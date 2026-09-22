@@ -1,0 +1,14 @@
+{
+  "updated": "2026-09-22T07:15:00-05:00",
+  "reports": {
+    "inlet-beach": {
+      "at": "2026-09-22T07:12:00-05:00",
+      "by": "BO Crew",
+      "flag": "yellow",
+      "seaweed": "light",
+      "water": "clear-green",
+      "parking": "filling",
+      "note": "Small shorebreak, water clear past the first bar. Thin weed line from last night's wind."
+    }
+  }
+}
