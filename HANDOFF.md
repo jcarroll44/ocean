@@ -1,69 +1,55 @@
-# BoBuoy — v46 design-system handoff
+# BoBuoy — v47 handoff
 
-23 September 2026. Built from the published v45 baseline. App commit: eb4002db66f367d0a560c1c703ac63e14dc9cfde. Main design commit: b5e5008aaca412deaaa18b98eb6c9937accefc5f. Live site: https://jcarroll44.github.io/ocean/
+Built from published v46. Live site: https://jcarroll44.github.io/ocean/
+Owner: Jacob Carroll. Product name: BoBuoy. GitHub: jcarroll44/ocean.
 
-## Scope and user decisions
+## Accepted direction
 
-This is the design-system layer of the existing plan. It does not reorder the character, ocean-realism, physics, UV-model, location or data-source work. Those remain outside this pass. The user's explicit v46 instructions authorize the time-control replacement and existing-feed repair inside this pass.
+See PASS-v47-cards.md. This is the product/content and interaction pass on the v46 design system. Preserve the existing palette, 300/500 type weights and translucent sheet. The burn estimate stays a headline feature; seven forecast days return. Camera changes require side-by-side review before adoption. Any-location support is followed immediately by Trip mode, then sunset alerts; see ROADMAP.md. Those future features are not implemented here.
 
-The current wordmark is **BoBuoy**. The four tabs are **Today / Water / Sun / Tonight**; the user's decision overrides the earlier five-tab requirement. Sunset and stargazing now share Tonight. Bo stays in the default ocean view and existing day/evening playback framing. Incoming character-artist and five-screen UI references take precedence where they conflict with this design.
+## What changed
 
-## Shipped presentation
+- Day, evening and night playback clear the sheet, header and tabs. The only control capsule contains time, pause/resume, progress and close. Tapping the scene pauses/resumes. Close or natural completion restores the previous time/live state, camera view, sheet size and panel scroll position. Keyboard Escape closes playback. Time and animation pause when playback is paused.
+- Seven dates are visible in the picker. The previous parser discarded weather more than 74 hours ahead; that cap is replaced with seven local days. The existing providers now receive the beach timezone, so the seventh evening is covered. Missing dates are disabled rather than fabricated. NOAA tide predictions cover the same week.
+- Air temperature and feels-like appear by the scene verdict. Today has a temperature hero and daily curve, tappable Water/Waves/Wind/Sun summaries, the beach window, rain chance and humidity. Feels-like and precipitation probability are new requested fields from the existing weather provider, not a new provider.
+- Tabs open at half height, with a visible primary answer and visual. Drag the handle or scroll upwards to expand. Every tab is labelled. The top verdict is hidden while a tab is open to avoid crowding the scene and repeating the panel answer.
+- Water has Waves / Water / Wind subviews. Wave-height and wind curves, a water-temperature band, beach-relative wind direction, gusts, tide timing and estimated water clarity add meaning to the numbers. No child-swimming, strong-swimmer or umbrella-safety promises.
+- Sun restores the headline burn estimate after optional skin-response selection. Wording: “About … min”, “without sunscreen”, and a visible reminder that response varies and this is not a safe-time limit. Six descriptions replace jargon. Selection persists and is editable in Settings. SPF changes reminders only; it does not extend the headline estimate. The UV curve, peak, lower-UV windows and daylight planning at night remain visible.
+- Tonight retains the sunset postcard/score, adds evening playback, and restores useful moon, darkness and planet-viewing details alongside stargazing and night playback.
+- The mannequin panels and pose controls are removed. Height is retained in Settings for a future scene character. The person renderer remains unused in the bundle; no character asset was sourced or substituted.
+- Storm forecasts outrank a pleasant beach headline and are described as forecasts, not live nearby lightning observations. The arc has a subtle forecast-rain segment while retaining a consistent 24-hour scale.
 
-- Ink `#1A435A`, amber `#F3A43A`, sea `#4987A4`, mist `#D3EBF9`, shell `#FBF8F3`. Interface colour families are blue, warm white and amber. Ink/sea/mist are shades of the same blue family; literal per-pixel RGB counting would also count antialiasing and transparent scene colour. Condition labels use words, without red/green/purple status blocks.
-- Native system UI; `ui-rounded` display type with a bundled Nunito variable fallback. Only 300 and 500 weights. Type scale 56 / 28 / 17 / 14 / 12. The font and complete OFL notice are inside index.html; no font-network dependency.
-- 24 px cards, pill controls, 20 px screen margins, soft shadows and no bordered boxes. One 40 px round-button treatment for Now, Play, Share and Settings. Visible keyboard focus uses a soft ring via shadow.
-- Peek state: scene and centred Bo, one verdict, four live values, segmented days, a compact time arc and floating tab pill. Four values are Waves / Water / Wind / UV even at night.
-- Expanded surfaces retain 70% shell or ink with 24 px blur, allowing the underlying scene to show through. Tonight has the ink surface in either theme. The four-tab pill shows a label only for the selected tab.
-- Today: one hero, then equal two-column cards. Water and Sun: 56 px light numbers and retained figure cards. The Water comparison cube/crest/measure labels are hidden. This is a presentation change, not a replacement of the character or wave model.
-- Tonight: sunset postcard and score, then stargazing verdict and sea-coloured meter. Methods and caveats are behind one information disclosure per tab. No sample banner inside the tabs. The header says `Offline · sample` on final sample fallback, and retains a distinct saved-forecast state.
+## Model and renderer boundaries
 
-## Time and motion
+Ocean rendering, waves, astronomy, UV dose equations, buoy geometry and figure geometry are unchanged. conditions.js only adds interpolation for the two new weather fields; activity scoring is unchanged. v47 changes presentation, forecast horizon and playback state handling.
 
-The old striped timeline and its range input are removed from the DOM. The panel has a 24-hour arc; its brightest segment marks the best remaining activity window. Drag or use arrow keys to select time; release holds the chosen time. Small bounded inertia settles in 240 ms. Now and double-tap on the scene return to current time and the ocean view. Days preserve the chosen hour when changing dates.
+The burn estimate uses the existing broad skin-response thresholds and forecast UV. UI and calculation behaviour were tested; personal medical accuracy has not been validated. The estimate does not track prior exposure or medication effects. Its label, visible uncertainty line and information disclosure must remain. SPF is never used as permission to stay out longer. Do not describe tanning or the estimate as safe.
 
-The real sun and moon receive a 48 px draggable target when they are above the horizon, inside the visible scene, and clear of the header/panel. During drag, an amber path follows their projected astronomical track. The panel arc remains available when a celestial body is offscreen. **The app does not move the sun into the hero shot artificially:** a fixed ocean-facing view often cannot include both Bo and the true midday sun. Pan/tilt can reveal the body; this case was tested for both sun and moon.
+## Camera review — no candidate committed
 
-Panel transitions use a 320 ms spring-like easing; tab content enters over 280 ms; changing numeric values interpolate over 280 ms. Reduced-motion settings disable the new transitions, number animation and time inertia, and disable ambient motion at boot.
+v47-camera-comparison.png uses the same captured live forecast and noon time:
 
-## Live data
+1. Current lens and camera world height 4.5 m.
+2. Approximately 15% wider vertical field of view, retaining 4.5 m.
+3. Wider lens with camera world height 1.7 m.
 
-The earlier v45 review images deliberately used fixtures; that alone did not prove a deployed feed defect. Direct inspection of the published site returned real weather, wave and air data, and reproduced intermittent 12-second request aborts. NOAA succeeded in later checks as well.
-
-v46 uses AbortController with explicit timers and cleanup, a 20-second timeout for core forecasts and NOAA, and one retry for weather/marine failures. Air quality remains optional with its shorter timeout. Rejected request details and per-feed status are retained for diagnostics. Core data remains usable when an optional source fails; unavailable tide/temperature values are displayed as unavailable. No new provider, proxy, API key or forecast model was introduced.
-
-The live screenshot runs received HTTP 200 and fulfilled results for:
-
-- Open-Meteo beach/light-gate weather
-- Open-Meteo marine waves and sea-surface temperature
-- Open-Meteo air quality
-- NOAA hourly tide predictions
-- NOAA high/low tide predictions
-
-Screenshots use real forecast values for noon and 10 PM on the selected local day. They are forecast views, not observations or photographs. Provisional startup data is not shown as numerical values before a forecast arrives. A final sample fallback is labelled in the header.
+The original proposal said to raise the camera to 1.7 m; the actual engine is already at 4.5 m. The 1.7 m candidate lowers it, increases the empty sand foreground and brings the buoy into the verdict area. Retain the current camera until Jacob reviews the comparison. Any source/candidate HTML used for these screenshots is an audit experiment, not the deployed index.
 
 ## Verification
 
-- 16 captures at 390 × 844: peek and expanded for all four tabs, in day and night themes.
-- Visible UI audit across every capture and Settings: weights 300/500 only; no text below 12 px; sizes restricted to the type scale; no visible borders; no horizontal page overflow; shell/ink alpha 0.7 and blur 24 px.
-- Confirmed four tabs, no old scrubber or sample banner; sunset/night shared navigation; old sunset/night saved links migrate to Tonight.
-- Panel time drag, release retention, keyboard changes, Now, double-tap return, matching playback clocks and stop.
-- Draggable actual sun and moon after bringing them into view, plus reduced-motion boot behavior.
-- Additional widths 375, 430 and 1280 checked for horizontal overflow. Notch and home-indicator safe-area offsets are included.
-- Delayed live-request startup check: provisional values remain blank; Loading forecast changes to live values after real requests resolve.
-- No JavaScript or shader errors in successful rendering checks.
-- Scene rendering is real software WebGL for captures. Rendering is paused for portions of the control checks. These tests are not an iPhone FPS, heat or battery benchmark.
+- Live weather, marine, air-quality and both NOAA feeds; complete seven-day local coverage, feels-like and rain-probability values.
+- 24 phone screenshots at 390 × 844: day/night peek, all four tabs at half/full, Water temperature and wind subviews, and paused full-screen playback.
+- Skin selection changes the estimate and saves the preference. SPF leaves the unprotected estimate unchanged. Settings can change skin response.
+- Seven dates selectable without changing the chosen noon hour. Main tab hero and visual fit at half height.
+- Playback pause/resume by button and scene tap, hidden chrome, exact state restoration, and evening completion.
+- No visible mannequin panel or old striped scrubber. Four labelled tabs. No visible border boxes, sub-12 px type, bold weights, horizontal overflow or object-string rendering in the checked states. Responsive widths 375, 430 and 1280. Reduced-motion CSS.
+- Software WebGL is used for screenshots; rendering is paused for portions of control verification. No physical iPhone FPS, battery or thermal claim.
 
-The renderer, astronomy, condition model and UV model were compared with v45 and are unchanged. In figure.js, only the visibility of the wave comparison diagram changes; character geometry and poses are unchanged.
+## Remaining limitations
 
-## Limits and next pass
+- The thin dark horizon seam remains in the existing ocean renderer. It was not bundled into a camera or physics change; track it with the renderer/realism work.
+- The artist-quality scene character, umbrella/chair shots and new camera framing remain separate, with Jacob's camera review required.
+- A forecast can still fail or omit optional values. Saved forecasts and labelled samples remain; missing values must not become invented observations.
+- No official beach flag/rip-current integration, Trip mode, push alerts or any-location expansion is included in v47.
 
-A static GitHub Pages client can still lose access to a provider when the user is offline or a service fails. Retries improve transient failures; they cannot guarantee provider availability. The app retains saved forecasts and explicitly labelled samples for those cases.
-
-No character replacement, beach-chair pose, ocean realism improvement, calibrated webcam comparison, physical iPhone performance measurement, new location, new data source, or permanent app logo was attempted in v46. Keep those in their existing plan layers. Do not interpret visual polish as completion of those layers.
-
-## Working files
-
-The app remains self-contained in index.html. The named embedded modules and their boundaries remain. New v46 presentation functions wrap the existing forecast/model functions. Legacy panel functions remain unused in the bundle; deleting/refactoring them is not necessary for this design pass.
-
-HANDOFF.md is the current entry point. OVERNIGHT-HANDOFF.md records v45 history. The screenshot bundle contains only the final 16 live-data phone captures, two overview sheets, this handoff, the app and a machine-readable test summary.
+The deployed source remains self-contained index.html. v46's legacy panel functions remain in the bundle but are unused. This handoff is current; OVERNIGHT-HANDOFF.md records older history.
