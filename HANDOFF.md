@@ -1,7 +1,30 @@
-# BoBuoy — v47 + adopted beach camera and shoreline
+# BoBuoy — compact peek, truthful night, conditions review
 
 Built from published v47 and the horizon-seam fix. Jacob approved elevated camera B (10 m high, 11° down); this pass adopts it with the requested buoy and shoreline refinements. Live site: https://jcarroll44.github.io/ocean/
 Owner: Jacob Carroll. Product name: BoBuoy. GitHub: jcarroll44/ocean.
+
+
+## Latest approved pass
+
+Built from main `9900e938de1a355ded9832d5449859533859d912`. Order: compact peek/night, controlled grid and clips, then the two largest observed weaknesses. The approved camera and buoy distance/scale are retained.
+
+- Peek sheet: 136 px instead of 272 px. Four readings remain tappable, with a 44 px time/expand control. Days, arc and playback appear on expansion; seven days and all detailed tab features remain. Water and Wind readings now open their matching Water subviews. The headline separates its small label from the larger answer.
+- Moon: above-horizon, illuminated nighttime Moon outside the unobscured view gets an edge hint using actual projected direction. Tap pans to the real Moon; Beach returns to the approved view without changing the selected time. Pan range is now ±180° to reach a Moon beyond the previous ±100° limit. No fake Moon is inserted. Moon-driven water lighting follows phase, altitude and cloud cover; the reflection remains directional.
+- Grid finding 1: pale storm skies and flat cloud layers. Increased cloud relief and adjusted cloud, water and beach attenuation together for cloud/rain conditions. This improves weather coherence; it is not a volumetric-cloud replacement.
+- Grid finding 2: the low-wave path discarded the wind spectrum below 2.5 ft. Low waves now include wind displacement and slopes, bounded to 45% of configured wave height with carrier variance reduced accordingly. The low-wave offshore combined spectral height remains at the requested value. Wind direction drives the fine surface texture. The existing higher-wave breaking/energy model is retained.
+
+### Checks for this pass
+
+- 390×844 day/night peek renders and moon-pan render; all four tabs and all seven days retained. Correct Waves/Water/Wind destinations, no horizontal overflow at 375/390/430/1280, reduced-motion sheet transition.
+- Moon below the horizon: no hint and no moon illumination. Moon beyond the old pan limit: visible after tapping the hint. Beach return restores approved view.
+- Full-screen playback hides chrome, pauses time, resumes, and restores exact time, camera and compact-sheet state. No JavaScript or shader errors in the checked cases.
+- Before/after 3×4 grid: 1 ft/5 kt, 3 ft/15 kt, 6 ft/25 kt × clear/scattered/overcast/storm. Separate 6 ft/5 kt and 1 ft/25 kt cases. Held camera, noon lighting, 7 s period, tide, clarity and directions fixed. These are simulated inputs, not live observations. Buoy bob phase is not synchronized across every cell.
+- Five 5-second clips before and after, rendered at 8 fps in software. They show animation differences; they are not measurements of phone frame rate.
+- UI screenshots reuse the captured live forecast used in the camera review. Fresh production feeds are checked separately after deployment.
+
+### What remains
+
+Clouds still have a procedural appearance; breaker/foam bands remain too regular in places. These are the next realism candidates, not grounds to claim the scene is finished. Physical iPhone FPS, heat/battery and input feel remain unmeasured. Jacob's next product test is 20–30 beachgoers using the live app; no recruitment messages have been sent. Any-location, Trip mode, sunset alerts and the artist-quality person remain in their existing roadmap order.
 
 ## Accepted direction
 
@@ -21,7 +44,7 @@ See PASS-v47-cards.md. This is the product/content and interaction pass on the v
 
 ## Model and renderer boundaries
 
-Wave geometry and propagation, astronomy, UV dose equations, buoy geometry/scale and figure geometry are unchanged. The seam fix changes distant background-water shading. This follow-up changes camera framing, buoy position, sand materials and swash-foam appearance/coverage using the existing wave and tide state. conditions.js only adds interpolation for the v47 weather fields; activity scoring is unchanged.
+Astronomy, UV dose equations, buoy geometry/scale and figure geometry are unchanged. The conditions follow-up below adds bounded wind detail to low waves; the higher-wave breaking model is retained. The seam fix changes distant background-water shading. This follow-up changes camera framing, buoy position, sand materials and swash-foam appearance/coverage using the existing wave and tide state. conditions.js only adds interpolation for the v47 weather fields; activity scoring is unchanged.
 
 The burn estimate uses the existing broad skin-response thresholds and forecast UV. UI and calculation behaviour were tested; personal medical accuracy has not been validated. The estimate does not track prior exposure or medication effects. Its label, visible uncertainty line and information disclosure must remain. SPF is never used as permission to stay out longer. Do not describe tanning or the estimate as safe.
 

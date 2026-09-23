@@ -1072,6 +1072,22 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
  #app .air-peek{position:absolute;top:calc(65px + env(safe-area-inset-top));right:20px;margin:0;gap:4px;font-size:12px}
  #app .air-peek .air-value{font-size:17px}
 }
+
+/* Compact peek: keep the readings; unfold the complete seven-day controls. */
+#app .sheet[data-detent=peek]{height:136px!important;--sheet-peek:136px}
+#app .sheet[data-detent=peek] .grabber{height:20px}
+#app .sheet[data-detent=peek] .dock{padding:0 20px 8px}
+#app .sheet[data-detent=peek] .peek-metrics{margin-bottom:0}
+#app .sheet[data-detent=peek] .clockrow,#app .sheet[data-detent=peek] .dayrow,#app .sheet[data-detent=peek] .sun-arc{display:none}
+#app .peek-expand{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:44px;margin:0;padding:0;background:none;box-shadow:none;color:var(--muted);font:500 14px system-ui;text-align:left}
+#app .peek-expand svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5}
+#app .sheet:not([data-detent=peek]) .peek-expand{display:none}
+#app .headline .headline-lead{display:block;font:500 14px system-ui;opacity:.78;margin-bottom:8px}
+#app .headline .headline-answer{display:block;font:300 28px var(--display);line-height:1.18;white-space:normal}
+#app .edges{display:block!important;position:fixed;inset:0;pointer-events:none;z-index:18}
+#app .edges .edgechip{position:absolute;pointer-events:auto;min-height:44px;margin:0;padding:0 12px;border:0;border-radius:999px;font:500 12px system-ui;color:var(--shell);background:rgba(26,67,90,.22);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 4px 16px rgba(26,67,90,.08);text-shadow:0 1px 3px rgba(26,67,90,.30)}
+#app .edges .edgechip.scene-home{background:rgba(26,67,90,.30)}
+#app[data-playback=true] .edges{display:none!important}
 </style>
 </head>
 <body>
@@ -1109,7 +1125,8 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
  <aside id="sheet" class="sheet" data-detent="peek" aria-label="Beach conditions">
   <div id="sheet-head" class="sheet-head">
    <div id="grabber" class="grabber" role="button" tabindex="0" aria-label="Resize panel"><span></span></div>
-   <div id="dock" class="dock"><div id="peek-metrics" class="peek-metrics"><button data-tab="water"><span class="label">Waves</span><span class="peek-value"><span id="peek-0" data-number="peek0">—</span><small id="peek-unit-0"></small></span></button><button data-tab="water"><span class="label">Water</span><span class="peek-value"><span id="peek-1" data-number="peek1">—</span><small id="peek-unit-1"></small></span></button><button data-tab="water"><span class="label">Wind</span><span class="peek-value"><span id="peek-2" data-number="peek2">—</span><small id="peek-unit-2"></small></span></button><button data-tab="uv"><span class="label">UV</span><span class="peek-value"><span id="peek-3" data-number="peek3">—</span><small id="peek-unit-3"></small></span></button></div>
+   <div id="dock" class="dock"><div id="peek-metrics" class="peek-metrics"><button data-tab="water" data-focus="waves"><span class="label">Waves</span><span class="peek-value"><span id="peek-0" data-number="peek0">—</span><small id="peek-unit-0"></small></span></button><button data-tab="water" data-focus="temperature"><span class="label">Water</span><span class="peek-value"><span id="peek-1" data-number="peek1">—</span><small id="peek-unit-1"></small></span></button><button data-tab="water" data-focus="wind"><span class="label">Wind</span><span class="peek-value"><span id="peek-2" data-number="peek2">—</span><small id="peek-unit-2"></small></span></button><button data-tab="uv"><span class="label">UV</span><span class="peek-value"><span id="peek-3" data-number="peek3">—</span><small id="peek-unit-3"></small></span></button></div>
+    <button id="peek-expand" class="peek-expand" aria-label="Expand forecast and time controls" aria-expanded="false" aria-controls="dock"><span id="peek-time-label">Today · Now</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 14 5-5 5 5"/></svg></button>
     <div class="clockrow">
      <div class="clock"><span id="clock-time" class="time">—</span><span id="clock-day" class="day">—</span></div>
      <div class="clock-actions">
@@ -56221,7 +56238,7 @@ function windSpectrum(T,knots,direction,k0){
  const modes=[];let sum=0;
  for(let i=0;i<WIND_COUNT;i++){
   const k=k0*(8+i*1.72+.3*Math.sin(i*5.3));
-  const angle=-direction+Math.sin(i*2.399)*1.05;
+  const angle=-direction+Math.sin(i*2.399)*.55;
   const weight=Math.exp(-i*.34);
   modes.push([k*Math.sin(angle),k*Math.cos(angle),Math.sqrt(weight),Math.sqrt(9.81*k)]);sum+=weight;
  }
@@ -57024,7 +57041,7 @@ __e['createBuoy'] = createBuoy;
 /* ===== ocean-engine.js ===== */
 (function(){
 var __e = __mods['ocean-engine.js'] = {};
-const {SWELL_COUNT, WIND_COUNT, windSpectrum} = __mods['wave-populations.js'];
+const {SWELL_COUNT, WIND_COUNT, windSpectrum, populationGLSL} = __mods['wave-populations.js'];
 const THREE = __mods['three.module.js'];
 const {makeSpectrum, spectrumGLSL} = __mods['wave-spectrum.js'];
 const {incomingSpectrum, depthTable, incomingGLSL, DEPTH_SAMPLES, phaseOffset, dispersion} = __mods['incoming-waves.js'];
@@ -57080,11 +57097,12 @@ float layerCover(vec3 rd,float layer,float cover){
  vec2 p=cloudPosition(rd,layer);
  // A broad low deck, softer mid-level patches and long high veils. These
  // textures are illustrative morphology; percentages are forecast inputs.
- vec2 q=layer>1.5?vec2(p.x*.58+p.y*.25,p.y*2.8):p;
+ vec2 q=layer>1.5?vec2(p.x*.58+p.y*.25,p.y*2.8):layer<.5?p*vec2(.90,.52):p*vec2(.90,.76);
  float n=cloudNoise(q);
- if(layer<.5&&uCloudQuality>.5)n=mix(n,noise(p*.45+8.),.18);
- float threshold=mix(.94,.13,clamp(cover,0.,1.));
- float density=smoothstep(threshold-.10,threshold+.12,n);
+ if(layer<.5)n+=.10*(noise(q*2.6+vec2(8.3,2.1))-.5);
+ float threshold=mix(.90,.13,clamp(cover,0.,1.));
+ float edge=layer>1.5?.11:layer>.5?.07:.045;
+ float density=smoothstep(threshold-edge,threshold+edge,n);
  float optical=layer>1.5?.64:layer>.5?.87:.97;
  return density*optical*smoothstep(.002,.065,rd.y);
 }
@@ -57143,8 +57161,8 @@ vec3 sky(vec3 rd,bool clouds){
  vec3 zenith=mix(vec3(.006,.013,.036),vec3(.055,.22,.39),day);
  vec3 horizon=mix(vec3(.018,.034,.065),vec3(.38,.55,.64),day);
  // Moonlit sky: Rayleigh-blue brightening that washes out faint stars.
- zenith+=vec3(.0035,.0065,.015)*uMoonInfo.z*night;
- horizon+=vec3(.005,.008,.014)*uMoonInfo.z*night;
+ zenith+=vec3(.006,.011,.020)*uMoonInfo.z*night;
+ horizon+=vec3(.009,.014,.022)*uMoonInfo.z*night;
  // Low sun is a DIRECTIONAL light, not a wash. Looking toward it the horizon
  // burns warm; turn away and the sky cools and falls off into earth shadow.
  // Without this every evening looked like uniform pink everywhere you panned.
@@ -57194,9 +57212,16 @@ vec3 sky(vec3 rd,bool clouds){
    float layer=float(2-j),alpha=j==0?layers.z:j==1?layers.y:layers.x;
    if(alpha>.001){
     vec2 p=cloudPosition(rd,layer);
-    float relief=noise(p*2.1+4.7),thickness=j==0?.12:j==1?.23:.34;
-    vec3 c=mix(vec3(.024,.035,.053),vec3(.87,.89,.87),day);
-    c*=1.-thickness*(1.-relief);
+    vec2 bodyP=layer<.5?p*vec2(.90,.52):p*vec2(.90,.76);
+    float relief=cloudNoise(bodyP+vec2(.17,.28)),thickness=j==0?.12:j==1?.28:.52;
+    float storm=smoothstep(.8,7.0,uRain)*smoothstep(.55,.98,uCloud);
+    vec3 litCloud=mix(vec3(.87,.89,.87),vec3(.24,.30,.35),storm);
+    vec3 c=mix(vec3(.024,.035,.053),litCloud,day);
+    c*=1.-thickness*(1.-smoothstep(.25,.76,relief));
+    // Cool shaded bodies and a restrained lit rim make depth readable without
+    // adding a volumetric march or changing the forecast cloud fractions.
+    c=mix(c,c*vec3(.75,.82,.90),(1.-relief)*thickness*day);
+    c+=vec3(.065,.062,.050)*day*(1.-storm)*pow(1.-alpha,2.0)*relief;
     // Warm scattering on sunward edges; cool bases preserve readable volume.
     c+=vec3(.12,.105,.075)*pow(max(dot(rd,sun),0.),7.)*day*(1.-alpha)*1.5;
     c+=vec3(.040,.052,.075)*uMoonInfo.z*night+vec3(.04,.028,.018)*townGlow(rd)*night;
@@ -57262,7 +57287,7 @@ vec3 sand(vec2 p,vec3 rd,float wet,vec2 pixelFootprint){
  vec3 moist=vec3(.32,.32,.28)*(1.0+grain*.4+mottling*.5+ridges*.3);
  float day=daylight(),warm=(1.0-smoothstep(.04,.36,sunDir().y))*smoothstep(-.08,.08,sunDir().y);
  float nightFill=.018+.042*uMoonInfo.z*(1.0-uCloud*.75);
- vec3 c=mix(dry,moist,wet)*mix(vec3(1),vec3(1.10,.87,.70),warm*.6)*mix(nightFill,.805,day);
+ vec3 c=mix(dry,moist,wet)*mix(vec3(1),vec3(1.10,.87,.70),warm*.6)*mix(nightFill,.805*(1.0-.38*uCloud)*exp(-uRain*.035),day);
  vec3 n=normalize(vec3(.008*sin(p.x*8.0),1.0,-.105));vec3 r=reflect(rd,n);r.y=abs(r.y);
  float f=pow(1.0-max(dot(-rd,n),0.0),5.0);
  float glint=pow(max(dot(normalize(r),sunDir()),0.0),650.0)*day*(1.0-uCloud)*wet;
@@ -57270,7 +57295,7 @@ vec3 sand(vec2 p,vec3 rd,float wet,vec2 pixelFootprint){
 }
 `;
 
-const waves = spectrumGLSL+`
+const waves = spectrumGLSL+populationGLSL+`
 float speed(){return sqrt(9.81*max(.55,uSwell/.78));}
 float spacing(){return uPeriod*speed();}
 float breakDistance(){return 4.0+uSwell*10.0;}
@@ -57358,17 +57383,19 @@ vec3 legacyDisplacement(vec2 q,out vec3 surfaceNormal){
  float shoreX=.045*cos(q.x*.10)+.0435*cos(q.x*.29);
  float seaX=-seaZ*shoreX;
  vec3 tx=vec3(1,0,0),tz=vec3(0,0,1),openWater=vec3(q.x,0,q.y);
+ vec2 windSlope;vec3 windPosition=windSea(q,windSlope);
  if(sea>.0001)openWater=offshoreSurface(q,tx,tz);
- if(sea>.9999){surfaceNormal=normalize(cross(tz,tx));openWater.y+=uTide;return openWater;}
+ if(sea>.9999){tx.y+=windSlope.x;tz.y+=windSlope.y;surfaceNormal=normalize(cross(tz,tx));openWater.y+=uTide+windPosition.y;return openWater;}
  vec3 surf=surfPosition(q);
  // Differentiate the actual bent, varying-height crest instead of inventing
  // an approximate normal that exposes the mesh as zigzag specular highlights.
  const float e=.035;
  vec3 surfX=(surfPosition(q+vec2(e,0))-surfPosition(q-vec2(e,0)))/(2.0*e);
  vec3 surfZ=(surfPosition(q+vec2(0,e))-surfPosition(q-vec2(0,e)))/(2.0*e);
- vec3 pos=mix(surf,openWater,sea);
+ vec3 pos=mix(surf,openWater,sea);pos.y+=windPosition.y;
  tx=mix(surfX,tx,sea)+(openWater-surf)*seaX;
  tz=mix(surfZ,tz,sea)+(openWater-surf)*seaZ;
+ tx.y+=windSlope.x;tz.y+=windSlope.y;
  float nearShore=1.0-smoothstep(-1.0,4.0,off);
  float wash=swash(q.x),sandRise=max(.0,bed(q)-uTide);
  float remaining=max(.0,wash-sandRise);
@@ -57380,13 +57407,13 @@ vec3 legacyDisplacement(vec2 q,out vec3 surfaceNormal){
 }
 // Foam needs height only; avoid all normal and spectrum work for its shore map.
 vec3 legacyDisplacement(vec2 q){
- vec3 p=surfPosition(q);float off=shore(q.x)-q.y;
+ vec3 p=surfPosition(q);float off=shore(q.x)-q.y;vec2 windSlope;p.y+=windSea(q,windSlope).y;
  float rise=max(.0,bed(q)-uTide),left=max(.0,swash(q.x)-rise);
  p.y=mix(p.y,left>0.0?rise+left*.62:-.002,1.0-smoothstep(-1.0,4.0,off));
  p.y+=uTide;return p;
 }
 
-`+incomingGLSL+`
+`+incomingGLSL.slice(populationGLSL.length)+`
 vec3 displacement(vec2 q,out vec3 normal){
  float blend=incomingMix();
  if(blend<=0.0)return legacyDisplacement(q,normal);
@@ -57402,9 +57429,9 @@ vec3 displacement(vec2 q){
 
 const waterLight = `
 vec2 micro(vec2 p,float distanceToCamera){
- vec2 slope=vec2(0);float amp=.011+uWind*.0015;
+ vec2 slope=vec2(0);float amp=(.011+uWind*.0015)*windActivation(uWind);
  for(int i=0;i<4;i++){
-  float fi=float(i),angle=fi*2.399+.3+uWindDirection;vec2 d=vec2(cos(angle),sin(angle));
+  float fi=float(i),angle=PI*.5+uWindDirection+sin(fi*2.399)*.55;vec2 d=vec2(cos(angle),sin(angle));
   float k=2.7*pow(1.76,fi),fade=exp(-distanceToCamera*k*.0045);
   float ph=dot(p,d)*k-uTime*(1.5+fi*.7);
   fade*=1.0-smoothstep(.35,2.5,fwidth(dot(p,d)*k));
@@ -57421,7 +57448,8 @@ vec3 shadeWater(vec3 p,vec3 n,vec3 v,float depth,float thickness){
  vec3 reflected=sky(normalize(r),true);
  reflected*=.80;
  float light=max(dot(n,sun),.0);
- vec3 water=mix(vec3(.002,.036,.072),vec3(.007,.155,.150),.30+light*.65)*(.055+day+uMoonInfo.z*.02*(1.0-day));
+ float moonIrradiance=0.0;if(day<.99&&uMoonInfo.z>.001)moonIrradiance=uMoonInfo.z*(1.0-.90*cloudCover(normalize(uMoon)))*(1.0-day);
+ vec3 water=mix(vec3(.002,.036,.072),vec3(.007,.155,.150),.30+light*.65)*(.055+day*(1.0-.35*uCloud)*exp(-uRain*.035)+moonIrradiance*.13);
  float glow=pow(max(dot(v,-sun),0.0),3.0)*thickness;
  water+=vec3(.025,.20,.14)*glow*day;
  // Refract the view toward the seabed; light absorption varies by color.
@@ -57432,7 +57460,8 @@ vec3 shadeWater(vec3 p,vec3 n,vec3 v,float depth,float thickness){
  float sediment=clamp(mix(uWind/45.0+uSwell*.12,1.0-uClarity,.7),0.0,1.0);
  vec3 absorption=mix(vec3(.28,.085,.055),vec3(.85,.55,.36),sediment);
  vec3 transmission=exp(-absorption*path);
- vec3 under=vec3(.53,.52,.43)*(.035+.78*day);
+ float skyTransmission=(1.0-.48*uCloud)*exp(-uRain*.055);
+ vec3 under=vec3(.53,.52,.43)*(.035+.78*day*skyTransmission+moonIrradiance*.035);
  under*=.91+.09*noise(bottom*28.0);
  // Intersecting light filaments fade with depth, cloud and surface agitation.
  vec2 cp=bottom*8.5+vec2(uTime*.31,-uTime*.25);
@@ -57466,7 +57495,7 @@ vec3 shadeWater(vec3 p,vec3 n,vec3 v,float depth,float thickness){
   float mr=clamp(.13+max(0.0,uWind)*.003,.13,.3),ma2=min(.18,mr*mr+normalVariance*.35),mden=mnh*mnh*(ma2-1.0)+1.0;
   float mD=ma2/(PI*mden*mden+.00001);
   float mspec=min(7.0,mD*.25/(nv*max(mnl,.02)+.01))*mnl;
-  c+=vec3(.80,.86,.97)*mspec*uMoonInfo.z*.20*(1.0-uCloud*.9)*(1.0-day);
+  c+=vec3(.80,.86,.97)*mspec*moonIrradiance*.38;
  }
  return c;
 }
@@ -57782,14 +57811,22 @@ function createOcean(canvas,uniforms,onError){
   const h=uniforms.uSwell.value,p=uniforms.uPeriod.value,d=uniforms.uDirection.value,w=uniforms.uWind.value,wd=uniforms.uWindDirection.value;
   const key=[h,p,d,w,wd].map(v=>v.toFixed(3)).join(',');
   if(key===spectrumKey)return;spectrumKey=key;
-  const state=makeSpectrum(h,p,d,w);
+  const k0=dispersion(2*Math.PI/p,9);uniforms.uSwellK.value=k0;
+  const windModes=windSpectrum(p,w,wd,k0);
+  const rawWindH=Math.sqrt(8*windModes.reduce((sum,m)=>sum+m[2]*m[2],0));
+  const transition=Math.max(0,Math.min(1,(h-.762)/.1524));
+  const blend=transition*transition*(3-2*transition);
+  const lowWindH=Math.min(rawWindH,h*.45);
+  const windH=lowWindH+(rawWindH-lowWindH)*blend;
+  const gain=rawWindH>0?windH/rawWindH:0;
+  windModes.forEach((m,i)=>{m[2]*=gain;uniforms.uWindSea.value[i].set(...m);});
+  const carrierH=Math.sqrt(Math.max(0,h*h-lowWindH*lowWindH*(1-blend)));
+  const state=makeSpectrum(carrierH,p,d,w);
   state.modes.forEach((m,i)=>uniforms.uSpectrum.value[i].set(...m));
   uniforms.uChoppiness.value=state.choppiness;
   if(h>.762){
    const incoming=incomingSpectrum(h,p,d);
    incomingModes=incoming;
-   const k0=dispersion(2*Math.PI/p,9);uniforms.uSwellK.value=k0;
-   windSpectrum(p,w,wd,k0).forEach((m,i)=>uniforms.uWindSea.value[i].set(...m));
    incoming.forEach((m,i)=>uniforms.uIncoming.value[i].set(...m));
    depthTexture.image.data.set(depthTable(h,p,incoming,w,wd));depthTexture.needsUpdate=true;
   }
@@ -60544,7 +60581,7 @@ function applySky(){
 }
 
 // ---------------------------------------------------------------- view (pan / tilt / zoom)
-const V=state.view,YAW=100*D2R,PITCH=75*D2R;
+const V=state.view,YAW=180*D2R,PITCH=75*D2R;
 function fov(){const z=engine?uniforms.uZoom.value:1;const v=2*Math.atan(.59/z);return {v,h:2*Math.atan(Math.tan(v/2)*innerWidth/innerHeight)};}
 function setView(y,p,z=V.zoom){
  V.yaw=Math.max(-YAW,Math.min(YAW,y));V.pitch=Math.max(-11*D2R,Math.min(PITCH,p));V.zoom=Math.max((state.lapse||V.anim?.from.length===3) ? .55 : .84,Math.min(6,z));
@@ -60649,7 +60686,8 @@ for(const [id,kind] of [['sun-arc','panel'],['scene-time-handle','scene']]){
 function returnNow(){stopLapse();cancelTimeInertia();setTime(Date.now(),{live:true});V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};}
 $('#now-btn').onclick=returnNow;$('#lapse-btn').onclick=()=>{cancelTimeInertia();startLapse('day');};
 $('#days').addEventListener('click',e=>{const b=e.target.closest('[data-dayselect]');if(!b)return;stopLapse();cancelTimeInertia();const d=+b.dataset.dayselect,tod=state.time-localDayStart(state.time);setTime(d+tod);});
-$('#peek-metrics').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)selectTab(b.dataset.tab);});
+$('#peek-expand').onclick=()=>setDetent('half');
+$('#peek-metrics').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b){if(b.dataset.focus)state.waterFocus=b.dataset.focus;selectTab(b.dataset.tab);}});
 function animateNumbers(root,previous){
  if(reduced)return;for(const el of root.querySelectorAll('[data-number]')){const end=Number(el.textContent),start=Number(previous[el.dataset.number]);if(!Number.isFinite(end)||!Number.isFinite(start)||end===start)continue;const digits=(el.textContent.split('.')[1]||'').length,began=performance.now();const tick=now=>{if(!el.isConnected)return;const f=Math.min(1,(now-began)/280);el.textContent=(start+(end-start)*(1-(1-f)**3)).toFixed(digits);if(f<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 }
@@ -60932,7 +60970,7 @@ $('#panel').addEventListener('pointerdown',e=>{
 
 // ---------------------------------------------------------------- sheet & layout
 const isDesktop=()=>matchMedia('(min-width: 1024px)').matches;
-function setDetent(d){state.detent=d;$('#sheet').dataset.detent=d;$('#app').dataset.detent=d;}
+function setDetent(d){state.detent=d;$('#sheet').dataset.detent=d;$('#app').dataset.detent=d;$('#peek-expand').setAttribute('aria-expanded',d!=='peek');}
 (function sheet(){
  const grab=$('#grabber'),order=['peek','half','full'];let y0=null,d0=null;
  grab.addEventListener('pointerdown',e=>{y0=e.clientY;d0=state.detent;grab.setPointerCapture(e.pointerId);});
@@ -60991,18 +61029,24 @@ function overlays(){
  const show=!state.lapse&&(Math.abs(V.yaw)>.05||V.pitch>.05||V.zoom>1.05);
  head.hidden=!show;
  if(show)head.innerHTML=`<span>${compass(bearing)} ${Math.round(bearing)}°</span>${V.pitch>.05?`<span>${Math.round(V.pitch/D2R)}° up</span>`:''}${V.zoom>1.05?`<span>${V.zoom.toFixed(1)}×</span>`:''}<button data-reset aria-label="Reset view">Reset</button>`;
- // Edge chips for the Sun and Moon when they are off screen.
- const chips=[];
- const tryChip=(key,label,az,alt,visible)=>{
-  if(!visible)return;const rel=wrap180(az-SITE.facing)*D2R-V.yaw;
-  const p=engine.project(sceneVector(az,Math.max(alt,.3)));
-  if(p&&p.x>.02&&p.x<.98)return;                // on screen horizontally: looking up is the user's call
-  chips.push(`<button class="edgechip ${rel>0?'right':'left'}" data-chip="${key}" title="${Math.round(Math.abs(rel/D2R))}° ${rel>0?'right':'left'}" aria-label="Look toward the ${label.toLowerCase()}, ${Math.round(Math.abs(rel/D2R))} degrees ${rel>0?'right':'left'}">${rel>0?'':'← '}${label}${rel>0?' →':''}</button>`);
- };
- const sun=s.sun,day=sunDay(state.time);
- const nearSunset=day.sunset&&Math.abs(state.time-day.sunset)<90*MIN;
- tryChip('sun',nearSunset?'Sunset':'Sun',sun.azimuth,sun.altitude,sun.altitude>-1.5&&sun.altitude<25);
- tryChip('moon','Moon',s.moon.azimuth,s.moon.altitude,s.moon.altitude>0&&s.moon.altitude<50&&s.ph.fraction>.04&&sun.altitude<3);
+ // A real-direction pointer includes vertical off-screen positions and avoids
+ // the header and sheet. It never moves the Moon or invents a reflection.
+ const chips=[],moon=s.moon;
+ const headerBottom=$('.top').getBoundingClientRect().bottom;
+ const safeTop=Math.max(headerBottom+12,innerHeight*.22),sheetTop=$('#sheet').getBoundingClientRect().top;
+ const safeBottom=state.detent==='peek'?sheetTop-56:Math.max(safeTop,sheetTop-48);
+ const p=engine.project(sceneVector(moon.azimuth,moon.altitude));
+ const rel=wrap180(moon.azimuth-SITE.facing-V.yaw/D2R),above=!p||p.y*innerHeight<safeTop;
+ const visible=p&&p.x>.08&&p.x<.92&&p.y*innerHeight>=safeTop&&p.y*innerHeight<sheetTop-12;
+ if(moon.altitude>0&&s.ph.fraction>.04&&s.sun.altitude<0&&!visible&&safeBottom>=safeTop){
+  const side=p?(p.x<.08?-1:p.x>.92?1:0):(rel<0?-1:1);
+  const arrow=above?(side<0?'↖':side>0?'↗':'↑'):(side<0?'←':side>0?'→':'↓');
+  const x=side<0?20:side>0?innerWidth-100:innerWidth/2-40;
+  const y=Math.max(safeTop,Math.min(safeBottom,p?p.y*innerHeight-22:safeTop));
+  chips.push(`<button class="edgechip" data-chip="moon" style="left:${x}px;top:${y}px" aria-label="Look toward the moon">Moon ${arrow}</button>`);
+ }
+ const away=Math.abs(V.yaw)>.05||Math.abs(V.pitch+11*D2R)>.05||Math.abs(V.zoom-.84)>.05;
+ if(away&&safeBottom>=safeTop)chips.push(`<button class="edgechip scene-home" data-scene-home style="right:20px;top:${safeBottom}px" aria-label="Return to beach view">Beach ↓</button>`);
  $('#edges').innerHTML=chips.join('');
  // Bo carries the number: the chip tracks the lamp, and hides when he is off
  // screen or behind the panel.
@@ -61033,7 +61077,7 @@ function overlays(){
  }
  $('#labels').innerHTML=labels.join('');
 }
-$('#edges').addEventListener('click',e=>{const k=e.target.closest('[data-chip]')?.dataset.chip;if(!k)return;
+$('#edges').addEventListener('click',e=>{if(e.target.closest('[data-scene-home]')){V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};V.vy=V.vp=0;return;}const k=e.target.closest('[data-chip]')?.dataset.chip;if(!k)return;
  const s=skyAt(state.time);if(k==='sun'){const p=s.sun;lookAt(p.azimuth,Math.max(0,p.altitude));}if(k==='moon')lookAt(s.moon.azimuth,s.moon.altitude);});
 $('#heading').addEventListener('click',e=>{if(e.target.closest('[data-reset]')){V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};}});
 
@@ -61042,6 +61086,7 @@ function updateHeader(){
  const d=state.data;
  const displayTime=state.lapse?.displayTime??state.time;
  $('#clock-time').textContent=clock(displayTime);
+ $('#peek-time-label').textContent=state.live?`${dayName(state.time)} · Now`:`${dayName(state.time)} · ${clock(displayTime)}`;
  $('#clock-day').textContent=state.live?`${dayName(state.time)} · Now`:`${dayName(state.time)} · ${relative(state.time)}`;
  const air=conditionsAt(state.time),airEl=$('#air-peek');airEl.hidden=!d||d.provisional||!Number.isFinite(air?.temperature);if(!airEl.hidden)airEl.innerHTML=`<span class="air-value">${temp(air.temperature)}°</span><span>Air${Number.isFinite(air.apparent)?` · feels ${temp(air.apparent)}°`:''}</span>`;
  $('#now-btn').hidden=false;$('#now-btn').setAttribute('aria-pressed',state.live);updatePeek();
@@ -61086,7 +61131,7 @@ function updateHeadline(){
  state.headline=h;const el=$('#headline');
  if(!h){el.hidden=true;return;}
  const c=conditionsAt(state.time);
- if(el.textContent!==h.text){el.innerHTML=`<span>${esc(h.text.replace(' · ','\n'))}</span>`;el.className=`headline tone-${h.tone||'neutral'}`;}
+ if(el.dataset.text!==h.text){const parts=h.text.split(' · ');el.innerHTML=parts.length===2?`<span class="headline-lead">${esc(parts[0])}</span><span class="headline-answer">${esc(parts[1])}</span>`:`<span class="headline-answer">${esc(h.text)}</span>`;el.dataset.text=h.text;el.className=`headline tone-${h.tone||'neutral'}`;}
  el.hidden=false;el.setAttribute('aria-label',h.text+(h.tab?`. Open ${h.tab}`:''));
 }
 $('#headline').onclick=()=>{const h=state.headline;if(!h)return;if(h.jump)setTime(h.jump);if(h.tab)selectTab(h.tab);};
