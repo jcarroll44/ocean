@@ -976,6 +976,10 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
 #app .panel > .v46-card{margin-bottom:16px}
 #app .headline span{display:block;overflow:visible;-webkit-line-clamp:unset;max-height:none}
 #app .v46-card .v46-value:has([data-number="Sunrise"]){font-size:17px}
+
+/* Keep the same spacing inside the iPhone notch and home-indicator safe areas. */
+#app .top{padding-top:calc(24px + env(safe-area-inset-top))}
+@media(max-width:1023px){#app .tabs{bottom:calc(20px + env(safe-area-inset-bottom))}#app .sheet{bottom:calc(104px + env(safe-area-inset-bottom));max-height:calc(100svh - 208px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}#app .sheet[data-detent=full]{height:calc(100svh - 208px - env(safe-area-inset-top) - env(safe-area-inset-bottom))}}
 </style>
 </head>
 <body>
@@ -60444,7 +60448,7 @@ function animateNumbers(root,previous){
  if(reduced)return;for(const el of root.querySelectorAll('[data-number]')){const end=Number(el.textContent),start=Number(previous[el.dataset.number]);if(!Number.isFinite(end)||!Number.isFinite(start)||end===start)continue;const digits=(el.textContent.split('.')[1]||'').length,began=performance.now();const tick=now=>{if(!el.isConnected)return;const f=Math.min(1,(now-began)/280);el.textContent=(start+(end-start)*(1-(1-f)**3)).toFixed(digits);if(f<1)requestAnimationFrame(tick);};requestAnimationFrame(tick);}
 }
 function updatePeek(){
- if(!state.data)return;const c=conditionsAt(state.time);if(!c)return;
+ if(!state.data||state.data.provisional)return;const c=conditionsAt(state.time);if(!c)return;
  const values=[height(c.swell),Number.isFinite(c.sst)?temp(cToF(c.sst)):'—',speed(c.wind),uvFor(state.data,state.time).at(state.time).toFixed(1)];
  const units0=[hUnit(),'°',sUnit(),''];
  for(let i=0;i<4;i++){const el=$('#peek-'+i);if(el.dataset.target!==String(values[i])){const previous={[el.dataset.number]:el.textContent};el.textContent=values[i];el.dataset.target=values[i];animateNumbers(el.parentElement,previous);}$('#peek-unit-'+i).textContent=units0[i];}
@@ -60482,7 +60486,7 @@ function renderPanel(force=false){
  const el=$('#panel'),top=el.scrollTop;
  const open=[...el.querySelectorAll('details[open]')].map(d=>d.querySelector('summary')?.textContent);
  const previous=Object.fromEntries([...el.querySelectorAll('[data-number]')].map(n=>[n.dataset.number,n.textContent]));
- el.innerHTML=PANELS[state.tab](panelContext());animateNumbers(el,previous);
+ el.innerHTML=state.data.provisional?'<section class="v46-hero"><span class="v46-label">Inlet Beach</span><h1 class="v46-title">Loading forecast</h1></section>':PANELS[state.tab](panelContext());animateNumbers(el,previous);
  for(const d of el.querySelectorAll('details'))if(open.includes(d.querySelector('summary')?.textContent))d.open=true;
  el.scrollTop=top;
  mountFigure();wantSunsetShot();
