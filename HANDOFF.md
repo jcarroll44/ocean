@@ -20,7 +20,7 @@ Built from main `9900e938de1a355ded9832d5449859533859d912`. Order: compact peek/
 - Full-screen playback hides chrome, pauses time, resumes, and restores exact time, camera and compact-sheet state. No JavaScript or shader errors in the checked cases.
 - Before/after 3×4 grid: 1 ft/5 kt, 3 ft/15 kt, 6 ft/25 kt × clear/scattered/overcast/storm. Separate 6 ft/5 kt and 1 ft/25 kt cases. Held camera, noon lighting, 7 s period, tide, clarity and directions fixed. These are simulated inputs, not live observations. Buoy bob phase is not synchronized across every cell.
 - Five 5-second clips before and after, rendered at 8 fps in software. They show animation differences; they are not measurements of phone frame rate.
-- UI screenshots reuse the captured live forecast used in the camera review. Fresh production feeds are checked separately after deployment.
+- UI screenshots reuse the captured live forecast used in the camera review. After deployment, the published source matched the tested bytes exactly. Fresh weather, marine and both NOAA tide feeds succeeded, with seven forecast days. The optional air-quality request was aborted/rejected in this browser check; do not claim that feed was verified.
 
 ### What remains
 
