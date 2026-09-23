@@ -57469,7 +57469,14 @@ void main(){
  vec3 mist=sky(normalize(vec3(rd.x,.003,rd.z)),false);
  c=mix(c,mist,lowVisibility*(1.0-smoothstep(.0,.12,max(.0,rd.y))));
  if(rd.y<-.001){
-  float t=(uTide-ro.y)/rd.y;vec3 p=ro+rd*t;
+  float t=(uTide-ro.y)/rd.y;
+  // Grazing rays approach an unbounded plane intersection. Do not feed those
+  // extreme coordinates into derivative-based water shading: it produced a
+  // dark single-pixel band at the sky/sea boundary. Dunes remain foreground.
+  if(t>=2000.0&&!dune){
+   gl_FragColor=vec4(finish(sky(normalize(vec3(rd.x,.003,rd.z)),false)),1.0);return;
+  }
+  vec3 p=ro+rd*t;
   float sandT=(ro.y-.105*(ro.z-baseShore(p.x)))/(.105*rd.z-rd.y);
   vec3 sp=ro+rd*sandT;
   if(dune&&(sandT<.0||sp.z>duneFace(sp.x))){c=duneColor(duneP,rd);}
@@ -57483,8 +57490,8 @@ void main(){
    // Keep a finite visible sea horizon; an infinite plane would fog out every day.
    float distant=smoothstep(1500.0,6500.0,t);
    c=mix(c,vec3(.018,.10,.15)*(.04+daylight()),distant*.24);
-   float haze=seaHaze(t);
-   c=mix(c,sky(normalize(vec3(rd.x,.003,rd.z)),false),clamp(haze,0.0,.96));
+   float haze=max(seaHaze(t),smoothstep(900.0,2000.0,t));
+   c=mix(c,sky(normalize(vec3(rd.x,.003,rd.z)),false),clamp(haze,0.0,1.0));
   }
  }else if(dune){c=duneColor(duneP,rd);}
  gl_FragColor=vec4(finish(c),1);

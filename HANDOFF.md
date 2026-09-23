@@ -1,6 +1,6 @@
 # BoBuoy — v47 handoff
 
-Built from published v46. Live site: https://jcarroll44.github.io/ocean/
+Built from published v46. Includes the subsequent horizon-seam fix; the new camera options remain uncommitted previews. Live site: https://jcarroll44.github.io/ocean/
 Owner: Jacob Carroll. Product name: BoBuoy. GitHub: jcarroll44/ocean.
 
 ## Accepted direction
@@ -21,7 +21,7 @@ See PASS-v47-cards.md. This is the product/content and interaction pass on the v
 
 ## Model and renderer boundaries
 
-Ocean rendering, waves, astronomy, UV dose equations, buoy geometry and figure geometry are unchanged. conditions.js only adds interpolation for the two new weather fields; activity scoring is unchanged. v47 changes presentation, forecast horizon and playback state handling.
+Waves, astronomy, UV dose equations, buoy geometry and figure geometry are unchanged. The follow-up seam fix changes only the distant background-water shading, as described below. conditions.js only adds interpolation for the two new weather fields; activity scoring is unchanged. v47 changes presentation, forecast horizon and playback state handling.
 
 The burn estimate uses the existing broad skin-response thresholds and forecast UV. UI and calculation behaviour were tested; personal medical accuracy has not been validated. The estimate does not track prior exposure or medication effects. Its label, visible uncertainty line and information disclosure must remain. SPF is never used as permission to stay out longer. Do not describe tanning or the estimate as safe.
 
@@ -47,9 +47,20 @@ The original proposal said to raise the camera to 1.7 m; the actual engine is al
 
 ## Remaining limitations
 
-- The thin dark horizon seam remains in the existing ocean renderer. It was not bundled into a camera or physics change; track it with the renderer/realism work.
+- The horizon seam is fixed: grazing-angle background sea rays stop sampling extreme coordinates beyond 2 km and blend continuously into horizon haze from 900 m. Dunes retain their foreground occlusion. Wave geometry, physics and the production camera are unchanged.
 - The artist-quality scene character, umbrella/chair shots and new camera framing remain separate, with Jacob's camera review required.
 - A forecast can still fail or omit optional values. Saved forecasts and labelled samples remain; missing values must not become invented observations.
 - No official beach flag/rip-current integration, Trip mode, push alerts or any-location expansion is included in v47.
 
 The deployed source remains self-contained index.html. v46's legacy panel functions remain in the bundle but are unused. This handoff is current; OVERNIGHT-HANDOFF.md records older history.
+
+## Current camera review (supersedes the earlier three-camera comparison)
+
+Jacob requested a wider lens, 3° downward pitch, a setback from the water, a horizon near one third of the full phone scene and a narrow sand band above the panel. Two standalone preview files and side-by-side screenshots are prepared, not committed or published as the app camera:
+
+- A: camera world height 2.5 m; 2 m farther back than v47 (world Z 10).
+- B: camera world height 3.5 m; 7 m farther back than v47 (world Z 15).
+- Both: zoom 0.84 (approximately 15% wider vertical field of view), pitch −3°, horizon near Y 281 on a 390 × 844 phone. Compact header spacing keeps the verdict clear of Bo. Different setbacks keep the sand band near 15% of the exposed area above the panel; shoreline and waves remain at their original physical positions.
+- Comparison uses the same captured live forecast at noon and 10 PM. Rough and storm conditions were separately simulated for rendering checks. No JavaScript/shader errors. The before/after seam check found the black row in v47 and no corresponding dark row after the fix.
+
+Await Jacob's camera choice before adopting either preview. Current app camera and header remain v47.
