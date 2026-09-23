@@ -1,11 +1,11 @@
-# BoBuoy — v47 handoff
+# BoBuoy — v47 + adopted beach camera and shoreline
 
-Built from published v46. Includes the subsequent horizon-seam fix; the new camera options remain uncommitted previews. Live site: https://jcarroll44.github.io/ocean/
+Built from published v47 and the horizon-seam fix. Jacob approved elevated camera B (10 m high, 11° down); this pass adopts it with the requested buoy and shoreline refinements. Live site: https://jcarroll44.github.io/ocean/
 Owner: Jacob Carroll. Product name: BoBuoy. GitHub: jcarroll44/ocean.
 
 ## Accepted direction
 
-See PASS-v47-cards.md. This is the product/content and interaction pass on the v46 design system. Preserve the existing palette, 300/500 type weights and translucent sheet. The burn estimate stays a headline feature; seven forecast days return. Camera changes require side-by-side review before adoption. Any-location support is followed immediately by Trip mode, then sunset alerts; see ROADMAP.md. Those future features are not implemented here.
+See PASS-v47-cards.md. This is the product/content and interaction pass on the v46 design system. Preserve the existing palette, 300/500 type weights and translucent sheet. The burn estimate stays a headline feature; seven forecast days return. Camera B was selected after side-by-side review. Preserve the approved 10 m / 11° framing unless Jacob requests a new comparison. Any-location support is followed immediately by Trip mode, then sunset alerts; see ROADMAP.md. Those future features are not implemented here.
 
 ## What changed
 
@@ -21,19 +21,18 @@ See PASS-v47-cards.md. This is the product/content and interaction pass on the v
 
 ## Model and renderer boundaries
 
-Waves, astronomy, UV dose equations, buoy geometry and figure geometry are unchanged. The follow-up seam fix changes only the distant background-water shading, as described below. conditions.js only adds interpolation for the two new weather fields; activity scoring is unchanged. v47 changes presentation, forecast horizon and playback state handling.
+Wave geometry and propagation, astronomy, UV dose equations, buoy geometry/scale and figure geometry are unchanged. The seam fix changes distant background-water shading. This follow-up changes camera framing, buoy position, sand materials and swash-foam appearance/coverage using the existing wave and tide state. conditions.js only adds interpolation for the v47 weather fields; activity scoring is unchanged.
 
 The burn estimate uses the existing broad skin-response thresholds and forecast UV. UI and calculation behaviour were tested; personal medical accuracy has not been validated. The estimate does not track prior exposure or medication effects. Its label, visible uncertainty line and information disclosure must remain. SPF is never used as permission to stay out longer. Do not describe tanning or the estimate as safe.
 
-## Camera review — no candidate committed
+## Adopted camera and shoreline
 
-v47-camera-comparison.png uses the same captured live forecast and noon time:
-
-1. Current lens and camera world height 4.5 m.
-2. Approximately 15% wider vertical field of view, retaining 4.5 m.
-3. Wider lens with camera world height 1.7 m.
-
-The original proposal said to raise the camera to 1.7 m; the actual engine is already at 4.5 m. The 1.7 m candidate lowers it, increases the empty sand foreground and brings the buoy into the verdict area. Retain the current camera until Jacob reviews the comparison. Any source/candidate HTML used for these screenshots is an audit experiment, not the deployed index.
+- Camera B: world Y 10 m, Z 26 m (18 m behind v47), 11° downward pitch, zoom 0.84 (about 70° vertical field of view). Heights are relative to the scene datum, not measured above local sand.
+- On a 390×844 phone, the shifted projection keeps the horizon near Y202 (top quarter of the full scene), below the compact headline. This is not a claim that the horizon sits in the top quarter of the smaller exposed area above the sheet.
+- Bo moves from world Z −14 to −11.375. The distance to the mean shoreline at Z −3.5 falls from 10.5 m to 7.875 m, exactly 25%. His existing 1.3 model scale, geometry, bob and heel remain unchanged. This is a modest on-screen size gain, not the full size of Bo under camera A.
+- A darker damp-sand band follows the tide line. The existing wetness memory retains recent run-up. Fine sand grains are filtered by their screen footprint; larger grain/ripple variation adds texture without a flat beige fill.
+- Stronger foam coverage follows the actual thin swash front and uses the existing advection/decay map. It is not a fixed shoreline stripe. Moonlight provides restrained night-time sand and foam visibility.
+- All home/reset controls return to the adopted view. Full-screen playback preserves/restores it and keeps Bo visible in the checked hero frame. Scene projections, shader origin and water mesh coverage share the new camera position.
 
 ## Verification
 
@@ -47,20 +46,18 @@ The original proposal said to raise the camera to 1.7 m; the actual engine is al
 
 ## Remaining limitations
 
-- The horizon seam is fixed: grazing-angle background sea rays stop sampling extreme coordinates beyond 2 km and blend continuously into horizon haze from 900 m. Dunes retain their foreground occlusion. Wave geometry, physics and the production camera are unchanged.
-- The artist-quality scene character, umbrella/chair shots and new camera framing remain separate, with Jacob's camera review required.
+- The horizon seam is fixed: grazing-angle background sea rays stop sampling extreme coordinates beyond 2 km and blend continuously into horizon haze from 900 m. Dunes retain their foreground occlusion. Wave geometry and propagation remain unchanged; the approved camera is now adopted.
+- The artist-quality scene character and umbrella/chair shots remain separate. Camera B is now approved and adopted.
 - A forecast can still fail or omit optional values. Saved forecasts and labelled samples remain; missing values must not become invented observations.
 - No official beach flag/rip-current integration, Trip mode, push alerts or any-location expansion is included in v47.
 
 The deployed source remains self-contained index.html. v46's legacy panel functions remain in the bundle but are unused. This handoff is current; OVERNIGHT-HANDOFF.md records older history.
 
-## Current camera review (supersedes the earlier three-camera comparison)
+## Follow-up verification
 
-Jacob requested a wider lens, 3° downward pitch, a setback from the water, a horizon near one third of the full phone scene and a narrow sand band above the panel. Two standalone preview files and side-by-side screenshots are prepared, not committed or published as the app camera:
+- Day/night phone renders at 390×844, matched to the same captured live forecast used for camera review; these screenshots do not claim a fresh weather fetch.
+- Several swash phases checked for advancing/retreating foam. Camera reset, playback pause/chrome hiding/restoration, and all four panel selections checked.
+- Final shader and JavaScript checks passed with zero errors. An initial sand-texture derivative error was caught and fixed by passing the pixel footprint from the fragment shader instead of declaring derivatives in the shared vertex block.
+- No physical iPhone performance measurement. The rendering tests use software WebGL.
 
-- A: camera world height 2.5 m; 2 m farther back than v47 (world Z 10).
-- B: camera world height 3.5 m; 7 m farther back than v47 (world Z 15).
-- Both: zoom 0.84 (approximately 15% wider vertical field of view), pitch −3°, horizon near Y 281 on a 390 × 844 phone. Compact header spacing keeps the verdict clear of Bo. Different setbacks keep the sand band near 15% of the exposed area above the panel; shoreline and waves remain at their original physical positions.
-- Comparison uses the same captured live forecast at noon and 10 PM. Rough and storm conditions were separately simulated for rendering checks. No JavaScript/shader errors. The before/after seam check found the black row in v47 and no corresponding dark row after the fix.
-
-Await Jacob's camera choice before adopting either preview. Current app camera and header remain v47.
+Previous camera48/camera49 previews are historical review artifacts; this handoff and the committed index are authoritative.

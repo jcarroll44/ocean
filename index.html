@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Camera/shoreline adoption: 10m, -11deg, wide lens; closer buoy; wet sand, swash rim, filtered dry-sand detail. -->
 <!-- v46: BoBuoy design system, 2026-09-23. Built from published v45.
 Four tabs: Today, Water, Sun, Tonight. Frosted peek/expanded panels, native system UI,
 rounded 300/500 display type with bundled Nunito, ink/amber/sea/mist/shell tokens.
@@ -1064,6 +1065,13 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
 #app .v47-sun-hero h1.v47-no-threshold{font-size:28px;white-space:normal}
 #app .v47-subtabs button{border-radius:999px}
 
+
+/* Elevated beach camera: compact header clears horizon and buoy. */
+@media(max-width:1023px){
+ #app .headline{margin-top:8px;width:100%;max-width:none;flex-basis:100%;order:3}
+ #app .air-peek{position:absolute;top:calc(65px + env(safe-area-inset-top));right:20px;margin:0;gap:4px;font-size:12px}
+ #app .air-peek .air-value{font-size:17px}
+}
 </style>
 </head>
 <body>
@@ -56903,7 +56911,7 @@ var __e = __mods['buoy.js'] = {};
 // and a head-high swell lifts it out of frame. Nothing about it is decorative
 // only — if it is riding high, that is what the water is doing.
 const THREE = __mods['three.module.js'];
-const BUOY_DISTANCE=14;          // metres offshore, on the view centreline
+const BUOY_DISTANCE=11.375;      // world -Z: 25% nearer the mean shoreline at Z=-3.5; original model scale
 
 // The scene's own light and grade, so Bo sits in the water rather than on it.
 const COMMON=`
@@ -57226,28 +57234,39 @@ vec3 duneColor(vec3 p,vec3 rd){
  float warm=(1.0-smoothstep(.04,.36,sunDir().y))*smoothstep(-.08,.08,sunDir().y);
  vec3 c=mix(sandC,oats,scrub)*light*(.022+.80*day)*mix(vec3(1),vec3(1.12,.86,.68),warm*.6);
  c+=vec3(.010,.014,.022)*uMoonInfo.z*(1.0-day);
- float dist=length(p-vec3(0,4.5,8));
+ float dist=length(p-vec3(0,10.0,26.0));
  return mix(c,sky(normalize(vec3(rd.x,.01,rd.z)),false),1.0-exp(-dist*.00045));
 }
-float duneMask(vec3 rd){vec3 h;return duneHit(vec3(0,4.5,8),rd,h)?1.0:0.0;}
+float duneMask(vec3 rd){vec3 h;return duneHit(vec3(0,10.0,26.0),rd,h)?1.0:0.0;}
 vec3 finish(vec3 c){c=max(c,vec3(.0))*.88*uExposure;c=clamp((c*(2.51*c+.03))/(c*(2.43*c+.59)+.14),0.0,1.0);
  float l=dot(c,vec3(.2126,.7152,.0722));c=clamp(mix(vec3(l),c,1.14),0.0,1.0);         // richer colour, less milky
  c=mix(c,c*c*(3.0-2.0*c),.16);                                                  // gentle contrast
  return pow(c,vec3(1.0/2.2));}
-vec3 sand(vec2 p,vec3 rd,float wet){
+vec3 sand(vec2 p,vec3 rd,float wet,vec2 pixelFootprint){
  vec2 uv=(p-uFoamOrigin)/vec2(140,70);
  float inside=step(.0,uv.x)*step(uv.x,1.0)*step(.0,uv.y)*step(uv.y,1.0);
- wet=max(wet,texture(uShoreMemory,clamp(uv,.001,.999)).g*inside);
- float grain=noise(p*75.0)*.045+noise(p*13.0)*.035;
- float ridges=sin(p.y*10.0+noise(p*.8)*2.0)*.018;
- vec3 dry=vec3(.81,.75,.62)*(1.0+grain+ridges);
- vec3 moist=vec3(.42,.40,.33)*(1.0+grain*.6+ridges);
+ // Tide-relative damp strand; recent run-up can extend it, then drains.
+ // Coarse world-space variation keeps its edge natural from a high camera.
+ float offset=p.y-shore(p.x);
+ float wetReach=2.6+min(1.7,uSwell*.85)+(noise(vec2(p.x*.24,18.7))-.5)*.7;
+ float damp=(1.0-smoothstep(wetReach-.55,wetReach+.65,offset))*.90;
+ wet=clamp(max(max(wet,damp),texture(uShoreMemory,clamp(uv,.001,.999)).g*inside),0.0,1.0);
+ // Filter fine grains by their pixel footprint: texture without distant shimmer.
+ float footprint=length(pixelFootprint);
+ float grain=(noise(p*75.0)-.5)*.085*(1.0-smoothstep(.008,.035,footprint));
+ grain+=(noise(p*7.0)-.5)*.070*(1.0-smoothstep(.10,.40,footprint));
+ float mottling=(fbm(p*.58)-.5)*.12;
+ float ridgePhase=p.y*8.0+p.x*.7+noise(p*.65)*3.0;
+ float ridges=sin(ridgePhase)*.020*(1.0-smoothstep(.7,2.2,footprint*9.0));
+ vec3 dry=vec3(.81,.75,.62)*(1.0+grain+mottling+ridges);
+ vec3 moist=vec3(.32,.32,.28)*(1.0+grain*.4+mottling*.5+ridges*.3);
  float day=daylight(),warm=(1.0-smoothstep(.04,.36,sunDir().y))*smoothstep(-.08,.08,sunDir().y);
- vec3 c=mix(dry,moist,wet)*mix(vec3(1),vec3(1.10,.87,.70),warm*.6)*(.025+.78*day);
+ float nightFill=.018+.042*uMoonInfo.z*(1.0-uCloud*.75);
+ vec3 c=mix(dry,moist,wet)*mix(vec3(1),vec3(1.10,.87,.70),warm*.6)*mix(nightFill,.805,day);
  vec3 n=normalize(vec3(.008*sin(p.x*8.0),1.0,-.105));vec3 r=reflect(rd,n);r.y=abs(r.y);
  float f=pow(1.0-max(dot(-rd,n),0.0),5.0);
  float glint=pow(max(dot(normalize(r),sunDir()),0.0),650.0)*day*(1.0-uCloud)*wet;
- return mix(c,sky(normalize(r),false),wet*(.05+f*.52))+vec3(1.0,.92,.78)*glint*.5;
+ return mix(c,sky(normalize(r),false),wet*(.025+f*.27))+vec3(1.0,.92,.78)*glint*.5;
 }
 `;
 
@@ -57458,7 +57477,7 @@ const backgroundFragment = environment+waves+waterLight+`
 varying vec2 vUv;
 void main(){
  vec2 uv=vUv*2.0-1.0;uv.x*=uResolution.x/uResolution.y;
- vec3 ro=vec3(0,4.5,8);vec3 l=normalize(vec3(uv.x*.59/uZoom,(uv.y*.59-uShear)/uZoom,-1));
+ vec3 ro=vec3(0,10.0,26.0);vec3 l=normalize(vec3(uv.x*.59/uZoom,(uv.y*.59-uShear)/uZoom,-1));
  // Camera pitch (about the camera's right axis), then yaw about +Y
  // (positive turns right, toward +X). Matches the THREE camera exactly.
  float cp=cos(uPitch),sp=sin(uPitch);l=vec3(l.x,l.y*cp-l.z*sp,l.y*sp+l.z*cp);
@@ -57481,7 +57500,7 @@ void main(){
   vec3 sp=ro+rd*sandT;
   if(dune&&(sandT<.0||sp.z>duneFace(sp.x))){c=duneColor(duneP,rd);}
   else if(bed(sp.xz)>uTide && sandT>.0){
-   float wet=(1.0-smoothstep(.2,2.1,sp.z-shore(sp.x)))*.62;c=sand(sp.xz,rd,wet);
+   float wet=(1.0-smoothstep(.2,2.1,sp.z-shore(sp.x)))*.62;c=sand(sp.xz,rd,wet,fwidth(sp.xz));
   }else{
    vec2 swellSlope=vec2(.02*cos(p.x*.8+p.z*.22-uTime),.025*sin(p.z*.7+p.x*.37-uTime*1.2));
    vec2 slope=micro(p.xz,t)+swellSlope*exp(-t*.026);
@@ -57586,10 +57605,15 @@ void main(){
   float sharedFroth=max(smoothstep(.07,.92,density)*lace,sharedFoam*(.55+.45*lace));
   froth=mix(froth,sharedFroth,incomingMix());
  }
- float washEdge=(1.0-smoothstep(.007,.055,depth))*smoothstep(.0,.008,depth);
- froth=max(froth,washEdge*lace*.75);
+ // The leading rim follows actual swash depth, so it advances and retreats
+ // with each wave rather than becoming a painted stripe along the beach.
+ float edgePixel=max(.006,fwidth(depth));
+ float washEdge=(1.0-smoothstep(.024,.072+edgePixel,depth))*smoothstep(.001,.018,depth);
+ washEdge*=1.0-smoothstep(1.0,3.0,shore(vBase.x)-vBase.y);
+ froth=max(froth,washEdge*(.68+.32*lace)*.96);
  float day=daylight();
- vec3 foamColor=mix(vec3(.028,.045,.067),vec3(.76,.84,.80),day);
+ vec3 moonFoam=vec3(.035,.048,.063)+vec3(.075,.088,.105)*uMoonInfo.z*(1.0-uCloud*.75);
+ vec3 foamColor=mix(moonFoam,vec3(.76,.84,.80),day);
  float pockets=.72+.28*smoothstep(.22,.74,bubble);
  vec2 bump=vec2(dFdx(bubble),dFdy(bubble));
  pockets*=clamp(1.0+(bump.x-bump.y)*.8,.72,1.18);
@@ -57599,7 +57623,7 @@ void main(){
  float dist=length(cameraPosition-vWorld);
  c=mix(c,sky(normalize(vec3(-v.x,.003,-v.z)),false),seaHaze(dist));
  // Fade the far rows by distance along the view, whatever the pan.
- float ahead=dot(vBase-vec2(0,8),vec2(sin(uYaw),-cos(uYaw)));
+ float ahead=dot(vBase-vec2(0,26),vec2(sin(uYaw),-cos(uYaw)));
  float edge=1.0-smoothstep(173.0,228.0,ahead);
  float shoreline=smoothstep(.001,.020,depth);
  gl_FragColor=vec4(finish(c),edge*shoreline);
@@ -57649,7 +57673,7 @@ void main(){
  }
  float depth=displacement(p).y-bed(p);
  float thinEdge=(1.0-smoothstep(.012,.09,depth))*smoothstep(.001,.014,depth);
- float edgeLace=.40+.60*noise(p*3.4+vec2(uTime*.2,0));
+ float edgeLace=.68+.32*noise(p*3.4+vec2(uTime*.2,0));
  source=max(source,thinEdge*edgeLace*smoothstep(-.5,2.0,p.y-shore(p.x)));
  source*=smoothstep(.002,.045,depth);
  float decay=depth>.006?(.22+.25*noise(p*1.7)):1.8;
@@ -57775,9 +57799,9 @@ function createOcean(canvas,uniforms,onError){
  const camera=new THREE.PerspectiveCamera(61.08,1,.1,2500);
  // A sheared projection matches the established horizon while keeping the
  // camera level: no vertical perspective distortion on the shoreline.
- camera.position.set(0,4.5,8);camera.lookAt(0,4.5,-100);
+ camera.position.set(0,10,26);camera.lookAt(0,10,-100);
  const lens=()=>{camera.fov=2*Math.atan(.59/uniforms.uZoom.value)*180/Math.PI;camera.updateProjectionMatrix();camera.projectionMatrix.elements[9]=-uniforms.uShear.value/.59;camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();};
- const aim=(yaw,pitch=0)=>{const c=Math.cos(pitch);camera.position.set(0,4.5,8);camera.lookAt(108*Math.sin(yaw)*c,4.5+108*Math.sin(pitch),8-108*Math.cos(yaw)*c);camera.updateMatrixWorld();};
+ const aim=(yaw,pitch=0)=>{const c=Math.cos(pitch);camera.position.set(0,10,26);camera.lookAt(108*Math.sin(yaw)*c,10+108*Math.sin(pitch),26-108*Math.cos(yaw)*c);camera.updateMatrixWorld();};
  const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.ShaderMaterial({uniforms,vertexShader:quadVertex,fragmentShader:backgroundFragment,depthTest:false,depthWrite:false}));
  quad.frustumCulled=false;quad.renderOrder=-100;scene.add(quad);
  const mobile=window.innerWidth<700;
@@ -57805,11 +57829,11 @@ function createOcean(canvas,uniforms,onError){
    const calmZ=iz<=split?9-iz/split*64:-55-(iz-split)/(nz-split)*165;
    const roughZ=iz<=384?9-iz/384*89:-80-(iz-384)/(nz-384)*140;
    const z=calmZ+(roughZ-calmZ)*gridMix;
-   const width=8+Math.max(0,8-z)*.59/Math.min(1,uniforms.uZoom.value)*aspect*1.15;   // widens with a wide-angle lens
+   const width=8+Math.max(0,26-z)*.59/Math.min(1,uniforms.uZoom.value)*aspect*1.15;   // widens with a wide-angle lens
    // Rows are laid out in the camera frame, then turned with the view, so
    // the grid always covers the visible water. At zero yaw this is exact.
-   const lx=sx*width,f=8-z;
-   const i=(iz*(nx+1)+ix)*3;verts[i]=lx*cy+f*sy;verts[i+1]=0;verts[i+2]=8+lx*sy-f*cy;
+   const lx=sx*width,f=26-z;
+   const i=(iz*(nx+1)+ix)*3;verts[i]=lx*cy+f*sy;verts[i+1]=0;verts[i+2]=26+lx*sy-f*cy;
   }
  };
  fillVertices(window.innerWidth/window.innerHeight);
@@ -57838,7 +57862,7 @@ function createOcean(canvas,uniforms,onError){
   },
   // Screen position of a scene direction; null when behind the camera.
   project(dir){
-   const v=new THREE.Vector3(dir[0]*1000,dir[1]*1000+4.5,dir[2]*1000+8).project(camera);
+   const v=new THREE.Vector3(dir[0]*1000,dir[1]*1000+10,dir[2]*1000+26).project(camera);
    return v.z>1?null:{x:(v.x+1)/2,y:(1-v.y)/2};
   },
   resize(w,h,scale){sky.resize(scale);fillVertices(w/h,yaw);geo.attributes.position.needsUpdate=true;renderer.setPixelRatio(scale);renderer.setSize(w,h,false);camera.aspect=w/h;lens();},
@@ -60413,7 +60437,7 @@ const store={get(k,d){try{const v=localStorage.getItem('ocean.'+k);return v==nul
 const state={
  data:null,version:0,time:Date.now(),live:true,playing:false,
  tab:store.get('tab','today'),detent:'peek',waterFocus:'waves',
- view:{yaw:0,pitch:0,zoom:1,vy:0,vp:0,anim:null},
+ view:{yaw:0,pitch:-11*D2R,zoom:.84,vy:0,vp:0,anim:null},
  prefs:{skin:3,spf:0,refMinutes:15,session:30,figures:false,labels:true,quality:'auto',motion:!reduced,pose:'stand',humanHeight:175,bodyYaw:0,bodyOpen:innerWidth>=1024,units:{temp:'F',height:'ft',speed:'kt'},...store.get('prefs',{})},
  sim:null,dirty:true,lastPanelKey:'',headKey:'',headline:null,offline:false
 };
@@ -60523,7 +60547,7 @@ function applySky(){
 const V=state.view,YAW=100*D2R,PITCH=75*D2R;
 function fov(){const z=engine?uniforms.uZoom.value:1;const v=2*Math.atan(.59/z);return {v,h:2*Math.atan(Math.tan(v/2)*innerWidth/innerHeight)};}
 function setView(y,p,z=V.zoom){
- V.yaw=Math.max(-YAW,Math.min(YAW,y));V.pitch=Math.max(0,Math.min(PITCH,p));V.zoom=Math.max((state.lapse||V.anim?.from.length===3) ? .55 : 1,Math.min(6,z));
+ V.yaw=Math.max(-YAW,Math.min(YAW,y));V.pitch=Math.max(-11*D2R,Math.min(PITCH,p));V.zoom=Math.max((state.lapse||V.anim?.from.length===3) ? .55 : .84,Math.min(6,z));
  if(engine){engine.setView(V.yaw,V.pitch);engine.setZoom(V.zoom);}
 }
 function lookAt(azimuth,altitude){
@@ -60560,7 +60584,7 @@ function stepView(dt){
   const k={ArrowLeft:[-s,0],ArrowRight:[s,0],ArrowUp:[0,s],ArrowDown:[0,-s]}[e.key];
   if(k){e.preventDefault();V.anim=null;setView(V.yaw+k[0],V.pitch+k[1]);}
   if(e.key==='+'||e.key==='=')setView(V.yaw,V.pitch,V.zoom*1.25);if(e.key==='-')setView(V.yaw,V.pitch,V.zoom/1.25);
-  if(e.key==='0'){V.anim={from:[V.yaw,V.pitch],to:[0,0],t:0};setView(V.yaw,V.pitch,1);}
+  if(e.key==='0'){V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};}
  });
 })();
 
@@ -60622,7 +60646,7 @@ for(const [id,kind] of [['sun-arc','panel'],['scene-time-handle','scene']]){
  const el=$('#'+id);el.addEventListener('pointerdown',e=>dragTime(e,kind));el.addEventListener('pointermove',moveTime);el.addEventListener('pointerup',endTime);el.addEventListener('pointercancel',()=>{arcDrag=null;cancelTimeInertia();delete $('#app').dataset.timeDrag;});
  el.addEventListener('keydown',e=>{if(['ArrowRight','ArrowUp','ArrowLeft','ArrowDown','Home','End'].includes(e.key)){e.preventDefault();stopLapse();cancelTimeInertia();const r=dayRange();setTime(e.key==='Home'?r.start:e.key==='End'?r.end:state.time+(e.key==='ArrowRight'||e.key==='ArrowUp'?1:-1)*(e.shiftKey?60:15)*MIN);}});
 }
-function returnNow(){stopLapse();cancelTimeInertia();setTime(Date.now(),{live:true});V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,0,1],t:0};}
+function returnNow(){stopLapse();cancelTimeInertia();setTime(Date.now(),{live:true});V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};}
 $('#now-btn').onclick=returnNow;$('#lapse-btn').onclick=()=>{cancelTimeInertia();startLapse('day');};
 $('#days').addEventListener('click',e=>{const b=e.target.closest('[data-dayselect]');if(!b)return;stopLapse();cancelTimeInertia();const d=+b.dataset.dayselect,tod=state.time-localDayStart(state.time);setTime(d+tod);});
 $('#peek-metrics').addEventListener('click',e=>{const b=e.target.closest('[data-tab]');if(b)selectTab(b.dataset.tab);});
@@ -60788,8 +60812,10 @@ function frameHorizon(dt){
  if(!engine)return;
  let target=.13;
  if(!isDesktop()&&!state.lapse){
-  const top=$('#sheet').getBoundingClientRect().top,v=Math.max(.08,Math.min(1,top/innerHeight));
-  target=Math.max(.13,Math.min(.5,(1-.9*v)*.59));
+  const top=$('#sheet').getBoundingClientRect().top;
+  // Approved elevated camera: top quarter of full scene, below the headline.
+  const horizon=Math.min(innerHeight*.24,top*.55);
+  target=(1-2*horizon/innerHeight)*.59+Math.tan(-11*D2R)*.84;
  }
  shear+=(target-shear)*Math.min(1,dt*6);engine.setShear(shear);
 }
@@ -61009,7 +61035,7 @@ function overlays(){
 }
 $('#edges').addEventListener('click',e=>{const k=e.target.closest('[data-chip]')?.dataset.chip;if(!k)return;
  const s=skyAt(state.time);if(k==='sun'){const p=s.sun;lookAt(p.azimuth,Math.max(0,p.altitude));}if(k==='moon')lookAt(s.moon.azimuth,s.moon.altitude);});
-$('#heading').addEventListener('click',e=>{if(e.target.closest('[data-reset]')){V.anim={from:[V.yaw,V.pitch],to:[0,0],t:0};setView(V.yaw,V.pitch,1);}});
+$('#heading').addEventListener('click',e=>{if(e.target.closest('[data-reset]')){V.anim={from:[V.yaw,V.pitch,V.zoom],to:[0,-11*D2R,.84],t:0};}});
 
 // ---------------------------------------------------------------- header & clock
 function updateHeader(){
@@ -61150,7 +61176,7 @@ function frame(now){
 // Open on the last saved forecast when there is one (instant, works offline),
 // otherwise on a provisional sample that is never shown as data.
 window.__startup.stage('Preparing forecast controls');
-resize();setDetent('peek');selectTab(state.tab,{open:false});
+resize();setView(0,-11*D2R,.84);setDetent('peek');selectTab(state.tab,{open:false});
 const saved=savedForecast();
 if(saved)adopt(saved);
 else{const s=finalize(sampleForecast(Date.now()));s.provisional=true;adopt(s);}
