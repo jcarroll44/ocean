@@ -733,6 +733,39 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
 #startup-help p{overflow-wrap:anywhere;font-size:13px}
 #startup-help button{display:block;min-height:44px;padding:10px 14px;margin-top:10px;border-radius:10px;background:#356d66;color:white;width:100%;font-weight:600}
 #startup-help small{display:block;margin-top:12px;color:#52686a}
+
+/* v43: compact controls and clear information hierarchy. */
+.lapse{width:230px;max-width:calc(100vw - 32px);grid-template-columns:minmax(0,1fr) auto;padding:12px 14px}
+.lapse .lt{white-space:nowrap;font-size:22px;letter-spacing:-.025em}
+.lapse .lu{white-space:nowrap;font-size:14px}
+.lapse .lsub{font-size:12px}
+.source-notice{padding:12px 14px;background:var(--raise2);border-radius:12px;font-size:13px;line-height:1.5}
+.night-sun{padding:20px 0}.night-sun h2{font-size:24px;line-height:1.2;margin:8px 0 12px;letter-spacing:-.03em}
+.night-sun .eyebrow{font-size:12px;color:var(--muted)}
+.night-sun .action{margin-top:16px}
+.panel details.report{border-top:1px solid var(--line);padding:0}
+.panel details.report>summary{padding:16px 0;font-size:15px;font-weight:600;cursor:pointer}
+.panel details.report>.block{padding-top:0;border:0}
+@media(max-width:1023px){
+ .sheet{--sheet-peek:208px}
+ .grabber{height:16px}
+ .dock{padding:0 16px 4px}
+ .clockrow{margin-bottom:3px;align-items:center}
+ .clock .time{font-size:23px;line-height:1.1}
+ .clock .day{font-size:11px;line-height:1.3}
+ .clock-actions .iconbtn{width:40px;height:40px}
+ .dayrow{margin-bottom:0;gap:4px}
+ .chipbtn{padding:5px 10px;min-height:32px;font-size:12px}
+ .timeline{height:35px}
+ .tl-days{top:23px;font-size:11px}
+ .tabs{padding:3px 8px 5px;gap:4px}
+ .tabs button{min-height:44px;padding:4px 0;font-size:11px}
+ .tabs svg{width:18px;height:18px}
+ .panel{padding:8px 18px calc(24px + env(safe-area-inset-bottom))}
+ .sheet[data-detent=half]{height:58svh;min-height:340px;max-height:86svh}
+ .headline{font-size:14px;line-height:1.4}
+ .buoytag{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -815,7 +848,7 @@ details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
  <pre id="perf" class="perf" hidden></pre>
  <div id="loading" class="loading" aria-hidden="true"><span class="wordmark">Ocean App</span></div>
- <span class="build" aria-hidden="true">v42.1</span>
+ <span class="build" aria-hidden="true">v43</span>
 </div>
 <script>
 // Runs separately so even a syntax/startup failure in the main bundle is visible.
@@ -59709,6 +59742,13 @@ function water(ctx){
 
 // ---------------------------------------------------------------- UV
 function uv(ctx){
+ if(ctx.vm.sun.altitude<0){
+  const {data,vm}=ctx,day0=sunDay(vm.t);
+  const next=vm.t<(day0.sunrise??vm.dayStart+6*HOUR)?vm.dayStart:vm.dayStart+24*HOUR;
+  const d=uvFor(data,next+12*HOUR),label=localDayStart(vm.t)===next?'Today':'Tomorrow';
+  if(d.peak.time>data.last)return '<section class="night-sun"><h2>The sun is below the horizon</h2><p class="lead">The next daylight forecast is not available yet.</p></section>';
+  return `<section class="night-sun"><span class="eyebrow">Sun below the horizon</span><h2>${label}’s peak UV: ${d.peak.uvi.toFixed(1)}</h2><p class="lead">${uvCategory(d.peak.uvi).label} at ${clock(d.peak.time)}.</p><p class="muted small">Plan your daylight hours and see where the sun will land.</p><button class="action" data-jump="${d.peak.time}">Explore ${label.toLowerCase()}’s sunlight →</button></section>${section('Daylight UV',uvChart(d,{selected:d.peak.time}))}`;
+ }
  const {data,vm,prefs}=ctx,day=uvFor(data,vm.t),u=day.at(vm.t),cat=uvCategory(u);
  const J=burnThreshold(prefs.skin,prefs.spf),mins=u>=.5?day.minutesTo(vm.t,J):null;
  const pw=day.windows.protect;
@@ -60165,7 +60205,13 @@ function renderPanel(force=false){
  state.lastPanelKey=key;
  const el=$('#panel'),top=el.scrollTop;
  const open=[...el.querySelectorAll('details[open]')].map(d=>d.querySelector('summary')?.textContent);
- el.innerHTML=PANELS[state.tab](panelContext())+`<p class="source">${esc(sourceLine(state.data))}</p>`;
+ el.innerHTML=(state.data.source==='sample'?'<p class="source-notice">Sample conditions — live forecast unavailable. These values are for demonstration.</p>':state.offline?'<p class="source-notice">Connection unavailable. Showing the last saved forecast.</p>':'')+PANELS[state.tab](panelContext())+`<p class="source">${esc(sourceLine(state.data))}</p>`;
+ const fold=state.tab==='water'?['Wind','Water','Tide','Next two days','Weather']:state.tab==='uv'?['Your skin','Plan a session']:[];
+ for(const block of [...el.querySelectorAll(':scope > .block')]){
+  const h=block.querySelector('h3');if(!h||!fold.includes(h.textContent))continue;
+  const detail=document.createElement('details');detail.className='report';
+  const summary=document.createElement('summary');summary.textContent=h.textContent;detail.appendChild(summary);h.remove();block.replaceWith(detail);detail.appendChild(block);
+ }
  for(const d of el.querySelectorAll('details'))if(open.includes(d.querySelector('summary')?.textContent))d.open=true;
  el.scrollTop=top;
  mountFigure();wantSunsetShot();
@@ -60327,12 +60373,14 @@ function stepLapse(now,dt){
   const ramp=Math.min(1,f*6,(1-f)*6),up=ramp*ramp*(3-2*ramp),z=1-.4*up;
   setView(V.yaw+(0-V.yaw)*k,V.pitch+(up*30*D2R-V.pitch)*k,V.zoom+(z-V.zoom)*k);
  }else{
-  const target=Math.max(-YAW,Math.min(YAW,wrap180(sun.azimuth-SITE.facing)*D2R));
-  const fr=L.kind==='day'?frameSun(sun.altitude):{zoom:1,pitch:0};
+  // Hero playback: real light moves; the camera stays with the sea and buoy.
+  const span=Math.min(10*D2R,fov().h*.15);
+  const target=Math.max(-span,Math.min(span,wrap180(sun.azimuth-SITE.facing)*D2R));
+  const fr=L.kind==='day'?{zoom:.85,pitch:Math.min(5,Math.max(0,sun.altitude)*.07)*D2R}:{zoom:1,pitch:0};
   setView(V.yaw+(target-V.yaw)*k,V.pitch+(fr.pitch-V.pitch)*k,V.zoom+(fr.zoom-V.zoom)*k);
  }
  if(!L.labelAt||now-L.labelAt>=100||f>=1){
- L.labelAt=now;
+ L.labelAt=now;L.displayTime=state.time;updateHeader();
  const c=conditionsAt(state.time),u=state.data?uvFor(state.data,state.time).at(state.time):0;
  const right=L.kind==='day'?`<span class="lu" style="color:${uvColor(u)}">UV ${u.toFixed(1)}</span>`
   :L.kind==='night'?`<span class="lu">${Math.round(skyAt(state.time).ph.fraction*100)}% moon</span>`:`<span class="lu">${Math.round(c?.cloud??0)}% cloud</span>`;
@@ -60474,6 +60522,9 @@ function overlays(){
    tag.style.top=`${((1-v.y)/2*100).toFixed(2)}%`;
    const txt=`${height(c.swell)} ${hUnit()} · ${bodyLevel(c.swell,state.prefs.humanHeight)}`;
    if(tag.textContent!==txt)tag.textContent=txt;
+   const r=tag.getBoundingClientRect(),h=$('.top').getBoundingClientRect(),p=$('#sheet').getBoundingClientRect();
+   const hit=a=>r.left<a.right&&r.right>a.left&&r.top<a.bottom+10&&r.bottom>a.top-10;
+   tag.hidden=r.top<12||r.left<8||r.right>innerWidth-8||hit(h)||hit(p);
   }
  }
  // Sky labels.
@@ -60494,7 +60545,8 @@ $('#heading').addEventListener('click',e=>{if(e.target.closest('[data-reset]')){
 // ---------------------------------------------------------------- header & clock
 function updateHeader(){
  const d=state.data;
- $('#clock-time').textContent=clock(state.time);
+ const displayTime=state.lapse?.displayTime??state.time;
+ $('#clock-time').textContent=clock(displayTime);
  $('#clock-day').textContent=state.live?`${dayName(state.time)} · Now`:`${dayName(state.time)} · ${relative(state.time)}`;
  $('#now-btn').hidden=state.live;
  const st=$('#status');
