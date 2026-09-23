@@ -1,20 +1,18 @@
 <!doctype html>
 <html lang="en">
 <head>
-<!-- v42.1: phone startup error capture and 15-second watchdog; lighter-graphics retry.
-Phone-only startup failure reported; exact cause is not yet known.
-v42 handoff: Ocean App is a temporary label; BO rejected as app name.
-Changes: readable glass and labels; two-column glance cards; figure camera state preserved;
-shared body-height labels; full tide offset for buoy; playback UI throttled, details held
-with explicit playback notice, stop control and eased lens return.
-Remaining: buoy bob is illustrative, not a sample of local water displacement;
-real iPhone FPS, hosted live feeds, and full source-repository integration need verification.
-Verification: Chromium software-WebGL phone screenshots reviewed; all five tabs opened;
-figure camera persistence, playback DOM stability, stop/completion, lens return and horizontal
-overflow at 375/390/430/1280 px checked with no JavaScript errors. Rendering was disabled after
-initial capture in the interaction run to isolate UI behavior; this is not an FPS benchmark.
-Elapsed-time camera return separately tested at sparse frames. JS syntax checked.
-Bundled modules retain their named boundaries below; Three.js and wave shader math unchanged.
+<!-- v45 overnight release, 2026-09-23.
+v43: compact phone controls, synchronized playback clocks, nighttime Sun summary,
+folded details and collision-aware buoy label; day/evening playback keeps Bo in view.
+v44: smoother adult proportions, swimwear/hair/features, shared sunlight,
+explicitly labelled dry-ground wave-height comparison; standing and lying poses retained.
+v45: wind-responsive fine ripples, filtered sun/moon highlights, calmer caustic contrast.
+Three isolated passes tested before publication. See OVERNIGHT-HANDOFF.md for evidence.
+Ocean App remains a working title. Bo is the buoy, not the app name.
+Actual iPhone Safari playback was demonstrated in the user's recording; precise FPS
+is still unmeasured. Browser checks here use software WebGL and sample data.
+Buoy bob remains illustrative and is not an exact sample of local wave displacement.
+Named module boundaries below are retained. No new beaches or UV model changes.
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -469,7 +467,7 @@ button.leadcard:hover{background:var(--raise3)}
 details.bodymap{margin-top:0}details.bodymap .figure-wrap{margin-top:6px}
 .postcard .shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .postcard.has-shot .sunsetsky{visibility:hidden}
-.postcard-tag{position:absolute;right:12px;bottom:12px;font-size:10.5px;font-weight:650;color:rgba(246,241,231,.8);text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.postcard-tag{position:absolute;right:12px;top:32px;bottom:auto;font-size:11px;font-weight:650;color:rgba(246,241,231,.8);text-shadow:0 1px 6px rgba(0,0,0,.5)}
 .postcard-score{z-index:1}.postcard-time,.postcard-tag{z-index:1}
 .bestview{margin:12px 0 0;font-size:16px}
 .skymap .pllabel{font-size:12px;font-weight:650}
@@ -56422,7 +56420,8 @@ vec2 lipDetailFlow(vec2 p){return p+vec2(sin(p.y*.7+uTime*.7)*.16,-uTime*.48);}
 // Explicit screen derivatives are passed in before any fold-local branch.
 // That keeps filtering valid even for pixel quads crossing the fold support.
 vec2 lipDetailMicro(vec2 p,float distanceToCamera,vec2 dx,vec2 dy){
- vec2 slope=vec2(0);float amp=.011+uWind*.0015;
+ // Calm water keeps long swell without the same noisy surface as strong wind.
+ vec2 slope=vec2(0);float amp=.0035+.0415*smoothstep(0.0,24.0,max(0.0,uWind));
  for(int i=0;i<4;i++){
   float fi=float(i),angle=fi*2.399+.3+uWindDirection;vec2 d=vec2(cos(angle),sin(angle));
   float k=2.7*pow(1.76,fi),fade=exp(-distanceToCamera*k*.0045);
@@ -57131,14 +57130,17 @@ vec3 shadeWater(vec3 p,vec3 n,vec3 v,float depth,float thickness){
  float filament=1.0-smoothstep(.025,.10+footprint*.35,network);
  float crossing=abs(sin(cp.x*.73-cp.y*.61+uTime*.29));
  float caustic=filament*(.20+.80*pow(1.0-crossing,2.0));
- caustic*=1.0-smoothstep(.20,.90,footprint);
+ caustic*=(1.0-smoothstep(.20,.90,footprint))*(1.0-.75*smoothstep(5.0,24.0,uWind));
  float sunlight=smoothstep(.015,.22,sun.y)*(1.0-uCloud*.95)*exp(-uRain*.08);
  under+=vec3(.24,.32,.23)*caustic*sunlight*exp(-depth*.35)*(1.0-sediment*.65);
  water=under*transmission+water*(vec3(1.0)-transmission);
  water+=vec3(.008,.055,.042)*sunlight*(1.0-exp(-depth*.5));
  vec3 c=mix(water,reflected,min(.94,fresnel));
  vec3 h=normalize(sun+v);float nh=max(dot(n,h),.0),nl=max(dot(n,sun),.0);
- float rough=.085+uWind*.0024,a2=rough*rough,den=nh*nh*(a2-1.0)+1.0;
+ // Broaden subpixel highlights rather than letting them sparkle between pixels.
+ float normalVariance=min(.06,dot(dFdx(n),dFdx(n))+dot(dFdy(n),dFdy(n)));
+ float rough=clamp(.07+max(0.0,uWind)*.0028,.07,.24);
+ float a2=min(.16,rough*rough+normalVariance*.35),den=nh*nh*(a2-1.0)+1.0;
  float D=a2/(PI*den*den+.00001),k=rough*.5;
  float G=nv/(nv*(1.0-k)+k)*nl/(nl*(1.0-k)+k);
  float F=.024+.976*pow(1.0-max(dot(v,h),.0),5.0);
@@ -57149,7 +57151,7 @@ vec3 shadeWater(vec3 p,vec3 n,vec3 v,float depth,float thickness){
  vec3 moon=normalize(uMoon);
  if(uMoonInfo.z>.001&&moon.y>.0){
   vec3 mh=normalize(moon+v);float mnh=max(dot(n,mh),.0),mnl=max(dot(n,moon),.0);
-  float mr=.13+uWind*.003,ma2=mr*mr,mden=mnh*mnh*(ma2-1.0)+1.0;
+  float mr=clamp(.13+max(0.0,uWind)*.003,.13,.3),ma2=min(.18,mr*mr+normalVariance*.35),mden=mnh*mnh*(ma2-1.0)+1.0;
   float mD=ma2/(PI*mden*mden+.00001);
   float mspec=min(7.0,mD*.25/(nv*max(mnl,.02)+.01))*mnl;
   c+=vec3(.80,.86,.97)*mspec*uMoonInfo.z*.20*(1.0-uCloud*.9)*(1.0-day);
