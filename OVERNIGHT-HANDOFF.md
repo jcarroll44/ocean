@@ -1,7 +1,7 @@
 # Ocean App — overnight handoff, 23 September 2026
 
 Live app: https://jcarroll44.github.io/ocean/
-Repository: jcarroll44/ocean, main. Final app commit: ce10e6e38baa967a6f32cffc0332f84b6c29a833 (v45).
+Repository: jcarroll44/ocean, main. Final app commit: 4d870167d4c8f01d15863fb38fe4428e98e3d24c (v45; release-label correction only after the tested functionality commit).
 
 ## What shipped
 
@@ -15,7 +15,7 @@ Repository: jcarroll44/ocean, main. Final app commit: ce10e6e38baa967a6f32cffc03
 
 ## Verification
 
-Each working delivery was tested before its app commit. v43 and v44 were subsequently fetched from GitHub Pages and matched their tested files byte-for-byte. Final hosted verification is recorded in the release summary.
+Each working delivery was tested before its app commit. v43 and v44 were subsequently fetched from GitHub Pages and matched their tested files byte-for-byte. The v45 functionality commit also matched its deployed file byte-for-byte; the final label-only correction was separately verified.
 
 - Chromium with software WebGL, 390 × 844 phone viewport; additional overflow checks at widths 375, 430 and 1280.
 - All five tabs; midnight Sun correctly chooses today's peak and hides the empty study.
