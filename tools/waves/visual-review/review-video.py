@@ -25,11 +25,12 @@ while True:
 assert decoder.wait()==0 and count==total,(count,total)
 largest=sorted(deltas,reverse=True)[:12]
 (out/'temporal.json').write_text(json.dumps({'decodedFrames':count,'durationSeconds':count/fps,'segmentStarts':cuts,'largestFrameMeanPixelChanges':[{'frame':i,'timeSeconds':i/fps,'meanChangeOutOf255':d} for d,i in largest],'note':'Segment cuts excluded. Statistics flag candidates; manual frame review is required.'},indent=2))
-subprocess.run(['ffmpeg','-v','error','-y','-i',str(video),'-vf','fps=2,scale=480:-1',str(out/'sample-%03d.jpg')],check=True)
+sample_step=round(fps/2)
+subprocess.run(['ffmpeg','-v','error','-y','-i',str(video),'-vf',f"select='not(mod(n,{sample_step}))',scale=480:-1",'-fps_mode','vfr',str(out/'sample-%03d.jpg')],check=True)
 images=sorted(out.glob('sample-*.jpg'));font=ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',15)
 for page in range((len(images)+17)//18):
- selected=images[page*18:(page+1)*18];sheet=Image.new('RGB',(480*3,(266+25)*6),'#15353d');draw=ImageDraw.Draw(sheet)
+ selected=images[page*18:(page+1)*18];sheet=Image.new('RGB',(480*3,(266+25)*((len(selected)+2)//3)),'#15353d');draw=ImageDraw.Draw(sheet)
  for j,path in enumerate(selected):
-  im=Image.open(path);x=(j%3)*480;y=(j//3)*291;sheet.paste(im,(x,y+25));draw.text((x+8,y+3),f'{(page*18+j)*.5:.1f} s',font=font,fill='white')
+  im=Image.open(path);x=(j%3)*480;y=(j//3)*291;sheet.paste(im,(x,y+25));draw.text((x+8,y+3),f'{(page*18+j)*sample_step/fps:.1f} s',font=font,fill='white')
  sheet.save(out/f'contact-{page+1}.jpg',quality=94)
 print(json.dumps({'decodedFrames':count,'seconds':count/fps,'largestChanges':largest[:6],'reviewFolder':str(out)}))

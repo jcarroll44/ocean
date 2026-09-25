@@ -44,8 +44,9 @@ def main():
  times=list(map(float,a.times.split(',')))
  for i,t in enumerate(times):
   fbo.clear(0,0,0,1)
+  cycle=9.5*math.sqrt(a.height/4);event=math.floor(t/cycle);local_time=t-event*cycle
   for p in ps.values():
-   for k,v in [('uRigTime',t),('uTime',30+t),('uPhase',5+t/6)]:
+   for k,v in [('uRigTime',local_time),('uRigEvent',vals['uRigEvent']+event),('uTime',30+t),('uPhase',5+t/6)]:
     if k in p:p[k].value=v
   ctx.disable(moderngl.DEPTH_TEST);qvao.render();ctx.enable(moderngl.DEPTH_TEST|moderngl.BLEND);ctx.blend_func=moderngl.SRC_ALPHA,moderngl.ONE_MINUS_SRC_ALPHA;vao.render();fbo.depth_mask=False;ctx.disable(moderngl.DEPTH_TEST);volumevao.render();ctx.enable(moderngl.DEPTH_TEST);sprayvao.render(moderngl.POINTS);fbo.depth_mask=True;ctx.disable(moderngl.BLEND)
   im=Image.frombytes('RGB',(a.width,a.size_y),fbo.read(components=3)).transpose(Image.Transpose.FLIP_TOP_BOTTOM);im.save(out/f'{i:04d}.png')

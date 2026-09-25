@@ -1,10 +1,10 @@
 {
   "updatedAt": "2026-09-25",
-  "revision": 3,
-  "approach": "procedural near-shore closeout with translucent face, aerated roller, ballistic spray and advancing/retreating wash",
+  "revision": 4,
+  "approach": "procedural shorebreak with a sustained forward throw and falling curtain before impact, staggered closeout sections and continuing backwash",
   "bakePathRetiredForThisPass": true,
   "preview": "review/breaking-wave/index.html",
-  "waterMeshTriangles": 202048,
+  "waterMeshTriangles": 253216,
   "spraySeeds": 140000,
   "foamVolumeMaxSteps": 128,
   "productionHomepageChanged": false,
@@ -25,20 +25,22 @@
     "sections"
   ],
   "visualSequence": [
-    "swell",
-    "standing face",
-    "pitching lip",
-    "impact and spray",
-    "raised whitewater",
-    "runup",
-    "lace and backwash"
+    "approaching swell and previous backwash",
+    "curved standing face",
+    "feathering crest",
+    "forward throw",
+    "falling aerated curtain",
+    "impact and sharp spray",
+    "tumbling whitewater",
+    "thin lacy wash",
+    "reflective wet sand and retreat into next approach"
   ],
   "validation": {
     "javascriptParsed": true,
     "actualShaderProgramsCompiledAndRenderedInMesaEGL": true,
     "standingHeightMeasuredFromActualVertexShader": true,
     "controlContractTestsPassed": true,
-    "geometryParameterCombinationsChecked": 336,
+    "geometryParameterCombinationsChecked": 480,
     "referenceClipHeightSettingsFt": [
       2,
       4,
@@ -52,14 +54,20 @@
     "browserWebGLStatus": "Unavailable in the connected browser (GL_VENDOR = Disabled)",
     "physicalIPhoneTested": false,
     "userVisualAccepted": false,
-    "photorealisticReferenceMatchClaimed": false
+    "photorealisticReferenceMatchClaimed": false,
+    "lipThrowAndFallMeasuredFromActualVertexShader": true,
+    "closeoutTimingSpreadSeconds": 0.46007928252220154,
+    "backwashLoopContinuityError": 0.0,
+    "cycleBoundaryFrameMeanChangeOutOf255": 1.033881,
+    "ordinaryFollowingFrameMeanChangeOutOf255": 0.999258,
+    "cycleFrameSampleIntervalSeconds": 0.01
   },
   "limitations": [
     "Authored visual model, not a calibrated nearshore forecast or fluid simulation",
-    "Foam and spray are still more stylized than the supplied AI reference",
+    "The curtain, foam and spray remain more regular and stylized than the supplied AI reference",
     "Preview camera changes do not change the production homepage's camera",
     "Browser animation/recording and physical iPhone frame rate remain unverified",
     "Native comparison clip uses actual app shaders but is not an in-browser recording",
-    "Single-wave events repeat with varied break patterns; interacting wave sets are not implemented"
+    "Adjacent approach/backwash overlap is authored choreography, not physically solved wave interaction"
   ]
 }

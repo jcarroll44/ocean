@@ -26,8 +26,8 @@
   const duration=9.5*Math.sqrt(height/4)*tuning.period/6;
   if(time>=duration){if(auto&&autoStep<2){autoStep++;setHeight([2,4,6][autoStep]);}else if(recording){playing=false;recording.stop();}else{time=0;event++;if(auto){autoStep=0;setHeight(2);}}}
   state.sim={swell:.5,period:6,direction:201,wind:4.34,windDirection:90,cloud:5,rain:0,visibility:24000,tide:0,clarity:85};lab.applyConditions(60);
-  rig.set(time,height,tuning.period,0,tuning.offset,event);u.uTime.value=30+time;u.uPhase.value=5+time/6;
-  const phase=time/Math.sqrt(height/4)*6/tuning.period,a=phase-3.2;$('phase').value=phase;status.textContent=a<-.4?'Swell':a<.25?'Standing up':a<.90?'Feathering & pitching':a<1.8?'Shorebreak':a<3.2?'Foam rushing up the beach':'Backwash';
+  rig.set(time,height,tuning.period,0,tuning.offset,event);const continuous=time+event*duration;u.uTime.value=30+continuous;u.uPhase.value=5+continuous/6;
+  const phase=time/Math.sqrt(height/4)*6/tuning.period,a=phase-4.2;$('phase').value=phase;status.textContent=a<-1.4?'Approach & backwash':a<-.1?'Standing up':a<.48?'Feathering':a<1.20?'Throwing & falling':a<2.1?'Impact':a<3.6?'Foam rushing up the beach':'Draining & next swell';
  };
  $('record').disabled=!window.MediaRecorder;
  engine.afterRender=()=>{if(!recording||!recordContext)return;const c=recordContext,w=recordCanvas.width,h=recordCanvas.height;c.drawImage(engine.renderer.domElement,0,0,w,h);const size=Math.max(18,w*.026);c.font='600 '+size+'px system-ui';const x=w*.04,y=h*.86,bw=w*.5,bh=size*2.5;c.fillStyle='rgba(246,249,244,.93)';c.fillRect(x,y,bw,bh);c.fillStyle='#16383d';c.fillText(height.toFixed(1)+' ft',x+size*.6,y+size*1.65);const left=x+size*5,right=x+bw-size;c.strokeStyle='#a8bcb7';c.lineWidth=4;c.beginPath();c.moveTo(left,y+bh*.5);c.lineTo(right,y+bh*.5);c.stroke();c.fillStyle='#126e71';c.beginPath();c.arc(left+(height-2)/4*(right-left),y+bh*.5,size*.3,0,Math.PI*2);c.fill();};

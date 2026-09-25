@@ -1,91 +1,118 @@
 {
   "date": "2026-09-25",
+  "revision": 4,
   "clipName": "shorebreak-2-4-6ft.mp4",
-  "sha256": "e05ab29c887a766b1ac54a11552d5d9a3201f8ee80e0d6110b9be048b3848adc",
-  "bytes": 6807258,
+  "sha256": "618d0b50f9f1d43e0331a80f083577ac95ab6f7d1d562f110e945bbea2ed0f27",
+  "bytes": 15125983,
   "capture": "native EGL rendering of actual app shader programs",
   "browserCapture": false,
   "iPhoneTested": false,
   "temporalReview": {
-    "decodedFrames": 837,
-    "durationSeconds": 27.9,
+    "decodedFrames": 1082,
+    "durationSeconds": 36.06666666666667,
     "segmentStarts": [
       0,
-      202,
-      487
+      261,
+      630
     ],
     "largestFrameMeanPixelChanges": [
       {
-        "frame": 661,
-        "timeSeconds": 22.033333333333335,
-        "meanChangeOutOf255": 6.37202962962963
+        "frame": 831,
+        "timeSeconds": 27.7,
+        "meanChangeOutOf255": 8.411888888888889
       },
       {
-        "frame": 662,
-        "timeSeconds": 22.066666666666666,
-        "meanChangeOutOf255": 6.296318518518518
+        "frame": 830,
+        "timeSeconds": 27.666666666666668,
+        "meanChangeOutOf255": 8.383007407407407
       },
       {
-        "frame": 660,
-        "timeSeconds": 22.0,
-        "meanChangeOutOf255": 6.239133333333333
+        "frame": 829,
+        "timeSeconds": 27.633333333333333,
+        "meanChangeOutOf255": 8.169718518518518
       },
       {
-        "frame": 658,
-        "timeSeconds": 21.933333333333334,
-        "meanChangeOutOf255": 6.147259259259259
+        "frame": 832,
+        "timeSeconds": 27.733333333333334,
+        "meanChangeOutOf255": 7.9206666666666665
       },
       {
-        "frame": 659,
-        "timeSeconds": 21.966666666666665,
-        "meanChangeOutOf255": 6.1419703703703705
+        "frame": 828,
+        "timeSeconds": 27.6,
+        "meanChangeOutOf255": 7.8398
       },
       {
-        "frame": 657,
-        "timeSeconds": 21.9,
-        "meanChangeOutOf255": 6.08202962962963
+        "frame": 827,
+        "timeSeconds": 27.566666666666666,
+        "meanChangeOutOf255": 7.7404370370370374
       },
       {
-        "frame": 663,
-        "timeSeconds": 22.1,
-        "meanChangeOutOf255": 6.024207407407407
+        "frame": 825,
+        "timeSeconds": 27.5,
+        "meanChangeOutOf255": 7.709651851851852
       },
       {
-        "frame": 656,
-        "timeSeconds": 21.866666666666667,
-        "meanChangeOutOf255": 5.923570370370371
+        "frame": 826,
+        "timeSeconds": 27.533333333333335,
+        "meanChangeOutOf255": 7.622022222222222
       },
       {
-        "frame": 655,
-        "timeSeconds": 21.833333333333332,
-        "meanChangeOutOf255": 5.848777777777777
+        "frame": 824,
+        "timeSeconds": 27.466666666666665,
+        "meanChangeOutOf255": 7.2492074074074075
       },
       {
-        "frame": 664,
-        "timeSeconds": 22.133333333333333,
-        "meanChangeOutOf255": 5.782629629629629
+        "frame": 823,
+        "timeSeconds": 27.433333333333334,
+        "meanChangeOutOf255": 7.115185185185185
       },
       {
-        "frame": 654,
-        "timeSeconds": 21.8,
-        "meanChangeOutOf255": 5.6924222222222225
+        "frame": 835,
+        "timeSeconds": 27.833333333333332,
+        "meanChangeOutOf255": 7.092466666666667
       },
       {
-        "frame": 653,
-        "timeSeconds": 21.766666666666666,
-        "meanChangeOutOf255": 5.635681481481481
+        "frame": 822,
+        "timeSeconds": 27.4,
+        "meanChangeOutOf255": 6.993511111111111
       }
     ],
     "note": "Segment cuts excluded. Statistics flag candidates; manual frame review is required."
   },
+  "visualReview": {
+    "referenceStagesCompared": [
+      "approach",
+      "standing face",
+      "feathering and throw",
+      "falling curtain",
+      "impact",
+      "wash"
+    ],
+    "portraitSizesChecked": [
+      2,
+      4,
+      6
+    ],
+    "consecutiveImpactFramesInspected": true,
+    "nextApproachAndBackwashIncluded": true,
+    "observations": [
+      "Lip falls and contacts water before the surface collapses",
+      "Sections land at different times; foam expands from landed sections",
+      "Wash exposes wet sand during drainage",
+      "Next swell approaches during previous backwash",
+      "Foam, spray and curtain are more regular and stylized than the supplied AI reference"
+    ],
+    "referencePhotorealismMatched": false,
+    "userAccepted": false
+  },
   "sourceHashes": {
-    "review/breaking-wave/app.html": "64c61a8ed4def9ffd7f0e8a4ab6467ecc5e884fcf9bbfaf2ac8a10d0c7c5d462",
-    "review/breaking-wave/index.html": "ec31f2b4df145ccc7a97f8585adeeeb5b703ef072094523e67097d423543e748",
-    "review/breaking-wave/rig-controls.js": "5edb2ef71519da7ebd9aec96a8c87330471e4ceb7742677c9b311e2c8efaa9ca",
-    "review/breaking-wave/rig-player.js": "372bc06e7f3c27c6349c4490523e8996685cb9143f7eb813d41846aae1500e7d",
-    "review/breaking-wave/spray.frag": "5ec9c24e9c52d9fdbd2fa5fd041a0adb48c0a0e0cf1140bee040d0fd57dc1d7d",
-    "review/breaking-wave/spray.vert": "587e686732ec3f736c9ba5c4ad1b37dd1dc560565d5cf1890afc62eff84b460a",
-    "review/breaking-wave/surface.glsl": "a0dcf7fae0e14a52088d0f41dd6b1d77e3137f393f52db85120004c72cc4535d",
-    "review/breaking-wave/whitewater.frag": "3925c21beb847a6d19b4073377ce83309d6ec0491210c0fe32088b7053afcc53"
+    "review/breaking-wave/app.html": "cfaccaa424aa99220417983230809d2deb5424389d0be25ecd6182d65dac4b5d",
+    "review/breaking-wave/index.html": "7d628519e6da136975b6cc8e15165380d3868f64378bcbc92d6738aa7fa70d64",
+    "review/breaking-wave/rig-controls.js": "e9f1d95e9b80879b41380a66aa9255c44d6123706cda74bc37ffda7b52b3656b",
+    "review/breaking-wave/rig-player.js": "18ed98281b7b87edb7ab2f3204cde3c1290c7c82ba93c28c618aa0966351fc6b",
+    "review/breaking-wave/spray.frag": "3551845ce2ef40d96612ac8ef1ae50abfca03abc1342b485e35d03d9611e7d0b",
+    "review/breaking-wave/spray.vert": "92bfe250601733ba7c5aa9f50f12030378c2b38dccf6e43b6ab8489854a48d06",
+    "review/breaking-wave/surface.glsl": "3b92340d16a89de86af456b53df739a90ef61288dbea242c3268e3cbd62b0b4d",
+    "review/breaking-wave/whitewater.frag": "91d272538c90125cb13055cd68abd10a81ee0b12e1a4e9c19b455c5ad5a90e3b"
   }
 }

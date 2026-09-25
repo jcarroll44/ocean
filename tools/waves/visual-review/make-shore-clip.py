@@ -8,7 +8,7 @@ ap=argparse.ArgumentParser();ap.add_argument('--out',required=True);ap.add_argum
 out=Path(a.out);out.parent.mkdir(parents=True,exist_ok=True);frames=Path(a.frames);frames.mkdir(parents=True,exist_ok=True)
 manifest=[]
 for h in [2,4,6]:
- duration=9.5*math.sqrt(h/4);n=math.ceil(duration*a.fps);folder=frames/str(h)
+ duration=12.3*math.sqrt(h/4);n=math.ceil(duration*a.fps);folder=frames/str(h)
  times=[i/a.fps for i in range(n)]
  if not a.reuse:
   subprocess.run([sys.executable,str(ROOT/'tools/waves/visual-review/render_inlet.py'),'--height',str(h),'--times',','.join(f'{t:.6f}' for t in times),'--out',str(folder),'--width',str(a.width),'--size-y',str(a.height)],check=True)
@@ -32,8 +32,8 @@ out.with_suffix('.json').write_text(json.dumps(data,indent=2))
 # Internal QA sheet: before break, standing face, explosion, swash, drainage.
 thumb_w=384;thumb_h=round(a.height*thumb_w/a.width);sheet=Image.new('RGB',(thumb_w*5,(thumb_h+28)*3),'#12333a');d=ImageDraw.Draw(sheet)
 for row,part in enumerate(manifest):
- for col,phase in enumerate([2.6,3.6,4.6,6.2,8.4]):
+ for col,phase in enumerate([2.5,4.7,5.9,7.6,11.8]):
   idx=min(part['frames']-1,round(phase*math.sqrt(part['heightFt']/4)*a.fps));im=Image.open(Path(part['folder'])/f'{idx:04d}.png').resize((thumb_w,thumb_h))
-  x,y=col*thumb_w,row*(thumb_h+28);sheet.paste(im,(x,y+28));d.text((x+8,y+6),f"{part['heightFt']} ft · {['Swell','Face','Crash','Wash','Backwash'][col]}",fill='white')
+  x,y=col*thumb_w,row*(thumb_h+28);sheet.paste(im,(x,y+28));d.text((x+8,y+6),f"{part['heightFt']} ft · {['Approach','Throw','Impact','Thin wash','Backwash + next'][col]}",fill='white')
 sheet.save(frames/'review.jpg',quality=94)
 print(json.dumps({'clip':str(out),'seconds':sum(p['durationSeconds'] for p in manifest),'review':str(frames/'review.jpg')}),flush=True)
