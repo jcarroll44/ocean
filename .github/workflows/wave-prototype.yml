@@ -1,0 +1,69 @@
+name: Bake one wave prototype
+on:
+  push:
+    branches: [wave-prototype-checkpoint]
+    paths: [tools/waves/BAKE_REQUEST.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: single-wave-prototype
+  cancel-in-progress: false
+jobs:
+  bake:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: wave-prototype-checkpoint
+          fetch-depth: 0
+      - name: Prepare pinned Blender runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP"
+          curl --fail --location --retry 3 --output blender.tar.xz https://download.blender.org/release/Blender4.5/blender-4.5.9-linux-x64.tar.xz
+          printf '%s  %s\n' dcdc3eca6c9825bb35a8033b689c053f3cb5a9b0cd2a61b2eac2a49436b4ad3d blender.tar.xz | sha256sum --check
+          tar -xf blender.tar.xz
+          echo "WAVE_BLENDER=$RUNNER_TEMP/blender-4.5.9-linux-x64/blender" >> "$GITHUB_ENV"
+          echo "WAVE_TANK=$RUNNER_TEMP/bobuoy-wave" >> "$GITHUB_ENV"
+          python3 -m venv "$RUNNER_TEMP/wave-python"
+          "$RUNNER_TEMP/wave-python/bin/pip" install --disable-pip-version-check numpy==2.2.6
+          echo "WAVE_PYTHON=$RUNNER_TEMP/wave-python/bin/python" >> "$GITHUB_ENV"
+      - name: Check source recovery and input response
+        run: |
+          python3 tools/waves/recover_candidate.py "$RUNNER_TEMP/candidate.html"
+          node tests/waves/input-response.cjs "$RUNNER_TEMP/candidate.html"
+          node tools/waves/check-shaders.cjs "$RUNNER_TEMP/wave-shaders.json"
+      - name: Simulate and mesh one 4 ft target wave
+        run: |
+          "$WAVE_BLENDER" --background --factory-startup -t 4 --python tools/waves/bake_breaker.py -- --out "$WAVE_TANK" --resolution 224 --frames 360 --width 6 --stroke-gain 1.6 --phase all
+      - name: Export native frames and pack mobile textures
+        run: |
+          "$WAVE_BLENDER" --background --factory-startup -t 4 --python tools/waves/export_breaker.py -- --tank "$WAVE_TANK" --out "$WAVE_TANK/export" --max-triangles 4000 --first 61 --last 330
+          "$WAVE_PYTHON" tools/waves/measure_sections.py "$WAVE_TANK"
+          "$WAVE_PYTHON" tools/waves/pack_indexed.py "$WAVE_TANK/export" "$WAVE_TANK/indexed"
+          "$WAVE_PYTHON" tools/waves/finalize_bake.py "$WAVE_TANK"
+      - name: Save the generated specimen on its review branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add review/wave-lab/assets tools/waves/STATUS.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Save generated wave specimen for isolated review'
+          git push origin HEAD:wave-prototype-checkpoint
+      - name: Preserve bake evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: one-wave-prototype-${{ github.run_id }}
+          retention-days: 7
+          if-no-files-found: warn
+          path: |
+            review/wave-lab/assets/
+            tools/waves/STATUS.json
+            ${{ runner.temp }}/bobuoy-wave/tank.json
+            ${{ runner.temp }}/bobuoy-wave/measurements.json
+            ${{ runner.temp }}/bobuoy-wave/sections.json
+            ${{ runner.temp }}/bobuoy-wave/breaker.blend
