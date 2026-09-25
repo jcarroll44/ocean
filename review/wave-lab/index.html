@@ -4,18 +4,20 @@
 <style>
 :root{font:15px system-ui;color:#172f36;background:#f2f0ea}*{box-sizing:border-box}body{margin:0;padding:24px}h1{font-size:25px;font-weight:500;margin:0 0 6px}p{line-height:1.5}header p{margin:0 0 22px;color:#5f6a6c}.layout{display:flex;align-items:start;gap:28px;max-width:1080px;margin:auto}header{max-width:1080px;margin:auto}iframe{border:0;border-radius:26px;box-shadow:0 10px 50px #18383918;width:390px;height:844px;flex:none;background:#d7e1e0}aside{flex:1;min-width:240px;max-width:500px}button,select{font:inherit;border:1px solid #c4cecb;border-radius:10px;background:white;color:inherit;min-height:42px;padding:8px 12px;cursor:pointer}button:hover{border-color:#167d84}button:disabled{opacity:.4;cursor:default}.row{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0}label{display:block;margin:18px 0 6px}input[type=range]{width:100%;accent-color:#117c82}output{font-variant-numeric:tabular-nums}.status{padding:14px;background:#e4e9e5;border-radius:12px;line-height:1.5;white-space:pre-line}.small{font-size:13px;color:#526466}.badge{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:#117c82}a{color:#117c82}#capture-link{display:none}#capture-link.ready{display:inline-block;margin:12px 0}#metrics{font:13px/1.5 ui-monospace,monospace;white-space:pre-line}.notice{border-left:3px solid #a2906d;padding-left:12px}@media(max-width:760px){body{padding:14px}.layout{flex-direction:column;align-items:center}iframe{width:min(390px,100%);height:760px}aside{max-width:100%;width:100%}header{max-width:390px}}
 </style></head><body>
-<header><div class="badge">Isolated development preview</div><h1>Wave Lab</h1><p>Fixed conditions · real fluid bake · visual acceptance pending</p></header>
+<header><div class="badge">Isolated development preview</div><h1>Wave Lab</h1><p>1.5 ft versus 2 ft · fixed 5 mph east wind · breaker test pending</p></header>
 <main class="layout"><iframe id="preview" src="app.html" title="BoBuoy wave prototype"></iframe><aside id="controls">
 <p class="status" id="lab-status" role="status">Starting the app renderer…</p>
-<div class="row"><button data-mode="small">1.5 ft ocean</button><button data-mode="large">2 ft ocean</button><button data-mode="bake">Baked breaker</button></div>
+<div class="row"><button data-mode="small">1.5 ft ocean</button><button data-mode="large">2 ft ocean</button><button data-mode="bake" disabled>Baked breaker · pending</button></div>
 <p class="small">Ocean comparisons: 6 s period, waves from 124°, wind 5 mph from east. Same phase, camera, tide, and light.</p>
-<div class="row"><button id="play">Pause</button><button id="restart">Restart</button><button id="beach">Beach view</button><button id="side">Side view</button></div>
+<div class="row"><button id="play">Pause</button><button id="restart">Restart</button><button id="beach">Beach view</button><button id="side" disabled>Side mesh</button></div>
+<fieldset id="bake-controls" disabled style="border:0;margin:0;padding:0">
 <label for="time">Baked time <output id="time-value">0.00 s</output></label><input id="time" type="range" min="0" max="12" value="0" step=".0333333">
 <label for="scale">Similarity scale <output id="scale-value">1.00 ×</output></label><input id="scale" type="range" min=".875" max="1.125" value="1" step=".025">
 <p class="small">Scales length and height together; gravity-consistent timing changes by √scale. This does not establish arbitrary height/period combinations.</p>
 <label><input id="gray" type="checkbox" checked> Plain material to inspect the shape</label>
 <div class="row"><button id="record" disabled>Record this wave</button></div><a id="capture-link" download>Download scene recording</a>
+</fieldset>
 <p id="metrics"></p>
 <p class="small notice">The bake targets a 4 ft individual wave on an idealized beach. Its actual height and visual quality require calibration. This is a development test, not a live forecast or an accepted release.</p>
-<p class="small"><a href="assets/breaker.json">Asset measurements</a> · <a href="../../">Live app</a></p>
+<p class="small"><a href="../../tools/waves/STATUS.json">Prototype status</a> · <a href="../../">Live app</a></p>
 </aside></main></body></html>

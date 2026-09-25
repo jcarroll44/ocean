@@ -1,0 +1,12 @@
+{
+  "request": "2026-09-25-recover-first-specimen",
+  "scope": "One review specimen only; no wave library or production release",
+  "heightFtTarget": 4,
+  "forcingPeriodS": 6,
+  "resolution": 224,
+  "frames": 360,
+  "strokeGain": 1.6,
+  "exportFirstFrame": 61,
+  "exportLastFrame": 330,
+  "maxTriangles": 4000
+}

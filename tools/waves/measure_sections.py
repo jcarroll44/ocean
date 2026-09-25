@@ -8,6 +8,7 @@ from pathlib import Path
 
 p=argparse.ArgumentParser();p.add_argument('tank');a=p.parse_args();tank=Path(a.tank)
 sections=json.loads((tank/'sections.json').read_text());meta=json.loads((tank/'tank.json').read_text())
+window=[sections[0]['time'],min(9,sections[-1]['time'])]
 rows=[]
 for gauge in [6,8,10,12]:
     samples=[]
@@ -22,8 +23,9 @@ for gauge in [6,8,10,12]:
     crest=max(samples,key=lambda s:s[1]);following=[s for s in samples if s[0]>crest[0]]
     if not following:continue
     trough=min(following,key=lambda s:s[1]);height=crest[1]-trough[1]
-    rows.append(dict(gaugeYM=gauge,windowS=[0,9],crestTimeS=crest[0],crestM=crest[1],
-                     followingTroughTimeS=trough[0],followingTroughM=trough[1],heightM=height,heightFt=height/.3048))
+    rows.append(dict(gaugeYM=gauge,windowS=window,crestTimeS=crest[0],crestM=crest[1],
+                     followingTroughTimeS=trough[0],followingTroughM=trough[1],heightM=height,heightFt=height/.3048,
+                     troughAtWindowEnd=abs(trough[0]-window[1])<.5/meta['fps']))
 result=dict(targetIndividualHeightM=meta['targetIndividualHeightM'],gauges=rows,
     method='Top free-surface intersection at x=0 in exported simplified mesh; crest followed by trough within first 9 seconds.',
     limitations='Fixed-gauge individual height, not Hs or breaking-face height. Grid and decimation convergence, offshore reflections, and visual acceptance remain unvalidated.')

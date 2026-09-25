@@ -5,7 +5,7 @@ This pass establishes one Blender/Mantaflow fluid bake and an isolated Three.js 
 ## Current scope
 
 - Root candidate: fixes the height-dependent spectral direction reversal and the zero wind-displacement cutoff below 5.5 kt. A 5 mph east wind now has a small nonzero response.
-- Preview: `review/wave-lab/`. Matched 1.5/2 ft ocean controls, one baked fluid mesh, timeline, plain/water materials, beach/side cameras, similarity scaling, measured browser cadence, and a scene recording button.
+- Preview: `review/wave-lab/`. Matched 1.5/2 ft ocean controls are available first. The baked controls remain disabled until the retained asset loads from `wave-prototype-checkpoint`.
 - The asset is a **4 ft target**, not yet a calibrated 4 ft result. `STATUS.json` is the current checkpoint.
 - The old 2.5–3 ft architectural transition, larger-wave foam accumulation, and separate swash clock remain in the original ocean model. They are not silently declared fixed by this prototype.
 - The previous candidate's sun/golden-hour work is preserved. Experimental bake hooks exist only in the generated review app.
@@ -20,7 +20,15 @@ This pass establishes one Blender/Mantaflow fluid bake and an isolated Three.js 
 | [manthrax/three-vat](https://github.com/manthrax/three-vat) | Inspected documentation as a reference. No reusable license was established from the retrieved files; its exporter/runtime code was not copied. It also targets a newer Three.js dependency than we need to introduce for this pass. |
 | [Older Three.js texture-cache example](https://github.com/sneha-belkhale/vertex-texture-cache) | Reference only; not adopted as a production dependency. |
 
-The prototype reuses Blender's solver and the app's existing Three.js/shaders. Its small exporter/player implement the documented BOBVAT1 format below without adding a new rendering framework.
+The prototype reuses Blender's solver and the app's existing Three.js/shaders. Its small exporter/player implement the documented BOBVAT2 format below without adding a new rendering framework.
+
+## Persistent build
+
+The September 24 local exports completed, but the generated files did not survive the paused session. Source was recovered from the saved GitHub tree and committed on `wave-prototype-checkpoint`. The exact previous candidate remains reconstructible, including the earlier lighting pass.
+
+The workflow `.github/workflows/wave-prototype.yml` runs only when `tools/waves/BAKE_REQUEST.json` changes on that checkpoint branch, or when manually dispatched. It verifies the official Blender archive checksum, bakes one specimen, measures it, packs the textures, checks their hashes and byte counts, and commits only the generated review assets and status on the checkpoint branch. It does not update the production root or expand the wave library.
+
+The preview loads that branch's retained asset after a successful run. Refresh the preview after the job finishes. Current build state is available in GitHub Actions; the generated `STATUS.json` on the checkpoint branch supersedes the static publication checkpoint on main. Completed export is not visual or iPhone acceptance.
 
 ## Reproduce
 
@@ -28,10 +36,10 @@ Use official Blender 4.5 LTS. In the execution environment used for this pass, u
 
 ```bash
 blender -b --factory-startup -t 6 --python tools/waves/bake_breaker.py -- \
-  --out /tmp/bobuoy-wave --resolution 224 --frames 360 --width 6 --phase all
+  --out /tmp/bobuoy-wave --resolution 224 --frames 360 --width 6 --stroke-gain 1.6 --phase all
 
 blender -b --factory-startup -t 6 --python tools/waves/export_breaker.py -- \
-  --tank /tmp/bobuoy-wave --out /tmp/bobuoy-wave/export --max-triangles 4000
+  --tank /tmp/bobuoy-wave --out /tmp/bobuoy-wave/export --max-triangles 4000 --first 61 --last 330
 
 python3 tools/waves/inspect_sections.py /tmp/bobuoy-wave --output /tmp/wave-sections.png
 python3 tools/waves/measure_sections.py /tmp/bobuoy-wave
