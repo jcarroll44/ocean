@@ -1,0 +1,35 @@
+{
+  "updatedAt": "2026-09-25",
+  "revision": 2,
+  "approach": "authored continuous procedural breaking-wave rig with rolling foam geometry and lip/impact spray",
+  "bakePathRetiredForThisPass": true,
+  "parameters": ["nominal height", "period", "direction", "break offset", "curl size", "lip glow", "foam amount", "spray", "peel speed", "water colour", "foam colour"],
+  "preview": "review/breaking-wave/index.html",
+  "waterMeshTriangles": 132928,
+  "foamMeshTriangles": 175000,
+  "foamLobes": 1250,
+  "spraySeeds": 14000,
+  "productionHomepageChanged": false,
+  "defaultPreviewCamera": "same dune position; 26-degree vertical FOV; fixed across heights",
+  "visualSequence": ["swell", "pitching lip", "overhang", "impact", "whitewater", "runup and decay"],
+  "validation": {
+    "javascriptParsed": true,
+    "shaderProgramsCompiledAndRenderedInMesaEGL": true,
+    "profileHeightAndOverhangCheckedInActualVertexShader": true,
+    "referenceClipHeightSettingsFt": [2,4,6],
+    "controlContractTestsPassed": true,
+    "geometryParameterCombinationsChecked": 189,
+    "referenceRendersAreBrowserCaptures": false,
+    "browserWebGLStatus": "Unavailable in the connected review browser (GL_VENDOR = Disabled)",
+    "physicalIPhoneTested": false,
+    "visualAccepted": false
+  },
+  "limitations": [
+    "Controlled visual model; not a fluid or calibrated nearshore forecast solver",
+    "Individual nominal height is measured before the lip pitches; the evolving profile can be taller while breaking",
+    "Single wave and a controlled repeat; realistic sets and interactions are not implemented",
+    "Mobile runtime frame rate and actual browser capture remain unverified",
+    "Foam is an authored visual approximation and still needs user visual review",
+    "Native reference render has the app background and wave shaders, but is not an in-browser recording"
+  ]
+}

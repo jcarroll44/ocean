@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Breaking wave · Ocean</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#edf1ef;color:#132e36;font:14px system-ui,-apple-system,sans-serif}main{height:100svh;display:flex;flex-direction:column}header{position:absolute;z-index:2;left:22px;top:18px;pointer-events:none;text-shadow:0 1px 10px #fff8}header p{margin:0 0 3px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}h1{margin:0;font-size:27px;font-weight:550;letter-spacing:-1px}iframe{display:block;width:100%;border:0;flex:1;min-height:0;background:#3a7487}.controls{background:#f7f8f5;padding:12px max(20px,calc((100vw - 950px)/2)) max(12px,env(safe-area-inset-bottom));box-shadow:0 -8px 30px #223c4812}.line{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.height-row{margin:8px 0 12px}.height-row output{font-size:23px;font-weight:600;width:82px}input[type=range]{accent-color:#087478;flex:1;min-width:85px}button,select,a{border:1px solid #c8d6d3;border-radius:50px;padding:8px 13px;font:inherit;background:#f7f8f5;color:inherit;text-decoration:none;cursor:pointer}button[aria-pressed=true],button[aria-expanded=true]{background:#0b6066;border-color:#0b6066;color:white}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #179ea2;outline-offset:3px}#status{margin-left:auto;font-size:12px;color:#50706c}#download[hidden],#tuning[hidden]{display:none}.secondary{font-size:11px;color:#60736f;margin:9px 0 0}#record{font-size:12px}.drawer{position:absolute;z-index:5;right:18px;top:18px;width:310px;max-height:calc(100svh - 205px);overflow:auto;background:#f7f8f5f5;border:1px solid #d4dfda;border-radius:17px;padding:17px;box-shadow:0 12px 45px #12333830;backdrop-filter:blur(15px)}.drawer h2{font-size:17px;font-weight:600;margin:0}.drawer .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.drawer label{display:grid;grid-template-columns:1fr auto;gap:6px;margin:13px 0;font-size:13px}.drawer label input[type=range]{grid-column:1/3;width:100%;margin:2px 0}.drawer output{font-variant-numeric:tabular-nums;color:#58736c}.drawer input[type=color]{width:55px;height:27px;border:0;background:transparent;padding:0}.drawer p{font-size:11px;line-height:1.45;color:#60736f}.timeline{display:flex;gap:10px;align-items:center;font-size:11px;color:#50706c;margin-top:9px}.timeline input{width:100%}.camera{font-size:12px}#tune{margin-left:auto}
+@media(max-width:600px){header{left:16px;top:13px}h1{font-size:22px}.controls{padding:10px 12px max(10px,env(safe-area-inset-bottom))}.line{gap:6px}button,a,select{font-size:12px;padding:8px 10px}#status{font-size:11px}.height-row{margin:6px 0 9px}.secondary{font-size:10px}#record{display:none}.drawer{top:auto;bottom:200px;right:10px;max-height:45svh;width:min(310px,calc(100vw - 20px))}.drawer label{margin:10px 0}.camera{max-width:135px}}
+</style></head><body><main>
+<header><p>Ocean · Wave study 02</p><h1>A wave you can shape.</h1></header>
+<iframe src="app.html?v=rig02" id="scene" title="Adjustable breaking wave"></iframe>
+<aside id="tuning" class="drawer" hidden aria-label="Wave look controls">
+<div class="top"><h2>Tune the wave</h2><button id="close-tuning" aria-label="Close tuning panel">Close</button></div>
+<label for="curl">Curl size <output id="curl-out">1.10×</output><input id="curl" type="range" min=".65" max="1.5" step=".01" value="1.1" data-tune></label>
+<label for="glow">Lip glow <output id="glow-out">0.60</output><input id="glow" type="range" min="0" max="1.5" step=".01" value=".6" data-tune></label>
+<label for="foam">Foam amount <output id="foam-out">1.20</output><input id="foam" type="range" min="0" max="1.8" step=".01" value="1.2" data-tune></label>
+<label for="spray">Spray <output id="spray-out">1.30</output><input id="spray" type="range" min="0" max="1.8" step=".01" value="1.3" data-tune></label>
+<label for="peel">Peel speed <output id="peel-out">1.00×</output><input id="peel" type="range" min=".5" max="2" step=".01" value="1" data-tune></label>
+<label for="period">Period <output id="period-out">6.0 s</output><input id="period" type="range" min="4" max="12" step=".1" value="6" data-tune></label>
+<label for="offset">Break position <output id="offset-out">0.0 m</output><input id="offset" type="range" min="-2" max="2" step=".1" value="0" data-tune></label>
+<label for="water">Water colour <input id="water" type="color" value="#278b93" data-tune></label>
+<label for="white">Foam colour <input id="white" type="color" value="#f2f8f5" data-tune></label>
+<button id="reset-look">Reset look</button>
+<p>Changes are live and saved on this device. Pause and scrub below to tune one moment. Height is an individual wave, not a calibrated forecast.</p>
+</aside>
+<section class="controls" aria-label="Wave playback">
+<div class="line"><button data-height="2">2 ft</button><button data-height="4" aria-pressed="true">4 ft</button><button data-height="6">6 ft</button><span id="status" role="status">Loading the scene…</span></div>
+<div class="line height-row"><output id="height-value">4.0 ft</output><input type="range" id="height" aria-label="Wave height" min="2" max="6" step=".1" value="4"></div>
+<div class="line"><button id="replay">Replay</button><button id="play">Pause</button><button id="compare">2 / 4 / 6</button><select id="view" class="camera" aria-label="Camera"><option value="app">App framing</option><option value="close">Barrel detail</option><option value="wide">Original wide</option></select><button id="record" disabled>Record clip</button><a id="download" hidden>Download clip</a><button id="tune" aria-expanded="false" aria-controls="tuning">Tune look</button></div>
+<div class="timeline"><span>Phase</span><input id="phase" type="range" aria-label="Wave phase" min="0" max="9" step=".01" value="0"></div>
+<p class="secondary">Procedural preview · same scene, tighter dune-camera framing · not yet visually accepted or iPhone-tested</p>
+</section></main>
+<script>
+(()=>{const panel=document.getElementById('tuning'),toggle=document.getElementById('tune');function show(v){panel.hidden=!v;toggle.setAttribute('aria-expanded',String(v));}toggle.onclick=()=>show(panel.hidden);document.getElementById('close-tuning').onclick=()=>show(false);document.addEventListener('keydown',e=>{if(e.key==='Escape')show(false);});})();
+</script></body></html>
