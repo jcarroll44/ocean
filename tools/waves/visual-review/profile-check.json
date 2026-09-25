@@ -1,0 +1,86 @@
+[
+  {
+    "heightSettingFt": 2,
+    "phaseSecondsAt4ft": 2.4,
+    "profileHeightFt": 2.0385448932647705,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": 0.48889997601509094
+  },
+  {
+    "heightSettingFt": 2,
+    "phaseSecondsAt4ft": 3.6,
+    "profileHeightFt": 2.147139549255371,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": 0.2575806677341461
+  },
+  {
+    "heightSettingFt": 2,
+    "phaseSecondsAt4ft": 4.2,
+    "profileHeightFt": 2.1658153533935547,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": -0.1201653778553009
+  },
+  {
+    "heightSettingFt": 2,
+    "phaseSecondsAt4ft": 5.5,
+    "profileHeightFt": 0.674589991569519,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": -0.008249315433204174
+  },
+  {
+    "heightSettingFt": 4,
+    "phaseSecondsAt4ft": 2.4,
+    "profileHeightFt": 4.096331596374512,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": 0.9874396920204163
+  },
+  {
+    "heightSettingFt": 4,
+    "phaseSecondsAt4ft": 3.6,
+    "profileHeightFt": 4.316969394683838,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": 0.517943263053894
+  },
+  {
+    "heightSettingFt": 4,
+    "phaseSecondsAt4ft": 4.2,
+    "profileHeightFt": 4.373044490814209,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": -0.24033062160015106
+  },
+  {
+    "heightSettingFt": 4,
+    "phaseSecondsAt4ft": 5.5,
+    "profileHeightFt": 1.4059535264968872,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": -0.014921970665454865
+  },
+  {
+    "heightSettingFt": 6,
+    "phaseSecondsAt4ft": 2.4,
+    "profileHeightFt": 6.086612701416016,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": 1.478373646736145
+  },
+  {
+    "heightSettingFt": 6,
+    "phaseSecondsAt4ft": 3.6,
+    "profileHeightFt": 6.462532997131348,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": 0.7807592153549194
+  },
+  {
+    "heightSettingFt": 6,
+    "phaseSecondsAt4ft": 4.2,
+    "profileHeightFt": 6.560992240905762,
+    "hasOverhang": true,
+    "lowestLipAboveSeaM": -0.35535839200019836
+  },
+  {
+    "heightSettingFt": 6,
+    "phaseSecondsAt4ft": 5.5,
+    "profileHeightFt": 2.2707974910736084,
+    "hasOverhang": false,
+    "lowestLipAboveSeaM": -0.02232431061565876
+  }
+]

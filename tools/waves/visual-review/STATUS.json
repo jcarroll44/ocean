@@ -1,0 +1,28 @@
+{
+  "updatedAt": "2026-09-25",
+  "approach": "authored continuous procedural breaking-wave rig",
+  "bakePathRetiredForThisPass": true,
+  "parameters": ["nominal height", "period", "direction", "break offset"],
+  "preview": "review/breaking-wave/index.html",
+  "meshTriangles": 132928,
+  "visualSequence": ["swell", "pitching lip", "overhang", "impact", "whitewater", "runup and decay"],
+  "validation": {
+    "javascriptParsed": true,
+    "shaderProgramsCompiledAndRenderedInMesaEGL": true,
+    "profileHeightAndOverhangCheckedInActualVertexShader": true,
+    "referenceClipHeightSettingsFt": [2,4,6],
+    "referenceClipSeconds": 26.1,
+    "referenceClipFPS": 30,
+    "referenceClipIsBrowserRecording": false,
+    "browserWebGLStatus": "Unavailable in the connected review browser (GL_VENDOR = Disabled)",
+    "physicalIPhoneTested": false,
+    "visualAccepted": false
+  },
+  "limitations": [
+    "Controlled visual model; not a fluid or calibrated nearshore forecast solver",
+    "Individual nominal height is measured before the lip pitches; the evolving profile can be taller while breaking",
+    "Single wave and a controlled repeat; realistic sets and interactions are not implemented",
+    "Mobile runtime frame rate and actual browser capture remain unverified",
+    "Native reference render has the app background and wave shaders, but is not an in-browser recording"
+  ]
+}

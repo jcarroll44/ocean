@@ -1,0 +1,11 @@
+# Single procedural breaker — September 25, 2026
+
+The retained Mantaflow specimen did not meet the user's visual requirement. This pass replaces the narrow cached patch with an authored continuous free surface. The rig has a rising asymmetric face, a forward jet with thickness, an underside and hollow face, a lip that crosses sea level, a collapsing roller, event-driven spray, and thin shoreline runup. It exposes nominal height in feet, period in seconds, direction in radians, and break offset in metres. It is an illustrative visual model, not a calibrated fluid solver.
+
+`review/breaking-wave/` is an isolated preview inside the recovered Ocean app. It replaces that preview's ocean mesh and old spray, keeps the established beach camera, and has 2 / 4 / 6 ft controls plus a closer view. Production `index.html` is unchanged. The comparison is a single individual wave; its height setting is not significant wave height. The old bake and all prior lighting work remain preserved in their original branches.
+
+`check-rig.cjs` reconstructs the integrity-checked preview, parses JavaScript, constructs the wave and spray with a stubbed Three interface, and exports their exact shaders and mesh buffers to `/tmp/rig-*`. `render_inlet.py` renders those shaders through Mesa EGL using the app background and fixed dune camera. The shader reference clip uses close views with an inset of the unchanged dune camera; it is **not** an in-browser or iPhone recording. The connected browser currently cannot create WebGL. The preview's recording button is an actual canvas recorder, with a height overlay, for capable browsers.
+
+`profile-check.json` records sampled profiles from transform feedback on the actual rig vertex shader. The profile changes from no overhang, to an overhang, to a lip below sea level, to a low roller. Nominal heights are approximately 2 / 4 / 6 ft before the lip pitches; the nonlinear authored shape increases crest-to-trough range during the curl.
+
+No wider wave library is authorized by this checkpoint. Visual approval, browser playback and device performance remain open. Do not call the native reference clip a captured app session, and do not claim physical iPhone testing or final realism acceptance.
