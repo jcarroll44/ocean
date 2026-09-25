@@ -21,17 +21,16 @@ const mats=[];class Geometry{constructor(){this.attributes={};}setAttribute(k,v)
 class Material{constructor(opts){mats.push(opts);}}class Object3D{constructor(g,m){this.geometry=g;this.material=m;}}
 class Vector3{constructor(x,y,z){this.set(x,y,z);}set(x,y,z){this.x=x;this.y=y;this.z=z;return this;}}
 const THREE={BufferGeometry:Geometry,BufferAttribute:Attr,ShaderMaterial:Material,Mesh:Object3D,Points:Object3D,DoubleSide:2,Vector3};
-ctx.fetch=async name=>({ok:true,text:async()=>fs.readFileSync(root+'/review/breaking-wave/'+name,'utf8')});
+ctx.fetch=async name=>({ok:true,text:async()=>fs.readFileSync(root+'/review/breaking-wave/'+name.split('?')[0],'utf8')});
 const uniforms={uBakeOn:{value:0}},lab={THREE,uniforms,engine:{labPrograms:engine.labPrograms,scene:{add(){}},ocean:{},spray:{},renderer:{domElement:{height:720}}}};
 const built=await ctx.window.createWaveRig(lab);built.set(3.6,4);
-if(mats.length!==3)throw Error('Expected water, spray and volume foam materials');
+if(mats.length!==3)throw Error('Expected water, spray and aerated roller materials');
 programs.rigSpray={vertex:mats[1].vertexShader,fragment:mats[1].fragmentShader};
-programs.rigFoam={vertex:mats[2].vertexShader,fragment:mats[2].fragmentShader};
-if(!programs.rigSpray.vertex.includes('p.z+=-3.5-4.5*uRigHeight+uRigBreakOffset;'))throw Error('Spray must follow wave position');
+programs.rigVolume={vertex:mats[2].vertexShader,fragment:mats[2].fragmentShader};
+if(!programs.rigSpray.vertex.includes('rig_frontAt(x,age)'))throw Error('Foam must follow the runup front');
 fs.writeFileSync('/tmp/rig-programs.json',JSON.stringify(programs));
 fs.writeFileSync('/tmp/rig-particles.bin',Buffer.from(built.spray.geometry.attributes.aParticle.array.buffer));
-for(const [suffix,attr] of [['v',built.foam.geometry.attributes.position],['seed',built.foam.geometry.attributes.aFoam],['i',built.foam.geometry.index]])fs.writeFileSync('/tmp/rig-foam-'+suffix+'.bin',Buffer.from(attr.array.buffer));
 built.tune({curl:1.4,peel:1.5,foam:0,spray:0,glow:1,water:'#00ff80',white:'#ffffff'});
 if(uniforms.uRigCurl.value!==1.4||uniforms.uRigFoam.value!==0||uniforms.uRigWaterColor.value.y!==1)throw Error('Live tuning did not update shader uniforms');
-console.log('Wave, spray and 1250 foam volumes built; live uniforms verified.');
+console.log('Shorebreak surface and 140,000 layered particle seeds built; live uniforms verified.');
 })().catch(e=>{console.error(e);process.exit(1)});

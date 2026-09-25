@@ -1,27 +1,29 @@
-# Single procedural breaker · revision 02 — September 25, 2026
+# Shorebreak · revision 03 — September 25, 2026
 
-The retained Mantaflow specimen did not meet the user's visual requirement. This pass replaces the narrow cached patch with an authored continuous free surface. The rig has a rising asymmetric face, a forward jet with thickness, an underside and hollow face, a lip that crosses sea level, a collapsing roller, event-driven spray, and thin shoreline runup. It exposes nominal height in feet, period in seconds, direction in radians, and break offset in metres. It is an illustrative visual model, not a calibrated fluid solver.
+This revision targets the supplied beach-view Emerald Coast reference: a close, full-width turquoise wall, a mostly simultaneous break, aerated whitewater and beach runup. It replaces revision 02's distant peeling breaker and separate foam lobes. This is authored animation, not a fluid solver or a calibrated forecast model.
 
-`review/breaking-wave/` is an isolated preview inside the recovered Ocean app. Production `index.html` is unchanged. The comparison is a single individual wave; its height setting is not significant wave height. The old bake and all prior lighting work remain preserved in their original branches.
+The isolated preview is `review/breaking-wave/`. It reconstructs the existing Ocean engine from a checksum-verified patch and uses its background, water lighting and beach. The production homepage and prior lighting work are unchanged. Its default **Beach camera** is now at `(0,1.2,-0.5)`, looking ten degrees down with a 50-degree vertical field of view. This same camera is held across all heights. **Low beach** lowers the eye to 0.9 m; **Original dune** retains the original camera. The preview's underwater beach slope is steeper to accommodate a shorebreak; dry sand retains its original slope.
 
-Revision 02 adds a wider concave inner profile, a thinner rounded pitching lip, rapid post-contact collapse, 1,250 independently rotating/displaced foam lobes, and 14,000 deterministic lip/impact spray seeds. Foam lobes travel with and sit in the rough roller rather than on an unrelated flat overlay. Live controls expose curl size, lip glow, foam amount, spray, peel speed, water/foam colours, period and break position. Settings are bounded, saved locally and resettable. The phase slider pauses/scrubs without losing the look.
+The first comparison wave closes out across the view. Subsequent waves deterministically vary among closeouts, left breaks, right breaks and sections. A 100-event check produces 65 closeouts, 12 left breaks, 9 right breaks and 14 sectioned breaks. Height remains an individual nominal crest-to-trough height: 1 ft is a small lap, while larger heights produce taller faces and larger explosions. This is not significant wave height.
 
-Default “App framing” keeps the dune camera's world position `(0,10,26)` but uses a 26-degree vertical field of view and aims at the break. It stays identical across 2/4/6 ft. “Original wide” preserves the previous camera. “Barrel detail” looks along the peeling crest at barrel elevation and follows the height-dependent break location; it is not the app's unchanged production default camera. The rig moves the break 0.7 nominal wave heights shoreward relative to revision 01, without multiplying wave height.
+The water surface contains 202,048 triangles. Its folded profile rises, pitches and collapses vertically before its rows redistribute into the wash, avoiding the stretched impact sheet found during review. Turquoise transmission, vertical face streaks and crest feathering are shaded on this surface. Whitewater combines a short volume integral through a moving turbulent roller, 140,000 deterministic lip/impact/foam/droplet seeds, and a raised, lit foam surface. The front advances irregularly, leaves thinner lace, then retreats. The old foam-sphere geometry is removed.
 
-`check-rig.cjs` reconstructs the integrity-checked preview, parses JavaScript, constructs water, spray and foam with a stubbed Three interface, checks tuning uniforms, and exports their exact shaders/mesh buffers to `/tmp/rig-*`. `render_inlet.py` renders all four programs through Mesa EGL with the app background and matching camera. This is **not** an in-browser or iPhone capture. The preview's recording button is a canvas recorder with a height overlay for capable browsers; it has not been browser-recording-tested here.
+Live controls cover height, curl, lip glow, foam amount, spray, peel speed, water/foam colours, period and break position. Settings persist locally. Replay, pause, scrub and a fixed-camera 2/4/6 comparison are available. The optional canvas recorder is retained for browsers supporting MediaRecorder; it has not been recording-tested in the connected browser.
 
-`check-controls.cjs` exercises presets, pause/scrub, live sliders, colours, period changes, reset, persistence, invalid saved settings and fixed comparison framing against a DOM/engine contract stub. `check-profile.py` measures nominal scale and overhang, verifies the high face collapses into a low roller, and checks finite geometry across 189 combinations of height, curl, peel speed and phase. These checks do not establish visual acceptance or mobile performance.
+## Verification
 
-`profile-check.json` records sampled profiles from transform feedback on the actual rig vertex shader. The profile changes from no overhang, to an overhang, to a lip below sea level, to a low roller. Nominal heights are approximately 2 / 4 / 6 ft before the lip pitches; the nonlinear authored shape increases crest-to-trough range during the curl.
+`check-rig.cjs` reconstructs the preview, verifies source integrity, parses the scripts, checks tuning and exports the actual background/water/volume/spray programs and geometry. `render_inlet.py` compiles and renders those programs through Mesa EGL with matching camera and weather. These are **native shader renders, not browser or iPhone captures**. The connected browser reports WebGL disabled, so it can only verify the published page and loading/error behavior.
 
-Run checks from the repository root:
+`check-controls.cjs` checks presets, scrub/pause, tuning, colours, period changes, reset, persistence, input bounds, fixed comparison framing and event progression with a DOM/engine contract stub. `check-profile.py` uses transform feedback from the real vertex shader to measure height, tests 336 geometry combinations, checks break-pattern distribution and verifies that runup advances and retreats. `profile-check.json` retains those measurements.
+
+`make-shore-clip.py` produces the 27.9-second 2/4/6 ft comparison at 30 fps, with a height indicator outside the rendered scene. Its JSON sidecar records provenance. Review includes the encoded sequence, standing/pitching/impact/runup/retreat screenshots, and 390 × 600 portrait renders. The AI reference is reviewed alongside these stages; its moving camera is not copied into the size comparison.
 
 ```sh
-python tools/waves/build_rig_preview.py
+python3 tools/waves/build_rig_preview.py
 node tools/waves/visual-review/check-rig.cjs
 node tools/waves/visual-review/check-controls.cjs
-python tools/waves/visual-review/check-profile.py
-python tools/waves/visual-review/render_inlet.py --times 2.4,3.6,4.5,6
+python3 tools/waves/visual-review/check-profile.py
+python3 tools/waves/visual-review/make-shore-clip.py --out /tmp/shorebreak-2-4-6ft.mp4
 ```
 
-Visual approval, browser playback and device performance remain open. Foam is still a stylized approximation, not resolved aerated fluid. Do not call native renders captured app sessions, or claim physical iPhone testing or final realism acceptance. No wider wave library was added.
+The framing and wave type now follow the shorebreak brief. Foam shading and spray remain more stylized than the AI reference. User visual acceptance, actual browser recording and physical iPhone performance are still open. The volume pass adds GPU work; native rendering does not establish mobile frame rate. Do not describe this clip as a captured app session or claim the reference's photorealism has been matched.

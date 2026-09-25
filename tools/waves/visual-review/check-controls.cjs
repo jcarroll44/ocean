@@ -22,19 +22,20 @@ async function setup(saved='{}'){
 }
 (async()=>{
  const {ctx,lab,rig,e,heights,camera,getSaved}=await setup();
- assert.equal(ctx.window.__rigReview.height,4);assert.equal(rig.look.curl,1.1);
+ assert.equal(ctx.window.__rigReview.height,4);assert.equal(rig.look.curl,1);
  heights[2].onclick();assert.equal(ctx.window.__rigReview.height,6);assert.equal(e['height-value'].textContent,'6.0 ft');
  e.phase.oninput({target:{value:'3.6'}});lab.tick(0);assert.equal(e.play.textContent,'Play');assert(Math.abs(rig.frame[0]-3.6*Math.sqrt(1.5))<1e-6);
  const oldTime=ctx.window.__rigReview.time;e.curl.value='1.4';e.curl.oninput();assert.equal(rig.look.curl,1.4);assert.equal(ctx.window.__rigReview.time,oldTime);assert.equal(getSaved().curl,1.4);
  e.period.value='9';e.period.oninput();assert.equal(ctx.window.__rigReview.time,oldTime*1.5);
  e.foam.value='0';e.foam.oninput();e.spray.value='0';e.spray.oninput();assert.equal(rig.look.foam,0);assert.equal(rig.look.spray,0);
  e.water.value='#123456';e.water.oninput();assert.equal(rig.look.water,'#123456');
- e['reset-look'].onclick();assert.equal(rig.look.curl,1.1);assert.equal(rig.look.foam,1.2);assert.equal(rig.look.period,6);
- lab.engine.beforeRender();assert.deepEqual(camera.position.xyz,[0,10,26]);assert.equal(camera.fov,26);
- heights[0].onclick();lab.engine.beforeRender();assert.deepEqual(camera.position.xyz,[0,10,26]);assert.equal(camera.fov,26);
- e.view.value='close';lab.engine.beforeRender();assert.equal(camera.position.xyz[0],8);
+ e['reset-look'].onclick();assert.equal(rig.look.curl,1);assert.equal(rig.look.foam,1);assert.equal(rig.look.period,6);
+ lab.engine.beforeRender();assert.deepEqual(camera.position.xyz,[0,1.2,-.5]);assert.equal(camera.fov,50);
+ heights[0].onclick();lab.engine.beforeRender();assert.deepEqual(camera.position.xyz,[0,1.2,-.5]);assert.equal(camera.fov,50);
+ e.view.value='close';lab.engine.beforeRender();assert.equal(camera.position.xyz[1],.9);
  e.compare.onclick();assert.equal(ctx.window.__rigReview.height,2);e.replay.onclick();lab.tick(.05);assert(ctx.window.__rigReview.time>0);
- const malformed=await setup('{broken');assert.equal(malformed.rig.look.curl,1.1);
- const clamped=await setup('{"curl":100,"foam":-2,"water":"javascript:bad"}');assert.equal(clamped.rig.look.curl,1.5);assert.equal(clamped.rig.look.foam,0);assert.equal(clamped.rig.look.water,'#278b93');
+ const malformed=await setup('{broken');assert.equal(malformed.rig.look.curl,1);
+ const clamped=await setup('{"curl":100,"foam":-2,"water":"javascript:bad"}');assert.equal(clamped.rig.look.curl,1.5);assert.equal(clamped.rig.look.foam,0);assert.equal(clamped.rig.look.water,'#148c90');
+ const looping=await setup();for(let i=0;i<170;i++)looping.lab.tick(.06);assert.equal(looping.rig.frame[5],1,'Next wave must receive a new event seed');looping.e.replay.onclick();looping.lab.tick(0);assert.equal(looping.rig.frame[5],1,'Replay keeps the same break pattern');
  console.log('PASS: presets, scrub/pause, live sliders, colours, period, reset, persistence, input bounds and fixed comparison camera.');
 })().catch(e=>{console.error(e);process.exit(1);});

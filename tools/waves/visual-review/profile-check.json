@@ -1,86 +1,36 @@
-[
-  {
-    "heightSettingFt": 2,
-    "phaseSecondsAt4ft": 2.4,
-    "profileHeightFt": 2.0385448932647705,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": 0.48889997601509094
+{
+  "standingHeightChecks": [
+    {
+      "nominalHeightFt": 1,
+      "standingHeightFt": 1.0095399618148804
+    },
+    {
+      "nominalHeightFt": 2,
+      "standingHeightFt": 1.9959299564361572
+    },
+    {
+      "nominalHeightFt": 4,
+      "standingHeightFt": 4.000383377075195
+    },
+    {
+      "nominalHeightFt": 6,
+      "standingHeightFt": 6.016061782836914
+    }
+  ],
+  "finiteGeometryCombinations": 336,
+  "breakPatternCountsIn100": {
+    "0": 65,
+    "1": 12,
+    "2": 9,
+    "3": 14
   },
-  {
-    "heightSettingFt": 2,
-    "phaseSecondsAt4ft": 3.6,
-    "profileHeightFt": 2.20521879196167,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": 0.2738136351108551
-  },
-  {
-    "heightSettingFt": 2,
-    "phaseSecondsAt4ft": 4.2,
-    "profileHeightFt": 1.6500438451766968,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": -0.07129378616809845
-  },
-  {
-    "heightSettingFt": 2,
-    "phaseSecondsAt4ft": 5.5,
-    "profileHeightFt": 0.6026057600975037,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": -0.0006396709941327572
-  },
-  {
-    "heightSettingFt": 4,
-    "phaseSecondsAt4ft": 2.4,
-    "profileHeightFt": 4.096331596374512,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": 0.9874396920204163
-  },
-  {
-    "heightSettingFt": 4,
-    "phaseSecondsAt4ft": 3.6,
-    "profileHeightFt": 4.430304527282715,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": 0.5509549379348755
-  },
-  {
-    "heightSettingFt": 4,
-    "phaseSecondsAt4ft": 4.2,
-    "profileHeightFt": 3.3225646018981934,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": -0.1367156058549881
-  },
-  {
-    "heightSettingFt": 4,
-    "phaseSecondsAt4ft": 5.5,
-    "profileHeightFt": 1.2576560974121094,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": 0.0003123314818367362
-  },
-  {
-    "heightSettingFt": 6,
-    "phaseSecondsAt4ft": 2.4,
-    "profileHeightFt": 6.086612701416016,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": 1.478373646736145
-  },
-  {
-    "heightSettingFt": 6,
-    "phaseSecondsAt4ft": 3.6,
-    "profileHeightFt": 6.622100353240967,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": 0.8324004411697388
-  },
-  {
-    "heightSettingFt": 6,
-    "phaseSecondsAt4ft": 4.2,
-    "profileHeightFt": 4.981618881225586,
-    "hasOverhang": true,
-    "lowestLipAboveSeaM": -0.20263254642486572
-  },
-  {
-    "heightSettingFt": 6,
-    "phaseSecondsAt4ft": 5.5,
-    "profileHeightFt": 1.8735154867172241,
-    "hasOverhang": false,
-    "lowestLipAboveSeaM": 0.001392391393892467
-  }
-]
+  "maxCloseoutTimingSpreadSeconds": 0.11763870716094971,
+  "runupFrontZ": [
+    -4.719200134277344,
+    -1.6105446815490723,
+    -0.676816463470459,
+    -3.361225128173828,
+    -5.4576592445373535
+  ],
+  "passed": true
+}

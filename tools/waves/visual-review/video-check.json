@@ -1,0 +1,91 @@
+{
+  "date": "2026-09-25",
+  "clipName": "shorebreak-2-4-6ft.mp4",
+  "sha256": "e05ab29c887a766b1ac54a11552d5d9a3201f8ee80e0d6110b9be048b3848adc",
+  "bytes": 6807258,
+  "capture": "native EGL rendering of actual app shader programs",
+  "browserCapture": false,
+  "iPhoneTested": false,
+  "temporalReview": {
+    "decodedFrames": 837,
+    "durationSeconds": 27.9,
+    "segmentStarts": [
+      0,
+      202,
+      487
+    ],
+    "largestFrameMeanPixelChanges": [
+      {
+        "frame": 661,
+        "timeSeconds": 22.033333333333335,
+        "meanChangeOutOf255": 6.37202962962963
+      },
+      {
+        "frame": 662,
+        "timeSeconds": 22.066666666666666,
+        "meanChangeOutOf255": 6.296318518518518
+      },
+      {
+        "frame": 660,
+        "timeSeconds": 22.0,
+        "meanChangeOutOf255": 6.239133333333333
+      },
+      {
+        "frame": 658,
+        "timeSeconds": 21.933333333333334,
+        "meanChangeOutOf255": 6.147259259259259
+      },
+      {
+        "frame": 659,
+        "timeSeconds": 21.966666666666665,
+        "meanChangeOutOf255": 6.1419703703703705
+      },
+      {
+        "frame": 657,
+        "timeSeconds": 21.9,
+        "meanChangeOutOf255": 6.08202962962963
+      },
+      {
+        "frame": 663,
+        "timeSeconds": 22.1,
+        "meanChangeOutOf255": 6.024207407407407
+      },
+      {
+        "frame": 656,
+        "timeSeconds": 21.866666666666667,
+        "meanChangeOutOf255": 5.923570370370371
+      },
+      {
+        "frame": 655,
+        "timeSeconds": 21.833333333333332,
+        "meanChangeOutOf255": 5.848777777777777
+      },
+      {
+        "frame": 664,
+        "timeSeconds": 22.133333333333333,
+        "meanChangeOutOf255": 5.782629629629629
+      },
+      {
+        "frame": 654,
+        "timeSeconds": 21.8,
+        "meanChangeOutOf255": 5.6924222222222225
+      },
+      {
+        "frame": 653,
+        "timeSeconds": 21.766666666666666,
+        "meanChangeOutOf255": 5.635681481481481
+      }
+    ],
+    "note": "Segment cuts excluded. Statistics flag candidates; manual frame review is required."
+  },
+  "sourceHashes": {
+    "review/breaking-wave/app.html": "64c61a8ed4def9ffd7f0e8a4ab6467ecc5e884fcf9bbfaf2ac8a10d0c7c5d462",
+    "review/breaking-wave/index.html": "ec31f2b4df145ccc7a97f8585adeeeb5b703ef072094523e67097d423543e748",
+    "review/breaking-wave/rig-controls.js": "5edb2ef71519da7ebd9aec96a8c87330471e4ceb7742677c9b311e2c8efaa9ca",
+    "review/breaking-wave/rig-player.js": "372bc06e7f3c27c6349c4490523e8996685cb9143f7eb813d41846aae1500e7d",
+    "review/breaking-wave/spray.frag": "5ec9c24e9c52d9fdbd2fa5fd041a0adb48c0a0e0cf1140bee040d0fd57dc1d7d",
+    "review/breaking-wave/spray.vert": "587e686732ec3f736c9ba5c4ad1b37dd1dc560565d5cf1890afc62eff84b460a",
+    "review/breaking-wave/surface.glsl": "a0dcf7fae0e14a52088d0f41dd6b1d77e3137f393f52db85120004c72cc4535d",
+    "review/breaking-wave/whitewater.frag": "3925c21beb847a6d19b4073377ce83309d6ec0491210c0fe32088b7053afcc53"
+  }
+}

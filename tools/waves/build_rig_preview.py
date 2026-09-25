@@ -14,7 +14,9 @@ try:
   s=lab.read_text()
 finally:
  lab.write_bytes(original)
-s=s.replace('<script src="baked-player.js"></script><script src="lab-controls.js"></script>','<script src="rig-player.js"></script><script src="rig-controls.js"></script>')
+s=s.replace('<script src="baked-player.js"></script><script src="lab-controls.js"></script>','<script src="rig-player.js?v=shore03"></script><script src="rig-controls.js?v=shore03"></script>')
+# Steeper submerged beach face for shorebreak; dry sand and shoreline stay put.
+s=s.replace('float bed(vec2 p){return .105*(p.y-baseShore(p.x));}', 'float bed(vec2 p){float d=p.y-baseShore(p.x);return d*mix(.26,.105,smoothstep(-.30,.10,d));}')
 s=s.replace('uniform float uBakeOn;','uniform vec3 uRigEye;\nuniform mat4 uRigInvVP;\nuniform float uBakeOn;',1)
 a=s.index(' vec2 uv=vUv*2.0-1.0;uv.x*=uResolution.x/uResolution.y;');b=s.index(' vec3 c=sky(rd,true);',a)
 s=s[:a]+''' vec4 rayEnd=uRigInvVP*vec4(vUv*2.0-1.0,1.0,1.0);
