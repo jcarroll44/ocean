@@ -1,15 +1,21 @@
 {
-  "updatedAt": "2026-09-25",
-  "stage": "comparison_preview_prepared_bake_job_pending_start",
+  "updatedAt": "2026-09-25T17:44:02.286495+00:00",
+  "stage": "specimen_exported_for_review",
+  "buildRunUrl": "https://github.com/jcarroll44/ocean/actions/runs/36167681070",
   "directionAndWindCodeChecked": true,
-  "retainedBakeAvailable": false,
+  "retainedBakeAvailable": true,
+  "downloadBytes": 8813288,
+  "gpuTextureBytes": 15759360,
   "inAppClipRecorded": false,
   "visualAccepted": false,
   "physicalIPhoneTested": false,
   "productionRootChanged": false,
   "expandWaveLibrary": false,
-  "checkpointBranch": "wave-prototype-checkpoint",
-  "note": "Earlier local exports completed, but were not retained through the paused session. The reproducible source is recovered. The build job must regenerate and commit the single specimen before it is available.",
-  "liveBuildStatus": "https://github.com/jcarroll44/ocean/actions",
-  "remaining": ["Regenerate and retain the baked asset", "Inspect the breaking face and ocean join", "Record an in-app clip", "Test a physical iPhone"]
+  "remaining": [
+    "Inspect the breaking face and ocean seam in the app",
+    "Resolve foam and swash handoff",
+    "Record an in-app clip",
+    "Profile a physical iPhone"
+  ],
+  "warning": "Measured approach height is not proof of breaking-face realism or significant wave height."
 }
