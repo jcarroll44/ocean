@@ -54,24 +54,26 @@ function applyScene(dt){
  uniforms.uSwell.value=clamp(current.swell/FT,.01,3);uniforms.uPeriod.value=current.period;uniforms.uWind.value=current.wind;uniforms.uCloud.value=current.cloud/100;uniforms.uRain.value=current.rain;uniforms.uVisibility.value=current.visibility;uniforms.uTide.value=current.tide||0;uniforms.uClarity.value=current.clarity/100;
  uniforms.uDirection.value=((c.direction??201)-SITE.facing)*RAD;uniforms.uWindDirection.value=((c.windDirection??201)-SITE.facing)*RAD;uniforms.uCloudLayers.value.set((c.cloudLow??current.cloud*.5)/100,(c.cloudMid??current.cloud*.3)/100,(c.cloudHigh??current.cloud*.2)/100);
  const s=sunPosition(state.time),m=moonPosition(state.time),ph=moonPhase(state.time),M=starToScene(state.time);uniforms.uSun.value.set(...sceneVector(s.azimuth,s.altitude));uniforms.uMoon.value.set(...sceneVector(m.azimuth,m.altitude));uniforms.uMoonInfo.value.set(ph.fraction,m.radius*RAD,m.altitude>0?ph.fraction*Math.min(1,Math.sin(m.altitude*RAD)/.3):0,Math.pow(1-ph.fraction,2));uniforms.uDark.value=clamp((-s.altitude-4)/14,0,1);uniforms.uExposure.value=1+uniforms.uDark.value*.25;uniforms.uGalactic.value.set(...matmul3(GALACTIC,transpose3(M)));uniforms.uGlow.value=.55;engine.sky.update({matrix:M,limit:6.2-(1-uniforms.uDark.value)*3,planets:[],figures:false});
- const horizon=state.sheet?innerHeight*.2:innerHeight*.415;engine.setShear((1-2*horizon/innerHeight)*.59+Math.tan(-11*RAD)*.84);
- updateFlatArc();
+ const horizon=state.sheet?innerHeight*(state.sheet==='sun'?.30:.20):innerHeight*.415;engine.setShear((1-2*horizon/innerHeight)*.59+Math.tan(-11*RAD)*.84);
+ updateFlatArc();updateSceneDetails();
 
 }
-function arcPoint(f){return{x:14+(innerWidth-28)*f,y:innerHeight*.414-Math.sin(f*Math.PI)*101};}
+function arcPoint(f){return{x:14+(innerWidth-28)*f,y:(state.sheet?innerHeight*.235:innerHeight*.414)-Math.sin(f*Math.PI)*(state.sheet?74:101)};}
 function updateFlatArc(){
  const h=(state.time-localDayStart(state.time))/HOUR,f=clamp((h-6)/13.333,0,1),p=arcPoint(f),points=Array.from({length:81},(_,i)=>arcPoint(i/80));
  const path=points.map((p,i)=>`${i?'L':'M'}${p.x},${p.y}`).join(' '),lit=points.slice(0,Math.max(2,Math.round(f*80)+1)).map((p,i)=>`${i?'L':'M'}${p.x},${p.y}`).join(' ');
  $('#time-arc').setAttribute('viewBox',`0 0 ${innerWidth} ${innerHeight}`);
  $('#time-arc').innerHTML=`<defs><filter id="trail-glow"><feGaussianBlur stdDeviation="3"/></filter></defs><path d="${path}" fill="none" stroke="#fff9e6" stroke-opacity=".68" stroke-width="1.2"/><path d="${lit}" fill="none" stroke="#ffd876" stroke-width="4" stroke-opacity=".65" filter="url(#trail-glow)"/><path d="${lit}" fill="none" stroke="#fff0bf" stroke-width="1.5"/>`+Array.from({length:14},(_,i)=>{const p=arcPoint(i/13.333),slope=-Math.cos(i/13.333*Math.PI)*101*Math.PI/(innerWidth-28),dx=-slope*3,dy=3;return`<path d="M${p.x-dx},${p.y-dy}L${p.x+dx},${p.y+dy}" stroke="#fffaeb" stroke-opacity=".65"/>`;}).join('');
- const handle=$('#sun-handle');handle.classList.remove('edge');handle.style.left=p.x+'px';handle.style.top=p.y+'px';
+ const handle=$('#sun-handle');handle.classList.remove('edge');handle.classList.toggle('right',p.x>innerWidth-110);handle.style.left=p.x+'px';handle.style.top=p.y+'px';
  $('#path-labels').innerHTML=[{f:0,t:'6a'},{f:6/13.333,t:'12p'},{f:12/13.333,t:'6p'}].map(a=>{const p=arcPoint(a.f);return`<span class="path-tick" style="left:${clamp(p.x,26,innerWidth-26)}px;top:${p.y-17}px">${a.t}</span>`;}).join('');
 }
+/* DAYBUOY_SCENE_UI */
 function metrics(){const c=conditions(),uv=review?c.uv:uvFor(state.data,state.time).at(state.time);return[['air','Air',Math.round(c.temperature)+'°'],['water','Water',Number.isFinite(c.sst)?Math.round(cToF(c.sst))+'°':'—'],['waves','Waves',c.swell.toFixed(c.swell<1?1:0)+' ft'],['wind','Wind',Math.round(c.wind)+' kt'],['sun','UV',Math.round(uv)+'']];}
 function burnMinutes(){if(review)return 42;return uvFor(state.data,state.time).minutesTo(state.time,burnThreshold(state.prefs.skin,0));}
 function renderUI(){
  const c=conditions(),h=(state.time-localDayStart(state.time))/HOUR,storm=c.weatherCode>=95||c.rain>=1,sunset=h>17&&h<20,night=sunPosition(state.time).altitude<0;
  $('#source-label').textContent=`${weekday(state.time).toUpperCase()} · ${review?'DESIGN PREVIEW':state.data.source==='sample'?'DEMO':state.data.source==='saved'?'SAVED':'FORECAST'}`;
+ $('#app').dataset.weather=storm?'storm':sunset?'sunset':'clear';
  $('#hero-temp').textContent=Math.round(c.temperature)+'°';$('#headline').textContent=storm?'Storms · 2–4 PM.':sunset?'Sunset · 8/10.':night?'Your beach after dark':c.wind<7?'Glassy & calm.':c.wind<14?'A little sea breeze':'Breezy on the beach';
  $('#sun-time').textContent=clock(state.time);$('#sun-handle').setAttribute('aria-valuenow',Math.round(h*60));$('#sun-handle').setAttribute('aria-valuetext',clock(state.time));
  const day=localDayStart(state.time),today=localDayStart(Date.now());$('#days').innerHTML=Array.from({length:7},(_,i)=>{const t=today+i*24*HOUR;return`<button data-day="${t}" aria-pressed="${day===t}" ${t>state.data.last?'disabled':''}>${i===0?'Today':weekday(t+12*HOUR)}</button>`;}).join('');
@@ -81,34 +83,30 @@ function renderUI(){
  action.dataset.action=storm?'storm':sunset?'remind':night?'tomorrow':'sun';
  if(state.sheet)renderSheet();
 }
-function chart(kind){
- const d=localDayStart(state.time),key={sun:'uv',water:'tide',waves:'swell',wind:'wind',air:'rainProbability'}[kind],points=Array.from({length:49},(_,i)=>{const t=d+(6+i/4)*HOUR,c=sampleAt(state.data.rows,t);return{t,v:kind==='sun'?uvFor(state.data,t).at(t):c?.[key]??0};}),values=points.map(p=>p.v),lo=kind==='water'?Math.min(...values):0,hi=Math.max(...values,lo+.1),scale=v=>57-(v-lo)/(hi-lo)*39;
- const coords=points.map((p,i)=>`${i*100/48},${scale(p.v)}`),line='M'+coords.join(' L'),area=line+' L100,70 L0,70 Z',f=clamp((state.time-d-6*HOUR)/(12*HOUR),0,1),v=kind==='sun'?uvFor(state.data,state.time).at(state.time):conditions()[key]??0,id='ribbon-'+kind;
- return`<div class="chart-wrap"><div class="chart-caption"><span>${{sun:'UV through the day',water:'Tide',waves:'Wave height',wind:'Wind through the day',air:'Rain chance'}[kind]}</span><span>${clock(state.time)}</span></div><div class="ribbon-control" role="slider" tabindex="0" aria-label="${kind} forecast time" aria-valuemin="360" aria-valuemax="1080" aria-valuenow="${Math.round((state.time-d)/MIN)}" data-ribbon="${kind}"><svg viewBox="0 0 100 70" preserveAspectRatio="none"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop stop-color="${kind==='sun'?'#f3a43a':'#54b6c2'}" stop-opacity=".96"/><stop offset="1" stop-color="#71daca" stop-opacity=".28"/></linearGradient></defs><path d="${area}" fill="url(#${id})"/><path d="${line}" fill="none" stroke="#f7ffed" stroke-width="1.3" vector-effect="non-scaling-stroke"/></svg><i class="chart-thumb" style="left:${f*100}%;top:${scale(v)}px"></i></div><div class="chart-hours"><span>6a</span><span>9a</span><span>12p</span><span>3p</span><span>6p</span></div></div>`;
-}
-function renderSheet(){
- const c=conditions(),k=state.sheet,title={air:'Sky / Air',water:'Water',waves:'Waves',wind:'Wind',sun:'Sun'}[k];
- const value=k==='sun'?`${Math.round(burnMinutes()??0)} min`:metrics().find(m=>m[0]===k)?.[2];
- const sub={air:`Feels ${Math.round(c.apparent??c.temperature)}°`,water:'Water temperature',waves:`${Math.round(c.period)} sec`,wind:`from ${compass(c.windDirection)} · Gusts ${Math.round(c.gust??c.wind)} kt`,sun:'Estimated time to burn'}[k];
- $('#sheet-content').innerHTML=`<h2 class="sheet-title">${title}</h2><p class="sheet-value">${value}</p><p class="sheet-sub">${sub}</p>${chart(k)}`;
-}
+/* DAYBUOY_SHEETS */
 function openSheet(k){state.sheet=k;$('#expanded-sheet').hidden=!k;$('#glass-dock').inert=!!k;$('#expanded-sheet').classList.toggle('sun-sheet',k==='sun');if(k)$('#app').dataset.sheet=k;else delete $('#app').dataset.sheet;state.dirty=true;}
 document.addEventListener('click',e=>{
  const metric=e.target.closest('[data-sheet]');if(metric?.classList.contains('metric'))openSheet(metric.dataset.sheet);
  const day=e.target.closest('[data-day]');if(day){const h=(state.time-localDayStart(state.time));setTime(Number(day.dataset.day)+h);}
  if(e.target.closest('.grab'))openSheet(null);
+ const hourly=e.target.closest('[data-hour-time]');if(hourly)setTime(Number(hourly.dataset.hourTime));
+ if(e.target.closest('[data-skin]')){state.prefs.skin=state.prefs.skin%6+1;state.dirty=true;}
+ if(e.target.closest('[data-spf]')){const list=[15,30,50];state.prefs.spf=list[(list.indexOf(state.prefs.spf)+1)%3];state.dirty=true;}
+ if(e.target.closest('[data-budget]')){const list=[15,20,25,30];state.prefs.budget=list[(list.indexOf(state.prefs.budget??25)+1)%4];state.dirty=true;}
+ if(e.target.closest('[data-start-tan]')){state.tanStarted=state.tanStarted?null:Date.now();state.dirty=true;}
+ if(e.target.closest('[data-skin],[data-spf],[data-budget]'))localStorage.setItem('daybuoy.prefs',JSON.stringify(state.prefs));
  if(e.target.closest('#moment-action')){const a=$('#moment-action').dataset.action;if(a==='sun')openSheet('sun');else if(a==='tomorrow'){setTime(localDayStart(state.time)+33*HOUR);}else if(a==='remind'){notice('Sunset reminder saved on this device.');localStorage.setItem('daybuoy.sunsetReminder',String(sunDay(state.time).sunset));}else openSheet('air');}
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')openSheet(null);if(e.target.matches('[role=slider]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();setTime(e.key==='Home'?localDayStart(state.time)+6*HOUR:e.key==='End'?localDayStart(state.time)+18*HOUR:state.time+(e.key==='ArrowLeft'?-15:15)*MIN);}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')openSheet(null);if(e.target.matches('[role=slider]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();setTime(e.key==='Home'?localDayStart(state.time)+6*HOUR:e.key==='End'?localDayStart(state.time)+20*HOUR:state.time+(e.key==='ArrowLeft'?-15:15)*MIN);}});
 let drag=null;
 document.addEventListener('pointerdown',e=>{
- const ribbon=e.target.closest('[data-ribbon]'),sun=e.target.closest('#sun-handle'),grab=e.target.closest('.grab');if(!ribbon&&!sun&&!grab)return;e.preventDefault();const target=ribbon||sun||grab;target.setPointerCapture(e.pointerId);drag={type:ribbon?'ribbon':sun?'sun':'grab',rect:target.getBoundingClientRect(),x:e.clientX,y:e.clientY,time:state.time,target};if(ribbon)dragTime(e);
+ const ribbon=e.target.closest('[data-ribbon]'),sun=e.target.closest('#sun-handle'),grab=e.target.closest('.grab');if(!ribbon&&!sun&&!grab)return;e.preventDefault();const target=ribbon||sun||grab;(grab?target:$('#app')).setPointerCapture(e.pointerId);drag={type:ribbon?'ribbon':sun?'sun':'grab',rect:target.getBoundingClientRect(),x:e.clientX,y:e.clientY,time:state.time,target};if(ribbon)dragTime(e);
 });
-function dragTime(e){if(!drag)return;if(drag.type==='ribbon'){const f=clamp((e.clientX-drag.rect.left)/drag.rect.width,0,1);setTime(localDayStart(state.time)+(6+12*f)*HOUR);}else if(drag.type==='sun'){setTime(localDayStart(state.time)+(6+13.333*clamp((e.clientX-14)/(innerWidth-28),0,1))*HOUR);}else if(e.clientY-drag.y>45){openSheet(null);drag=null;}}
+function dragTime(e){if(!drag)return;if(drag.type==='ribbon'){const f=clamp((e.clientX-drag.rect.left)/drag.rect.width,0,1);setTime(localDayStart(state.time)+(6+14*f)*HOUR);}else if(drag.type==='sun'){setTime(localDayStart(state.time)+(6+13.333*clamp((e.clientX-14)/(innerWidth-28),0,1))*HOUR);}else if(e.clientY-drag.y>45){openSheet(null);drag=null;}}
 document.addEventListener('pointermove',e=>{if(drag){e.preventDefault();dragTime(e);}}, {passive:false});document.addEventListener('pointerup',()=>drag=null);document.addEventListener('pointercancel',()=>drag=null);
 async function refresh(){if(review)return;try{const data=await loadForecast();if(data.source==='live'){adopt(data);saveForecast(data);}else if(state.data.source==='sample')adopt(data);}catch(e){console.warn('Forecast refresh unavailable',e);}}
-function frame(now){requestAnimationFrame(frame);const dt=Math.min((now-frameTime)/1000,.05);frameTime=now;if(document.hidden)return;if(state.live)state.time=Date.now();if(!reduced){uniforms.uTime.value+=dt;uniforms.uPhase.value+=dt/Math.max(2,current.period);}applyScene(dt);if(engine)engine.render(reduced?0:dt);const minute=Math.floor(state.time/MIN);if(minute!==lastUI||state.dirty){lastUI=minute;state.dirty=false;renderUI();}if(engine)$('#loading').hidden=true;}
+function frame(now){requestAnimationFrame(frame);const dt=Math.min((now-frameTime)/1000,.05);frameTime=now;if(document.hidden||state.capture)return;if(state.live)state.time=Date.now();if(state.tanStarted&&Math.floor(now/1000)!==ui.timerSecond){ui.timerSecond=Math.floor(now/1000);state.dirty=true;}if(!reduced){uniforms.uTime.value+=dt;uniforms.uPhase.value+=dt/Math.max(2,current.period);}applyScene(dt);if(engine)engine.render(reduced?0:dt);const minute=Math.floor(state.time/MIN);if(minute!==lastUI||state.dirty){lastUI=minute;state.dirty=false;renderUI();}if(engine)$('#loading').hidden=true;}
 refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);
 if(['sun','water','waves','wind','air'].includes(q.get('sheet')))openSheet(q.get('sheet'));
-window.__daybuoy={state,engine,uniforms,setTime,setHour,openSheet,conditions,refresh,reviewData,renderUI,renderForCapture(h){setHour(h);applyScene(10);renderUI();engine.render(0);}};window.__ocean=window.__daybuoy;
+window.__daybuoy={state,engine,uniforms,setTime,setHour,openSheet,conditions,refresh,reviewData,renderUI,renderForCapture(h){state.capture=true;setHour(h);applyScene(10);renderUI();engine.render(0);}};window.__ocean=window.__daybuoy;
 })();
