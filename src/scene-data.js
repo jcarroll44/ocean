@@ -55862,6 +55862,7 @@ precision highp float;
 uniform vec2 uResolution;
 uniform float uTime,uHour,uSwell,uWind,uCloud,uPeriod,uPhase,uRain,uVisibility,uTide,uDirection,uWindDirection;
 uniform vec3 uSun;
+uniform vec3 uCamera;
 uniform vec3 uCloudLayers;   // forecast low / mid / high fractions, not cloud types
 uniform float uCloudQuality;
 uniform sampler2D uShoreMemory;
@@ -56312,7 +56313,7 @@ const backgroundFragment = environment+waves+waterLight+`
 varying vec2 vUv;
 void main(){
  vec2 uv=vUv*2.0-1.0;uv.x*=uResolution.x/uResolution.y;
- vec3 ro=vec3(0,10.0,26.0);vec3 l=normalize(vec3(uv.x*.59/uZoom,(uv.y*.59-uShear)/uZoom,-1));
+ vec3 ro=uCamera;vec3 l=normalize(vec3(uv.x*.59/uZoom,(uv.y*.59-uShear)/uZoom,-1));
  // Camera pitch (about the camera's right axis), then yaw about +Y
  // (positive turns right, toward +X). Matches the THREE camera exactly.
  float cp=cos(uPitch),sp=sin(uPitch);l=vec3(l.x,l.y*cp-l.z*sp,l.y*sp+l.z*cp);
@@ -56606,6 +56607,7 @@ function createOcean(canvas,uniforms,onError){
  if(!uniforms.uMoon)uniforms.uMoon={value:new THREE.Vector3(0,-1,0)};
  if(!uniforms.uMoonInfo)uniforms.uMoonInfo={value:new THREE.Vector4(0,.00454,0,0)};
  if(!uniforms.uGalactic)uniforms.uGalactic={value:new THREE.Matrix3()};
+ uniforms.uCamera={value:new THREE.Vector3(0,10,26)};
  uniforms.uFoamOrigin={value:new THREE.Vector2(-70,-60)};
  let incomingModes=[];
  const depthTexture=new THREE.DataTexture(new Float32Array(DEPTH_SAMPLES*SWELL_COUNT*4),DEPTH_SAMPLES,SWELL_COUNT,THREE.RGBAFormat,THREE.FloatType);
@@ -56644,7 +56646,7 @@ function createOcean(canvas,uniforms,onError){
  // camera level: no vertical perspective distortion on the shoreline.
  camera.position.set(0,10,26);camera.lookAt(0,10,-100);
  const lens=()=>{camera.fov=2*Math.atan(.59/uniforms.uZoom.value)*180/Math.PI;camera.updateProjectionMatrix();camera.projectionMatrix.elements[9]=-uniforms.uShear.value/.59;camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();};
- const aim=(yaw,pitch=0)=>{const c=Math.cos(pitch);camera.position.set(0,10,26);camera.lookAt(108*Math.sin(yaw)*c,10+108*Math.sin(pitch),26-108*Math.cos(yaw)*c);camera.updateMatrixWorld();};
+ const aim=(yaw,pitch=0)=>{const c=Math.cos(pitch),p=uniforms.uCamera.value;camera.position.copy(p);camera.lookAt(p.x+108*Math.sin(yaw)*c,p.y+108*Math.sin(pitch),p.z-108*Math.cos(yaw)*c);camera.updateMatrixWorld();};
  const quad=new THREE.Mesh(new THREE.PlaneGeometry(2,2),new THREE.ShaderMaterial({uniforms,vertexShader:quadVertex,fragmentShader:backgroundFragment,depthTest:false,depthWrite:false}));
  quad.frustumCulled=false;quad.renderOrder=-100;scene.add(quad);
  const mobile=window.innerWidth<700;
@@ -56672,11 +56674,11 @@ function createOcean(canvas,uniforms,onError){
    const calmZ=iz<=split?9-iz/split*64:-55-(iz-split)/(nz-split)*165;
    const roughZ=iz<=384?9-iz/384*89:-80-(iz-384)/(nz-384)*140;
    const z=calmZ+(roughZ-calmZ)*gridMix;
-   const width=8+Math.max(0,26-z)*.59/Math.min(1,uniforms.uZoom.value)*aspect*1.15;   // widens with a wide-angle lens
+   const width=8+Math.max(0,uniforms.uCamera.value.z-z)*.59/Math.min(1,uniforms.uZoom.value)*aspect*1.15;   // widens with a wide-angle lens
    // Rows are laid out in the camera frame, then turned with the view, so
    // the grid always covers the visible water. At zero yaw this is exact.
-   const lx=sx*width,f=26-z;
-   const i=(iz*(nx+1)+ix)*3;verts[i]=lx*cy+f*sy;verts[i+1]=0;verts[i+2]=26+lx*sy-f*cy;
+   const lx=sx*width,f=uniforms.uCamera.value.z-z;
+   const i=(iz*(nx+1)+ix)*3;verts[i]=uniforms.uCamera.value.x+lx*cy+f*sy;verts[i+1]=0;verts[i+2]=uniforms.uCamera.value.z+lx*sy-f*cy;
   }
  };
  fillVertices(window.innerWidth/window.innerHeight);
@@ -56699,13 +56701,23 @@ function createOcean(canvas,uniforms,onError){
  let initialized=false,yaw=0,pitch=0;
  return {
   renderer,camera,sky,buoy,
+  setPose(x,y,z,lookYaw,lookPitch,zoom,shear){
+   const moved=Math.abs(uniforms.uCamera.value.x-x)+Math.abs(uniforms.uCamera.value.z-z)>.01;
+   uniforms.uCamera.value.set(x,y,z);
+   const turn=Math.abs(yaw-lookYaw)>.0001;yaw=lookYaw;pitch=lookPitch;
+   uniforms.uYaw.value=yaw;uniforms.uPitch.value=pitch;
+   const changed=Math.abs(uniforms.uZoom.value-zoom)+Math.abs(uniforms.uShear.value-shear)>.0001;
+   uniforms.uZoom.value=zoom;uniforms.uShear.value=shear;if(changed)lens();
+   if(moved||turn||changed){fillVertices(gridAspect,yaw);geo.attributes.position.needsUpdate=true;}
+   aim(yaw,pitch);
+  },
   setView(y,p=pitch){
    if(y!==yaw){yaw=y;fillVertices(gridAspect,yaw);geo.attributes.position.needsUpdate=true;}
    pitch=p;uniforms.uYaw.value=yaw;uniforms.uPitch.value=pitch;aim(yaw,pitch);
   },
   // Screen position of a scene direction; null when behind the camera.
   project(dir){
-   const v=new THREE.Vector3(dir[0]*1000,dir[1]*1000+10,dir[2]*1000+26).project(camera);
+   const v=new THREE.Vector3(...dir).multiplyScalar(1000).add(uniforms.uCamera.value).project(camera);
    return v.z>1?null:{x:(v.x+1)/2,y:(1-v.y)/2};
   },
   resize(w,h,scale){sky.resize(scale);fillVertices(w/h,yaw);geo.attributes.position.needsUpdate=true;renderer.setPixelRatio(scale);renderer.setSize(w,h,false);camera.aspect=w/h;lens();},
