@@ -12,9 +12,9 @@ This branch owns the new DayBuoy interface and sun camera. Never push these prev
 - `src/style.css`, `src/index.html`, `src/font.css`: new glass UI and rounded type.
 - `npm run build` creates self-contained `dist/index.html`; the same built bytes are committed as root `index.html` on GitHub app-v2.
 
-The old tabs, panels and sheets are removed from the runtime. Sun opens to 40%; other sheets 55%. Skin/SPF and a user-set tanning budget persist locally. SPF never extends the unprotected burn estimate. The tanning timer is page-local, not a background notification service. The sunset reminder is saved locally; push/calendar delivery remains outside this UI implementation.
+The old tabs, panels and sheets are removed from the runtime. Sun opens to 40%; other sheets 55%. Skin/SPF and a user-set tanning budget persist locally. SPF never extends the unprotected burn estimate. The tanning timer is page-local, not a background notification service. The sunset action exports a real calendar event with a 15-minute alarm, using the phone share sheet when supported and a .ics download otherwise. The user must import the event; the app does not claim a notification has been scheduled. Past reminders and design-preview reminders are explicitly identified.
 
-Normal mode uses the existing current-day forecast loader and labelled fallbacks. `?review=1&hour=9` uses clearly labelled illustrative conditions on Saturday September 19, 2026, so the three reference times correspond to the intended solar framing. Review-only rip risk, visibility and set count are not presented as live measurements in normal mode.
+Normal mode uses the existing current-day forecast loader and labelled fallbacks. Live storm windows and sunset scores come from retained forecast/astronomy data. The source label becomes Back to now after time travel. `?review=1&hour=9` uses clearly labelled illustrative conditions on Saturday September 19, 2026, so the three reference times correspond to the intended solar framing. Review-only rip risk, visibility and set count are not presented as live measurements in normal mode.
 
 ## Verification and limits
 

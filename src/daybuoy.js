@@ -7,7 +7,7 @@ const {loadForecast,finalize,savedForecast,saveForecast}=__mods['forecast.js'];
 const {sampleForecast}=__mods['sample.js'];
 const {sunPosition,sunDay,localDayStart,sceneVector,moonPosition,moonPhase,starToScene,GALACTIC,matmul3,transpose3}=__mods['astro.js'];
 const {sampleAt,compass}=__mods['conditions.js'];
-const {uvFor}=__mods['model.js'];
+const {uvFor,sunsetFor}=__mods['model.js'];
 const {burnThreshold}=__mods['uv.js'];
 const {clock,weekday,cToF}=__mods['format.js'];
 const $=s=>document.querySelector(s),HOUR=3600000,MIN=60000,RAD=Math.PI/180;
@@ -53,16 +53,38 @@ function applyScene(dt){
 /* DAYBUOY_SCENE_UI */
 function metrics(){const c=conditions(),uv=review?c.uv:uvFor(state.data,state.time).at(state.time);return[['air','Air',Math.round(c.temperature)+'°'],['water','Water',Number.isFinite(c.sst)?Math.round(cToF(c.sst))+'°':'—'],['waves','Waves',c.swell.toFixed(c.swell<1?1:0)+' ft'],['wind','Wind',Math.round(c.wind)+' kt'],['sun','UV',Math.round(uv)+'']];}
 function burnMinutes(){if(review)return 42;return uvFor(state.data,state.time).minutesTo(state.time,burnThreshold(state.prefs.skin,0));}
+const isStorm=c=>c.weatherCode>=95||c.rain>=1;
+function stormWindow(){
+ const rows=state.data.rows,d=localDayStart(state.time);let i=rows.findIndex(r=>r.time>=state.time);if(i<0)i=rows.length-1;
+ if(!isStorm(rows[i])&&i>0)i--;if(!isStorm(rows[i]))return clock(state.time).replace(':00','');
+ let first=i,last=i;while(first>0&&rows[first-1].time>=d&&isStorm(rows[first-1]))first--;while(last+1<rows.length&&rows[last+1].time<d+24*HOUR&&isStorm(rows[last+1]))last++;
+ const a=clock(rows[first].time).replace(':00',''),b=clock(Math.min(rows[last].time+HOUR,d+24*HOUR)).replace(':00','');
+ return `${a.slice(-2)===b.slice(-2)?a.slice(0,-3):a}–${b}`;
+}
+async function sunsetReminder(){
+ const sunset=sunDay(state.time).sunset;
+ if(review){notice('Design preview. Open the current forecast to add a reminder.');return;}
+ if(!sunset||sunset-15*MIN<=Date.now()){notice('This reminder time has passed. Choose a future day.');return;}
+ const stamp=t=>new Date(t).toISOString().replace(/[-:]/g,'').replace(/\.\d{3}Z$/,'Z');
+ const content=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//DayBuoy//Sunset//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT',`UID:inlet-sunset-${sunset}@daybuoy`, `DTSTAMP:${stamp(Date.now())}`,`DTSTART:${stamp(sunset)}`,`DTEND:${stamp(sunset+30*MIN)}`,'SUMMARY:Sunset at Inlet Beach','LOCATION:Inlet Beach','DESCRIPTION:Your DayBuoy sunset. Arrive 15 minutes early.','BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY','DESCRIPTION:Sunset in 15 minutes','END:VALARM','END:VEVENT','END:VCALENDAR',''].join('\r\n');
+ const file=new File([content],'DayBuoy-Sunset.ics',{type:'text/calendar'});
+ try{
+  if(navigator.canShare?.({files:[file]})){await navigator.share({files:[file],title:'DayBuoy sunset'});notice('Open the calendar file to add your reminder.');}
+  else{const url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=file.name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);notice('Open the downloaded calendar file to add your reminder.');}
+ }catch(e){if(e.name!=='AbortError')notice('Could not open the calendar file. Please try again.');}
+}
 function renderUI(){
- const c=conditions(),h=(state.time-localDayStart(state.time))/HOUR,storm=c.weatherCode>=95||c.rain>=1,sunset=h>17&&h<20,night=sunPosition(state.time).altitude<0;
+ const c=conditions(),h=(state.time-localDayStart(state.time))/HOUR,storm=isStorm(c),sunsetTime=sunDay(state.time).sunset,sunset=review?h>17&&h<20:!!sunsetTime&&state.time>=sunsetTime-90*MIN&&state.time<=sunsetTime+25*MIN,night=sunPosition(state.time).altitude<0;
  $('#source-label').textContent=`${weekday(state.time).toUpperCase()} · ${review?'DESIGN PREVIEW':state.data.source==='sample'?'DEMO':state.data.source==='saved'?'SAVED':'FORECAST'}`;
+ $('#source-label').disabled=review||state.live;$('#source-label').setAttribute('aria-label',review?'Design preview':state.live?'Current forecast':'Return to current time');if(!review&&!state.live)$('#source-label').innerHTML+='<small>Back to now</small>';
  $('#app').dataset.weather=storm?'storm':sunset?'sunset':'clear';
- $('#hero-temp').textContent=Math.round(c.temperature)+'°';$('#headline').textContent=storm?'Storms · 2–4 PM.':sunset?'Sunset · 8/10.':night?'Your beach after dark':c.wind<7?'Glassy & calm.':c.wind<14?'A little sea breeze':'Breezy on the beach';
+ const sunsetScore=sunset?(review?8:sunsetFor(state.data,state.time).score?.score):null;
+ $('#hero-temp').textContent=Math.round(c.temperature)+'°';$('#headline').textContent=storm?(review?'Storms · 2–4 PM.':`${c.weatherCode>=95?'Storms':'Rain'} · ${stormWindow()}.`):sunset?(sunsetScore==null?'Sunset on the water.':`Sunset · ${Math.round(sunsetScore)}/10.`):night?'Your beach after dark':c.wind<7?'Glassy & calm.':c.wind<14?'A little sea breeze':'Breezy on the beach';
  $('#sun-time').textContent=clock(state.time);$('#sun-handle').setAttribute('aria-valuenow',Math.round(h*60));$('#sun-handle').setAttribute('aria-valuetext',clock(state.time));
  const day=localDayStart(state.time),today=localDayStart(review?reviewNow:Date.now());$('#days').innerHTML=Array.from({length:7},(_,i)=>{const t=today+i*24*HOUR;return`<button data-day="${t}" aria-pressed="${day===t}" ${t>state.data.last?'disabled':''}>${i===0?'Today':weekday(t+12*HOUR)}</button>`;}).join('');
  $('#metrics').innerHTML=metrics().map(([key,name,v])=>`<button class="metric" data-sheet="${key}" aria-label="${name}, ${v}. Open details"><strong>${v.replace(/ (ft|kt)$/,'<em>$1</em>')}</strong><small>${name.toUpperCase()}</small></button>`).join('');
  const action=$('#moment-action'),burn=burnMinutes();action.classList.toggle('storm',storm);
- action.innerHTML=storm?`${icon('storm')}<span class="action-copy">Storm warning · Head indoors</span>`:sunset?`${icon('bell')}<span class="action-copy">Remind me at ${review?'6:25':clock((sunDay(state.time).sunset||state.time)-15*MIN)}</span>`:night?`${icon('sun')}<span class="action-copy">See tomorrow's sun</span>`:`${icon('sun')}<span class="action-copy">Tan · ${burn==null?'UV below 1':`burn in ${Math.round(burn)} min`}</span><span class="action-end">Start</span>`;
+ action.innerHTML=storm?`${icon('storm')}<span class="action-copy">${review?'Storm warning · Head indoors':c.weatherCode>=95?'Thunderstorms · Head indoors':'Rain · View forecast'}</span>`:sunset?`${icon('bell')}<span class="action-copy">Remind me at ${review?'6:25':clock((sunDay(state.time).sunset||state.time)-15*MIN)}</span>`:night?`${icon('sun')}<span class="action-copy">See tomorrow's sun</span>`:`${icon('sun')}<span class="action-copy">Tan · ${burn==null?'UV below 1':`burn in ${Math.round(burn)} min`}</span><span class="action-end">Start</span>`;
  action.dataset.action=storm?'storm':sunset?'remind':night?'tomorrow':'sun';
  if(state.sheet)renderSheet();
  $('#watch-day').innerHTML=state.playing?`${state.paused?'▶':'Ⅱ'} · ${clock(state.time)}`:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5 13 8 4 13.5z" fill="currentColor"/></svg>Watch the day';$('#watch-close').hidden=!state.playing;
@@ -70,6 +92,7 @@ function renderUI(){
 /* DAYBUOY_SHEETS */
 function openSheet(k){state.sheet=k;$('#expanded-sheet').hidden=!k;$('#glass-dock').inert=!!k;$('#expanded-sheet').classList.toggle('sun-sheet',k==='sun');if(k)$('#app').dataset.sheet=k;else delete $('#app').dataset.sheet;state.dirty=true;}
 document.addEventListener('click',e=>{
+ if(e.target.closest('#source-label')&&!review){if(state.playing)stopWatch(false);setTime(Date.now(),{live:true});}
  const metric=e.target.closest('[data-sheet]');if(metric?.classList.contains('metric'))openSheet(metric.dataset.sheet);
  const day=e.target.closest('[data-day]');if(day){const h=(state.time-localDayStart(state.time));setTime(Number(day.dataset.day)+h);}
  if(e.target.closest('.grab'))openSheet(null);
@@ -80,7 +103,7 @@ document.addEventListener('click',e=>{
  if(e.target.closest('[data-start-tan]')){state.tanStarted=state.tanStarted?null:Date.now();state.dirty=true;}
  if(e.target.closest('[data-skin],[data-spf],[data-budget]'))localStorage.setItem('daybuoy.prefs',JSON.stringify(state.prefs));
  if(e.target.closest('#watch-day')){if(state.playing){state.paused=!state.paused;state.playStart=performance.now()-state.playProgress*20000;state.dirty=true;}else startWatch();}if(e.target.closest('#watch-close'))stopWatch(true);
- if(e.target.closest('#moment-action')){const a=$('#moment-action').dataset.action;if(a==='sun')openSheet('sun');else if(a==='tomorrow'){setTime(localDayStart(state.time)+33*HOUR);}else if(a==='remind'){notice('Sunset reminder saved on this device.');localStorage.setItem('daybuoy.sunsetReminder',String(sunDay(state.time).sunset));}else openSheet('air');}
+ if(e.target.closest('#moment-action')){const a=$('#moment-action').dataset.action;if(a==='sun')openSheet('sun');else if(a==='tomorrow'){setTime(localDayStart(state.time)+33*HOUR);}else if(a==='remind')sunsetReminder();else openSheet('air');}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(state.playing)stopWatch(true);else openSheet(null);}if(e.target.matches('[role=slider]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();setTime(e.key==='Home'?localDayStart(state.time)+6*HOUR:e.key==='End'?localDayStart(state.time)+20*HOUR:state.time+(e.key==='ArrowLeft'?-15:15)*MIN);}});
 let drag=null;
