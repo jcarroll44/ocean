@@ -11,6 +11,7 @@ import {ProfileRun,profileMetadata} from './profile.js';
 import {loopMode,FrameGate,LoopProbe,clearFrame} from './loop-profile.js';
 import {FramePipeline,throttleReadbacks} from './pipeline.js';
 import {PIPE_PASSES,CompletedProfileRun} from './pipeline-profile.js';
+import {AdaptiveResolution,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
@@ -21,12 +22,14 @@ try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
+ const settings=app.profileConfig??PRODUCTION_SETTINGS;
+ const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
   beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);
-  app.engine.setRenderScale(app.profileConfig?.dpr??2);app.activeQuality={...app.activeQuality,dpr:app.profileConfig?.dpr??2};
+  app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
   app.proofFlare=app.post.flare;
-  if(app.profileConfig?.pass==='native-fxaa'||app.profileConfig?.aa==='fxaa')app.post.aaMode='fxaa';
+  if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
   if(app.profileConfig?.pass==='native-flare'||app.profileConfig?.flare===false)app.post.flare=null;
   await prepare();
  };
@@ -61,6 +64,7 @@ try{
  const mode={...loopMode(app.profileConfig?.pass),...(pipelined?{wait:false}:{}),pipelined};
  const gate=pipelined?new FramePipeline({queue:GPU.queue,onComplete:e=>tick(e.now,e.count),onError:fail}):new FrameGate(mode.wait);
  const readbackThrottle=pipelined?throttleReadbacks(app,GPU):null;
+ if(adaptive&&!profileRun)document.addEventListener('visibilitychange',()=>adaptive.resetWindow());
  if(profileRun){probe=new LoopProbe(profileRun,mode);probe.readbacks(app);}
  GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);
@@ -92,28 +96,40 @@ try{
    if(!mode.wait){send({status:'loading',label:'Measurement finished · draining queued GPU work'});const start=performance.now();if(pipelined)await gate.drain();else await GPU.queue.onSubmittedWorkDone();queueDrainMs=performance.now()-start;}
    send({status:'profile-result',result:{...result,...profileMetadata(app,app.profileConfig,G,GPU,
     [app.engine.canvas.width,app.engine.canvas.height],'one native WebGPU renderer; zero external image/layer copies'),
-    ...probe.result(),queueDrainMs,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{}),...(mode.empty?{oceanVisible:false,sprayVisible:false,breakerVisible:false}:{}),
+    ...probe.result(),queueDrainMs,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{}),...(adaptive?{adaptiveResolution:adaptive.result()}:{}),...(mode.empty?{oceanVisible:false,sprayVisible:false,breakerVisible:false}:{}),
     drainNote:pipelined?'Final drain is outside the measured window and does not increase measured completed-frame counts.':'One final queue drain for rAF cases; its duration exposes backlog. Submission/rAF FPS is not GPU-completed or displayed FPS.'}});
   }catch(e){fail(e);}
  }
  function tick(now,count=1){
+  if(!capturing&&!profileRun?.done)adaptive?.observe(now,count);
   completed.push({now,count});while(completed.length&&completed[0].now<now-3000)completed.shift();
   const result=profileRun?.observe(now,count);if(result)void finish(result);
   if(now-lastReport>1000){const fps=completed.reduce((n,e)=>n+e.count,0)/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:pipelined?'gpu-completed-pipelined':mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{})});}
  }
  const api=window.__daybuoyOcean={
-  get ready(){return !failed&&!gate.busy&&!capturing&&!profileRun?.done;},get canvas(){return app.engine.canvas;},pin:PIN,
+  get ready(){
+   if(failed||capturing||profileRun?.done)return false;
+   try{
+    if(adaptive&&!adaptive.prepare(performance.now(),gate.inFlight,dpr=>{
+     app.engine.setRenderScale(dpr);app.activeQuality={...app.activeQuality,dpr};app.post.taau._needsRestart=true;
+     return [app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height];
+    }))return false;
+   }catch(e){fail(e);return false;}
+   return !gate.busy;
+  },get canvas(){return app.engine.canvas;},pin:PIN,
   profileFrameStart(timestamp,origin){if(probe&&!profileRun.done){rafTime=timestamp+origin-performance.timeOrigin;probe.begin(rafTime,gate.busy);}},
   profileFrameEnd(cpuMs){probe?.end(cpuMs);},
   async capturePair(){
    if(profileRun)throw Error('Use the separate capture page; never record during an FPS test');
-   capturing=true;try{if(pipelined)await gate.drain();return await captureNativePair({app,beach,overlays,G,GPU});}finally{capturing=false;}
+   capturing=true;try{if(pipelined)await gate.drain();return await captureNativePair({app,beach,overlays,G,GPU});}finally{capturing=false;adaptive?.resetWindow();}
   },
   draw(p){
-   if(failed||gate.busy||capturing||profileRun?.done)return false;
+   if(failed||gate.busy||capturing||profileRun?.done||adaptive?.pending)return false;
    const cpuStart=performance.now();
    applyPacket(p);
-   if(profileRun){
+   if(adaptive){
+    try{adaptive.verifyFrame(innerWidth,innerHeight,[app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height]);}catch(e){fail(e);return false;}
+   }else if(profileRun){
     const d=app.profileConfig.dpr,w=Math.floor(innerWidth*d),h=Math.floor(innerHeight*d);
     const actual=[app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height];
     const valid=actual.every((v,i)=>v===(i%2?h:w));

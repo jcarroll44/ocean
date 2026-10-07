@@ -4,8 +4,10 @@ import {PIPE_PASSES,pipelineSettings} from './pipeline-profile.js';
 export {LOOP_PASSES};
 export {PIPE_PASSES};
 export {comboQuery,chooseCombo,chooseSustained} from './pipeline-profile.js';
+export {ADAPTIVE_PASS,validateAdaptiveResult} from './adaptive-resolution.js';
 export const NATIVE_PASSES=['native','native175','native15','native-fxaa','native-flare'];
 export const PASSES = [
+ ['native-adaptive','Production adaptive · 120 s','Starts DPR 1.5, FXAA, lens flare on. Confirmed GPU completions in 1-second windows control 0.05 DPR steps: below 32 down, above 38 up, otherwise hold. Bounds 1.25–1.6. Resize only after outstanding frames finish; pauses stay in the measurement. Full High waves.'],
  ['native-pipe','Pipelined · DPR 2','Production loop: max 2 outstanding frames, asynchronous GPU-completed counter, water CPU readback at most every fourth submitted frame and atmosphere at most 4 Hz. Full High waves, TAA and lens flare at DPR 2.'],
  ['native-pipe175','Pipelined · DPR 1.75','Same production pipeline and readbacks; only DPR changes to 1.75.'],
  ['native-pipe15','Pipelined · DPR 1.5','Same production pipeline and readbacks; only DPR changes to 1.5.'],
@@ -44,7 +46,7 @@ export const PASSES = [
  ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
  ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-pipeline-1';
+export const PROFILE_REVISION='2026-10-07-adaptive-1';
 export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
 export function hostCuts(config){
  const pass=config?.pass,all=pass==='host-all';

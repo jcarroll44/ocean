@@ -1,6 +1,8 @@
-export const PIPE_PASSES=['native-pipe','native-pipe175','native-pipe15','native-pipe-fxaa','native-pipe-flare','native-pipe-combo'];
+import {ADAPTIVE_PASS,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
+export const PIPE_PASSES=['native-pipe','native-pipe175','native-pipe15','native-pipe-fxaa','native-pipe-flare','native-pipe-combo',ADAPTIVE_PASS];
 export function pipelineSettings(pass,q=new URLSearchParams()){
  if(!PIPE_PASSES.includes(pass))return null;
+ if(pass===ADAPTIVE_PASS)return {...PRODUCTION_SETTINGS,adaptive:true};
  if(pass==='native-pipe-combo'){
   const dpr=Number(q.get('profile-dpr')??2),aa=q.get('profile-aa')??'taa',flare=q.get('profile-flare')??'1';
   if(![2,1.75,1.5].includes(dpr)||!['taa','fxaa'].includes(aa)||!['0','1'].includes(flare))throw Error('Invalid pipeline combination');
@@ -42,7 +44,7 @@ export class CompletedProfileRun{
   for(const e of this.events){const i=Math.floor((e.now-this.start)/1000);if(i<bins.length)bins[i]+=e.count;}
   const sorted=this.events.map(e=>e.gap).sort((a,b)=>a-b),q=p=>sorted[Math.ceil(sorted.length*p)-1];
   const frames=this.events.reduce((n,e)=>n+e.count,0),min=Math.min(...bins);
-  return {pass:this.config.pass,duration,frames,fps:frames/duration,minOneSecondFPS:min,oneSecondFPS:bins,
+  return {pass:this.config.pass,duration,frames,fps:frames/duration,minOneSecondFPS:min,oneSecondFPS:bins,secondsUnder30:bins.filter(fps=>fps<30).length,
    metric:'gpu-completed-pipelined',measurement:'Frames covered by resolved asynchronous GPU queue fences; max 2 outstanding. Notification timestamps are CPU delivery times, not individual GPU timestamps or display scanout.',
    p95CompletionGapMs:q(.95),p99CompletionGapMs:q(.99),maxCompletionGapMs:sorted.at(-1),
    completionNotifications:this.events.length,maxCompletionBatch:Math.max(...this.events.map(e=>e.count)),

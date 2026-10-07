@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,hostCuts,installHostRuntime} from '../ocean-proof/proof/profile.js';
+import {PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,ADAPTIVE_PASS,validateAdaptiveResult,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,hostCuts,installHostRuntime} from '../ocean-proof/proof/profile.js';
+import {AdaptiveResolution} from '../ocean-proof/proof/adaptive-resolution.js';
 import {SunShadows} from '../ocean-proof/vendor/tidewater/src/engine/render/Shadows.js';
 import {ShadowUniforms} from '../ocean-proof/vendor/tidewater/src/engine/render/wgsl/lighting.js';
 const noop=()=>{};
@@ -28,7 +29,7 @@ function runner(mode='round3'){
  const elements=new Map(),events={},timeouts=[];
  const node=()=>({style:{},append(){},replaceChildren(){},contentWindow:{}});
  const $=id=>elements.get(id)||elements.set(id,node()).get(id);
- const c={PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
+ const c={PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,ADAPTIVE_PASS,validateAdaptiveResult,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
  vm.createContext(c);vm.runInContext(source,c);$(mode).onclick();
  return {$,c,events,timeouts,result(pass,overrides={}){const r={pass,config:profileConfig('?ocean-profile=1&profile-pass='+pass),fps:30,minOneSecondFPS:30,p95FrameMs:33,resolution:[780,1378],output:[780,1378],resolutionVerifiedEveryFrame:true,oceanVisible:true,sprayVisible:true,breakerVisible:true,...overrides};events.message({origin:c.location.origin,source:$('stage').contentWindow,data:{type:'daybuoy-profile',status:'profile-result',result:r}});}};
 }
@@ -74,4 +75,18 @@ pipeResult(piped,35);piped.timeouts.at(-1)();
 assert(piped.$('stage').src.includes('profile-pass=native-pipe175'));assert(piped.$('stage').src.includes('profile-seconds=120'));
 pipeResult(piped,31);piped.timeouts.at(-1)();assert.equal(piped.$('stage').src,'about:blank');assert.equal(piped.$('captureCandidate').hidden,false);assert(piped.$('captureCandidate').href.includes('native-pipe175'));
 for(const overrides of [{metric:'raf-submitted'},{pipeline:{maxFramesInFlight:3,maxObservedInFlight:3,outstanding:0}},{readbackThrottle:{waterMinFrameInterval:1}},{nativePost:{aa:'fxaa',lensFlare:true}},{oceanVisible:false}]){const invalid=runner('pipeline');pipeResult(invalid,40,overrides);assert(invalid.$('error').textContent);}
+// Round 7 audits adaptive changes but keeps every legacy fixed-DPR rejection.
+const ar=new AdaptiveResolution();ar.observe(0,31);ar.prepare(1000,0,d=>[Math.floor(390*d),Math.floor(689*d),Math.floor(390*d),Math.floor(689*d)]);
+const adaptiveSize=[565,999];for(let i=0;i<900;i++)ar.verifyFrame(390,689,[...adaptiveSize,...adaptiveSize]);
+const adaptiveRow={adaptiveResolution:ar.result(),duration:120.01,oneSecondFPS:Array(120).fill(36),minOneSecondFPS:36,secondsUnder30:0,meetsCadenceTarget:true,resolution:adaptiveSize,output:adaptiveSize};
+for(const slow of [false,true]){
+ const r=runner('adaptive'),row=structuredClone(adaptiveRow);
+ if(slow){row.oneSecondFPS[71]=28;row.minOneSecondFPS=28;row.secondsUnder30=1;row.meetsCadenceTarget=false;}
+ assert(r.$('stage').src.includes('profile-pass=native-adaptive&profile-seconds=120'));
+ pipeResult(r,36,row);assert.equal(r.$('error').textContent,'');r.timeouts.at(-1)();assert.equal(r.$('stage').src,'about:blank');
+ assert(r.$('captureCandidate').href.includes('profile-pass=native-pipe-combo&profile-dpr=1.5&profile-aa=fxaa&profile-flare=1'));
+}
+for(const alter of [r=>r.adaptiveResolution=null,r=>r.output=[780,1378],r=>r.adaptiveResolution.policy.floor=1,r=>r.adaptiveResolution.changes[0].inFlight=1,r=>r.adaptiveResolution.changes[0].fps=40,r=>r.adaptiveResolution.verifiedFrames=899,r=>r.nativePost={aa:'taa',lensFlare:true},r=>r.oneSecondFPS[5]=28,r=>r.config={...profileConfig('?ocean-profile=1&profile-pass=native-adaptive&profile-seconds=120'),adaptive:false}]){
+ const r=runner('adaptive'),row=structuredClone(adaptiveRow);alter(row);pipeResult(r,36,row);assert(r.$('error').textContent);
+}
 console.log('PASS: six DPR-2 host cases; ocean update functions untouched; actual disabled-shadow uniform path; first-frame atmosphere prime; direct-proof routing; rejection of stale/DPR/hidden-ocean results. CPU/source only.');
