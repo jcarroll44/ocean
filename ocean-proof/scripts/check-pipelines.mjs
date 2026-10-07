@@ -3,7 +3,7 @@ import fs from 'node:fs';
 const {create,globals}=await import(process.env.DAYBUOY_WEBGPU_MODULE||'webgpu');
 Object.assign(globalThis,globals);
 Object.defineProperty(globalThis,'navigator',{value:{gpu:create(['backend=null'])},configurable:true});
-globalThis.location={search:'?height=3'};globalThis.window=globalThis;globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=1;
+globalThis.location={search:process.env.DAYBUOY_PROFILE_PASS?'?height=3&noClouds=1&quality=0&ocean-profile=1&profile-pass='+encodeURIComponent(process.env.DAYBUOY_PROFILE_PASS):'?height=3'};globalThis.window=globalThis;globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=1;
 globalThis.document={getElementById:()=>null};
 globalThis.fetch=async url=>new Response(fs.readFileSync('public/'+String(url).replace(/^\//,'')));
 const {GPU}=await import('../vendor/tidewater/src/engine/gpu/GPU.js');

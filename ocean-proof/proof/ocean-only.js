@@ -6,8 +6,9 @@ import {Vector2} from '../vendor/tidewater/src/engine/index.js';
 import {WaveClock,renderAt,AutoQuality} from './timing.js';
 import {applyQuality} from './quality.js';
 import {PIN} from './inputs.js';
+import {ProfileRun,installRuntimeAblation,PASSES} from './profile.js';
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
-let app,composite,packet,inFlight=false,failed=false,tuner,clock,completed=[],lastReport=0,lastQuality=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore;
+let app,composite,packet,inFlight=false,failed=false,tuner,clock,completed=[],lastReport=0,lastQuality=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun;
 const started=performance.now();
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
@@ -40,6 +41,11 @@ try{
  // Do not initialize the proof's fabricated fixed-time sun for app startup.
  const initial=parent.__daybuoy; if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
  await app.init((fraction,label)=>send({status:'loading',fraction,label}));
+ installRuntimeAblation(app,app.profileConfig,composite);
+ if(app.profileConfig){
+  profileRun=new ProfileRun(app.profileConfig);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden&&!profileRun.done)fail('Profiling interrupted: page hidden. Rerun this case.');});
+ }
  GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);tuner=new AutoQuality(app.qualityLevel);lastQuality=performance.now();
  const worker=new Worker(new URL('./shore-worker.js',import.meta.url),{type:'module'});let first=true;
@@ -57,19 +63,29 @@ try{
   const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
   if(f&&key!==forecastKey&&app.setForecast(f)){
    forecastKey=key;const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
-   if(next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
+   // Fixed 201-degree / zero-tide diagnostics already match the initial field.
+   if(!profileRun&&next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
   }
  }
  const api=window.__daybuoyOcean={
-  get ready(){return !failed&&!inFlight;},get canvas(){return composite.canvas||app.engine.canvas;},pin:PIN,
+  get ready(){return !failed&&!inFlight&&!profileRun?.done;},get canvas(){return composite.canvas||app.engine.canvas;},pin:PIN,
   begin(p,base){if(failed||inFlight)return false;applyPacket(p);composite.resize();composite.copyBase(base);return true;},
   finish(overlay){
    if(failed||inFlight)return false;
    try{composite.copyOverlay(overlay);renderAt(app,G,clock.sample(performance.now()));inFlight=true;
     GPU.queue.onSubmittedWorkDone().then(()=>{
      inFlight=false;const now=performance.now();completed.push(now);while(completed.length&&completed[0]<now-3000)completed.shift();
+     if(profileRun){
+      const result=profileRun.observe(now);
+      if(result)send({status:'profile-result',result:{...result,pin:PIN,config:app.profileConfig,
+       scope:PASSES.find(p=>p[0]===result.pass)[2],resolution:[app.engine.width,app.engine.height],
+       output:[composite.canvas?.width,composite.canvas?.height],quality:app.activeQuality,
+       waveSeconds:G.time.value,userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
+       adapter:GPU.adapter.info?{vendor:GPU.adapter.info.vendor,architecture:GPU.adapter.info.architecture,device:GPU.adapter.info.device}:null,
+       scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}}});
+     }
      if(now-lastReport>1000){const fps=completed.length/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value});
-      if(now-lastQuality>5000){lastQuality=now;if(tuner.observe(fps)){applyQuality(app,tuner.level);composite.resize();completed=[];}}
+      if(!profileRun&&now-lastQuality>5000){lastQuality=now;if(tuner.observe(fps)){applyQuality(app,tuner.level);composite.resize();completed=[];}}
      }
     }).catch(fail);return true;
    }catch(e){fail(e);return false;}

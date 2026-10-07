@@ -128,3 +128,9 @@ Jacob explicitly requests the real Tidewater ocean and wave form, without its sk
 - Match the exact approved camera transform/projection each rendered frame. Forecast H/2, period, direction, wind and tide feed the ocean. Wave phase uses real elapsed clock time.
 - Share captures must use the displayed Tidewater canvas. Reference CSS and all seven gesture checks stay intact.
 - Run actual native shader/pipeline validation plus interaction/build checks. These do not establish iPhone FPS or visual acceptance; report missing phone/rendered evidence explicitly.
+
+## October 6, 9:38 PM — iPhone profiling authority
+
+Wave work stays on GitHub `wip/tidewater-in-app`; main, the standalone proof and the UI workstream remain unchanged. First measure the fixed sunny 3 ft / 8 s / zero-tide scene on an actual iPhone. Lock DPR 2 and quality during ablations; isolate FFT, shore shader evaluation, surface foam shading, spray, swash, refraction, transparent draws, reflection and imported-image updates. These systems share work, so report exactly what each switch removes and do not treat differences as additive timings. Fixed inputs and the resting proof camera are restricted to the explicitly labelled diagnostic route.
+
+No appearance optimization is accepted before phone profiling. Next rounds change one measured bottleneck at a time, compare same-moment phone/proof captures, and undo visual regressions. Acceptance requires at least 30 fps for two minutes on iPhone Safari, with the picture retained. Preserve the elapsed-time wave clock, labelled WebGL fallback and Tidewater MIT credits. CPU tests and cloud browser emulation cannot satisfy the phone gate.

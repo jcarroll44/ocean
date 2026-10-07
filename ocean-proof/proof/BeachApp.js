@@ -40,12 +40,14 @@ import {createLandward} from './landward.js';
 import {sugarWhite} from './white-sand.js';
 import {applyMarine} from './forecast.js';
 import {CAMERA,TEST} from './inputs.js';
+import {profileConfig,installShaderAblation,breakersForProfile} from './profile.js';
 const noop=()=>{};
 
 export class BeachApp extends App{
  async init(onProgress=noop){
   // Phone quality changes sample density and budgets, never wave period or amplitude.
-  this.initialQuality=initialQuality();
+  this.profileConfig=profileConfig(location.search);
+  this.initialQuality=this.profileConfig?{mode:'manual',level:0}:initialQuality();
   const stage=async(p,label)=>{onProgress(p,label);await new Promise(r=>setTimeout(r,0));};
   await stage(.02,'Opening the beach');
   this.engine=new Engine(document.getElementById('app'));await this.engine.init();
@@ -78,6 +80,7 @@ export class BeachApp extends App{
   this.surface=new WaterSurface({fft:this.fft,cdlod:this.oceanLOD,foamTexture:this.foamTexture});this.surface.terrain=this.terrainGPU;
   this.seaDetail=new SeaDetail();this.surface.detail=this.seaDetail;
   this.shore=new ShoreWaves(this.terrainGPU);this.surface.shore=this.shore;
+  installShaderAblation(this,this.profileConfig,'shore');
   this.caustics=new Caustics(engine,this.fft);if(this.caustics)this.caustics.detail=this.seaDetail;
   this.shoreSim=new ShoreSim(engine,{terrainGPU:this.terrainGPU,shore:this.shore,center:new Vector2(0,20),size:380,res:768});
   this.surface.shoreSim=this.shoreSim;
@@ -85,17 +88,20 @@ export class BeachApp extends App{
   this.terrain.finalizeMaterial();sugarWhite(this.terrain);
   if(this.qs.get('land')==='1')this.landward=createLandward(this);
   this.surfFoam=new SurfFoam({shoreSim:this.shoreSim});this.surface.foamShading=args=>this.surfFoam.shading(args);
+  installShaderAblation(this,this.profileConfig,'foam');
   this.underwaterLighting=installUnderwaterLighting({fft:this.fft,caustics:this.caustics,clouds:this.clouds,terrain:this.terrainGPU,shore:this.shore,surface:this.surface,shoreSim:this.shoreSim});
   installGroundBounce({terrain:this.terrainGPU,clouds:this.clouds});
   this.sceneRenderer=new SceneRenderer(engine.meshRenderer,scene,camera);
   this.refraction=new RefractionPass({meshRenderer:engine.meshRenderer,scene,camera,sceneRenderer:this.sceneRenderer,scale:.5});this.sceneRenderer.onBeforeWater=()=>this.refraction.render(G.seaLevel.value);
   this.sceneRenderer.background=this.sky.background;this.localLights=new LocalLights();
   this.waterMaterial=new WaterMaterial({surface:this.surface,sky:this.sky,sceneCopy:this.sceneRenderer.opaqueCopy,sceneDepthHalf:this.sceneRenderer.opaqueDepthHalf.texture,refraction:this.refraction,hullMask:this.sceneRenderer.hullMaskRT.texture,hullMaskActive:this.sceneRenderer.hullMaskActive});
+  installShaderAblation(this,this.profileConfig,'reflections');
   this.waterMaterial.clouds=this.clouds;
   this.ocean=new Mesh(this.oceanLOD.geometry,this.waterMaterial);this.ocean.frustumCulled=false;this.ocean.receiveShadow=true;this.ocean.staticVelocity=true;this.ocean.layers.set(LAYERS.WATER);scene.add(this.ocean);
   this.query=new WaterQuery(engine,this.surface);
   this.spray=new Spray(engine,{query:this.query,terrain:this.terrainGPU,sceneCopy:this.sceneRenderer.opaqueCopy,clouds:this.clouds});scene.add(this.spray.mesh);
-  this.breakers=new Breakers(engine,{surface:this.surface,shore:this.shore,terrainData:this.terrainData,sky:this.sky,spray:this.spray,clouds:this.clouds});scene.add(this.breakers.mesh);
+  const ActiveBreakers=breakersForProfile(Breakers,this.profileConfig);
+  this.breakers=new ActiveBreakers(engine,{surface:this.surface,shore:this.shore,terrainData:this.terrainData,sky:this.sky,spray:this.spray,clouds:this.clouds});scene.add(this.breakers.mesh);
   await stage(.50,'Preparing light and reflections');
   this.underwater=new Underwater({depthTexture:this.sceneRenderer.sceneRT.depthTexture,maskTexture:this.sceneRenderer.waterMaskTexture,query:this.query,caustics:this.caustics,fft:this.fft});
   this.waterMaterial.cameraWaterHeightNode=this.query.cameraState().x;
@@ -104,6 +110,11 @@ export class BeachApp extends App{
   this.setTestHeight(TEST.feet);
   applyQuality(this,this.initialQuality.level);
   this.updateSun();this.gpu=GPU;window.__app=this;
+  if(this.profileConfig){
+   this.setForecast({swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0});
+   this.engine.setRenderScale(this.profileConfig.dpr);
+   this.activeQuality={...this.activeQuality,dpr:this.profileConfig.dpr};
+  }
   await stage(.65,'Finishing the waves');await this.precompile();
   await stage(.95,'Opening your view');this.frame(1/60);await GPU.queue.onSubmittedWorkDone();
   const validation=await GPU.device.popErrorScope();if(validation)throw Error('The wave renderer could not start on this device: '+validation.message);

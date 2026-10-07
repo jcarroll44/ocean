@@ -21,6 +21,8 @@ fs.cpSync('assets','dist/assets',{recursive:true});
 fs.cpSync('ui-reference','dist/ui-reference',{recursive:true});
 fs.cpSync('ui-review','dist/ui-review',{recursive:true});
 fs.writeFileSync('dist/index.html',html);
+fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
+execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
