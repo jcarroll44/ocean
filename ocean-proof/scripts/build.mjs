@@ -1,4 +1,5 @@
 import fs from 'node:fs';import {execFileSync} from 'node:child_process';
+execFileSync(process.execPath,['scripts/generate-grid128.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check.mjs'],{stdio:'inherit'});
 fs.rmSync('dist',{recursive:true,force:true});fs.mkdirSync('dist');
 for(const p of ['index.html','proof.css','report.html','proof','baseline','vendor','upstream-integrity.json'])fs.cpSync(p,'dist/'+p,{recursive:true});

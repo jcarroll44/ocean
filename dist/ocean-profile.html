@@ -4,7 +4,8 @@
 </style>
 <main><h1>iPhone wave profiling</h1><p>Fixed test scene: sunny, 3 ft / 8 s, zero tide, 8 kt wind, resting beach camera, DPR 2. Test values, not a live forecast.</p>
 <p>Open in iPhone Safari. Keep this page foregrounded and avoid screen recording while measuring. The full suite takes several minutes plus loading. It repeats the baseline at the end to expose warming or thermal drift.</p>
-<button id="suite">Run pass comparison</button><button id="sustain">Run 2-minute baseline</button><button id="export">Download results</button><button id="copy">Copy results</button>
+<button id="round2">Run round 2</button><button id="suite">Run all diagnostics</button><button id="sustain">Run 2-minute baseline</button><button id="candidate">Run 2-minute candidate</button><button id="export">Download results</button><button id="copy">Copy results</button>
+<p>Round 2 brackets the one-transfer candidate with unchanged baselines, then tests DPR 1.0, DPR 1.5, all-ocean-off, 3 × 128 FFT and one-step lower mesh LOD separately. The ordinary app is unchanged. Lower-DPR rows are diagnostic only.</p>
 <p id="error"></p><p id="scope">No phone results yet. FPS below means completed rendering cadence, not display scanout. Off cases deliberately change the picture and are diagnostics only.</p>
 <table><thead><tr><th>Case</th><th>FPS</th><th>Lowest 1 s</th><th>p95 ms</th></tr></thead><tbody id="rows"></tbody></table>
 <p><a href="https://daybuoy-ocean-proof.jacobcarroll51.chatgpt.site">Original proof</a> · <a href="/">In-app preview</a></p>

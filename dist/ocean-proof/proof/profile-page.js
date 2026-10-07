@@ -1,4 +1,4 @@
-import {PASSES} from './profile.js';
+import {PASSES,profileConfig,PROFILE_REVISION} from './profile.js';
 const $=id=>document.getElementById(id),stage=$('stage'),key='daybuoy-iphone-profile-v1';
 let results=[];try{results=JSON.parse(localStorage.getItem(key)||'[]');}catch{}
 let queue=[],current=null,watchdog,lastDimensions,startedAt;
@@ -15,7 +15,7 @@ function render(){
 }
 function stop(reason=''){
  queue=[];current=null;clearTimeout(watchdog);stage.src='about:blank';stage.style.display='none';$('progress').style.display='none';
- $('suite').disabled=$('sustain').disabled=false;$('error').textContent=reason;render();
+ for(const id of ['suite','round2','sustain','candidate'])$(id).disabled=false;$('error').textContent=reason;render();
 }
 function next(){
  clearTimeout(watchdog);
@@ -25,11 +25,12 @@ function next(){
  stage.src='/?review=1&hour=12&ocean-profile=1&profile-pass='+current.pass+'&profile-seconds='+current.seconds;
  watchdog=setTimeout(()=>stop('This case stalled or could not initialize. No result was recorded. Retry this page in Safari.'),300000);
 }
-function start(sustain=false){
+function start(mode='suite'){
  results=[];save();render();$('error').textContent='';
  const runId=new Date().toISOString();
- queue=(sustain?['baseline']:[...PASSES.map(p=>p[0]),'baseline']).map(pass=>({pass,seconds:sustain?120:20,runId}));
- $('suite').disabled=$('sustain').disabled=true;stage.style.display='block';$('progress').style.display='block';next();
+ const passes=mode==='sustain'?['baseline']:mode==='candidate'?['atlas']:mode==='round2'?['baseline','atlas','baseline','dpr1','dpr15','all-off','grid128','lod','baseline']:[...PASSES.map(p=>p[0]),'baseline'];
+ queue=passes.map(pass=>({pass,seconds:['sustain','candidate'].includes(mode)?120:20,runId}));
+ for(const id of ['suite','round2','sustain','candidate'])$(id).disabled=true;stage.style.display='block';$('progress').style.display='block';next();
 }
 window.addEventListener('message',e=>{
  if(!current||e.origin!==location.origin||e.source!==stage.contentWindow||e.data?.type!=='daybuoy-profile')return;
@@ -39,17 +40,18 @@ window.addEventListener('message',e=>{
  if(d.status==='running')$('status').textContent=current.pass+' · '+d.fps.toFixed(1)+' fps · '+d.resolution.join('×')+' · warm-up + '+current.seconds+' s';
  if(d.status==='profile-result'){
   const r=d.result;
-  if(r.pass!==current.pass||r.config.seconds!==current.seconds){stop('Mismatched profiling result; no measurement accepted.');return;}
+  if(r.pass!==current.pass||r.config.seconds!==current.seconds||r.config.revision!==PROFILE_REVISION){stop('Mismatched profiling result; reload this page. No measurement accepted.');return;}
   if(innerWidth!==lastDimensions[0]||innerHeight!==lastDimensions[1]){stop('Viewport changed during the case. Hold the phone upright and rerun.');return;}
-  if(r.resolution[0]!==Math.floor(innerWidth*2)||r.resolution[1]!==Math.floor(innerHeight*2)){stop('DPR 2 was not retained. Result rejected.');return;}
+  const dpr=profileConfig('?ocean-profile=1&profile-pass='+current.pass).dpr;
+  if(r.config.dpr!==dpr||!r.resolutionVerifiedEveryFrame||[r.resolution,r.output].some(size=>size?.[0]!==Math.floor(innerWidth*dpr)||size?.[1]!==Math.floor(innerHeight*dpr))){stop('Requested DPR '+dpr+' was not retained for ocean AND output. Result rejected.');return;}
   results.push({...r,runId:current.runId,recordedAt:new Date().toISOString(),pageElapsedSeconds:(performance.now()-startedAt)/1000,viewport:lastDimensions});save();render();
   // Destroy the old iframe document before loading the next GPU renderer.
   stage.src='about:blank';setTimeout(next,1500);
  }
 });
 document.addEventListener('visibilitychange',()=>{if(current&&document.hidden)stop('Test interrupted while hidden. Completed cases remain in the results.');});
-$('suite').onclick=()=>start();$('sustain').onclick=()=>start(true);$('cancel').onclick=()=>stop('Stopped. Completed cases are retained.');
-const report=()=>JSON.stringify({schema:1,results,notes:'No physical iPhone result exists until this runner is used on that device. Diagnostic ablations are not optimized visuals. Compare both baseline rows for thermal drift. No ranking is inferred from source.'},null,2);
+$('suite').onclick=()=>start();$('round2').onclick=()=>start('round2');$('sustain').onclick=()=>start('sustain');$('candidate').onclick=()=>start('candidate');$('cancel').onclick=()=>stop('Stopped. Completed cases are retained.');
+const report=()=>JSON.stringify({schema:2,results,notes:'No physical iPhone result exists until this runner is used on that device. Diagnostic ablations are not optimized visuals. Atlas only batches transfers; both legacy layer draws remain. Compare repeated baseline rows for drift, not proof of thermal state. Grid/LOD/DPR rows are separate changes. Ocean and final output dimensions are checked every frame. Screenshots and physical-device visual acceptance remain separate requirements.'},null,2);
 $('export').onclick=()=>{const url=URL.createObjectURL(new Blob([report()],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='daybuoy-iphone-profile.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(report());$('error').textContent='Results copied.';}catch{$('error').textContent=report();}};
 render();

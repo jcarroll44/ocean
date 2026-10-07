@@ -60054,17 +60054,22 @@ if(engine&&typeof navigator!=='undefined'){
  const badge=document.createElement('div');badge.id='ocean-engine-status';badge.setAttribute('role','status');$('#app').append(badge);
  const profiling=q.get('ocean-profile')==='1',debug=q.get('ocean-debug')==='1'||profiling;
  const profilePass=q.get('profile-pass')||'baseline';
+ const profileDPR=profilePass==='dpr1'?1:profilePass==='dpr15'?1.5:2;
+ // Opt-in until phone cadence AND appearance pass. No ocean quality changes.
+ const atlas=profiling&&profilePass==='atlas';
  const profileSend=data=>{if(profiling)parent.postMessage({...data,type:'daybuoy-profile'},location.origin);};
  if(profiling){
   // Controlled diagnostic fixture; never labels invented values as live data.
   for(const row of state.data.rows)Object.assign(row,{swell:3,period:8,tide:0,wind:8,windDirection:201,direction:201,cloud:0,cloudLow:0,cloudMid:0,cloudHigh:0,rain:0,weatherCode:0,visibility:28000});
   setTime(Date.parse('2026-10-05T12:00:00-05:00'));state.live=false;
-  renderer.setPixelRatio(2);renderer.setSize(innerWidth,innerHeight,false);
+  const resize=engine.resize?.bind(engine);
+  if(resize)engine.resize=(w,h)=>resize(w,h,profileDPR);
+  renderer.setPixelRatio(profileDPR);renderer.setSize(innerWidth,innerHeight,false);
  }
  const proof=window.__tidewater={backend:'loading',pin:'4811ba48d795197de5621985f404e765c0b7c0ef',metrics:null,error:null};
  let host,ready=false,failed=false,first=true;
  const direction=new THREE.Vector3();
- function fallback(reason){failed=true;ready=false;proof.backend='WebGL fallback';proof.error=reason;if(host)host.hidden=true;canvas.style.opacity='1';badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;profileSend({status:'failed',reason});}
+ function fallback(reason){failed=true;ready=false;proof.backend='WebGL fallback';proof.error=reason;if(atlas){renderer.setScissorTest(false);renderer.setSize(innerWidth,innerHeight,false);}if(host)host.hidden=true;canvas.style.opacity='1';badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;profileSend({status:'failed',reason});}
  if(!navigator.gpu){fallback('This browser does not provide WebGPU.');}
  else{
   host=document.createElement('iframe');host.id='tidewater-ocean-layer';host.title='Tidewater ocean';host.tabIndex=-1;host.setAttribute('aria-hidden','true');host.setAttribute('allow','webgpu');host.src='ocean-proof/proof/ocean-only.html?noClouds=1&quality=auto';$('#app').prepend(host);
@@ -60097,6 +60102,14 @@ if(engine&&typeof navigator!=='undefined'){
    const originalVisibility=new Map(scene.children.map(o=>[o,o.visible]));
    const remember=new Map([...water,...foreground].map(o=>[o,o.visible]));
    for(const o of remember.keys())o.visible=false;
+   const w=atlas?innerWidth:0,h=atlas?innerHeight:0;
+   if(atlas){
+    // Two scissored full-size views in one drawing buffer. No resampling,
+    // intermediate render target, image readback, or second context transfer.
+    const pixels=Math.floor(w*profileDPR);
+    if(canvas.width!==pixels*2||canvas.height!==Math.floor(h*profileDPR))renderer.setSize(pixels*2/profileDPR,h,false);
+    renderer.setViewport(0,0,pixels/profileDPR,h);renderer.setScissor(0,0,pixels/profileDPR,h);renderer.setScissorTest(true);
+   }
    renderer.setRenderTarget(null);renderer.setClearColor(0,1);renderer.clear();renderer.render(scene,engine.camera);
    engine.camera.getWorldDirection(direction);
    const c=conditions();
@@ -60104,15 +60117,18 @@ if(engine&&typeof navigator!=='undefined'){
     forecast:profiling?{swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0}:realForecast()?Object.fromEntries(['swell','period','direction','wind','windDirection','tide','cloud'].map(k=>[k,c[k]])):null};
    try{
     if(!packet.forecast){for(const[o,v]of remember)o.visible=v;originalRender(dt);host.hidden=true;canvas.style.opacity='1';badge.hidden=false;badge.textContent='Waiting for marine forecast';return;}
-    if(!native.begin(packet,canvas))return;
+    if(!atlas&&!native.begin(packet,canvas))return;
     const all=new Map(scene.children.map(o=>[o,o.visible]));
     for(const o of scene.children)o.visible=foreground.includes(o)&&remember.get(o);
-    renderer.setClearColor(0,0);renderer.clear();renderer.render(scene,engine.camera);native.finish(canvas);
+    if(atlas){const half=canvas.width/2/profileDPR;renderer.setViewport(half,0,half,h);renderer.setScissor(half,0,half,h);}
+    renderer.setClearColor(0,0);renderer.clear();renderer.render(scene,engine.camera);
+    if(atlas&&!native.begin(packet,canvas))return;
+    native.finish(atlas?null:canvas);
     for(const[o,v]of all)o.visible=v;
     renderer.setClearColor(0,1);host.hidden=false;canvas.style.opacity='0';
     if(first){first=false;setTimeout(()=>{if(!failed&&!debug)badge.hidden=true;},6000);}
    }catch(e){for(const[o,v]of originalVisibility)o.visible=v;fallback(e.message);originalRender(dt);}
-   finally{for(const[o,v]of originalVisibility)o.visible=v;renderer.setClearColor(0,1);}
+   finally{for(const[o,v]of originalVisibility)o.visible=v;renderer.setClearColor(0,1);if(atlas){renderer.setScissorTest(false);renderer.setViewport(0,0,w,h);}}
   };
   engine.getSceneCanvas=()=>ready&&!failed?host.contentWindow.__daybuoyOcean?.canvas||canvas:canvas;
  }

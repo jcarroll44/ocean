@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
 // User-required gate: input regressions block every build/delivery.
 execFileSync(process.execPath,['scripts/check-interactions.cjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['ocean-proof/scripts/generate-grid128.mjs'],{stdio:'inherit'});
 fs.mkdirSync('dist',{recursive:true});
 const read=p=>fs.readFileSync('src/'+p,'utf8');
 // Original scene is retained for sky/land and explicit unsupported fallback.
@@ -23,6 +24,7 @@ fs.cpSync('ui-review','dist/ui-review',{recursive:true});
 fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});

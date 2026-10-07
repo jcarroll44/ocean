@@ -13,6 +13,7 @@ import {PerspectiveCamera,Vector3} from '../ocean-proof/vendor/tidewater/src/eng
 assert.equal(profileConfig('?quality=0'),null);
 assert.throws(()=>profileConfig('?ocean-profile=1&profile-pass=garbage'));
 assert.equal(profileConfig('?ocean-profile=1&profile-seconds=120').seconds,120);
+for(const [pass,dpr] of [['baseline',2],['atlas',2],['dpr1',1],['dpr15',1.5],['grid128',2],['lod',2],['all-off',2]])assert.equal(profileConfig('?ocean-profile=1&profile-pass='+pass).dpr,dpr);
 const untouched=new Proxy({}, {get(){throw Error('Ordinary build accessed profiling internals');}});
 installShaderAblation(untouched,null);installRuntimeAblation(untouched,null);
 // Generate actual upstream WGSL on the CPU. Validate guarded edits against the
@@ -42,13 +43,16 @@ assert(full.includes('let Rraw = reflect'));assert(!reduced.includes('let Rraw =
 assert(!reduced.includes('let r = _waterSSR'));assert(reduced.includes('let sunSpec ='));
 for(const [pass] of PASSES){
  const calls=[],fn=n=>()=>calls.push(n);
- const app={fft:{update:fn('fft')},spray:{update:fn('spray'),mesh:{visible:true}},breakers:{kernel:{dispatch:fn('emission')},_budget:fn('budget'),mesh:{visible:true}},shoreSim:{update:fn('swash')},refraction:{render:fn('refraction')},environment:{update:fn('reflections')}};
+ const app={ocean:{visible:true},fft:{update:fn('fft')},spray:{update:fn('spray'),mesh:{visible:true}},breakers:{update:fn('crest'),kernel:{dispatch:fn('emission')},_budget:fn('budget'),mesh:{visible:true}},shoreSim:{update:fn('swash')},refraction:{render:fn('refraction')},environment:{update:fn('reflections')}};
+ for(const name of ['seaDetail','query','caustics','underwaterLighting','oceanLOD'])app[name]={update:fn(name)};
  const comp={copyBase:fn('base'),copyOverlay:fn('overlay')};installRuntimeAblation(app,{pass},comp);
  app.fft.update();app.spray.update();app.breakers.kernel.dispatch();app.shoreSim.update();app.refraction.render();app.environment.update();
- for(const name of ['fft','spray','swash','refraction','reflections'])assert.equal(calls.includes(name),pass!==name,pass+' altered '+name);
+ for(const name of ['fft','spray','swash','refraction','reflections'])assert.equal(calls.includes(name),pass!==name&&pass!=='all-off',pass+' altered '+name);
  assert(calls.includes('emission'),'Shared crest kernel must remain active');
- assert.equal(app.spray.mesh.visible,!['spray','transparency'].includes(pass));
- assert.equal(app.breakers.mesh.visible,pass!=='transparency');
+ assert.equal(app.spray.mesh.visible,!['spray','transparency','all-off'].includes(pass));
+ assert.equal(app.breakers.mesh.visible,!['transparency','all-off'].includes(pass));
+ for(const name of ['seaDetail','query','caustics','underwaterLighting','oceanLOD','breakers']){app[name].update();assert.equal(calls.includes(name==='breakers'?'crest':name),pass!=='all-off');}
+ assert.equal(app.ocean.visible,pass!=='all-off');
  comp.copyBase({});comp.copyBase({});comp.copyOverlay({});comp.copyOverlay({});
  assert.equal(calls.filter(n=>n==='base').length,pass==='composition'?1:2);
 }
@@ -76,7 +80,7 @@ const el=()=>({style:{},setAttribute(){},append(){},prepend(){},contentWindow:{}
 const $=id=>elements.get(id)||elements.set(id,el()).get(id);
 const camera=new PerspectiveCamera(60,390/844,.3,60000),uniform=v=>({value:v});
 const renderer={setPixelRatio:r=>ratio=r,setSize(){},setRenderTarget(){},setClearColor(){},clear(){},render(){}};
-const engine={camera,scene:{children:[]},renderer,render(){throw Error('Fixture unexpectedly rendered fallback');}};
+const engine={camera,scene:{children:[]},renderer,resize(w,h,scale){renderer.setPixelRatio(scale);},render(){throw Error('Fixture unexpectedly rendered fallback');}};
 const context={engine,THREE:{Vector3},$,q:new URLSearchParams('?review=1&ocean-profile=1&profile-pass=foam'),navigator:{gpu:{}},
  window:{addEventListener:(k,f)=>listeners[k]=f},parent:{postMessage:(d,origin)=>sent.push({d,origin})},
  document:{createElement(tag){const e=el();if(tag==='iframe')host=e;return e;}},location:{origin:'https://test'},setTimeout(){},clearTimeout(){},
@@ -84,6 +88,7 @@ const context={engine,THREE:{Vector3},$,q:new URLSearchParams('?review=1&ocean-p
  uniforms:{uSun:uniform(new Vector3()),uMoon:uniform(new Vector3()),uMoonInfo:uniform(new Vector3()),uLightning:uniform(0),uCloud:uniform(1),uCloudLayers:uniform(new Vector3(1,1,1)),uRain:uniform(1)},conditions:()=>({}),realForecast:()=>false};
 vm.createContext(context);vm.runInContext(fs.readFileSync('src/ocean-layer.js','utf8'),context);
 assert.equal(ratio,2);assert.equal(selected,Date.parse('2026-10-05T12:00:00-05:00'));assert.equal(context.state.live,false);
+engine.resize(390,844,1.6);assert.equal(ratio,2,'Legacy resize must not silently lower the profiling output');
 host.contentWindow.__daybuoyOcean={ready:true,begin(p){packet=p;return true;},finish(){}};
 const message=d=>listeners.message({origin:'https://test',source:host.contentWindow,data:{type:'daybuoy-ocean',...d}});
 message({status:'ready'});engine.render(.016);

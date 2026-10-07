@@ -8,7 +8,7 @@ import {applyQuality} from './quality.js';
 import {PIN} from './inputs.js';
 import {ProfileRun,installRuntimeAblation,PASSES} from './profile.js';
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
-let app,composite,packet,inFlight=false,failed=false,tuner,clock,completed=[],lastReport=0,lastQuality=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun;
+let app,composite,packet,inFlight=false,failed=false,tuner,clock,completed=[],lastReport=0,lastQuality=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions;
 const started=performance.now();
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
@@ -69,7 +69,18 @@ try{
  }
  const api=window.__daybuoyOcean={
   get ready(){return !failed&&!inFlight&&!profileRun?.done;},get canvas(){return composite.canvas||app.engine.canvas;},pin:PIN,
-  begin(p,base){if(failed||inFlight)return false;applyPacket(p);composite.resize();composite.copyBase(base);return true;},
+  begin(p,base){
+   if(failed||inFlight)return false;
+   applyPacket(p);composite.resize();composite.copyBase(base);
+   if(profileRun){
+    const d=app.profileConfig.dpr,w=Math.floor(innerWidth*d),h=Math.floor(innerHeight*d);
+    const actual=[app.engine.width,app.engine.height,composite.canvas?.width,composite.canvas?.height];
+    const valid=actual.every((v,i)=>v===(i%2?h:w));
+    if(!valid||profileDimensions&&actual.some((v,i)=>v!==profileDimensions[i])){fail('Profiling resolution changed or did not retain requested DPR '+d+'. Rerun this case.');return false;}
+    profileDimensions=actual;
+   }
+   return true;
+  },
   finish(overlay){
    if(failed||inFlight)return false;
    try{composite.copyOverlay(overlay);renderAt(app,G,clock.sample(performance.now()));inFlight=true;
@@ -80,6 +91,7 @@ try{
       if(result)send({status:'profile-result',result:{...result,pin:PIN,config:app.profileConfig,
        scope:PASSES.find(p=>p[0]===result.pass)[2],resolution:[app.engine.width,app.engine.height],
        output:[composite.canvas?.width,composite.canvas?.height],quality:app.activeQuality,
+       transport:composite.atlas?'one atlas copy':'two layer copies',resolutionVerifiedEveryFrame:true,
        waveSeconds:G.time.value,userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
        adapter:GPU.adapter.info?{vendor:GPU.adapter.info.vendor,architecture:GPU.adapter.info.architecture,device:GPU.adapter.info.device}:null,
        scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}}});

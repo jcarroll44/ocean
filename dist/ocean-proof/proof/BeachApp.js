@@ -26,7 +26,7 @@ import {SeaDetail} from '../vendor/tidewater/src/ocean/SeaDetail.js';
 import {WaterQuery} from '../vendor/tidewater/src/ocean/WaterQuery.js';
 import {Breakers} from '../vendor/tidewater/src/ocean/Breakers.js';
 import {TunedSpray as Spray} from './TunedSpray.js';
-import {initialQuality,applyQuality,PRESETS,phoneDevice} from './quality.js';
+import {initialQuality,applyQuality,applyMeshLOD,PRESETS,phoneDevice} from './quality.js';
 import {installUnderwaterLighting} from '../vendor/tidewater/src/ocean/UnderwaterLighting.js';
 import {RefractionPass} from '../vendor/tidewater/src/ocean/RefractionPass.js';
 import {installGroundBounce} from '../vendor/tidewater/src/materials/GroundBounce.js';
@@ -47,6 +47,11 @@ export class BeachApp extends App{
  async init(onProgress=noop){
   // Phone quality changes sample density and budgets, never wave period or amplitude.
   this.profileConfig=profileConfig(location.search);
+  let FFTOcean=OceanFFT,Surface=WaterSurface,BreakerSystem=Breakers,underwaterLighting=installUnderwaterLighting;
+  if(this.profileConfig?.pass==='grid128'){
+   const modules=await Promise.all([import('./grid128/OceanFFT.js'),import('./grid128/WaterSurface.js'),import('./grid128/Breakers.js'),import('./grid128/UnderwaterLighting.js')]);
+   [FFTOcean,Surface,BreakerSystem,underwaterLighting]=[modules[0].OceanFFT,modules[1].WaterSurface,modules[2].Breakers,modules[3].installUnderwaterLighting];
+  }
   this.initialQuality=this.profileConfig?{mode:'manual',level:0}:initialQuality();
   const stage=async(p,label)=>{onProgress(p,label);await new Promise(r=>setTimeout(r,0));};
   await stage(.02,'Opening the beach');
@@ -75,9 +80,9 @@ export class BeachApp extends App{
   this.terrain=new Terrain({scene,terrainData:this.terrainData,terrainGPU:this.terrainGPU,gridSize:40,renderer:engine});
   this.terrain.mesh.material.appliesHillShadow=true;
   await stage(.34,'Preparing the waves');
-  this.fft=new OceanFFT(engine);this.foamTexture=createFoamTexture(engine);
+  this.fft=new FFTOcean(engine,this.profileConfig?.pass==='grid128'?{cascades:3}:{});this.foamTexture=createFoamTexture(engine);
   this.oceanLOD=new CDLOD({gridSize:32,leafSize:8,levels:12,minY:-25,maxY:25});
-  this.surface=new WaterSurface({fft:this.fft,cdlod:this.oceanLOD,foamTexture:this.foamTexture});this.surface.terrain=this.terrainGPU;
+  this.surface=new Surface({fft:this.fft,cdlod:this.oceanLOD,foamTexture:this.foamTexture});this.surface.terrain=this.terrainGPU;
   this.seaDetail=new SeaDetail();this.surface.detail=this.seaDetail;
   this.shore=new ShoreWaves(this.terrainGPU);this.surface.shore=this.shore;
   installShaderAblation(this,this.profileConfig,'shore');
@@ -89,7 +94,7 @@ export class BeachApp extends App{
   if(this.qs.get('land')==='1')this.landward=createLandward(this);
   this.surfFoam=new SurfFoam({shoreSim:this.shoreSim});this.surface.foamShading=args=>this.surfFoam.shading(args);
   installShaderAblation(this,this.profileConfig,'foam');
-  this.underwaterLighting=installUnderwaterLighting({fft:this.fft,caustics:this.caustics,clouds:this.clouds,terrain:this.terrainGPU,shore:this.shore,surface:this.surface,shoreSim:this.shoreSim});
+  this.underwaterLighting=underwaterLighting({fft:this.fft,caustics:this.caustics,clouds:this.clouds,terrain:this.terrainGPU,shore:this.shore,surface:this.surface,shoreSim:this.shoreSim});
   installGroundBounce({terrain:this.terrainGPU,clouds:this.clouds});
   this.sceneRenderer=new SceneRenderer(engine.meshRenderer,scene,camera);
   this.refraction=new RefractionPass({meshRenderer:engine.meshRenderer,scene,camera,sceneRenderer:this.sceneRenderer,scale:.5});this.sceneRenderer.onBeforeWater=()=>this.refraction.render(G.seaLevel.value);
@@ -100,7 +105,7 @@ export class BeachApp extends App{
   this.ocean=new Mesh(this.oceanLOD.geometry,this.waterMaterial);this.ocean.frustumCulled=false;this.ocean.receiveShadow=true;this.ocean.staticVelocity=true;this.ocean.layers.set(LAYERS.WATER);scene.add(this.ocean);
   this.query=new WaterQuery(engine,this.surface);
   this.spray=new Spray(engine,{query:this.query,terrain:this.terrainGPU,sceneCopy:this.sceneRenderer.opaqueCopy,clouds:this.clouds});scene.add(this.spray.mesh);
-  const ActiveBreakers=breakersForProfile(Breakers,this.profileConfig);
+  const ActiveBreakers=breakersForProfile(BreakerSystem,this.profileConfig);
   this.breakers=new ActiveBreakers(engine,{surface:this.surface,shore:this.shore,terrainData:this.terrainData,sky:this.sky,spray:this.spray,clouds:this.clouds});scene.add(this.breakers.mesh);
   await stage(.50,'Preparing light and reflections');
   this.underwater=new Underwater({depthTexture:this.sceneRenderer.sceneRT.depthTexture,maskTexture:this.sceneRenderer.waterMaskTexture,query:this.query,caustics:this.caustics,fft:this.fft});
@@ -114,6 +119,8 @@ export class BeachApp extends App{
    this.setForecast({swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0});
    this.engine.setRenderScale(this.profileConfig.dpr);
    this.activeQuality={...this.activeQuality,dpr:this.profileConfig.dpr};
+   if(this.profileConfig.pass==='grid128')this.activeQuality.fft='3 × 128';
+   if(this.profileConfig.pass==='lod'){applyMeshLOD(this,2);this.activeQuality.lod=2;}
   }
   await stage(.65,'Finishing the waves');await this.precompile();
   await stage(.95,'Opening your view');this.frame(1/60);await GPU.queue.onSubmittedWorkDone();

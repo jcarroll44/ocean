@@ -11,16 +11,19 @@ export function initialQuality(){const q=new URLSearchParams(location.search).ge
 export function applyQuality(app,level){
  const p=PRESETS[level];app.qualityLevel=level;
  const dpr=Math.min(devicePixelRatio||1,p.dpr);if(app.engine.renderScale!==dpr)app.engine.setRenderScale(dpr);
- const lod=app.oceanLOD;let prev=0;
- for(let l=0;l<lod.levels;l++){
-  const range=lod.leafSize*2**l*p.lod,start=prev+(range-prev)*.66;
-  lod.ranges[l]=range;lod.uMorph.array[l].set(start,1/Math.max(.001,range-start));
-  const m=lod.params.fields.morph.value[l];m.x=start;m.y=1/Math.max(.001,range-start);prev=range;
- }
- lod.params.set('morph',lod.params.fields.morph.value);
+ applyMeshLOD(app,p.lod);
  app.spray.setBudget(p.spray);app.breakers.params.spray.value=Math.sqrt(p.spray/32768);
  app.refraction.scale=p.reflection;app.environment.interval=p.reflectionSeconds;
  if(app.clouds)app.clouds.resolutionScale=p.cloud;
  app.activeQuality={...p,level,dpr,fft:'4 × 256',mesh:'32-cell tiles',reflectionCube:app.environment.size};
  return app.activeQuality;
+}
+export function applyMeshLOD(app,factor){
+ const lod=app.oceanLOD;let prev=0;
+ for(let l=0;l<lod.levels;l++){
+  const range=lod.leafSize*2**l*factor,start=prev+(range-prev)*.66;
+  lod.ranges[l]=range;lod.uMorph.array[l].set(start,1/Math.max(.001,range-start));
+  const m=lod.params.fields.morph.value[l];m.x=start;m.y=1/Math.max(.001,range-start);prev=range;
+ }
+ lod.params.set('morph',lod.params.fields.morph.value);
 }
