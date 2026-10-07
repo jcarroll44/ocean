@@ -1,0 +1,25 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DayBuoy · Morning report</title><link rel="stylesheet" href="report.css"><main class="morning"><header><a href="index.html">DayBuoy / night-pass</a><span>6 October 2026</span></header><aside><strong>Superseded October 6:</strong> The partial integration and A/B layouts below were rejected and withdrawn. <a href="index.html">Current rollback status.</a></aside><h1>DayBuoy · Morning report</h1>
+<p><strong>6 October 2026 · <code>night-pass</code> · main unchanged</strong></p>
+<p>The phone-tuning tools and branch previews are ready. <strong>30 fps and visual acceptance are not yet proven.</strong> No iPhone or rendering browser was available here.</p>
+<h2>Decisions for you</h2>
+<ol>
+<li><strong>Ocean gate:</strong> recommend keeping native ocean off main until the two-minute phone test and 3/5 ft comparisons pass.</li>
+<li><strong>Header:</strong> recommend A, Verdict first; B, In the scene, leaves more sky clear. Both are interpretations—the exact board was not available.</li>
+<li><strong>Beta renderer:</strong> recommend the approved WebGL build if the remaining WebGPU ports threaten launch.</li>
+<li><strong>Data service:</strong> arrange a commercial Open-Meteo plan before commercial release; I recommend a server-side cache/proxy to protect its key.</li>
+<li><strong>Native scope:</strong> recommend location on request, one useful widget and an opt-in best-hour notification; defer Watch/Live Activity extras.</li>
+</ol>
+<h2>Phone result</h2>
+<p>Latest actual evidence remains <strong>your report: approximately 6 fps, WebGPU, 1170×2532</strong>. New Auto starts at DPR 1.25 on phones, steps down to 1.0 and reduces LOD/spray/reflection work. FFT, curling lip and swash resolution are retained. At 390×844 CSS size, DPR 1 gives 390×844 pixels; actual dimensions are shown by the test.</p>
+<p>The proof now offers a <strong>120-second benchmark</strong>, <strong>10-second real-clock recording</strong>, and <strong>same-wave-phase full/tuned captures</strong>. Run those separately in Safari and save results. No new phone clip or rendered stills were produced here. CPU tests confirm an 8-second wave phase remains 8 real seconds at 1–120 fps.</p>
+<h2>Preview and work completed</h2>
+<ul>
+<li><a href="../ocean-proof/">Phone ocean proof</a>: quality controls, frame-rate/backend/resolution diagnostics, white sand, capture/export tools.</li>
+<li><a href="../?ocean=webgpu&amp;header=verdict">Ocean in the real app</a>: app camera/data bridge and automatic original-water fallback. <strong>Partial integration.</strong></li>
+<li><a href="design.html">Header A/B</a>: lighter 216 px dock, advice-led action, live/selected-time distinction, loading/offline/no-data states.</li>
+<li><a href="land.html">Landward views</a>: 2–4 m dunes, instanced oats/palmetto/scrub/pines and a wooden walkover with an empty stand. Visual review pending.</li>
+</ul>
+<h2>Blocked / remaining</h2>
+<p>Night, rain and sun-path/story states retain the approved WebGL renderer; native sky parity, lunar shading, low/mid/high clouds, arc and share capture need ports. Native forecast inputs are wired, but wave-height calibration against the missing reference clips remains open. Full/tuned captures hold wave phase and swash history; spray particles reset with the budget. <a href="migration.html">Migration inventory</a></p>
+<p><strong>Checks:</strong> all seven interaction-contract scenarios pass in the event-handler test harness; approved camera/story/astronomy source hashes match. Unit mappings, fallback routing and instanced wind/fog shader checks pass. These do not replace phone visual or touch testing.</p>
+<p><strong>Launch:</strong> <a href="launch.html">dated checklist</a>, <a href="privacy-draft.html">privacy draft</a>, <a href="credits.html">sources and credits</a>. Planning targets start with your retest/choices on Oct 7; the checklist distinguishes engineering effort from Apple review. Nothing was merged into the main app.</p></main></html>

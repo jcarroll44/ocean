@@ -1,0 +1,203 @@
+/* October 5, 10:04 PM — a new composition, not another layer of glass cards.
+   This file owns UI presentation. Camera and scene code are untouched. */
+:root{
+ --type-hero:76px;--type-answer:20px;--type-label:15px;--type-detail:13px;--type-eyebrow:11px;
+ --space-1:8px;--space-2:16px;--space-3:24px;--space-4:32px;
+ --ui-top:max(20px,calc(env(safe-area-inset-top,0px) + 12px));--ui-side:20px;
+ --ui-ease:cubic-bezier(.2,.8,.2,1);--glass-tint:111,165,192;
+ --panel:#e6f1f3;--panel-text:#1A435A;--panel-muted:#4d6d7f;--panel-rule:#244f651c;
+}
+#app{font-family:Poppins,system-ui,sans-serif;font-weight:400}
+#app [hidden]{display:none!important}
+#compass-strip,#facing-label,#look-back,#path-labels,#sun-time{display:none!important}
+/* Selected time is the hero; air is a supporting reading. */
+.visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#app .brandbar,#app[data-playing] .brandbar{top:var(--ui-top);left:var(--ui-side);right:var(--ui-side);height:18px;justify-content:center;align-items:center;gap:0}
+#app .brand{height:18px;gap:4px;opacity:.7;justify-content:center}
+#app .brand b{font-size:10px;font-weight:500;line-height:18px;letter-spacing:.1px}
+#app .brand:after{content:'· Inlet Beach';font-size:10px;font-weight:400;line-height:18px;white-space:nowrap}
+#app .brand svg{width:13px;height:13px;filter:none}
+#app #time-switch{position:absolute;top:calc(var(--ui-top) + 25px);left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:3px;height:42px;max-width:calc(100% - 32px);border:1px solid #ffffff50;border-radius:24px;background:#16435a32;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:white;z-index:8}
+#app #time-switch #back-to-now{position:static;min-height:34px;height:34px;min-width:64px;padding:0 12px;font-size:13px;font-weight:500;border-radius:20px;background:none;color:#fff;box-shadow:none;border:0;white-space:nowrap;left:auto;right:auto;top:auto}
+#app #time-switch #back-to-now:before{display:inline-block;position:static;content:'';width:6px;height:6px;margin-right:6px;background:#cad6df;border-radius:50%;box-shadow:none}
+#app[data-connected-live=true] #time-switch #back-to-now:before{background:var(--red);box-shadow:0 0 0 4px #d8433b24;animation:live-lamp 4s ease-in-out infinite}
+#app #time-switch #back-to-now[aria-pressed=true]{background:#f7fbff;color:var(--ink);box-shadow:0 1px 4px #12394b18}
+#app #time-switch #back-to-now:not([hidden]){background:#f7fbff;color:var(--ink);box-shadow:0 1px 4px #12394b18}
+#app #time-switch #back-to-now:not([hidden]):before{background:var(--red)}
+@keyframes live-lamp{0%,70%,100%{box-shadow:0 0 0 2px #d8433b15}25%{box-shadow:0 0 0 5px #d8433b28}}
+#app #time-switch #source-label,#app[data-story=true] #time-switch #source-label{position:static;top:auto;left:auto;right:auto;max-width:168px;min-height:34px;padding:0 10px;border-radius:20px;font-size:12px;font-weight:500;line-height:34px;text-align:center;white-space:nowrap;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;color:var(--ink);background:#f7fbff;opacity:1}
+#app #time-switch #source-label:before{display:inline-block;position:static;content:'';width:5px;height:5px;margin-right:5px;background:#9db4c4;border-radius:50%;box-shadow:none;animation:none}
+#app #time-switch .watch-controls,#app[data-playing] #time-switch .watch-controls,#app[data-story=true] #time-switch .watch-controls{position:static;top:auto;bottom:auto;left:auto;right:auto;transform:none;height:34px;width:auto;min-width:34px;padding:0;border:0;border-radius:18px;box-shadow:none;background:none;gap:0;opacity:1;pointer-events:auto;display:flex;backdrop-filter:none}
+#app #time-switch .watch-controls:before{display:none}
+#app #time-switch #watch-day{width:auto;height:34px;min-height:34px;min-width:34px;padding:0 9px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:500;white-space:nowrap}
+#app #time-switch .play-circle{width:14px;height:18px;color:#fff;background:none;display:grid;place-items:center}
+#app #time-switch .play-circle svg{width:8px;height:10px}
+#app[data-live=false] #time-switch .watch-label{display:none}
+#app #time-switch #watch-close{width:26px;height:34px;padding:0;font-size:20px;display:grid;place-items:center}
+#app .hero,#app[data-playing] .hero{top:calc(var(--ui-top) + 86px);left:var(--ui-side);right:var(--ui-side);max-width:none;text-align:left;opacity:1;filter:none;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"clock temp" "clock air" "answer answer" "detail detail" "status status";column-gap:12px;align-items:start;color:#fff;text-shadow:0 1px 8px #163b5724}
+#hero-clock{grid-area:clock;display:flex;align-items:center;gap:9px;min-width:0;font-variant-numeric:tabular-nums}
+#clock-digits{font-size:62px;font-weight:200;line-height:1;letter-spacing:-4px;white-space:nowrap}
+.clock-context{display:flex;flex-direction:column;gap:2px;min-width:0;padding-top:8px;font-size:12px;line-height:16px;color:#e8f4fd}
+#clock-period{font-size:13px;font-weight:500;color:#fff}
+#clock-day{white-space:nowrap}
+#app .hero #hero-temp{grid-area:temp;justify-self:end;align-self:start;font-size:34px;font-weight:300;line-height:1.1;letter-spacing:-1px;margin:0;background:none;color:#fff;text-shadow:none}
+#app .hero .degree-ring{width:.18em;height:.18em;border:.035em solid currentColor;border-radius:50%;margin:.12em 0 0 .07em;flex:none}
+#app #air-feel{grid-area:air;justify-self:end;align-self:start;font-size:10px;font-weight:500;line-height:16px;letter-spacing:1.2px;margin:0;opacity:.8;text-align:right}
+#app .hero #headline{grid-area:answer;font-size:16px;font-weight:500;line-height:1.35;letter-spacing:-.1px;margin:12px 0 0;padding:10px 0 0;border:0;border-top:1px solid #ffffff40;max-width:100%;white-space:normal;text-shadow:0 1px 8px #163b5744}
+#app #story-detail{grid-area:detail;font-size:12px;font-weight:400;line-height:1.4;margin:4px 0 0;padding:0;max-width:100%;opacity:.9}
+#app #forecast-status{grid-area:status;font-size:12px;font-weight:400;line-height:1.4;margin:6px 0 0;max-width:100%;color:#fff}
+#app[data-scrubbing=true] #clock-digits{font-size:46px;letter-spacing:-2px}
+#app[data-scrubbing=true] .hero #hero-temp{font-size:30px}
+#app[data-scrubbing=true] #headline,#app[data-scrubbing=true] #story-detail{display:none}
+#app[data-sheet] #hero{display:none}
+#app #sun-handle i{visibility:hidden}
+/* The main screen has no floating elevation label. The approved story keeps
+   its glance-up, and elevation/bearing remain in the Sun sheet. */
+#app:not([data-playing]) #sun-edge{display:none!important}
+/* Light sea-glass panel: readings, day picker, timeline, action.
+   218px at 390×844, instead of five nested cards in a pale bubble. */
+#app #glass-dock{left:var(--ui-side);right:var(--ui-side);bottom:calc(env(safe-area-inset-bottom,0px) + 12px);width:auto;max-width:440px;height:218px;max-height:none;padding:12px;display:grid;grid-template-rows:60px 36px 24px 44px;gap:8px;border-radius:18px;border:1px solid #ffffffe0;background:linear-gradient(rgba(var(--glass-tint),.035),rgba(var(--glass-tint),.035)),linear-gradient(135deg,#f6fbfbe8,#dcecf0e8);color:var(--panel-text);box-shadow:0 8px 32px #0d293b26;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);overflow:visible;transition:height 220ms var(--ui-ease),opacity 180ms var(--ui-ease)}
+#app #glass-dock .metrics{grid-row:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin:0;padding:0 0 4px;border-bottom:1px solid var(--panel-rule)}
+#app #glass-dock .metric{height:52px;min-width:0;padding:0 2px;border:0;border-right:1px solid var(--panel-rule);border-radius:0;background:none;box-shadow:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;color:var(--panel-text);overflow:visible}
+#app #glass-dock .metric:last-child{border-right:0}
+#app #glass-dock .metric .metric-label{display:flex;align-items:center;justify-content:center;gap:3px;height:14px;flex:none}
+#app #glass-dock .metric .metric-icon{display:none}
+#app #glass-dock .metric small{font-size:10px;font-weight:500;line-height:14px;letter-spacing:.7px;text-transform:uppercase;color:var(--panel-muted);margin:0}
+#app #glass-dock .metric strong{font-size:23px;font-weight:500;line-height:25px;letter-spacing:-.8px;color:var(--panel-text);margin:0;max-width:100%}
+#app #glass-dock .metric strong em{font-size:10px;font-weight:400;letter-spacing:0;margin-left:2px;color:var(--panel-muted)}
+#app #glass-dock .metric .meaning{font-size:var(--type-eyebrow);font-weight:400;line-height:14px;letter-spacing:0;margin:0;color:var(--panel-muted);max-width:100%;overflow:hidden;text-overflow:ellipsis}
+#app #glass-dock .metric .chev{display:none}
+#app #glass-dock .metric:active{background:#ffffff10}
+#app #glass-dock .uv-dot{width:4px;height:4px;margin-right:3px;vertical-align:1px}
+#app #glass-dock .days{grid-row:2;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:0;height:36px;margin:0;padding:0;align-items:stretch}
+#app #days button{width:auto;height:36px;padding:2px 0;border-radius:6px;font-size:var(--type-eyebrow);font-weight:500;line-height:16px;color:var(--panel-muted);background:none;box-shadow:none;letter-spacing:0}
+#app #days button small{font-size:var(--type-eyebrow);font-weight:400;line-height:14px;margin:0;color:#587b8d}
+#app #days button[aria-pressed=true]{background:#ffffffed;color:#1A435A;box-shadow:0 2px 7px #19445a12}
+#app #days button[aria-pressed=true] small{color:#365e73}
+#app #days button:disabled{opacity:.35}
+#app #week-scrubber{grid-row:3;height:24px;margin:0 4px;align-self:start;position:relative;touch-action:none}
+#app #week-scrubber .week-track{top:4px;height:3px;border-radius:2px;box-shadow:0 0 0 1px #ffffff18}
+#app #week-scrubber .week-sun{top:0;width:11px;height:11px;background:#fff8dc;box-shadow:0 0 0 2px #fff,0 0 8px #f6d98788}
+#app #week-scrubber .week-now{top:0;height:11px;width:2px}
+#app .day-hours{inset:13px 0 0;opacity:1;color:var(--panel-muted)}
+#app .day-hours b{font-size:10px;font-weight:400;line-height:11px}
+#app .day-marks i{top:2px;height:7px;background:#f2d9a680}
+#scrub-time{position:absolute;left:clamp(32px,var(--selected),calc(100% - 32px));top:-30px;transform:translateX(-50%);padding:4px 8px;border-radius:6px;white-space:nowrap;font-size:var(--type-eyebrow);font-weight:500;line-height:16px;color:var(--ink);background:#f2f7f9;pointer-events:none;z-index:2}
+#app #glass-dock .home-actions{grid-row:4;display:flex;gap:8px;margin:0;height:44px}
+#app #glass-dock #moment-action{height:44px;min-height:44px;min-width:0;margin:0;padding:0 0 0 12px;border:0;border-radius:10px;background:linear-gradient(135deg,#477f98,#2f647f);color:#fff;box-shadow:0 2px 6px #1a435a16;gap:8px;letter-spacing:0;text-transform:none}
+#app #glass-dock .action-copy{font-size:var(--type-detail);font-weight:600;line-height:16px;max-height:none;white-space:normal;overflow:hidden;text-overflow:clip}
+.action-main,.action-hint{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#app #glass-dock .action-hint{font-size:10px;font-weight:400;line-height:14px;color:#e5f2f9}
+#app #glass-dock .action-end{width:36px;height:36px;border:0;border-radius:8px;background:none;box-shadow:none;color:inherit}
+#app #glass-dock .action-end svg{width:16px;height:16px}
+#app #glass-dock .share-circle{width:44px;height:44px;min-height:44px;background:#ffffff94;border:1px solid #ffffffd0;border-radius:10px;box-shadow:none;color:#1A435A}
+#story-progress{position:absolute;top:-1px;left:18px;right:18px;height:2px;background:#ffffff22;border-radius:2px;overflow:hidden;pointer-events:none}
+#story-progress i{display:block;width:100%;height:100%;transform:scaleX(var(--story-progress,0));transform-origin:left;background:var(--red);transition:transform 100ms linear}
+#app #compact-values{grid-row:3;font-size:var(--type-detail);font-weight:500;line-height:18px;margin:0;color:var(--panel-text)}
+#app[data-dock-compact=true] #glass-dock{height:92px;max-height:none;grid-template-rows:28px 20px 18px;gap:4px;padding:8px 12px;border-radius:14px}
+#app[data-dock-compact=true] #glass-dock .days{grid-row:1}
+#app[data-dock-compact=true] #glass-dock .days,#app[data-dock-compact=true] #days button{height:28px}
+#app[data-dock-compact=true] #days button{padding:0;line-height:14px}
+#app[data-dock-compact=true] #days button small{font-size:10px;line-height:14px}
+#app[data-dock-compact=true] #week-scrubber{grid-row:2;height:20px}
+#app[data-dock-compact=true] .day-hours{inset:10px 0 0}
+#app[data-dock-compact=true] #glass-dock .metrics,#app[data-dock-compact=true] #glass-dock .home-actions{display:none}
+/* Subject sheets are compact instruments in the same material.
+   The former giant water temperature is now one of three peer readings. */
+#app #expanded-sheet,#app #story-card{left:var(--ui-side);right:var(--ui-side);bottom:calc(env(safe-area-inset-bottom,0px) + 12px);width:auto;max-width:440px;margin:auto;border-radius:18px;background:linear-gradient(135deg,#f6fbfbf5,#dcecf0f5);color:var(--panel-text);border:1px solid #ffffff33;box-shadow:0 8px 32px #0d293b26;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+#app #expanded-sheet{height:auto;max-height:calc(100% - 144px);padding:24px 16px 12px;overflow:auto;overscroll-behavior:contain;animation:sheet-arrive 200ms var(--ui-ease)}
+#app[data-sheet] #expanded-sheet:not(.peek),#app[data-night=true][data-sheet=sun] #expanded-sheet:not(.peek){height:auto;max-height:calc(100% - 144px);padding:24px 16px 12px;background:linear-gradient(135deg,#f6fbfbf5,#dcecf0f5)}
+@keyframes sheet-arrive{from{transform:translateY(16px);opacity:.8}to{transform:none;opacity:1}}
+#app #expanded-sheet .grab{top:0;left:0;right:0;width:100%;height:24px;background:none}
+#app #expanded-sheet .grab i{width:28px;height:3px;border-radius:2px;background:#345b7055}
+#app #expanded-sheet .sheet-dismiss{position:absolute;top:6px;right:8px;width:32px;height:32px;display:grid;place-items:center;border-radius:8px;background:none;color:var(--panel-muted);font-size:20px;font-weight:400;line-height:1;z-index:2}
+#app #expanded-sheet .sheet-title{font-size:var(--type-label);font-weight:500;line-height:20px;letter-spacing:0;margin:0 0 8px;color:var(--panel-text)}
+#app #expanded-sheet .sheet-value{font-size:36px;font-weight:400;line-height:1.1;letter-spacing:-1px;margin:4px 0;color:var(--panel-text)}
+#app #expanded-sheet .sheet-value em{font-size:var(--type-label);font-weight:400;letter-spacing:0;margin-left:4px}
+#app #expanded-sheet .water-verdict{font-size:var(--type-detail);font-weight:500;line-height:20px;margin:0 0 12px;color:var(--panel-text)}
+#app #expanded-sheet .water-verdict[data-risk=high]{color:#a63c35}
+#app #expanded-sheet .water-verdict a{display:inline-block;white-space:nowrap;margin-left:4px;font-size:10px;font-weight:500;letter-spacing:.4px;color:#4d6d7f;text-decoration:none}
+#app #expanded-sheet .sheet-sub,#app #expanded-sheet .moon-description{font-size:var(--type-detail);font-weight:400;line-height:1.4;margin:4px 0;color:var(--panel-muted)}
+.sheet-readings{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:4px 0 0;padding:8px 0;border-top:1px solid var(--panel-rule);border-bottom:1px solid var(--panel-rule)}
+.sheet-readings .reading{background:none;padding:0 12px;text-align:left;border:0;border-right:1px solid var(--panel-rule);color:var(--panel-text);min-width:0}
+.sheet-readings .reading:first-child{padding-left:0}
+.sheet-readings .reading:last-child{border-right:0}
+.sheet-readings small{display:block;font-size:var(--type-eyebrow);font-weight:400;line-height:16px;color:var(--panel-muted)}
+.sheet-readings strong{display:block;font-size:28px;font-weight:400;letter-spacing:-.8px;line-height:32px;white-space:nowrap}
+.sheet-readings strong em{font-size:var(--type-detail);font-weight:400;letter-spacing:0;margin-left:4px;font-style:normal}
+#app[data-sheet=water] #expanded-sheet:not(.peek) .sheet-title{font-size:var(--type-eyebrow);line-height:14px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;color:var(--panel-muted)}
+#app[data-sheet=water] #expanded-sheet .water-verdict{margin-bottom:8px}
+#app[data-sheet=water] .sheet-readings{padding:4px 0}
+#app[data-sheet=water] .sheet-readings small{line-height:14px}
+#app[data-sheet=water] .sheet-readings strong{font-size:26px;line-height:28px}
+#app #expanded-sheet .chart-wrap{margin-top:12px}
+#app #expanded-sheet .ribbon-control{height:64px;border-radius:8px;background:#ffffff48;box-shadow:none;border:0}
+#app #expanded-sheet .ribbon-control svg{filter:none;opacity:.78}
+#app #expanded-sheet .chart-caption,#app #expanded-sheet .chart-caption span:last-child{font-size:var(--type-eyebrow);font-weight:500;line-height:14px;top:5px;color:var(--panel-text);text-shadow:none}
+#app #expanded-sheet .chart-caption{left:8px;right:8px}
+#app #expanded-sheet .chart-hours{font-size:10px;font-weight:400;line-height:14px;padding:4px 8px 0;color:var(--panel-muted)}
+#app #expanded-sheet .curve-mark{font-size:10px;font-weight:500;color:#254f66;text-shadow:0 1px 2px #ffffffb0}
+#app #expanded-sheet .chart-thumb{width:18px;height:18px;background:#f5f8f9;border:2px solid var(--red);box-shadow:0 0 0 3px #ffffffb0}
+#app #expanded-sheet .sun-answer{font-size:var(--type-answer);font-weight:500;letter-spacing:0;line-height:1.3;margin:4px 0}
+#app #expanded-sheet .sun-answer b{font-weight:500}
+#app #expanded-sheet .sun-answer small,#app #expanded-sheet .estimate-note,#app #expanded-sheet .sheet-note,#app #expanded-sheet .night-note{font-size:var(--type-eyebrow);font-weight:400;line-height:1.5;color:var(--panel-muted)}
+#app #expanded-sheet .sun-tiles{gap:8px;margin-top:12px}
+#app #expanded-sheet .mini-glass{box-shadow:none;border:1px solid var(--panel-rule);background:#ffffff08;border-radius:8px;padding:8px;color:var(--panel-text)}
+#app #expanded-sheet .mini-glass span,#app #expanded-sheet .mini-glass small{font-size:var(--type-eyebrow);font-weight:400;color:var(--panel-muted)}
+#app #expanded-sheet .mini-glass b,#app #expanded-sheet .mini-glass strong{font-size:var(--type-label);font-weight:500;color:var(--panel-text)}
+#app #expanded-sheet .skin-chips{gap:8px;margin-top:8px}
+#app #expanded-sheet .skin-chips button{min-height:36px;font-size:var(--type-detail)}
+#app #expanded-sheet .tanning-action{min-height:40px;margin-top:8px;font-size:var(--type-detail);font-weight:500;letter-spacing:0;text-transform:none;background:#e8f1f5;color:#163d52;border:0;border-radius:8px;box-shadow:none;padding:8px 16px;justify-content:center}
+#app #expanded-sheet.peek{height:170px!important;max-height:170px;padding:24px 16px 8px;overflow:hidden}
+#app #expanded-sheet.peek .sheet-title{font-size:var(--type-label);margin:0}
+#app #expanded-sheet.peek #sheet-peek-line{font-size:var(--type-detail);line-height:20px;margin:0;color:var(--panel-muted)}
+#app #expanded-sheet.peek .chart-wrap{margin-top:8px}
+#app #expanded-sheet.peek .ribbon-control{height:62px}
+.forecast-method{border-top:1px solid var(--panel-rule);margin-top:8px;padding-top:0;font-size:var(--type-detail);line-height:1.5;color:var(--panel-muted)}
+.forecast-method summary{cursor:pointer;min-height:32px;padding:8px 0;font-size:var(--type-eyebrow);line-height:16px;font-weight:400;color:var(--panel-muted)}
+.forecast-method p{margin:8px 0}
+.forecast-method a{color:#285b76;text-underline-offset:3px}
+.sun-outlook{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--panel-rule);margin-top:12px;padding-top:12px;font-size:var(--type-eyebrow);line-height:1.5;color:var(--panel-muted)}
+.sun-outlook strong{display:block;font-size:var(--type-label);font-weight:500;color:var(--panel-text)}
+.retry-forecast{min-height:44px;padding:8px 16px;border-radius:8px;background:#e8f1f5;color:#163d52;font-size:var(--type-detail)}
+#app #story-card{padding:24px 16px 16px}
+#app #story-card h2{font-size:24px;font-weight:500;letter-spacing:-.5px;margin:0 40px 8px 0}
+#app .story-note{font-size:var(--type-detail);font-weight:400;line-height:1.5;margin:0 0 16px;color:var(--panel-muted)}
+#app #story-card .story-close{color:#285b76}
+#app #story-card .story-list button{min-height:56px;padding:8px 0;gap:16px;color:var(--panel-text);border-color:var(--panel-rule)}
+#app #story-card .story-list time{font-size:var(--type-detail);font-weight:400;min-width:72px;color:var(--panel-muted)}
+#app #story-card .story-list span{font-size:var(--type-label);font-weight:500}
+#app #story-card .story-list small{font-size:var(--type-detail);font-weight:400;line-height:1.4;color:var(--panel-muted)}
+#app .story-actions button{font-size:var(--type-detail);font-weight:500;border-radius:8px;background:#ffffff08;color:var(--panel-text);border:1px solid var(--panel-rule)}
+#app .story-actions .story-share{background:#e8f1f5;color:#163d52}
+#app .loading{background:linear-gradient(#193e58,#6c9ead);font-family:Poppins,system-ui,sans-serif}
+#app .loading span{font-size:var(--type-detail);font-weight:400}
+#app .loading-logo b{font-size:32px;font-weight:500}
+#app #expanded-sheet .moon-answer{margin:4px 0;gap:12px}
+#app #expanded-sheet .moon-answer strong{font-size:36px;font-weight:400}
+#app #expanded-sheet .moon-answer span,#app #expanded-sheet .moon-answer em{font-size:var(--type-detail);font-weight:400}
+#app #expanded-sheet #lunar-details{border-color:var(--panel-rule);margin-top:12px;padding-top:8px}
+#app #expanded-sheet #lunar-details h3{font-size:var(--type-detail);font-weight:500;color:var(--panel-text)}
+#app #expanded-sheet #lunar-details p{font-size:var(--type-eyebrow);line-height:1.5;color:var(--panel-muted)}
+#app button:focus-visible,#app [role=slider]:focus-visible{outline:2px solid #4987A4;outline-offset:3px}
+@media(min-width:700px){
+ :root{--ui-side:36px;--ui-top:20px}
+ #app .brandbar,#app[data-playing] .brandbar,#app .hero,#app[data-playing] .hero{right:auto;width:440px}
+ #app #time-switch{left:256px}
+ #app #glass-dock,#app #expanded-sheet,#app #story-card{right:auto;width:440px;margin:0}
+}
+@media(max-height:650px){
+ :root{--ui-top:8px}
+ #app .hero,#app[data-playing] .hero{top:calc(var(--ui-top) + 76px)}
+ #clock-digits{font-size:48px;letter-spacing:-2px}
+ #app .hero #headline{margin-top:8px;padding-top:6px}
+}
+@media(max-width:359px){
+ :root{--ui-side:12px}
+ #clock-digits{font-size:52px;letter-spacing:-3px}
+ .clock-context{font-size:10px}
+ #app #glass-dock .metric strong{font-size:20px}
+ #app #glass-dock .metric strong em{font-size:9px}
+ #app #time-switch #source-label{max-width:144px;padding:0 8px;font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){#app #time-switch #back-to-now:before{animation:none!important}#app #hero-temp,#app #glass-dock,#app #expanded-sheet,#story-progress i{transition:none;animation:none}}

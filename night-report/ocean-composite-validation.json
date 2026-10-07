@@ -1,0 +1,8 @@
+{
+  "backend": "Dawn null (no pixels)",
+  "newBackgroundAndFinalPasses": "PASS",
+  "foregroundAlpha": "source checked; browser copy unverified",
+  "nativeOceanFullValidation": "BLOCKED: container adapter has 16 KB workgroup storage and 16 sampled textures; Tidewater requires more",
+  "phoneTested": false,
+  "visualAcceptance": false
+}

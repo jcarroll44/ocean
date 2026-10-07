@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-06",
+  "checks": [
+    {
+      "check": "1/3/5 ft → H/2; period, incoming bearings, wind and cloud units; missing data rejected",
+      "result": "PASS",
+      "scope": "CPU / source checks; not rendered"
+    },
+    {
+      "check": "Dunes stay 2–4 m; unchanged nearshore slope; 580 finite plant instances in four draws",
+      "result": "PASS",
+      "scope": "CPU / source checks; not rendered"
+    },
+    {
+      "check": "Archived adapter only (not shipped): packet, handoff and failure behavior",
+      "result": "PASS",
+      "scope": "CPU / source checks; not rendered"
+    },
+    {
+      "check": "Camera, gestures, astronomy, weather and story source hashes preserved",
+      "result": "PASS",
+      "scope": "CPU / source checks; not rendered"
+    },
+    {
+      "check": "Final app bundle parses",
+      "result": "PASS",
+      "scope": "CPU / source checks; not rendered"
+    }
+  ],
+  "unverified": [
+    "iPhone sustained fps",
+    "full renderer shader compilation",
+    "visual comparison, screenshots and video",
+    "live forecast network reliability",
+    "rendered CSS, contrast and touch ergonomics"
+  ]
+}

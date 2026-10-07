@@ -1,0 +1,29 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>WebGPU migration inventory · 6 October 2026</title><link rel="stylesheet" href="report.css"><main class="migration"><header><a href="index.html">DayBuoy / night-pass</a><span>6 October 2026</span></header><h1>WebGPU migration inventory · 6 October 2026</h1>
+<p>Stage 1 is a partial, reversible renderer integration. <code>?ocean=webgpu</code> uses the native Tidewater ocean during supported daytime conditions; the unchanged WebGL renderer handles night, rain/storms, the visible sun path and Watch the day. The preview labels that handoff. This is not an approved whole-app migration.</p>
+<table><thead><tr><th>System</th><th>Current branch behavior / break</th><th>Remaining engineering estimate</th></tr></thead><tbody>
+<tr><td>Native ocean</td><td>Original FFT, shore waves, lip, whitewater, swash, refraction, caustics and water material; host quality adapters. Actual phone validation pending.</td><td>1–3 days after device results</td></tr>
+<tr><td>Camera and input</td><td>Original modules retained by hash. The adapter forwards pose, FOV and off-axis projection; it adds no gesture handlers.</td><td>Half-day device regression</td></tr>
+<tr><td>Forecast</td><td>H/2, period, wave FROM bearing, wind FROM bearing/speed and tide mapped. Spectrum energy remains relative, not calibrated Hs. Directional shore field rebuild runs in a worker.</td><td>1–2 days calibration against supplied clips</td></tr>
+<tr><td>Sky and daylight grading</td><td>Native atmosphere is in the WebGPU frame. Approved GLSL sky cannot run directly in this engine. Its exact appearance is not preserved yet.</td><td>2–4 days WGSL port and comparison</td></tr>
+<tr><td>Clouds</td><td>Native aggregate coverage is wired. Separate forecast low/mid/high layers are not ported. Original rain states use WebGL.</td><td>1–3 days</td></tr>
+<tr><td>Sun / moon / stars</td><td>Exact app solar direction forwarded by 180° coordinate rotation. Native moon has a generic full disc and stars are procedural, so night deliberately uses approved WebGL.</td><td>2–3 days for lunar limb/phase and star catalogue</td></tr>
+<tr><td>Sun arc and glow</td><td>Original Three.js meshes, UV glow, ticks and sun hit geometry remain on the original renderer for now. Story camera source is unchanged.</td><td>1–2 days native geometry/material port</td></tr>
+<tr><td>Sand</td><td>#EFEBE2 pigment adapter preserves native wetness and shading. Foreground slope 0.105; 2–4 m dunes behind. Native swash nominal 0.066 is still inherited.</td><td>1 day swash/shoreline comparison</td></tr>
+<tr><td>Shadows</td><td>Native terrain and instanced vegetation receive native shadowing. Exact approved sand/shadow appearance not reproduced.</td><td>1–2 days</td></tr>
+<tr><td>GLSL ShaderMaterials</td><td>None can be passed directly to Tidewater&#x27;s WGSL material system. Heat haze, rain, lightning and moon glint require ports.</td><td>2–4 days</td></tr>
+<tr><td>Share export</td><td>Existing export currently renders original WebGL water, even when the live frame used WebGPU. A unified native snapshot path is still needed.</td><td>Half–1 day</td></tr>
+<tr><td>Fallback / loading</td><td>Original scene renders while native initializes. Failed WebGPU, device loss and timeout keep the original water and data. If WebGL itself is unavailable, a non-canvas forecast state is still a release task.</td><td>Half–1 day real-device failure testing</td></tr>
+<tr><td>UI</td><td>Same real app and data, plus branch-only A/B presentation. No copied Tidewater controls, people, island or boats.</td><td>Half–1 day accessibility/phone QA</td></tr>
+</tbody></table>
+<p>Estimates overlap and are not a promise to complete everything in one day. Budget roughly 2–3 engineering weeks for a fully accepted migration, depending on the phone result. Recommendation: ship the approved WebGL renderer in the beta if the native ocean cannot meet both appearance and sustained frame-rate gates.</p>
+<h2>Measurement limits</h2>
+<p>This environment cannot render or operate the user&#x27;s iPhone. CPU checks, native source integrity and isolated shader compilation do not establish visual quality, stable 30 fps, touch ergonomics, or WebGPU compatibility on every iOS device. No screenshot or clip was manufactured as proof. The exact comparison reference videos are not present in this checkout; calibration remains open.</p>
+<h2>Phone protocol</h2>
+<ol>
+<li>Open the ocean proof in Safari at normal phone width, full charge. Use Auto, 3 ft. Leave it visible; do not record while benchmarking.</li>
+<li>Run the two-minute check. Export the JSON. A pass requires every measured rolling 3-second window and overall rate to reach 30 fps. A mean above 30 with slower windows does not pass.</li>
+<li>Record the separate 10-second wave-clock clip. At an 8-second test period, its phase advances 1.25 cycles in 10 real seconds at any render rate. MP4 is used when Safari&#x27;s recorder supports it, otherwise WebM is explicitly named.</li>
+<li>Capture full/tuned stills at 3 ft and 5 ft. Full uses native DPR up to 3 and original ocean detail; both retain the phone reflection cube. The two panels freeze wave phase and swash history. Spray budget changes reset particles, so individual droplets are not an exact match.</li>
+<li>Inspect curl, whitewater, foam lace and clear shallows. Reject a lower quality setting if those disappear, even if it meets the frame-rate target.</li>
+<li>Retest for thermal slowdown after 10 minutes, then repeat in the native WKWebView shell when available.</li>
+</ol></main></html>

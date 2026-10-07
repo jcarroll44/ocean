@@ -1,0 +1,200 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>DayBuoy · UI reference v1 (Verdict first)</title>
+<!--
+  DAYBUOY UI REFERENCE v1 — "Verdict first"
+  ------------------------------------------------------------
+  This file is the source of truth for the HTML/CSS layer that sits on top of the 3D scene.
+  Copy the CSS between "COPY START" and "COPY END" and the markup inside each .db-screen.
+  The scene backgrounds here are still images standing in for the live 3D scene — ignore them.
+  Viewport: 390 × 844 CSS px (iPhone 15/16). All sizes are CSS px. Spacing is on an 8-pt grid (4 allowed for hairlines).
+  Font: Poppins only (200/300/400/500/600).
+  Pass test: your screenshot at 390×844 overlaid on this one must line up within 2 px.
+-->
+<style>
+@font-face{font-family:Poppins;font-weight:200;src:url(fonts/poppins-latin-200-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:300;src:url(fonts/poppins-latin-300-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:500;src:url(fonts/poppins-latin-500-normal.woff2)}
+@font-face{font-family:Poppins;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+
+/* ================= COPY START ================= */
+:root{
+  --ink:#16394D;          /* text on glass */
+  --ink-2:rgba(22,57,77,.62);
+  --ink-3:rgba(22,57,77,.42);
+  --live:#E5483F;         /* live dot only */
+  --away:rgba(255,255,255,.62); /* not-live dot */
+  --sun:#F2C66C;          /* daylight on track */
+  --btn-a:#4F8FAD; --btn-b:#16394D;
+  --glass:rgba(255,255,255,.64);
+  --glass-2:rgba(255,255,255,.40);
+  --glass-line:rgba(255,255,255,.72);
+  --shadow:0 12px 34px rgba(10,40,60,.20);
+  --side:20px;            /* side margin for header */
+  --dock-side:12px;       /* dock inset from screen edge */
+}
+.db-screen{position:relative;width:390px;height:844px;overflow:hidden;font-family:Poppins,system-ui,sans-serif;color:#fff;background:#0d1b24 center/cover no-repeat;-webkit-font-smoothing:antialiased}
+.db-shade{position:absolute;left:0;right:0;top:0;height:300px;background:linear-gradient(180deg,rgba(8,30,45,.28),rgba(8,30,45,0));pointer-events:none;z-index:4}
+
+/* ---------- HEADER (top: 60 = below status bar) ---------- */
+.db-head{position:absolute;left:var(--side);right:var(--side);top:60px;z-index:6;text-shadow:0 1px 16px rgba(8,30,45,.30)}
+.db-row1{height:36px;display:flex;align-items:center;justify-content:space-between}
+.db-kicker{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase}
+.db-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.db-dot.live{background:var(--live);box-shadow:0 0 0 4px rgba(229,72,63,.25);animation:db-pulse 4s ease-in-out infinite}
+.db-dot.away{background:var(--away)}
+@keyframes db-pulse{0%,100%{box-shadow:0 0 0 3px rgba(229,72,63,.30)}50%{box-shadow:0 0 0 7px rgba(229,72,63,.06)}}
+.db-verdict{margin-top:16px;font-size:36px;line-height:40px;font-weight:600;letter-spacing:-1px;max-width:300px}   /* max 2 lines, max 7 words */
+.db-meta{margin-top:12px;display:flex;align-items:baseline;gap:12px}
+.db-temp{font-size:28px;line-height:32px;font-weight:300;letter-spacing:-1px}
+.db-detail{font-size:15px;line-height:20px;font-weight:500;opacity:.9}
+.db-progress{margin-top:8px;height:2px;border-radius:1px;background:rgba(255,255,255,.28)}
+.db-progress i{display:block;height:100%;border-radius:1px;background:#fff}
+
+/* right-side control in row 1 — exactly one of these at a time */
+.db-play{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.db-now{height:32px;padding:0 14px 0 12px;border-radius:16px;display:flex;align-items:center;gap:8px;background:#fff;color:var(--ink);font-size:13px;font-weight:600;letter-spacing:0;text-transform:none;text-shadow:none;box-shadow:0 6px 18px rgba(8,30,45,.22)}
+.db-now i{width:7px;height:7px;border-radius:50%;background:var(--live)}
+
+/* sun/moon pill — only when the body is near the top edge (alt > 50°), centered under the body */
+.db-skypill{position:absolute;z-index:5;transform:translateX(-50%);height:28px;padding:0 12px;border-radius:14px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:#fff;background:rgba(8,30,45,.30);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);white-space:nowrap}
+
+/* ---------- DOCK (height 232 incl. padding = 27.5%) ---------- */
+.db-dock{position:absolute;left:var(--dock-side);right:var(--dock-side);bottom:20px;z-index:8;border-radius:32px;padding:16px 16px 12px;color:var(--ink);
+  background:linear-gradient(160deg,var(--glass),var(--glass-2));backdrop-filter:blur(28px) saturate(1.5);-webkit-backdrop-filter:blur(28px) saturate(1.5);
+  border:1px solid var(--glass-line);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),var(--shadow)}
+.db-tint{position:absolute;inset:0;border-radius:32px;pointer-events:none}   /* sky color at 6% */
+/* stats: no boxes, one quiet row */
+.db-stats{position:relative;display:grid;grid-template-columns:repeat(5,1fr);height:44px}
+.db-stat{text-align:center;position:relative}
+.db-stat+.db-stat:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:1px;background:rgba(22,57,77,.10)}
+.db-stat b{display:block;font-size:20px;line-height:24px;font-weight:500;letter-spacing:-.3px}
+.db-stat b small{font-size:12px;font-weight:500;margin-left:1px}
+.db-stat span{display:block;font-size:10px;line-height:16px;font-weight:600;letter-spacing:1px;color:var(--ink-3);text-transform:uppercase}
+.db-uv{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:3px}
+.db-hr{height:1px;background:rgba(22,57,77,.08);margin:12px 0 8px}
+/* days */
+.db-days{display:flex;justify-content:space-between}
+.db-day{width:44px;height:40px;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:13px;line-height:16px;font-weight:500;color:var(--ink-2)}
+.db-day small{font-size:11px;line-height:14px;font-weight:400;color:var(--ink-3)}
+.db-day.on{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(22,57,77,.14)}
+.db-day.on small{color:var(--ink-2)}
+/* track: midnight→midnight of the selected day */
+.db-track{position:relative;height:32px;margin:8px 6px 0}
+.db-line{position:absolute;left:0;right:0;top:9px;height:4px;border-radius:2px}
+.db-tick{position:absolute;top:18px;transform:translateX(-50%);font-size:10px;line-height:12px;font-weight:500;color:var(--ink-3)}
+.db-thumb{position:absolute;top:2px;width:18px;height:18px;border-radius:50%;transform:translateX(-50%);border:2px solid #fff}
+.db-thumb.sun{background:radial-gradient(circle at 40% 35%,#fff8e2,#ffcf6e);box-shadow:0 0 0 1px rgba(22,57,77,.15),0 0 12px rgba(255,196,90,.95)}
+.db-thumb.moon{background:radial-gradient(circle at 40% 35%,#fff,#c9d6e6);box-shadow:0 0 0 1px rgba(22,57,77,.18),0 0 10px rgba(200,220,255,.9)}
+.db-nowtick{position:absolute;top:5px;width:2px;height:12px;border-radius:1px;background:var(--live);transform:translateX(-50%)}   /* Today only */
+/* action row */
+.db-act{display:flex;gap:8px;margin-top:4px}
+.db-btn{flex:1;height:52px;border-radius:26px;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 20px;color:#fff;font-size:15px;font-weight:600;
+  background:linear-gradient(160deg,var(--btn-a),var(--btn-b));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 20px rgba(22,57,77,.30)}
+.db-btn em{font-style:normal;font-weight:400;opacity:.8;margin-left:6px}
+.db-btn .go{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.18)}
+.db-share{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9)}
+/* states */
+.db-offline .db-stats,.db-offline .db-days{opacity:.55}
+.db-banner{display:inline-flex;align-items:center;gap:8px;height:28px;padding:0 12px;border-radius:14px;font-size:12px;font-weight:600;background:rgba(255,196,90,.92);color:#3d2a05;text-shadow:none;margin-top:12px}
+.db-skel{background:rgba(22,57,77,.10);border-radius:6px}
+/* ================= COPY END ================= */
+
+/* ---------- board only (not part of the app) ---------- */
+@font-face{font-family:B;font-weight:400;src:url(fonts/poppins-latin-400-normal.woff2)}
+@font-face{font-family:B;font-weight:600;src:url(fonts/poppins-latin-600-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:B;background:#0f2230;color:#fff;padding:40px 56px 48px;width:max-content}
+h1{font-size:28px;font-weight:600}
+.sub{opacity:.65;font-size:14px;margin-top:4px}
+.grid{display:grid;grid-template-columns:repeat(3,390px);gap:48px 44px;margin-top:28px}
+.lab{font-size:15px;font-weight:600;margin-bottom:12px}
+.lab span{opacity:.6;font-weight:400}
+.frame{border-radius:48px;overflow:hidden;box-shadow:0 0 0 8px #05090d,0 0 0 9px #33434e,0 30px 60px rgba(0,0,0,.45);position:relative}
+.island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:124px;height:36px;border-radius:20px;background:#000;z-index:30}
+.sb{position:absolute;top:0;left:0;right:0;height:54px;display:flex;justify-content:space-between;align-items:center;padding:6px 34px 0 46px;font:600 16px B;z-index:29}
+.sb svg{margin-left:5px}
+</style></head><body>
+<h1>DayBuoy · UI reference v1 · Verdict first</h1>
+<div class="sub">390 × 844 · Poppins · 8-pt grid · copy the CSS between COPY START / COPY END and the markup in each screen. Scenes are stand-ins for the 3D view.</div>
+<div class="grid" id="g"></div>
+<script>
+const I={
+ play:'<svg width="12" height="13" viewBox="0 0 10 12"><path d="M1.5 1l7.5 5-7.5 5z" fill="#fff"/></svg>',
+ pause:'<svg width="12" height="13" viewBox="0 0 10 12"><rect x="1.5" y="1" width="2.4" height="10" rx=".8" fill="#fff"/><rect x="6.1" y="1" width="2.4" height="10" rx=".8" fill="#fff"/></svg>',
+ go:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>',
+ share:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16394D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 8l5-5 5 5M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg>',
+ off:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#3d2a05" stroke-width="2.4" stroke-linecap="round"><path d="M2 8.8a15 15 0 0120 0M5 12.6a10 10 0 0114 0M8.5 16.3a5 5 0 017 0M12 20h.01M3 3l18 18"/></svg>'
+};
+const sb=t=>`<div class="island"></div><div class="sb"><span>${t}</span><span><svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" width="3" height="12" rx="1"/></svg><svg width="27" height="13" viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.5" fill="none" stroke="#fff" opacity=".45"/><rect x="2" y="2" width="17" height="9" rx="2" fill="#fff"/></svg></span></div>`;
+const DAYS=[['Today','79°'],['Wed','79°'],['Thu','82°'],['Fri','79°'],['Sat','78°'],['Sun','84°'],['Mon','86°']];
+const dl=(6.65/24*100).toFixed(1),dr=(18.4/24*100).toFixed(1);
+const line=`linear-gradient(90deg,rgba(22,57,77,.14) 0 ${dl}%,var(--sun) ${dl}% ${dr}%,rgba(22,57,77,.14) ${dr}% 100%)`;
+function stats(a){return `<div class="db-stats">${a.map(s=>`<div class="db-stat"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>`}
+function dock(o){
+ const p=(o.h/24*100).toFixed(2);
+ const days=DAYS.map((d,i)=>`<div class="db-day${i===o.day?' on':''}">${d[0]}<small>${d[1]}</small></div>`).join('');
+ const ticks=[['12a',0],['6a',25],['12p',50],['6p',75],['12a',100]].map(t=>`<div class="db-tick" style="left:${t[1]}%">${t[0]}</div>`).join('');
+ return `<div class="db-dock"><div class="db-tint" style="background:${o.tint}"></div>
+  ${stats(o.stats)}<div class="db-hr"></div>
+  <div class="db-days">${days}</div>
+  <div class="db-track"><div class="db-line" style="background:${line}"></div>${ticks}${o.day===0?`<div class="db-nowtick" style="left:${(o.now/24*100).toFixed(2)}%"></div>`:''}<div class="db-thumb ${o.thumb}" style="left:${p}%"></div></div>
+  <div class="db-act"><div class="db-btn"><span>${o.btn}</span><span class="go">${I.go}</span></div><div class="db-share">${I.share}</div></div></div>`;
+}
+function head(o){
+ const right=o.right==='retry'?`<div class="db-now" style="padding:0 14px">Retry</div>`:o.right==='play'?`<div class="db-play">${I.play}</div>`:o.right==='pause'?`<div class="db-play">${I.pause}</div>`:`<div class="db-now"><i></i>Back to now</div>`;
+ return `<div class="db-head"><div class="db-row1"><div class="db-kicker"><span class="db-dot ${o.live?'live':'away'}"></span>${o.kicker}</div>${right}</div>
+  ${o.prog!=null?`<div class="db-progress"><i style="width:${o.prog*100}%"></i></div>`:''}
+  ${o.banner?`<div class="db-banner">${I.off}${o.banner}</div>`:''}
+  <div class="db-verdict">${o.v}</div><div class="db-meta"><span class="db-temp">${o.t}°</span><span class="db-detail">${o.d}</span></div></div>`;
+}
+function stars(){let s='';let k=9;const r=()=>((k=k*16807%2147483647)/2147483647);for(let i=0;i<150;i++){s+=`<circle cx="${r()*390}" cy="${r()*330}" r="${r()<.12?1.4:r()*.8+.35}" fill="#fff" opacity="${(r()*.6+.25).toFixed(2)}"/>`}return s}
+const fx={
+ noon:`<svg style="position:absolute;inset:0;z-index:3" width="390" height="844"><defs><radialGradient id="ng"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".12" stop-color="#fffbe8" stop-opacity=".7"/><stop offset=".45" stop-color="#e8f6ff" stop-opacity=".22"/><stop offset="1" stop-color="#e8f6ff" stop-opacity="0"/></radialGradient></defs><circle cx="314" cy="268" r="150" fill="url(#ng)"/><circle cx="314" cy="268" r="17" fill="#fffdf4"/></svg>`,
+ rise:`<svg style="position:absolute;inset:0;z-index:3" width="390" height="844"><defs><radialGradient id="rg"><stop offset="0" stop-color="#ffe2c4" stop-opacity=".65"/><stop offset=".4" stop-color="#ffd2b0" stop-opacity=".18"/><stop offset="1" stop-color="#ffd2b0" stop-opacity="0"/></radialGradient></defs><ellipse cx="120" cy="388" rx="210" ry="120" fill="url(#rg)"/><circle cx="120" cy="380" r="10" fill="#fff3e2" opacity=".85"/></svg>`,
+ set:`<svg style="position:absolute;inset:0;z-index:3" width="390" height="844"><defs><radialGradient id="sg"><stop offset="0" stop-color="#fff6e0"/><stop offset=".1" stop-color="#ffe2a8" stop-opacity=".75"/><stop offset=".45" stop-color="#ffbf7a" stop-opacity=".25"/><stop offset="1" stop-color="#ffbf7a" stop-opacity="0"/></radialGradient></defs><circle cx="213" cy="347" r="160" fill="url(#sg)"/><circle cx="213" cy="347" r="15" fill="#fffaf0"/></svg>`,
+ night:`<svg style="position:absolute;inset:0;z-index:3" width="390" height="844"><defs><radialGradient id="mg"><stop offset="0" stop-color="#f4f7ff" stop-opacity=".55"/><stop offset=".35" stop-color="#cfe0ff" stop-opacity=".16"/><stop offset="1" stop-color="#cfe0ff" stop-opacity="0"/></radialGradient><linearGradient id="mp" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe9ff" stop-opacity=".55"/><stop offset="1" stop-color="#dfe9ff" stop-opacity="0"/></linearGradient></defs>${stars()}<circle cx="318" cy="300" r="120" fill="url(#mg)"/><circle cx="318" cy="300" r="12" fill="#f3f6ff"/><path d="M314 394 L322 394 L354 600 L282 600Z" fill="url(#mp)" opacity=".5" style="mix-blend-mode:screen;filter:blur(9px)"/></svg>`
+};
+const S=[
+ {lab:'1 · Live, midday',sub:'Today. Red pulsing dot. Play = Watch the day.',bg:'scenes/noon.png',fx:fx.noon,time:'12:15',
+  h:{live:true,kicker:'Live · Inlet Beach',right:'play',v:'Peak sun.<br>Shade by 1.',t:85,d:'UV 8 · burn in 22 min est.'},
+  pill:{x:296,y:300,txt:'☀ 72° up · above you'},
+  k:{tint:'rgba(60,130,200,.06)',day:0,h:12.25,now:12.25,thumb:'sun',btn:'Tan window 3–4:30 PM<em>est.</em>',
+   stats:[['85°','Air'],['84°','Water'],['1–2<small>ft</small>','Waves'],['6<small>kt</small>','Wind'],['<i class="db-uv" style="background:#e5484d"></i>8','UV']]}},
+ {lab:'2 · Another day',sub:'Grey dot + day/time. White “Back to now”. Everything updates together.',bg:'scenes/rise.png',fx:fx.rise,time:'12:15',
+  h:{live:false,kicker:'Sat 6:40 AM · Inlet Beach',right:'now',v:'Sunrise 6:40.<br>Glassy till 10.',t:76,d:'Waves 2–3 ft · rip risk moderate'},
+  k:{tint:'rgba(150,110,120,.06)',day:4,h:6.67,thumb:'sun',btn:'Best swim 8–10 AM',
+   stats:[['76°','Air'],['83°','Water'],['2–3<small>ft</small>','Waves'],['3<small>kt</small>','Wind'],['<i class="db-uv" style="background:#9fb3c8"></i>0','UV']]}},
+ {lab:'3 · Watch the day, playing',sub:'Pause replaces play. Thin progress line under row 1. Any touch pauses.',bg:'scenes/set.png',fx:fx.set,time:'12:16',
+  h:{live:false,kicker:'Sat 6:04 PM · Inlet Beach',right:'pause',prog:.84,v:'Golden hour.<br>Stay for sunset.',t:79,d:'Sunset 6:24 · color 6/10 est.'},
+  k:{tint:'rgba(230,150,80,.06)',day:4,h:18.07,thumb:'sun',btn:'Sunset 6:24 PM<em>6/10 est.</em>',
+   stats:[['79°','Air'],['84°','Water'],['1–2<small>ft</small>','Waves'],['8<small>kt</small>','Wind'],['<i class="db-uv" style="background:#9fb3c8"></i>0','UV']]}},
+ {lab:'4 · Live, night',sub:'Moon thumb. Button gives tomorrow’s call.',bg:'scenes/night.png',fx:fx.night,time:'9:01',
+  h:{live:true,kicker:'Live · Inlet Beach',right:'play',v:'Warm night.<br>Calm water.',t:74,d:'Moon 23% · sunrise 6:39 AM'},
+  k:{tint:'rgba(20,40,80,.06)',day:0,h:21,now:21,thumb:'moon',btn:'Tomorrow: go 7–11 AM',
+   stats:[['74°','Air'],['83°','Water'],['1–2<small>ft</small>','Waves'],['9<small>kt</small>','Wind'],['<i class="db-uv" style="background:#9fb3c8"></i>0','UV']]}},
+ {lab:'5 · Offline',sub:'Amber banner with the time of the last good data. Stats dim. Retry, not “Back to now”.',bg:'scenes/noon.png',fx:fx.noon,time:'12:15',off:true,
+  h:{live:false,kicker:'Today 9:00 AM · Inlet Beach',right:'retry',banner:'Offline · forecast from 9:00 AM',v:'Peak sun.<br>Shade by 1.',t:85,d:'UV 8 · burn in 22 min est.'},
+  k:{tint:'rgba(60,130,200,.06)',day:0,h:12.25,now:12.25,thumb:'sun',btn:'Tan window 3–4:30 PM<em>est.</em>',
+   stats:[['85°','Air'],['84°','Water'],['1–2<small>ft</small>','Waves'],['6<small>kt</small>','Wind'],['<i class="db-uv" style="background:#e5484d"></i>8','UV']]}},
+ {lab:'6 · Loading',sub:'Scene first, words after. Skeleton keeps every position fixed — nothing jumps.',bg:'scenes/noon.png',fx:'',time:'12:15',load:true}
+];
+const g=document.getElementById('g');
+for(const s of S){
+ let inner;
+ if(s.load){
+  inner=`<div style="position:absolute;inset:0;background:rgba(200,215,225,.35);z-index:2"></div><div class="db-shade"></div><div class="db-head"><div class="db-row1"><div class="db-kicker"><span class="db-dot away"></span>Reading the Gulf…</div></div>
+   <div class="db-skel" style="margin-top:20px;width:230px;height:30px;background:rgba(255,255,255,.28)"></div><div class="db-skel" style="margin-top:10px;width:170px;height:30px;background:rgba(255,255,255,.28)"></div>
+   <div class="db-skel" style="margin-top:16px;width:200px;height:18px;background:rgba(255,255,255,.22)"></div></div>
+   <div class="db-dock"><div class="db-stats">${[1,2,3,4,5].map(()=>`<div class="db-stat" style="display:grid;place-items:center"><div class="db-skel" style="width:40px;height:28px"></div></div>`).join('')}</div><div class="db-hr"></div>
+   <div class="db-days">${DAYS.map(()=>`<div class="db-day"><div class="db-skel" style="width:32px;height:26px"></div></div>`).join('')}</div>
+   <div class="db-track"><div class="db-line" style="background:rgba(22,57,77,.12)"></div></div>
+   <div class="db-act"><div class="db-btn" style="opacity:.45"><span>Checking conditions…</span><span class="go">${I.go}</span></div><div class="db-share" style="opacity:.5">${I.share}</div></div></div>`;
+ } else {
+  inner=`${s.fx}<div class="db-shade"></div>${head(s.h)}${s.pill?`<div class="db-skypill" style="left:${s.pill.x}px;top:${s.pill.y}px">${s.pill.txt}</div>`:''}${dock(s.k)}`;
+ }
+ g.insertAdjacentHTML('beforeend',`<div><div class="lab">${s.lab} <span>· ${s.sub}</span></div><div class="frame">${sb(s.time)}<div class="db-screen${s.off?' db-offline':''}" style="background-image:url(${s.bg});">${inner}</div></div></div>`);
+}
+</script>
+</body></html>

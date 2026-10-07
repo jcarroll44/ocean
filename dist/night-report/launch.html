@@ -1,0 +1,40 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Launch readiness · 6 October 2026</title><link rel="stylesheet" href="report.css"><main class="launch"><header><a href="index.html">DayBuoy / night-pass</a><span>6 October 2026</span></header><h1>Launch readiness · 6 October 2026</h1>
+<h2>Recommended App Store path</h2>
+<p>Use Capacitor for the existing scene and UI, with a bundled local web build, a small Swift bridge and native extensions. Validate WebGPU in its WKWebView separately from Safari. Keep the proven WebGL fallback. A shell alone is not the product differentiation: the forecast-driven beach, hour exploration and useful day story already provide utility; context-aware location, a glanceable widget and an opt-in best-hour notification would make that utility easier to reach on iPhone.</p>
+<p>Apple&#x27;s 4.2 rule assesses whether an app provides substantial, distinctive utility beyond a repackaged website. Adding a widget is not an automatic pass. The submission should demonstrate the complete beach-planning journey, offline behavior and native integrations. Apple&#x27;s 5.1.1 requires an accessible policy explaining data practices, retention/deletion and consent. These are review criteria, not a prediction of approval. <a href="https://developer.apple.com/app-store/review/guidelines/">Official guidelines</a></p>
+<p><a href="https://capacitorjs.com/docs/ios">Capacitor&#x27;s iOS documentation</a> describes its WKWebView runtime and Xcode-based native project. No shell or native extension was built tonight, per the writing-only track.</p>
+<h2>Dated checklist</h2>
+<p>These are planning targets, not a promised beta date. They assume decisions and the phone retest on <strong>7 October</strong>; missed gates move the dependent dates. “Me” means implementation work I can perform; native signing and device testing require your Mac/account/device access.</p>
+<table><thead><tr><th>Target</th><th>Remaining item</th><th>Owner</th><th>Estimate</th><th>Exit condition</th></tr></thead><tbody>
+<tr><td>Oct 7</td><td>Safari sustained test + 10-second clip + 3/5 ft stills</td><td>You</td><td>20–30 min</td><td>Exported results, visual acceptance, ≥30 fps for 2 min</td></tr>
+<tr><td>Oct 7</td><td>Pick header A or B; confirm imagery against exact board</td><td>You</td><td>10 min</td><td>One approved composition</td></tr>
+<tr><td>Oct 7</td><td>Decide native-ocean timing</td><td>You; recommendation from me</td><td>15 min</td><td>WebGPU remains branch-only until accepted</td></tr>
+<tr><td>Oct 7–8</td><td>Wave-height/reference calibration, directional swash review</td><td>Me, then you on phone</td><td>1–2 days</td><td>1/3/5 ft and 8 s look right; measurement notes</td></tr>
+<tr><td>Oct 7–8</td><td>Open-Meteo commercial plan and API budget</td><td>You</td><td>30–60 min</td><td>Appropriate subscription and permitted use</td></tr>
+<tr><td>Oct 8–9</td><td>Server-side forecast proxy/cache; protect paid API key, rate limits, source timestamps and outage handling</td><td>Me</td><td>1–2 days</td><td>No secret in shipped JS; stale/missing feeds tested</td></tr>
+<tr><td>Oct 8–9</td><td>Design device review: all times, five sheets, dynamic text, 44 px targets, contrast and VoiceOver</td><td>Me + you</td><td>1–2 days</td><td>No clipping, overlap, dead ends or inaccessible controls</td></tr>
+<tr><td>Oct 8–9</td><td>Long-session battery/thermal/memory, low-power mode, offline, return-from-background and device-loss tests</td><td>You + me</td><td>1 day</td><td>Documented device matrix and fallbacks</td></tr>
+<tr><td>Oct 8–10</td><td>Native Capacitor shell, lifecycle, haptics, native share, bundled assets, orientation and status-bar insets</td><td>Me; you for Xcode/signing</td><td>2–3 days</td><td>Runs on target iPhones and remains useful offline</td></tr>
+<tr><td>Oct 9–10</td><td>Location on request, manual option, permission-denied and approximate-location flows</td><td>Me + you</td><td>1 day</td><td>No upfront permission wall; no forced GPS</td></tr>
+<tr><td>Oct 10–12</td><td>Home-screen widget with forecast freshness and deep link; best-hour local notification with opt-in/cancel</td><td>Me + you</td><td>2–3 days</td><td>Useful native behavior, no promise of live animation</td></tr>
+<tr><td>Oct 10–12</td><td>App data/source audit: NWS zone/expiry, tide station/datum, timezone/DST, estimate labels, missing data, NOAA regression</td><td>Me</td><td>1 day</td><td>Every reading traceable; no invented conditions</td></tr>
+<tr><td>Oct 10–12</td><td>Privacy, support/contact, terms, credits, commercial/proprietary asset licences</td><td>You + me</td><td>1 day</td><td>Operator/email filled, actual retention confirmed, public URLs</td></tr>
+<tr><td>Oct 12–13</td><td>App privacy labels + privacy manifest / required-reason API audit</td><td>Me + you</td><td>Half–1 day</td><td>Matches native SDKs, hosting and data flows</td></tr>
+<tr><td>Oct 12–13</td><td>Bundle ID, Apple membership, signing, app icon, launch assets, age rating, category, export compliance, support URL</td><td>You + me</td><td>Half–1 day</td><td>Complete App Store Connect record</td></tr>
+<tr><td>Oct 13–14</td><td>Device screenshots and preview, description, review notes, accessibility/support checks</td><td>Me + you</td><td>1 day</td><td>Captures show actual released behavior</td></tr>
+<tr><td>Oct 14 onward</td><td>TestFlight internal build, external testing/review if needed, crash fixes and release candidate</td><td>You + me</td><td>2–4 days + Apple review</td><td>Accepted device testing; no blocking defects</td></tr>
+<tr><td>After gates</td><td>Approve merge, deploy release and submit</td><td>You approves; me prepares</td><td>Half-day + Apple review</td><td>Explicit approval; rollback version retained</td></tr>
+</tbody></table>
+<p><strong>WebGPU full migration is a separate critical path:</strong> approximately 2–3 engineering weeks after device results, with uncertainty. <a href="migration.html">Inventory</a>. The launch targets above assume the established WebGL ocean can ship if this work is not ready. Do not silently set a date that requires unfinished ports.</p>
+<h2>Source and licensing work</h2>
+<p>Open-Meteo distinguishes the CC BY 4.0 data licence from access to its hosted service. Its public API is for non-commercial use; commercial operation needs an appropriate subscription. Attribution remains required. <a href="https://open-meteo.com/en/pricing">Pricing/licensing</a> · <a href="https://open-meteo.com/en/terms">Terms</a></p>
+<p>Keep NOAA/NWS material attributed, preserve timestamps and avoid implied endorsement. DayBuoy&#x27;s interpretations are its own. <a href="https://www.weather.gov/disclaimer">NWS use terms</a></p>
+<h2>Ideas only — not built tonight</h2>
+<ul>
+<li>Lock-screen widget with a tiny beach: 3–5 days; use a rendered snapshot and scheduled refresh, not a continuously live GPU scene.</li>
+<li>“Your window today” notification: 1–2 days for local scheduling; 3–5 with server updates and push.</li>
+<li>Share any selected hour: 1–2 days to unify WebGL/WebGPU image capture and native share.</li>
+<li>Sunset countdown Live Activity: 2–3 days for ActivityKit lifecycle, stale state and opt-in.</li>
+<li>Apple Watch glance: 4–7 days for a small companion, shared forecast and complications.</li>
+</ul>
+<p>Estimates are engineering effort, not Apple review time. New beaches, accounts and paywall remain outside this pass.</p></main></html>

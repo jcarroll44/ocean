@@ -1,0 +1,45 @@
+{
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "scope": "Actual registered event handlers + Three.js projection, mocked DOM and synthetic forecast. No rendered/browser/device/FPS claim.",
+  "checks": [
+    {
+      "check": "Drag scene → view rotates, time unchanged",
+      "result": "PASS",
+      "detail": "Registered handlers; cross sun/dock, fixed position, inertia, held view and angular limits."
+    },
+    {
+      "check": "Drag sun → time changes, sun follows finger",
+      "result": "PASS",
+      "detail": "Upward input advances morning sun upward on its true path; 60 px target; release holds time."
+    },
+    {
+      "check": "Drag scrubber → time changes, dock compacts",
+      "result": "PASS",
+      "detail": "Ownership retained across canvas; header release flag clears; momentum stays within day."
+    },
+    {
+      "check": "Pinch zooms; double-tap resets",
+      "result": "PASS",
+      "detail": "Two pointers, 35–80° limits, lift/cancel handoff, sun-to-pinch promotion; time unchanged."
+    },
+    {
+      "check": "Water sheet: scrub tide → camera stays on water",
+      "result": "PASS",
+      "detail": "Water pose remains fixed; selected time changes; 170 px peek state persists after release."
+    },
+    {
+      "check": "Back to now → live",
+      "result": "PASS",
+      "detail": "Clears held look, inertia and time motion; returns default home heading and live time."
+    },
+    {
+      "check": "Watch plays; a tap pauses it",
+      "result": "PASS",
+      "detail": "Actual story start/advance; first touch freezes time/camera, same touch looks, explicit Resume works, pre-watch view restores."
+    }
+  ],
+  "extra": "Day change preserves hour and clears held look; exact approved beachPose hash retained."
+}

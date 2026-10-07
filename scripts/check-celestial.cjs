@@ -1,0 +1,23 @@
+// Exercise the display layer against the real sky source, without a GPU.
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const scene=fs.readFileSync('src/scene-data.js','utf8');
+const start=scene.indexOf('vec3 moonDisc('),end=scene.indexOf('// Milky Way surface',start);
+const moon=scene.slice(start,end),sky={fragmentShader:moon,uniforms:{}},water={fragmentShader:moon,uniforms:{}};
+const camera={fov:70,position:{x:1,y:10,z:28}},sunPos={x:17,y:800,z:-2300};
+const scale=()=>({value:1,multiplyScalar(x){this.value*=x;}});
+const sunMesh={position:sunPos,visible:true,scale:scale(),material:{opacity:.37,color:{set(v){this.value=v;}}}};
+const sunHalo={position:{...sunPos},visible:true,scale:scale(),material:{opacity:.15,map:{dispose(){}}}};
+const uniforms={uMoonInfo:{value:{y:.0046}},uSun:{value:{x:1,y:2,z:3}},uMoon:{value:{x:4,y:5,z:6}}};
+const c={console,engine:{camera,scene:{traverse(fn){fn({renderOrder:-100,material:sky});fn({renderOrder:0,material:water});}}},sunMesh,sunHalo,uniforms,sunEl:30,RAD:Math.PI/180,innerHeight:844,Math,clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),mix:(a,b,t)=>a+(b-a)*t,THREE:{CanvasTexture:class{constructor(canvas){this.canvas=canvas;}}},document:{createElement:()=>({getContext:()=>({createRadialGradient:()=>({addColorStop(){}}),fillRect(){}})})}};
+const oldCamera=JSON.stringify(camera),oldDirections=JSON.stringify(uniforms),oldPos=JSON.stringify(sunPos);
+vm.createContext(c);vm.runInContext(fs.readFileSync('src/celestial.js','utf8'),c);vm.runInContext('updateCelestialPresentation()',c);
+assert.equal(JSON.stringify(camera),oldCamera,'camera must not change');assert.equal(JSON.stringify(uniforms),oldDirections,'astronomy must not change');assert.equal(JSON.stringify(sunPos),oldPos,'sun direction must not change');
+assert.equal(water.fragmentShader,moon,'water material untouched');assert.deepEqual(water.uniforms,{});
+assert.equal(sunMesh.material.opacity,.37,'forecast occlusion remains');assert.equal(sunHalo.material.opacity,.15);
+assert.equal(sky.fragmentShader,'uniform float uMoonDisplayRadius;\n'+moon.replace('float R=uMoonInfo.y*1.5;','float R=uMoonDisplayRadius;'),'only lunar display radius may change; phase and limb stay exact');
+assert(sky.uniforms.uMoonDisplayRadius.value>.0046*1.5);
+const shader=sky.fragmentShader,texture=sunHalo.material.map;c.innerHeight=1200;
+sunMesh.scale.value=sunHalo.scale.value=1;vm.runInContext('updateCelestialPresentation()',c);
+assert.equal(sky.fragmentShader,shader,'shader installation is idempotent');assert.equal(sunHalo.material.map,texture,'texture is reused');
+assert(Math.abs(sky.uniforms.uMoonDisplayRadius.value-Math.tan(35*Math.PI/180)*20/1200)<1e-9);
+console.log('PASS: celestial display preserves camera, solar/lunar vectors, phase/limb shading, forecast dimming and water material; no rendered/GPU claim.');

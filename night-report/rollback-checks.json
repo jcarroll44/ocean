@@ -1,0 +1,8 @@
+{
+  "water": "PASS — d008588a exact scene source and unpatched shipped bundle",
+  "camera": "PASS — exact approved beachPose; later approved gesture/story modules unchanged",
+  "startup": "PASS — reproduced rejected null append; repaired DOM startup passes",
+  "selectedDay": "PASS — actual Saturday click changes header, tiles, verdict, track and selected day together",
+  "live": "PASS — Now hides in live; no duplicate time chip; sheet time and return-to-live pass",
+  "scope": "Parsed DOM, source and behavior tests only. No rendered screenshot, pixel comparison, GPU or iPhone FPS verification."
+}

@@ -1,0 +1,32 @@
+@layer legacy, reference-reset;
+@layer reference-reset {
+ .db-head,.db-head :not(svg):not(path):not(rect):not(circle),.db-dock,.db-dock :not(svg):not(path):not(rect):not(circle),.db-skypill,.db-loading-wash{all:revert;box-sizing:border-box;margin:0;padding:0;font-family:inherit}
+ .db-head::before,.db-head *::before,.db-head *::after,.db-dock::before,.db-dock *::before,.db-dock *::after{all:revert}
+}
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden}
+#app.db-screen{width:100%;height:100dvh;min-height:0;font-synthesis:none}
+.db-screen [hidden]{display:none!important}
+.db-screen button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.db-screen [role=button]{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.db-screen :focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.db-head{pointer-events:none}.db-row1 button{pointer-events:auto;border:0;font-family:inherit}
+.db-row1 .db-play{border:1px solid rgba(255,255,255,.55);padding:0;color:#fff}
+.db-dock{box-sizing:border-box;pointer-events:auto}
+.db-track{touch-action:none;user-select:none}
+.db-stat,.db-day,.db-btn,.db-share{user-select:none}
+.db-loading-wash{position:absolute;inset:0;background:rgba(200,215,225,.35);z-index:2;pointer-events:none}
+#loading,#welcome-line,#source-label:before,#source-label:after,#sun-edge,.brandbar,.sky-scrim,#air-feel,#hero-clock,#watch-close,#forecast-status,#scrub-time{display:none!important}
+#source-label{display:inline!important}
+.db-head [aria-disabled=true],.db-dock [aria-disabled=true]{pointer-events:none}
+#app[data-sheet] .db-verdict,#app[data-sheet] .db-meta,#app[data-sheet] .db-dock{visibility:hidden;pointer-events:none}
+#app[data-sheet] .db-head{z-index:9}
+#app #expanded-sheet,#app #story-card{z-index:10}
+#app #notice{z-index:14}
+#app[data-dock-compact=true] .db-dock{padding:8px 16px;border-radius:24px}
+#app[data-dock-compact=true] .db-stats,#app[data-dock-compact=true] .db-hr,#app[data-dock-compact=true] .db-act{display:none}
+#app[data-dock-compact=true] .db-days .db-day{height:28px}
+#app[data-dock-compact=true] .db-track{margin-top:4px;height:24px}
+#app .db-dock #compact-values{display:none}
+#app[data-dock-compact=true] .db-dock #compact-values{display:block;font:500 13px/18px Poppins;color:var(--ink);margin:0;text-align:center}
+#app[data-scrubbing=true] .db-verdict{display:none}
+@media(prefers-reduced-motion:reduce){.db-screen .db-dot.live{animation:none}}

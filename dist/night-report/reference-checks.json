@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "loading skeleton and no readings",
+    "live midday and one Play control",
+    "actual Saturday click updates all readings and track",
+    "playing/paused controls and progress",
+    "Back to now event restores live",
+    "live night and moon thumb",
+    "offline banner and real Retry handler",
+    "verbatim CSS parses"
+  ],
+  "verification": "Parsed DOM, code, and copied CSS. No browser geometry, 2 px comparison, GPU render, iPhone screenshot or video proof."
+}

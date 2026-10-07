@@ -27,7 +27,49 @@
 
 @keyframes sheet-in{from{opacity:.6;transform:scaleY(.45)}to{opacity:1;transform:none}}.sun-sheet{animation-name:sun-sheet-in}@keyframes sun-sheet-in{from{opacity:.6;transform:scaleY(.6)}to{opacity:1;transform:none}}
 /* Round 3: time-lapse controls, scene-space sun path. */
-.watch-controls{position:absolute;bottom:242px;left:50%;transform:translateX(-50%);border-radius:25px;display:flex;align-items:center;padding:2px 5px;color:#fbf8f3;background:linear-gradient(130deg,#16465a80,#326b7b40);white-space:nowrap;box-shadow:inset 0 1px 1px #fff8,0 3px 12px #153d5126}.watch-controls button{background:none;padding:9px 11px;font-size:11px;font-weight:850;display:flex;align-items:center;gap:7px}.watch-controls svg{width:12px;height:12px}#watch-close{font-size:22px;padding:2px 9px;font-weight:600}#app[data-sheet] .watch-controls{display:none}#app[data-playing] .hero,#app[data-playing] .dock{opacity:0;pointer-events:none}#app[data-playing] .watch-controls{bottom:32px}#app[data-playing] .sky-scrim{opacity:.35}#app[data-camera=dome] .sun-handle i{width:19px;height:19px}.path-tick{font-size:10px;font-weight:800}
+.watch-controls{position:absolute;bottom:242px;left:50%;transform:translateX(-50%);border-radius:25px;display:flex;align-items:center;padding:2px 5px;color:#fbf8f3;background:linear-gradient(130deg,#16465a80,#326b7b40);white-space:nowrap;box-shadow:inset 0 1px 1px #fff8,0 3px 12px #153d5126}.watch-controls button{background:none;padding:9px 11px;font-size:11px;font-weight:850;display:flex;align-items:center;gap:7px}.watch-controls svg{width:12px;height:12px}#watch-close{font-size:22px;padding:2px 9px;font-weight:600}#app[data-sheet] .watch-controls{display:none}#app[data-playing] .dock{opacity:0;pointer-events:none}#app[data-playing] .watch-controls{bottom:32px}#app[data-playing] .sky-scrim{opacity:.35}#app[data-camera=dome] .sun-handle i{width:19px;height:19px}.path-tick{font-size:10px;font-weight:800}
 
 /* Time travel always has a quiet route back to the current forecast. */
 .source-label{background:none;color:inherit;padding:5px 0;pointer-events:auto;line-height:1.4}.source-label:disabled{cursor:default}.source-label small{display:block;font-size:10px;letter-spacing:0;text-decoration:underline;text-underline-offset:3px;margin-top:3px}
+
+/* Round 3b: one scene sun, legible camera annotations. */
+.sun-handle i{background:none!important;box-shadow:none!important;width:25px!important;height:25px!important}
+.sun-handle span{font-size:11px;top:13px;left:28px}.sun-handle.right span{left:auto;right:28px}
+.horizon-marker,.ground-letter{position:absolute;transform:translate(-50%,-50%);pointer-events:none;font-size:10px;font-weight:850;color:#fbf8f3;text-shadow:0 1px 4px #163942;background:#1a435a66;padding:4px 7px;border-radius:10px;white-space:nowrap}
+.ground-letter{font-size:12px;background:none;color:#1a435a;text-shadow:0 1px 3px #fff}
+#app[data-playing] .hero{opacity:1}#app[data-playing] .sky-scrim{opacity:.8}
+
+.bo-label{position:absolute;transform:translate(-50%,-50%);font-size:11px;font-weight:900;color:#fbf8f3;text-shadow:0 1px 4px #163942;pointer-events:none}
+
+.watch-controls{top:98px;right:16px;left:auto;bottom:auto;transform:none}.watch-controls button{font-size:10px;padding:8px}#app[data-playing] .watch-controls{top:auto;bottom:32px;right:auto;left:50%;transform:translateX(-50%)}
+
+/* Round 3c: fixed bearing, actual sky coordinates, honest off-screen directions. */
+#compass-strip{position:absolute;top:0;left:0;right:0;height:29px;background:linear-gradient(#163f5675,#163f5620);color:#fbf8f3;font-size:9px;font-weight:850;pointer-events:none}#compass-strip span{position:absolute;top:4px;transform:translateX(-50%);padding-top:5px}#compass-strip span:before{content:'';position:absolute;width:1px;height:3px;background:#fff8;left:50%;top:0}#compass-strip .major:before{height:5px;background:#fff}#compass-strip b{position:absolute;left:50%;top:8px;transform:translateX(-50%);font-size:10px;color:#ffd57c}#compass-strip b:before{content:'▾';position:absolute;top:-11px;left:50%;transform:translateX(-50%)}
+.brandbar{top:41px}.hero{top:106px}#solar-debug{position:absolute;top:148px;right:18px;border-radius:14px;padding:7px 10px;white-space:pre-line;color:#fbf8f3;font-size:11px;line-height:1.6;font-weight:800;text-shadow:0 1px 3px #153c56;background:#163f5644}#sun-edge{position:absolute;top:272px;padding:9px 12px;border-radius:20px;font-size:12px;font-weight:850;color:#fbf8f3;background:#173f5688;text-shadow:0 1px 3px #163f56;pointer-events:none}#look-back{position:absolute;right:18px;top:215px;padding:7px 12px;border-radius:20px;font-size:11px;font-weight:850;color:#fbf8f3;background:#173f5666}.watch-controls{top:100px}#app[data-playing] #solar-debug{opacity:1}
+
+/* Round 3d: unobstructed sun and optional diagnostic readout. */
+#facing-label{position:absolute;top:31px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:800;white-space:nowrap;color:#fff8df;text-shadow:0 1px 4px #163f56;background:#173f5650;border-radius:12px;padding:3px 9px;pointer-events:none}
+.brandbar{top:58px}.hero{top:115px}#sun-edge{top:253px;max-width:calc(100% - 28px)}#look-back{top:242px}#solar-debug{top:148px;z-index:8}.bo-label,.ground-letter{display:none!important}
+.sun-handle span{top:20px}.sun-handle i{border:1px solid #ffe9a97a;border-radius:50%;width:15px!important;height:15px!important}
+
+.hero{top:106px}#hero-temp{font-size:110px}.hero p{margin-top:8px}#compass-strip b{background:#163f5688;padding:0 3px;border-radius:3px}
+
+#compass-strip{pointer-events:auto;touch-action:none;user-select:none}
+
+#sun-edge{max-width:160px;font-size:11px;line-height:1.35;padding:8px 10px;top:250px}
+
+#hero-temp{font-size:100px}.hero p{margin-top:2px}
+
+/* Round 3e: a world-space day diagram only while controlling time. */
+#sun-edge{pointer-events:auto;touch-action:none;cursor:grab;text-align:left}#sun-handle{cursor:grab}#sun-handle:active{cursor:grabbing}
+#app[data-sky=true] .dock{opacity:0;pointer-events:none}#app[data-sky=true] .watch-controls{opacity:0;pointer-events:none}#app[data-playing] .watch-controls{opacity:1;pointer-events:auto}
+#release-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);white-space:nowrap;color:#fff;font-size:12px;font-weight:800;background:#163f5677;backdrop-filter:blur(8px);border-radius:20px;padding:10px 15px;pointer-events:none}
+.ground-letter{display:block!important;color:#fff6cf;font-size:13px;text-shadow:0 1px 3px #173f56}.ground-letter[hidden]{display:none!important}.horizon-marker{font-size:11px;background:#173f56a0}.path-tick{font-size:11px}#look-back{display:none!important}
+
+#sun-edge small{display:block;margin-top:4px;font-size:10px;font-weight:700;opacity:.8}
+
+#app[data-sky=true] .sun-handle span{top:-31px}
+.path-tick{font-size:10px;line-height:1.2;text-align:center;color:#fff;text-shadow:0 1px 3px #123b50}.path-tick b{display:block;margin-top:3px;font-size:10px;color:var(--uv);background:#153d51dc;padding:3px 5px;border-radius:8px;border:1px solid color-mix(in srgb,var(--uv),transparent 55%)}
+#watch-weather-note{position:absolute;left:12px;right:12px;bottom:87px;text-align:center;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 4px #123c50;pointer-events:none}
+#ocean{touch-action:none}
+.path-tick,.path-tick b{white-space:nowrap}
