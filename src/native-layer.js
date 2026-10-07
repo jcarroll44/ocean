@@ -12,6 +12,14 @@ if(engine?.nativeScene){
  const fallback=reason=>{if(failed)return;failed=true;ready=false;host.remove();canvas.style.opacity='1';proof.backend='WebGL fallback';proof.error=reason;badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;engine.activateFallback();send({status:'failed',reason});};
  const timeout=setTimeout(()=>{if(!ready)fallback('Native beach initialization timed out');},180000);
  if(profiling){
+  // Wrap the existing callback only in diagnostics; original UI/camera source
+  // and ordinary scheduling stay intact. Include CPU work even on gated frames.
+  const sceneFrame=frame;
+  frame=function(now){
+   const native=host.contentWindow.__daybuoyOcean,start=performance.now();
+   native?.profileFrameStart?.(now,performance.timeOrigin);
+   try{return sceneFrame(now);}finally{native?.profileFrameEnd?.(performance.now()-start);}
+  };
   for(const row of state.data.rows)Object.assign(row,{swell:3,period:8,tide:0,wind:8,windDirection:201,direction:201,cloud:0,cloudLow:0,cloudMid:0,cloudHigh:0,rain:0,weatherCode:0,visibility:28000});
   setTime(Date.parse('2026-10-05T12:00:00-05:00'));state.live=false;
  }

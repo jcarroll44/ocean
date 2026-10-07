@@ -1,6 +1,12 @@
 // Diagnostic ablations only. The ordinary app never enables these hooks.
+import {LOOP_PASSES,loopMode} from './loop-profile.js';
+export {LOOP_PASSES};
 export const NATIVE_PASSES=['native','native175','native15','native-fxaa','native-flare'];
 export const PASSES = [
+ ['native-empty','Clear only · GPU wait','Same native canvas, initialized device, parent scene/UI CPU loop and DPR 2. Submit only a clear-color pass; retain the original per-frame completion gate. No native scene draws or simulation dispatches. Initialized scene resources stay allocated.'],
+ ['native-empty-raf','Clear only · rAF','Same clear-only case; remove the per-frame completion gate. Count rAF submissions and drain the queue once at the end.'],
+ ['native-readback','Native · no CPU readbacks / wait','Full native scene at DPR 2. After 3 s of warm-up suppress WaterQuery and Atmosphere CPU staging copies/mapAsync; preserve GPU queries and cached fixed-scene lighting. No per-frame completion wait; rAF submission metric. One final queue drain.'],
+ ['native-raf','Native · no completion wait','Full native scene at DPR 2 with normal CPU readbacks. Remove only the per-frame GPU-completion gate and count rAF submissions; one final queue drain reports backlog.'],
  ['native','Native scene · DPR 2','Single native WebGPU scene: DayBuoy sky, native sand and empty stand, full High Tidewater ocean, TAA and lens flare. No WebGL context or host image copies. Fixed resting proof camera.'],
  ['native175','Native scene · DPR 1.75','Only native output DPR changes to 1.75. TAA, lens flare, waves and scene remain unchanged.'],
  ['native15','Native scene · DPR 1.5','Only native output DPR changes to 1.5. TAA, lens flare, waves and scene remain unchanged.'],
@@ -29,7 +35,7 @@ export const PASSES = [
  ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
  ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-native-1';
+export const PROFILE_REVISION='2026-10-07-loop-1';
 export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
 export function hostCuts(config){
  const pass=config?.pass,all=pass==='host-all';
@@ -50,7 +56,7 @@ export function profileMetadata(app,config,G,GPU,output,transport){
   quality:app.activeQuality,transport,resolutionVerifiedEveryFrame:true,
   nativePost:{aa:app.post.aaMode,lensFlare:!!app.post.flare,bypassed:hostCuts(config).post},
   oceanVisible:app.ocean.visible,sprayVisible:app.spray.mesh.visible,breakerVisible:app.breakers.mesh.visible,
-  rendererCount:NATIVE_PASSES.includes(config.pass)?1:undefined,externalImageCopies:NATIVE_PASSES.includes(config.pass)?0:undefined,hostCuts:hostCuts(config),waveSeconds:G.time.value,
+  rendererCount:config.pass.startsWith('native')?1:undefined,externalImageCopies:config.pass.startsWith('native')?0:undefined,hostCuts:hostCuts(config),waveSeconds:G.time.value,
   userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
   adapter:info?{vendor:info.vendor,architecture:info.architecture,device:info.device}:null,
   scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}};
@@ -143,9 +149,11 @@ export class ProfileRun{
   // Whole one-second bins only; an incomplete tail never lowers the minimum.
   const bins=Array.from({length:Math.floor(duration)},()=>0);
   for(const t of this.times){const i=Math.floor((t-this.start)/1000);if(i<bins.length)bins[i]++;}
+  const completion=loopMode(this.config.pass).wait;
   return {pass:this.config.pass,duration,frames:this.times.length,fps:this.times.length/duration,
    minOneSecondFPS:Math.min(...bins),p95FrameMs:quantile(.95),p99FrameMs:quantile(.99),maxFrameMs:sorted.at(-1),
-   measurement:'GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings',
-   meetsCadenceTarget:this.config.seconds===120&&Math.min(...bins)>=30&&sorted.at(-1)<=1000/30+1};
+   metric:completion?'gpu-completed':'raf-submitted',
+   measurement:completion?'GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings':'Submitted frames counted with parent rAF timestamps; NOT GPU-completed cadence or display scanout. Inspect final queue drain for backlog.',
+   meetsCadenceTarget:completion&&!loopMode(this.config.pass).empty&&this.config.seconds===120&&Math.min(...bins)>=30&&sorted.at(-1)<=1000/30+1};
  }
 }

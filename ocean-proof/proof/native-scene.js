@@ -8,9 +8,10 @@ import {Vector2} from '../vendor/tidewater/src/engine/index.js';
 import {WaveClock,renderAt} from './timing.js';
 import {PIN} from './inputs.js';
 import {ProfileRun,profileMetadata} from './profile.js';
+import {loopMode,FrameGate,LoopProbe,clearFrame} from './loop-profile.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
-let app,beach,overlays,packet,capturing=false,inFlight=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions;
+let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
@@ -53,6 +54,8 @@ try{
   profileRun=new ProfileRun(app.profileConfig);
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&!profileRun.done)fail('Profiling interrupted: page hidden. Rerun this case.');});
  }
+ const mode=loopMode(profileRun?app.profileConfig.pass:null),gate=new FrameGate(mode.wait);
+ if(profileRun){probe=new LoopProbe(profileRun,mode);probe.readbacks(app);}
  GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);
  const worker=new Worker(new URL('./shore-worker.js',import.meta.url),{type:'module'});let first=true;
@@ -75,14 +78,34 @@ try{
    if(!app.profileConfig&&next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
   }
  }
+ async function finish(result){
+  try{
+   // One terminal drain exposes queued work without serializing rAF cases.
+   // Never use submission cadence to pass the 30-fps GPU/display gate.
+   let queueDrainMs=0;
+   if(!mode.wait){send({status:'loading',label:'Measurement finished · draining queued GPU work'});const start=performance.now();await GPU.queue.onSubmittedWorkDone();queueDrainMs=performance.now()-start;}
+   send({status:'profile-result',result:{...result,...profileMetadata(app,app.profileConfig,G,GPU,
+    [app.engine.canvas.width,app.engine.canvas.height],'one native WebGPU renderer; zero external image/layer copies'),
+    ...probe.result(),queueDrainMs,...(mode.empty?{oceanVisible:false,sprayVisible:false,breakerVisible:false}:{}),
+    drainNote:'One final queue drain for rAF cases; its duration exposes backlog. Submission/rAF FPS is not GPU-completed or displayed FPS.'}});
+  }catch(e){fail(e);}
+ }
+ function tick(now){
+  completed.push(now);while(completed.length&&completed[0]<now-3000)completed.shift();
+  const result=profileRun?.observe(now);if(result)void finish(result);
+  if(now-lastReport>1000){const fps=completed.length/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value});}
+ }
  const api=window.__daybuoyOcean={
-  get ready(){return !failed&&!inFlight&&!capturing&&!profileRun?.done;},get canvas(){return app.engine.canvas;},pin:PIN,
+  get ready(){return !failed&&!gate.busy&&!capturing&&!profileRun?.done;},get canvas(){return app.engine.canvas;},pin:PIN,
+  profileFrameStart(timestamp,origin){if(probe&&!profileRun.done){rafTime=timestamp+origin-performance.timeOrigin;probe.begin(rafTime,gate.busy);}},
+  profileFrameEnd(cpuMs){probe?.end(cpuMs);},
   async capturePair(){
    if(profileRun)throw Error('Use the separate capture page; never record during an FPS test');
    capturing=true;try{return await captureNativePair({app,beach,overlays,G,GPU});}finally{capturing=false;}
   },
   draw(p){
-   if(failed||inFlight||capturing)return false;
+   if(failed||gate.busy||capturing||profileRun?.done)return false;
+   const cpuStart=performance.now();
    applyPacket(p);
    if(profileRun){
     const d=app.profileConfig.dpr,w=Math.floor(innerWidth*d),h=Math.floor(innerHeight*d);
@@ -91,18 +114,12 @@ try{
     if(!valid||profileDimensions&&actual.some((v,i)=>v!==profileDimensions[i])){fail('Profiling resolution changed or did not retain requested DPR '+d+'. Rerun this case.');return false;}
     profileDimensions=actual;
    }
-   try{renderAt(app,G,clock.sample(performance.now()));inFlight=true;
-    GPU.queue.onSubmittedWorkDone().then(()=>{
-     inFlight=false;const now=performance.now();completed.push(now);while(completed.length&&completed[0]<now-3000)completed.shift();
-     if(profileRun){
-      const result=profileRun.observe(now);
-      if(result)send({status:'profile-result',result:{...result,...profileMetadata(app,app.profileConfig,G,GPU,
-       [app.engine.canvas.width,app.engine.canvas.height],'one native WebGPU renderer; zero external image/layer copies')}});
-     }
-     if(now-lastReport>1000){const fps=completed.length/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value});
-      // DPR 2 / High stays fixed until measured phone acceptance.
-     }
-    }).catch(fail);return true;
+   try{
+    if(!mode.readbacks&&profileRun.start!==null&&(app.query._pending||app.atmosphere._irrPending))throw Error('CPU readback still pending after warm-up; result rejected.');
+    if(mode.empty){const sample=clock.sample(performance.now());G.time.value=sample.seconds;clearFrame(GPU);}
+    else renderAt(app,G,clock.sample(performance.now()));
+    probe?.draw(performance.now()-cpuStart);
+    gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);return true;
    }catch(e){fail(e);return false;}
   }
  };
