@@ -1,5 +1,11 @@
 // Diagnostic ablations only. The ordinary app never enables these hooks.
+export const NATIVE_PASSES=['native','native175','native15','native-fxaa','native-flare'];
 export const PASSES = [
+ ['native','Native scene · DPR 2','Single native WebGPU scene: DayBuoy sky, native sand and empty stand, full High Tidewater ocean, TAA and lens flare. No WebGL context or host image copies. Fixed resting proof camera.'],
+ ['native175','Native scene · DPR 1.75','Only native output DPR changes to 1.75. TAA, lens flare, waves and scene remain unchanged.'],
+ ['native15','Native scene · DPR 1.5','Only native output DPR changes to 1.5. TAA, lens flare, waves and scene remain unchanged.'],
+ ['native-fxaa','Native scene · FXAA','Native scene at DPR 2; upstream FXAA replaces upstream TAA. All other scene, ocean and post settings retained.'],
+ ['native-flare','Native scene · flare off','Native scene at DPR 2 and TAA; remove lens flare visibility compute and shader contribution only. Sun, bloom, waves and other post remain.'],
  ['baseline','All on','Unchanged High ocean settings, locked DPR 2.'],
  ['fft','FFT updates off','Freeze FFT textures after initialization; vertex sampling and shore math remain.'],
  ['shore','Shore wave evaluation off','Remove shoreEvaluate variants in all shaders; retain FFT, swash dispatch and lip draw. Coupled diagnostic, not an isolated timer.'],
@@ -23,7 +29,7 @@ export const PASSES = [
  ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
  ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-host-1';
+export const PROFILE_REVISION='2026-10-07-native-1';
 export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
 export function hostCuts(config){
  const pass=config?.pass,all=pass==='host-all';
@@ -44,7 +50,7 @@ export function profileMetadata(app,config,G,GPU,output,transport){
   quality:app.activeQuality,transport,resolutionVerifiedEveryFrame:true,
   nativePost:{aa:app.post.aaMode,lensFlare:!!app.post.flare,bypassed:hostCuts(config).post},
   oceanVisible:app.ocean.visible,sprayVisible:app.spray.mesh.visible,breakerVisible:app.breakers.mesh.visible,
-  hostCuts:hostCuts(config),waveSeconds:G.time.value,
+  rendererCount:NATIVE_PASSES.includes(config.pass)?1:undefined,externalImageCopies:NATIVE_PASSES.includes(config.pass)?0:undefined,hostCuts:hostCuts(config),waveSeconds:G.time.value,
   userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
   adapter:info?{vendor:info.vendor,architecture:info.architecture,device:info.device}:null,
   scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}};
@@ -54,7 +60,7 @@ export function profileConfig(search){
  if(q.get('ocean-profile')!=='1')return null;
  const pass=q.get('profile-pass')||'baseline';
  if(!PASSES.some(p=>p[0]===pass))throw Error('Unknown profiling pass: '+pass);
- return {pass,seconds:q.get('profile-seconds')==='120'?120:20,warmup:15,dpr:pass==='dpr1'?1:pass==='dpr15'?1.5:2,revision:PROFILE_REVISION};
+ return {pass,seconds:q.get('profile-seconds')==='120'?120:20,warmup:15,dpr:pass==='dpr1'?1:pass==='native175'?1.75:['dpr15','native15'].includes(pass)?1.5:2,revision:PROFILE_REVISION};
 }
 export function replaceRegion(code,start,end,replacement){
  const a=code.indexOf(start),b=code.indexOf(end,a+start.length);
