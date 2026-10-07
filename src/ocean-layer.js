@@ -8,6 +8,29 @@ if(engine&&typeof navigator!=='undefined'){
  const profileDPR=profilePass==='dpr1'?1:profilePass==='dpr15'?1.5:2;
  // Opt-in until phone cadence AND appearance pass. No ocean quality changes.
  const atlas=profiling&&profilePass==='atlas';
+ const singleLayer=profiling&&['host-single','host-all'].includes(profilePass);
+ const bakedSky=profiling&&['host-sky','host-all'].includes(profilePass);
+ const noShadows=profiling&&['host-shadows','host-all'].includes(profilePass);
+ if(noShadows&&renderer.shadowMap)renderer.shadowMap.enabled=false;
+ let backgroundBake=null;
+ function bakeBackground(){
+  if(!bakedSky||backgroundBake)return;
+  const quad=scene.children.find(o=>o.isMesh&&o.renderOrder===-100);
+  if(!quad)throw Error('Profiling background quad missing');
+  const visibility=new Map(scene.children.map(o=>[o,o.visible]));
+  const target=new THREE.WebGLRenderTarget(canvas.width,canvas.height,{depthBuffer:false,stencilBuffer:false});
+  try{
+   for(const o of scene.children)o.visible=o===quad;
+   renderer.setRenderTarget(target);renderer.setClearColor(0,1);renderer.clear();renderer.render(scene,engine.camera);
+   // Raw shader preserves the existing encoded colour; no second colour-space
+   // conversion. This freezes the whole expensive quad, including old water.
+   quad.material=new THREE.ShaderMaterial({uniforms:{baked:{value:target.texture}},
+    vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.0,1.0);}',
+    fragmentShader:'uniform sampler2D baked;varying vec2 vUv;void main(){gl_FragColor=texture2D(baked,vUv);}',
+    depthTest:false,depthWrite:false,toneMapped:false});
+   backgroundBake=target;
+  }finally{for(const[o,v]of visibility)o.visible=v;renderer.setRenderTarget(null);}
+ }
  const profileSend=data=>{if(profiling)parent.postMessage({...data,type:'daybuoy-profile'},location.origin);};
  if(profiling){
   // Controlled diagnostic fixture; never labels invented values as live data.
@@ -61,6 +84,7 @@ if(engine&&typeof navigator!=='undefined'){
     if(canvas.width!==pixels*2||canvas.height!==Math.floor(h*profileDPR))renderer.setSize(pixels*2/profileDPR,h,false);
     renderer.setViewport(0,0,pixels/profileDPR,h);renderer.setScissor(0,0,pixels/profileDPR,h);renderer.setScissorTest(true);
    }
+   bakeBackground();
    renderer.setRenderTarget(null);renderer.setClearColor(0,1);renderer.clear();renderer.render(scene,engine.camera);
    engine.camera.getWorldDirection(direction);
    const c=conditions();
@@ -72,9 +96,9 @@ if(engine&&typeof navigator!=='undefined'){
     const all=new Map(scene.children.map(o=>[o,o.visible]));
     for(const o of scene.children)o.visible=foreground.includes(o)&&remember.get(o);
     if(atlas){const half=canvas.width/2/profileDPR;renderer.setViewport(half,0,half,h);renderer.setScissor(half,0,half,h);}
-    renderer.setClearColor(0,0);renderer.clear();renderer.render(scene,engine.camera);
+    if(!singleLayer){renderer.setClearColor(0,0);renderer.clear();renderer.render(scene,engine.camera);}
     if(atlas&&!native.begin(packet,canvas))return;
-    native.finish(atlas?null:canvas);
+    native.finish(atlas||singleLayer?null:canvas);
     for(const[o,v]of all)o.visible=v;
     renderer.setClearColor(0,1);host.hidden=false;canvas.style.opacity='0';
     if(first){first=false;setTimeout(()=>{if(!failed&&!debug)badge.hidden=true;},6000);}

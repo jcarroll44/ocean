@@ -15,9 +15,40 @@ export const PASSES = [
  ['dpr15','DPR 1.5','Original two-copy path; only source, ocean and output DPR reduced to 1.5.'],
  ['all-off','All ocean passes off','Hide ocean/lip/spray; freeze FFT, detail, queries, caustics, swash, underwater-light maps, crest/emission, refraction and environment after initialization. Remove shore/foam/reflection shader blocks. Retain legacy layer draws/copies, terrain, atmosphere, shadows and post/composition; not an empty-frame floor.'],
  ['grid128','3 × 128 FFT','Original two-copy path and High settings; only FFT grid/cascades and dependent sampling footprints change. Diagnostic, not appearance-approved.'],
- ['lod','Mesh LOD one step lower','Original two-copy path; only CDLOD range factor 2.5 → 2.0. Keep 32-cell tiles, spray, refraction and DPR 2.']
+ ['lod','Mesh LOD one step lower','Original two-copy path; only CDLOD range factor 2.5 → 2.0. Keep 32-cell tiles, spray, refraction and DPR 2.'],
+ ['proof-alone','Tidewater proof alone','Embedded native proof directly, without the DayBuoy document, WebGL renderer, layer copies or OceanComposite. Same sunny fixture, camera, High waves and DPR 2; retains native sky/terrain and proof post defaults (AA/flare reported). Frozen external proof is unchanged.'],
+ ['host-single','Second legacy layer removed','Skip the foreground WebGL render and overlay copy. Transparent overlay stays empty. One base-layer render/copy, full native ocean, native post and final mask composition remain at DPR 2.'],
+ ['host-shadows','Shadow maps off','Disable native SunShadows (cascade draws and shadow sampling via its enabled uniform) and WebGL shadowMap. Analytic shading baked into legacy background remains; all waves, both copies and post stay on at DPR 2.'],
+ ['host-sky','Background baked / atmosphere frozen','Bake the original legacy fullscreen background once at DPR 2, then sample it cheaply. This background includes sky, sand AND old-water shading. Freeze native atmosphere LUT/irradiance updates after the first fixed-scene frame. Keep both layer draws/copies, foreground, reflections, waves and post.'],
+ ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
+ ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-atlas-1';
+export const PROFILE_REVISION='2026-10-07-host-1';
+export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
+export function hostCuts(config){
+ const pass=config?.pass,all=pass==='host-all';
+ return {single:all||pass==='host-single',shadows:all||pass==='host-shadows',sky:all||pass==='host-sky',post:all||pass==='host-post'};
+}
+export function installHostRuntime(app,config){
+ const cuts=hostCuts(config);
+ if(cuts.shadows)app.shadows.enabled=false;
+ if(cuts.sky){
+  const update=app.atmosphere.update.bind(app.atmosphere);let primed=false;
+  app.atmosphere.update=(...args)=>{if(!primed){primed=true;return update(...args);}};
+ }
+}
+export function profileMetadata(app,config,G,GPU,output,transport){
+ const info=GPU.adapter.info;
+ return {pin:'4811ba48d795197de5621985f404e765c0b7c0ef',config,
+  scope:PASSES.find(p=>p[0]===config.pass)[2],resolution:[app.engine.width,app.engine.height],output,
+  quality:app.activeQuality,transport,resolutionVerifiedEveryFrame:true,
+  nativePost:{aa:app.post.aaMode,lensFlare:!!app.post.flare,bypassed:hostCuts(config).post},
+  oceanVisible:app.ocean.visible,sprayVisible:app.spray.mesh.visible,breakerVisible:app.breakers.mesh.visible,
+  hostCuts:hostCuts(config),waveSeconds:G.time.value,
+  userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
+  adapter:info?{vendor:info.vendor,architecture:info.architecture,device:info.device}:null,
+  scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}};
+}
 export function profileConfig(search){
  const q=new URLSearchParams(search);
  if(q.get('ocean-profile')!=='1')return null;

@@ -25,22 +25,25 @@ for(let i=0;i<12;i++){assert.equal(lod.ranges[i],8*2**i*2);assert.equal(lod.uMor
 // the scissored draws and number/order of submissions, including resize drift.
 const code=fs.readFileSync('src/ocean-layer.js','utf8');
 const {PerspectiveCamera,Vector3}=await import('../ocean-proof/vendor/tidewater/src/engine/index.js');
-for(const [pass,dpr] of [['baseline',2],['atlas',2],['dpr1',1],['dpr15',1.5]]){
+for(const [pass,dpr] of [['baseline',2],['atlas',2],['dpr1',1],['dpr15',1.5],['host-single',2],['host-shadows',2],['host-sky',2],['host-post',2],['host-all',2]]){
+ const single=['host-single','host-all'].includes(pass),baked=['host-sky','host-all'].includes(pass);
  const nodes=new Map(),events={},calls=[],canvas={style:{}};nodes.set('#ocean',canvas);
  const el=()=>({style:{},setAttribute(){},append(){},prepend(){},contentWindow:{}});
  const $=id=>nodes.get(id)||nodes.set(id,el()).get(id);
  let host,ratio=1,viewport,scissor=false;
- const children=[{renderOrder:1,isMesh:true,visible:true},{renderOrder:-100,visible:true},{renderOrder:100,visible:true}];
+ const children=[{renderOrder:1,isMesh:true,visible:true},{renderOrder:-100,isMesh:true,visible:true,material:{original:true}},{renderOrder:100,visible:true}];
  const renderer={setPixelRatio(r){ratio=r;},setSize(w,h){canvas.width=Math.floor(w*ratio);canvas.height=Math.floor(h*ratio);},setRenderTarget(){},setClearColor(){},clear(){},setViewport(...v){viewport=v;},setScissor(){},setScissorTest(v){scissor=v;},render(){calls.push({draw:true,width:canvas.width,viewport,scissor,visible:children.map(o=>o.visible)});}};
  const engine={renderer,scene:{children},camera:new PerspectiveCamera(),resize(w,h,s){renderer.setPixelRatio(s);renderer.setSize(w,h);},render(){calls.push('fallback');}};
  const u=value=>({value});
- const c={engine,THREE:{Vector3},$,q:new URLSearchParams('?ocean-profile=1&profile-pass='+pass),navigator:{gpu:{}},window:{addEventListener(k,f){events[k]=f;}},parent:{postMessage(){}},document:{createElement(tag){const n=el();if(tag==='iframe')host=n;return n;}},location:{origin:'https://test'},innerWidth:391,innerHeight:689,setTimeout(){},clearTimeout(){},state:{data:{rows:[{}]}},setTime(){},weatherRoot:null,conditions:()=>({}),realForecast:()=>false,uniforms:{uSun:u(new Vector3()),uMoon:u(new Vector3()),uMoonInfo:u(new Vector3()),uLightning:u(0),uCloud:u(0),uCloudLayers:u(new Vector3()),uRain:u(0)}};
+ const c={engine,THREE:{Vector3,WebGLRenderTarget:class{constructor(w,h){assert.equal(w,782);assert.equal(h,1378);this.texture={};}},ShaderMaterial:class{constructor(options){Object.assign(this,options);}}},$,q:new URLSearchParams('?ocean-profile=1&profile-pass='+pass),navigator:{gpu:{}},window:{addEventListener(k,f){events[k]=f;}},parent:{postMessage(){}},document:{createElement(tag){const n=el();if(tag==='iframe')host=n;return n;}},location:{origin:'https://test'},innerWidth:391,innerHeight:689,setTimeout(){},clearTimeout(){},state:{data:{rows:[{}]}},setTime(){},weatherRoot:null,conditions:()=>({}),realForecast:()=>false,uniforms:{uSun:u(new Vector3()),uMoon:u(new Vector3()),uMoonInfo:u(new Vector3()),uLightning:u(0),uCloud:u(0),uCloudLayers:u(new Vector3()),uRain:u(0)}};
  vm.createContext(c);vm.runInContext(code,c);
  engine.resize(391,689,1.6);assert.equal(ratio,dpr);
- host.contentWindow.__daybuoyOcean={ready:true,begin(p,source){calls.push('copy');assert.equal(source,canvas);return true;},finish(source){calls.push('finish');assert.equal(source,pass==='atlas'?null:canvas);}};
+ host.contentWindow.__daybuoyOcean={ready:true,begin(p,source){calls.push('copy');assert.equal(source,canvas);return true;},finish(source){calls.push('finish');assert.equal(source,pass==='atlas'||single?null:canvas);}};
  events.message({origin:c.location.origin,source:host.contentWindow,data:{type:'daybuoy-ocean',status:'ready'}});
- engine.render(.1);assert.equal(calls.filter(v=>v.draw).length,2);assert.deepEqual(children.map(o=>o.visible),[true,true,true]);
- assert.deepEqual(calls.map(v=>v.draw?'draw':v),pass==='atlas'?['draw','draw','copy','finish']:['draw','copy','draw','finish']);
+ engine.render(.1);assert.equal(calls.filter(v=>v.draw).length,(single?1:2)+(baked?1:0));assert.deepEqual(children.map(o=>o.visible),[true,true,true]);
+ const steady=pass==='atlas'?['draw','draw','copy','finish']:single?['draw','copy','finish']:['draw','copy','draw','finish'];
+ assert.deepEqual(calls.map(v=>v.draw?'draw':v),baked?['draw',...steady]:steady);
+ if(baked){assert(children[1].material.fragmentShader.includes('texture2D(baked'));calls.length=0;engine.render(.1);assert.deepEqual(calls.map(v=>v.draw?'draw':v),steady,'Background must bake only once');}
  assert.equal(canvas.width,Math.floor(391*dpr)*(pass==='atlas'?2:1));assert.equal(canvas.height,Math.floor(689*dpr));
  if(pass==='atlas'){assert.equal(calls[0].scissor,true);assert.equal(calls[1].viewport[0],391);assert.equal(scissor,false);}
 }

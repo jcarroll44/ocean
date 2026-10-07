@@ -4,11 +4,13 @@ import {GPU} from '../vendor/tidewater/src/engine/gpu/GPU.js';
 import {Texture} from '../vendor/tidewater/src/engine/gpu/Texture.js';
 import {FullscreenPass} from '../vendor/tidewater/src/engine/render/FullscreenPass.js';
 import {SCENE_FORMATS,DEPTH_FORMAT} from '../vendor/tidewater/src/engine/render/SceneRenderer.js';
+import {hostCuts} from './profile.js';
 
 export class OceanComposite {
  constructor(app){
   this.app=app;
   this.atlas=app.profileConfig?.pass==='atlas';
+  this.singleLayer=hostCuts(app.profileConfig).single;
   this.base=new Texture({label:'DayBuoy unchanged beach and sky',format:'rgba8unorm',usage:['sample','copyDst','render']});
   this.overlay=this.atlas?this.base:new Texture({label:'DayBuoy rain and sun path',format:'rgba8unorm',usage:['sample','copyDst','render']});
   // Clamp inside each half, not across the atlas seam. At every output pixel
@@ -59,7 +61,7 @@ export class OceanComposite {
   app.post.render=()=>{postRender();if(this.context)this.final.render({colorViews:[this.context.getCurrentTexture().createView()],clear:[0,0,0,1]});};
  }
  copyBase(canvas){const width=canvas.width/(this.atlas?2:1);if(this.canvas&&(this.canvas.width!==width||this.canvas.height!==canvas.height)){this.canvas.width=width;this.canvas.height=canvas.height;}this.copy(canvas,this.base);}
- copyOverlay(canvas){if(!this.atlas)this.copy(canvas,this.overlay);}
+ copyOverlay(canvas){if(!this.atlas&&!this.singleLayer)this.copy(canvas,this.overlay);}
  copy(canvas,texture){
   texture.resize(canvas.width,canvas.height);
   GPU.queue.copyExternalImageToTexture({source:canvas},{texture:texture.getGPU(),premultipliedAlpha:false},{width:canvas.width,height:canvas.height});

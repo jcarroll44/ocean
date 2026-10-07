@@ -1,0 +1,609 @@
+{
+  "schema": 2,
+  "results": [
+    {
+      "pass": "baseline",
+      "duration": 20.079,
+      "frames": 247,
+      "fps": 12.301409432740673,
+      "minOneSecondFPS": 10,
+      "p95FrameMs": 88.99999999999636,
+      "p99FrameMs": 141,
+      "maxFrameMs": 242.00000000000364,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "baseline",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Unchanged High ocean settings, locked DPR 2.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.128,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:49:30.594Z",
+      "pageElapsedSeconds": 38.391,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "atlas",
+      "duration": 20.029,
+      "frames": 247,
+      "fps": 12.332118428278996,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 87,
+      "p99FrameMs": 89,
+      "maxFrameMs": 94,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "atlas",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Batch both unchanged full-resolution scene layers into one canvas transfer. Both layer draws remain; all ocean detail and DPR 2 retained.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "one atlas copy",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.125,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:50:10.973Z",
+      "pageElapsedSeconds": 38.864,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "baseline",
+      "duration": 20.074,
+      "frames": 247,
+      "fps": 12.304473448241506,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 87,
+      "p99FrameMs": 89,
+      "maxFrameMs": 89,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "baseline",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Unchanged High ocean settings, locked DPR 2.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.13900000000001,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:50:51.158Z",
+      "pageElapsedSeconds": 38.66900000000001,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "dpr1",
+      "duration": 20.019,
+      "frames": 379,
+      "fps": 18.932014586143165,
+      "minOneSecondFPS": 14,
+      "p95FrameMs": 68,
+      "p99FrameMs": 81.00000000000728,
+      "maxFrameMs": 84,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "dpr1",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 1,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Original two-copy path; only source, ocean and output DPR reduced to 1.0.",
+      "resolution": [
+        390,
+        689
+      ],
+      "output": [
+        390,
+        689
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 1,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.02000000000001,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:51:30.555Z",
+      "pageElapsedSeconds": 37.887,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "dpr15",
+      "duration": 20.068999999999996,
+      "frames": 281,
+      "fps": 14.001694155164685,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 84.99999999999636,
+      "p99FrameMs": 87,
+      "maxFrameMs": 89,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "dpr15",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 1.5,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Original two-copy path; only source, ocean and output DPR reduced to 1.5.",
+      "resolution": [
+        585,
+        1033
+      ],
+      "output": [
+        585,
+        1033
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 1.5,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.131,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:52:11.209Z",
+      "pageElapsedSeconds": 39.152,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "all-off",
+      "duration": 20.026999999999997,
+      "frames": 250,
+      "fps": 12.483147750536776,
+      "minOneSecondFPS": 11,
+      "p95FrameMs": 88,
+      "p99FrameMs": 91,
+      "maxFrameMs": 114,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "all-off",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Hide ocean/lip/spray; freeze FFT, detail, queries, caustics, swash, underwater-light maps, crest/emission, refraction and environment after initialization. Remove shore/foam/reflection shader blocks. Retain legacy layer draws/copies, terrain, atmosphere, shadows and post/composition; not an empty-frame floor.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.118,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:52:55.468Z",
+      "pageElapsedSeconds": 42.751,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "grid128",
+      "duration": 20.041000000000007,
+      "frames": 251,
+      "fps": 12.524325133476369,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 87,
+      "p99FrameMs": 90,
+      "maxFrameMs": 92,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "grid128",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Original two-copy path and High settings; only FFT grid/cascades and dependent sampling footprints change. Diagnostic, not appearance-approved.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "3 × 128",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.08500000000001,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:53:42.879Z",
+      "pageElapsedSeconds": 46.028,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "lod",
+      "duration": 20.023,
+      "frames": 256,
+      "fps": 12.785296908555162,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 87,
+      "p99FrameMs": 89,
+      "maxFrameMs": 100,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "lod",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Original two-copy path; only CDLOD range factor 2.5 → 2.0. Keep 32-cell tiles, spray, refraction and DPR 2.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.035,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:54:23.105Z",
+      "pageElapsedSeconds": 38.707,
+      "viewport": [
+        390,
+        689
+      ]
+    },
+    {
+      "pass": "baseline",
+      "duration": 20.015,
+      "frames": 251,
+      "fps": 12.540594554084436,
+      "minOneSecondFPS": 12,
+      "p95FrameMs": 87,
+      "p99FrameMs": 90,
+      "maxFrameMs": 92,
+      "measurement": "GPU-completed frame cadence, including app rendering and queue wait; not display scanout or isolated GPU timings",
+      "meetsCadenceTarget": false,
+      "pin": "4811ba48d795197de5621985f404e765c0b7c0ef",
+      "config": {
+        "pass": "baseline",
+        "seconds": 20,
+        "warmup": 15,
+        "dpr": 2,
+        "revision": "2026-10-07-atlas-1"
+      },
+      "scope": "Unchanged High ocean settings, locked DPR 2.",
+      "resolution": [
+        780,
+        1378
+      ],
+      "output": [
+        780,
+        1378
+      ],
+      "quality": {
+        "name": "High",
+        "dpr": 2,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "transport": "two layer copies",
+      "resolutionVerifiedEveryFrame": true,
+      "waveSeconds": 65.083,
+      "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko)",
+      "deviceDPR": 3,
+      "adapter": {
+        "vendor": "apple",
+        "architecture": "apple",
+        "device": "apple"
+      },
+      "scene": {
+        "heightFt": 3,
+        "period": 8,
+        "tideM": 0,
+        "windKnots": 8,
+        "direction": 201,
+        "sunny": true
+      },
+      "runId": "2026-10-07T04:48:52.202Z",
+      "recordedAt": "2026-10-07T04:55:02.861Z",
+      "pageElapsedSeconds": 38.25400000000006,
+      "viewport": [
+        390,
+        689
+      ]
+    }
+  ],
+  "notes": "No physical iPhone result exists until this runner is used on that device. Diagnostic ablations are not optimized visuals. Atlas only batches transfers; both legacy layer draws remain. Compare repeated baseline rows for drift, not proof of thermal state. Grid/LOD/DPR rows are separate changes. Ocean and final output dimensions are checked every frame. Screenshots and physical-device visual acceptance remain separate requirements."
+}

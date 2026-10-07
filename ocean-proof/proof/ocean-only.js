@@ -6,7 +6,8 @@ import {Vector2} from '../vendor/tidewater/src/engine/index.js';
 import {WaveClock,renderAt,AutoQuality} from './timing.js';
 import {applyQuality} from './quality.js';
 import {PIN} from './inputs.js';
-import {ProfileRun,installRuntimeAblation,PASSES} from './profile.js';
+import {ProfileRun,installRuntimeAblation,installHostRuntime,hostCuts,profileMetadata} from './profile.js';
+import {installPostBypass} from './profile-present.js';
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,composite,packet,inFlight=false,failed=false,tuner,clock,completed=[],lastReport=0,lastQuality=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions;
 const started=performance.now();
@@ -42,6 +43,8 @@ try{
  const initial=parent.__daybuoy; if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
  await app.init((fraction,label)=>send({status:'loading',fraction,label}));
  installRuntimeAblation(app,app.profileConfig,composite);
+ installHostRuntime(app,app.profileConfig);
+ if(hostCuts(app.profileConfig).post)installPostBypass(app,composite);
  if(app.profileConfig){
   profileRun=new ProfileRun(app.profileConfig);
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&!profileRun.done)fail('Profiling interrupted: page hidden. Rerun this case.');});
@@ -88,13 +91,8 @@ try{
      inFlight=false;const now=performance.now();completed.push(now);while(completed.length&&completed[0]<now-3000)completed.shift();
      if(profileRun){
       const result=profileRun.observe(now);
-      if(result)send({status:'profile-result',result:{...result,pin:PIN,config:app.profileConfig,
-       scope:PASSES.find(p=>p[0]===result.pass)[2],resolution:[app.engine.width,app.engine.height],
-       output:[composite.canvas?.width,composite.canvas?.height],quality:app.activeQuality,
-       transport:composite.atlas?'one atlas copy':'two layer copies',resolutionVerifiedEveryFrame:true,
-       waveSeconds:G.time.value,userAgent:navigator.userAgent,deviceDPR:devicePixelRatio,
-       adapter:GPU.adapter.info?{vendor:GPU.adapter.info.vendor,architecture:GPU.adapter.info.architecture,device:GPU.adapter.info.device}:null,
-       scene:{heightFt:3,period:8,tideM:0,windKnots:8,direction:201,sunny:true}}});
+      if(result)send({status:'profile-result',result:{...result,...profileMetadata(app,app.profileConfig,G,GPU,
+       [composite.canvas?.width,composite.canvas?.height],composite.atlas?'one atlas copy':composite.singleLayer?'one base copy; foreground omitted':'two layer copies')}});
      }
      if(now-lastReport>1000){const fps=completed.length/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value});
       if(!profileRun&&now-lastQuality>5000){lastQuality=now;if(tuner.observe(fps)){applyQuality(app,tuner.level);composite.resize();completed=[];}}

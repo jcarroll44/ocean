@@ -25,6 +25,7 @@ fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-ocean-host-profile.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
