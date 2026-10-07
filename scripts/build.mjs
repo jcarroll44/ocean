@@ -1,6 +1,7 @@
-import fs from 'node:fs';
-fs.mkdirSync('dist',{recursive:true});
-const read=p=>fs.readFileSync('src/'+p,'utf8');
-let html=read('index.html').replace('/* DAYBUOY_CSS */',()=>read('font.css')+'\n'+read('style.css')).replace('/* DAYBUOY_JS */',()=>read('scene-data.js')+'\n'+read('daybuoy.js').replace('/* DAYBUOY_SHEETS */',()=>read('sheets.js')).replace('/* DAYBUOY_SCENE_UI */',()=>read('scene-ui.js')).replace('/* DAYBUOY_CAMERA */',()=>read('camera.js')));
-fs.writeFileSync('dist/index.html',html);
-console.log('Built DayBuoy: retained 3D scene and data; new UI.');
+import fs from 'node:fs';import {execFileSync} from 'node:child_process';
+execFileSync(process.execPath,['scripts/check.mjs'],{stdio:'inherit'});
+fs.rmSync('dist',{recursive:true,force:true});fs.mkdirSync('dist');
+for(const p of ['index.html','proof.css','report.html','proof','baseline','vendor','upstream-integrity.json'])fs.cpSync(p,'dist/'+p,{recursive:true});
+for(const name of fs.readdirSync('public'))fs.cpSync('public/'+name,'dist/'+name,{recursive:true});
+if(fs.existsSync('validation.json'))fs.copyFileSync('validation.json','dist/validation.json');
+console.log('Built isolated ocean proof. Main application unchanged.');

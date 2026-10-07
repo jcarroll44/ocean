@@ -1,1 +1,8 @@
-{"name":"daybuoy-preview","private":true,"type":"module","scripts":{"dev":"vite","build":"node scripts/build.mjs"},"devDependencies":{"vite":"^6.1.0"}}
+{
+  "name": "daybuoy-ocean-proof",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

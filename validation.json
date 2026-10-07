@@ -1,0 +1,26 @@
+{
+  "sourceIntegrity": "pass",
+  "cameraProjection": "pass",
+  "syntaxAndImports": "pass",
+  "pipelineValidation": "blocked",
+  "pipelineReason": "Dawn null backend supports 16384-byte workgroup storage; unmodified Tidewater Env SH requires 18432. Subsequent invalid-layout errors; no pipeline pass claimed.",
+  "pixelsRendered": false,
+  "iPhoneTested": false,
+  "clipsRecorded": false,
+  "mainAppChanged": false,
+  "clockTests": "pass: 1/6/15/30/60/120 fps and stalls; 8 seconds real time = one 8-second shore phase cycle",
+  "qualityTests": "pass: adaptive thresholds/floor, effective DPR, real LOD node reduction, budget values",
+  "sprayBudgetShader": "pass on Dawn null: compiled modified budget hook; dispatch and instance limits verified",
+  "priorUserResult": {
+    "fpsApprox": 6,
+    "resolution": [
+      1170,
+      2532
+    ],
+    "backend": "WebGPU",
+    "device": "iPhone Safari",
+    "source": "User reported original proof"
+  },
+  "tunedIPhoneTested": false,
+  "timingClipRecordedBySession": false
+}
