@@ -30,6 +30,7 @@ execFileSync(process.execPath,['scripts/check-ocean-host-profile.mjs'],{stdio:'i
 execFileSync(process.execPath,['scripts/check-native-scene.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-native-startup.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-loop-profile.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-pipeline.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});

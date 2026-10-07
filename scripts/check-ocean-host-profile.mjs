@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import {PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,profileConfig,PROFILE_REVISION,hostCuts,installHostRuntime} from '../ocean-proof/proof/profile.js';
+import {PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,hostCuts,installHostRuntime} from '../ocean-proof/proof/profile.js';
 import {SunShadows} from '../ocean-proof/vendor/tidewater/src/engine/render/Shadows.js';
 import {ShadowUniforms} from '../ocean-proof/vendor/tidewater/src/engine/render/wgsl/lighting.js';
 const noop=()=>{};
@@ -28,7 +28,7 @@ function runner(mode='round3'){
  const elements=new Map(),events={},timeouts=[];
  const node=()=>({style:{},append(){},replaceChildren(){},contentWindow:{}});
  const $=id=>elements.get(id)||elements.set(id,node()).get(id);
- const c={PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
+ const c={PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
  vm.createContext(c);vm.runInContext(source,c);$(mode).onclick();
  return {$,c,events,timeouts,result(pass,overrides={}){const r={pass,config:profileConfig('?ocean-profile=1&profile-pass='+pass),fps:30,minOneSecondFPS:30,p95FrameMs:33,resolution:[780,1378],output:[780,1378],resolutionVerifiedEveryFrame:true,oceanVisible:true,sprayVisible:true,breakerVisible:true,...overrides};events.message({origin:c.location.origin,source:$('stage').contentWindow,data:{type:'daybuoy-profile',status:'profile-result',result:r}});}};
 }
@@ -59,4 +59,19 @@ for(const pass of ['native',...LOOP_PASSES,'native']){
 }
 assert.equal(loop.$('stage').src,'about:blank');
 const badCPU=runner('loop');badCPU.result('native');badCPU.timeouts.at(-1)();badCPU.result('native-empty',{clearOnly:true});assert.match(badCPU.$('error').textContent,/loop\/CPU/);
+function pipeResult(r,fps=28,overrides={}){
+ const config=profileConfig(new URL(r.$('stage').src,'https://test').search),size=[Math.floor(390*config.dpr),Math.floor(689*config.dpr)];
+ r.result(config.pass,{config,fps,minOneSecondFPS:Math.floor(fps),metric:'gpu-completed-pipelined',perFrameCompletionWait:false,pipeline:{maxFramesInFlight:2,maxObservedInFlight:2,outstanding:0,submitted:900,completed:900},readbackThrottle:{waterMinFrameInterval:4},nativePost:{aa:config.aa,lensFlare:config.flare},cpuFrame:{samples:1000,meanMs:3},resolution:size,output:size,p95CompletionGapMs:50,...overrides});
+}
+const piped=runner('pipeline');
+for(const [pass,fps] of [['native-pipe',28],['native-pipe175',31],['native-pipe15',34],['native-pipe-fxaa',29],['native-pipe-flare',29],['native-pipe',28]]){
+ assert(piped.$('stage').src.includes('profile-pass='+pass));pipeResult(piped,fps);assert.equal(piped.$('error').textContent,'');piped.timeouts.at(-1)();
+}
+assert(piped.$('stage').src.includes('native-pipe-combo'));assert(piped.$('stage').src.includes('profile-dpr=1.75'));assert(piped.$('stage').src.includes('profile-aa=fxaa'));assert(piped.$('stage').src.includes('profile-flare=0'));
+pipeResult(piped,35);piped.timeouts.at(-1)();
+// Independent DPR 1.75 already held 30 with TAA + flare; prefer its unchanged
+// appearance for the sustained test even when the combination is faster.
+assert(piped.$('stage').src.includes('profile-pass=native-pipe175'));assert(piped.$('stage').src.includes('profile-seconds=120'));
+pipeResult(piped,31);piped.timeouts.at(-1)();assert.equal(piped.$('stage').src,'about:blank');assert.equal(piped.$('captureCandidate').hidden,false);assert(piped.$('captureCandidate').href.includes('native-pipe175'));
+for(const overrides of [{metric:'raf-submitted'},{pipeline:{maxFramesInFlight:3,maxObservedInFlight:3,outstanding:0}},{readbackThrottle:{waterMinFrameInterval:1}},{nativePost:{aa:'fxaa',lensFlare:true}},{oceanVisible:false}]){const invalid=runner('pipeline');pipeResult(invalid,40,overrides);assert(invalid.$('error').textContent);}
 console.log('PASS: six DPR-2 host cases; ocean update functions untouched; actual disabled-shadow uniform path; first-frame atmosphere prime; direct-proof routing; rejection of stale/DPR/hidden-ocean results. CPU/source only.');

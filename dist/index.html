@@ -60091,7 +60091,7 @@ if(engine?.nativeScene){
  const badge=document.createElement('div');badge.id='ocean-engine-status';badge.setAttribute('role','status');$('#app').append(badge);
  const proof=window.__tidewater={backend:'loading',pin:'4811ba48d795197de5621985f404e765c0b7c0ef',metrics:null,error:null};
  const host=document.createElement('iframe');host.id='tidewater-ocean-layer';host.title='DayBuoy native beach';host.tabIndex=-1;host.setAttribute('aria-hidden','true');host.setAttribute('allow','webgpu');
- host.src='ocean-proof/proof/native-scene.html?noClouds=1&quality=0'+(profiling?'&ocean-profile=1&profile-pass='+encodeURIComponent(pass)+'&profile-seconds='+(q.get('profile-seconds')==='120'?'120':'20'):'')+(q.get('native-capture')==='1'?'&native-capture=1':'');
+ host.src='ocean-proof/proof/native-scene.html?noClouds=1&quality=0'+(profiling?'&ocean-profile=1&profile-pass='+encodeURIComponent(pass)+'&profile-seconds='+(q.get('profile-seconds')==='120'?'120':'20')+['profile-dpr','profile-aa','profile-flare'].filter(k=>q.has(k)).map(k=>'&'+k+'='+encodeURIComponent(q.get(k))).join(''):'')+(q.get('native-capture')==='1'?'&native-capture=1':'');
  $('#app').prepend(host);badge.textContent='Loading native beach…';
  let ready=false,failed=false,first=true;
  const send=d=>{if(profiling)parent.postMessage({...d,type:'daybuoy-profile'},location.origin);};

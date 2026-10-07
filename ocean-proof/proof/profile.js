@@ -1,8 +1,17 @@
 // Diagnostic ablations only. The ordinary app never enables these hooks.
 import {LOOP_PASSES,loopMode} from './loop-profile.js';
+import {PIPE_PASSES,pipelineSettings} from './pipeline-profile.js';
 export {LOOP_PASSES};
+export {PIPE_PASSES};
+export {comboQuery,chooseCombo,chooseSustained} from './pipeline-profile.js';
 export const NATIVE_PASSES=['native','native175','native15','native-fxaa','native-flare'];
 export const PASSES = [
+ ['native-pipe','Pipelined · DPR 2','Production loop: max 2 outstanding frames, asynchronous GPU-completed counter, water CPU readback at most every fourth submitted frame and atmosphere at most 4 Hz. Full High waves, TAA and lens flare at DPR 2.'],
+ ['native-pipe175','Pipelined · DPR 1.75','Same production pipeline and readbacks; only DPR changes to 1.75.'],
+ ['native-pipe15','Pipelined · DPR 1.5','Same production pipeline and readbacks; only DPR changes to 1.5.'],
+ ['native-pipe-fxaa','Pipelined · FXAA','Same production pipeline at DPR 2; only upstream FXAA replaces TAA.'],
+ ['native-pipe-flare','Pipelined · flare off','Same production pipeline at DPR 2 with TAA; only lens flare is removed.'],
+ ['native-pipe-combo','Pipelined · candidate combination','DPR/AA/flare combination selected from this device’s current single-setting results, then measured separately. Actual settings are recorded; no visual acceptance or additive gain is assumed.'],
  ['native-empty','Clear only · GPU wait','Same native canvas, initialized device, parent scene/UI CPU loop and DPR 2. Submit only a clear-color pass; retain the original per-frame completion gate. No native scene draws or simulation dispatches. Initialized scene resources stay allocated.'],
  ['native-empty-raf','Clear only · rAF','Same clear-only case; remove the per-frame completion gate. Count rAF submissions and drain the queue once at the end.'],
  ['native-readback','Native · no CPU readbacks / wait','Full native scene at DPR 2. After 3 s of warm-up suppress WaterQuery and Atmosphere CPU staging copies/mapAsync; preserve GPU queries and cached fixed-scene lighting. No per-frame completion wait; rAF submission metric. One final queue drain.'],
@@ -35,7 +44,7 @@ export const PASSES = [
  ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
  ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-loop-1';
+export const PROFILE_REVISION='2026-10-07-pipeline-1';
 export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
 export function hostCuts(config){
  const pass=config?.pass,all=pass==='host-all';
@@ -66,7 +75,7 @@ export function profileConfig(search){
  if(q.get('ocean-profile')!=='1')return null;
  const pass=q.get('profile-pass')||'baseline';
  if(!PASSES.some(p=>p[0]===pass))throw Error('Unknown profiling pass: '+pass);
- return {pass,seconds:q.get('profile-seconds')==='120'?120:20,warmup:15,dpr:pass==='dpr1'?1:pass==='native175'?1.75:['dpr15','native15'].includes(pass)?1.5:2,revision:PROFILE_REVISION};
+ return {pass,seconds:q.get('profile-seconds')==='120'?120:20,warmup:15,dpr:pass==='dpr1'?1:pass==='native175'?1.75:['dpr15','native15'].includes(pass)?1.5:2,revision:PROFILE_REVISION,...pipelineSettings(pass,q)};
 }
 export function replaceRegion(code,start,end,replacement){
  const a=code.indexOf(start),b=code.indexOf(end,a+start.length);

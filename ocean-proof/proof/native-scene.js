@@ -9,6 +9,8 @@ import {WaveClock,renderAt} from './timing.js';
 import {PIN} from './inputs.js';
 import {ProfileRun,profileMetadata} from './profile.js';
 import {loopMode,FrameGate,LoopProbe,clearFrame} from './loop-profile.js';
+import {FramePipeline,throttleReadbacks} from './pipeline.js';
+import {PIPE_PASSES,CompletedProfileRun} from './pipeline-profile.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
@@ -18,12 +20,14 @@ window.addEventListener('error',e=>fail(e.error||e.message));window.addEventList
 try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();
+ const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
   beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);
   app.engine.setRenderScale(app.profileConfig?.dpr??2);app.activeQuality={...app.activeQuality,dpr:app.profileConfig?.dpr??2};
-  if(app.profileConfig?.pass==='native-fxaa')app.post.aaMode='fxaa';
-  if(app.profileConfig?.pass==='native-flare')app.post.flare=null;
+  app.proofFlare=app.post.flare;
+  if(app.profileConfig?.pass==='native-fxaa'||app.profileConfig?.aa==='fxaa')app.post.aaMode='fxaa';
+  if(app.profileConfig?.pass==='native-flare'||app.profileConfig?.flare===false)app.post.flare=null;
   await prepare();
  };
  // Native terrain, sky and objects share Tidewater's one scene renderer.
@@ -51,10 +55,12 @@ try{
  await app.init((fraction,label)=>send({status:'loading',fraction,label}));
 
  if(app.profileConfig&&!app.qs.has('native-capture')){
-  profileRun=new ProfileRun(app.profileConfig);
+  profileRun=pipelined?new CompletedProfileRun(app.profileConfig):new ProfileRun(app.profileConfig);
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&!profileRun.done)fail('Profiling interrupted: page hidden. Rerun this case.');});
  }
- const mode=loopMode(profileRun?app.profileConfig.pass:null),gate=new FrameGate(mode.wait);
+ const mode={...loopMode(app.profileConfig?.pass),...(pipelined?{wait:false}:{}),pipelined};
+ const gate=pipelined?new FramePipeline({queue:GPU.queue,onComplete:e=>tick(e.now,e.count),onError:fail}):new FrameGate(mode.wait);
+ const readbackThrottle=pipelined?throttleReadbacks(app,GPU):null;
  if(profileRun){probe=new LoopProbe(profileRun,mode);probe.readbacks(app);}
  GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);
@@ -83,17 +89,17 @@ try{
    // One terminal drain exposes queued work without serializing rAF cases.
    // Never use submission cadence to pass the 30-fps GPU/display gate.
    let queueDrainMs=0;
-   if(!mode.wait){send({status:'loading',label:'Measurement finished · draining queued GPU work'});const start=performance.now();await GPU.queue.onSubmittedWorkDone();queueDrainMs=performance.now()-start;}
+   if(!mode.wait){send({status:'loading',label:'Measurement finished · draining queued GPU work'});const start=performance.now();if(pipelined)await gate.drain();else await GPU.queue.onSubmittedWorkDone();queueDrainMs=performance.now()-start;}
    send({status:'profile-result',result:{...result,...profileMetadata(app,app.profileConfig,G,GPU,
     [app.engine.canvas.width,app.engine.canvas.height],'one native WebGPU renderer; zero external image/layer copies'),
-    ...probe.result(),queueDrainMs,...(mode.empty?{oceanVisible:false,sprayVisible:false,breakerVisible:false}:{}),
-    drainNote:'One final queue drain for rAF cases; its duration exposes backlog. Submission/rAF FPS is not GPU-completed or displayed FPS.'}});
+    ...probe.result(),queueDrainMs,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{}),...(mode.empty?{oceanVisible:false,sprayVisible:false,breakerVisible:false}:{}),
+    drainNote:pipelined?'Final drain is outside the measured window and does not increase measured completed-frame counts.':'One final queue drain for rAF cases; its duration exposes backlog. Submission/rAF FPS is not GPU-completed or displayed FPS.'}});
   }catch(e){fail(e);}
  }
- function tick(now){
-  completed.push(now);while(completed.length&&completed[0]<now-3000)completed.shift();
-  const result=profileRun?.observe(now);if(result)void finish(result);
-  if(now-lastReport>1000){const fps=completed.length/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value});}
+ function tick(now,count=1){
+  completed.push({now,count});while(completed.length&&completed[0].now<now-3000)completed.shift();
+  const result=profileRun?.observe(now,count);if(result)void finish(result);
+  if(now-lastReport>1000){const fps=completed.reduce((n,e)=>n+e.count,0)/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:pipelined?'gpu-completed-pipelined':mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{})});}
  }
  const api=window.__daybuoyOcean={
   get ready(){return !failed&&!gate.busy&&!capturing&&!profileRun?.done;},get canvas(){return app.engine.canvas;},pin:PIN,
@@ -101,7 +107,7 @@ try{
   profileFrameEnd(cpuMs){probe?.end(cpuMs);},
   async capturePair(){
    if(profileRun)throw Error('Use the separate capture page; never record during an FPS test');
-   capturing=true;try{return await captureNativePair({app,beach,overlays,G,GPU});}finally{capturing=false;}
+   capturing=true;try{if(pipelined)await gate.drain();return await captureNativePair({app,beach,overlays,G,GPU});}finally{capturing=false;}
   },
   draw(p){
    if(failed||gate.busy||capturing||profileRun?.done)return false;
@@ -119,7 +125,7 @@ try{
     if(mode.empty){const sample=clock.sample(performance.now());G.time.value=sample.seconds;clearFrame(GPU);}
     else renderAt(app,G,clock.sample(performance.now()));
     probe?.draw(performance.now()-cpuStart);
-    gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);return true;
+    if(pipelined)gate.submittedFrame();else gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);return true;
    }catch(e){fail(e);return false;}
   }
  };
