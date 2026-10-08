@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "runId": "2026-10-08T23-45-55Z-412ca7e7-af61-466e-8f8e-7b80dbda50ea",
+  "kind": "overcast",
+  "fingerprint": "0d584f6dabbe0e1a4236799eb3b4f70fffaf93c022a2105534cddcb9e0021d80",
+  "receivedAt": "2026-10-08T23:51:11.450Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 37103,
+      "type": "application/json",
+      "sha256": "0b1b6edc420dade7e13b205e92eb246f2fd0e6ac7f5925803e2a111ec3df5d03"
+    },
+    {
+      "name": "01-baseline.png",
+      "size": 1196843,
+      "type": "image/png",
+      "sha256": "ec328ed556ab2fbccdb4880402c54cf92edd901c50f56b6c8cbfe9f42ba84d34"
+    },
+    {
+      "name": "02-previous.png",
+      "size": 1203961,
+      "type": "image/png",
+      "sha256": "5632449bc9a14a6b7c38c706d6e9e733afdb02fc28b43383ded0beb78359bf65"
+    },
+    {
+      "name": "03-deck-off.png",
+      "size": 1216329,
+      "type": "image/png",
+      "sha256": "c56a939b4341f4a759191f4a6bc721a4691f7109bb17d3f83f53c59e008b56bb"
+    },
+    {
+      "name": "04-surf-off.png",
+      "size": 1172367,
+      "type": "image/png",
+      "sha256": "74f04c92d1cc8d6d9ac66aa46b930cba452d7c2da5c231786762de8d6b3a52e6"
+    },
+    {
+      "name": "05-exposure-off.png",
+      "size": 1194720,
+      "type": "image/png",
+      "sha256": "88d4bc31b49becc23f17bd4bdc55c4bb79fc3bdd20ca6d3bd0705c2d8ef04779"
+    },
+    {
+      "name": "06-old-fov.png",
+      "size": 1193650,
+      "type": "image/png",
+      "sha256": "b3de8a72eeae989fad616212be953f49c3f098cda074f54fd9bb6d6cf9e29212"
+    }
+  ]
+}
