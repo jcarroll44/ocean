@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "revision": "2026-10-08-overcast-diagnosis-1",
+  "startedAt": "2026-10-08T23:58:40.020Z",
+  "previousCommit": "b29957b11d46a92416233f2f4bcf8e2c44610404",
+  "overcastCommit": "9104aae084372722e6124c9c0995aaad45a639b7",
+  "rows": [],
+  "notes": [
+    "Historical renderer is packaged from its exact commit, with shore-worker pending telemetry only.",
+    "All rows use the unchanged approved FOV. Old-FOV row is an explicit repeat control.",
+    "CPU draw timing includes warmup; FPS bins exclude warmup.",
+    "Repeated baselines expose drift but do not measure temperature.",
+    "30 fps every second is the sustained floor; 40 fps average is the recovery target."
+  ],
+  "error": "Run interrupted. Keep Safari visible and rerun.",
+  "finishedAt": "2026-10-08T23:58:43.950Z",
+  "runId": "2026-10-08T23-58-40Z-4b577829-b331-4d0d-a6ba-f09d46c2af91",
+  "captureScope": "Native scene canvas screenshots after each pass; clip after the last timed pass."
+}
