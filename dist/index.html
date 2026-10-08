@@ -60087,6 +60087,13 @@ window.__daybuoy={state,engine,uniforms,homeProof(){return{arcVisible:pathLine?.
 // One GPU renderer. The parent supplies CPU camera/forecast/astronomy only.
 if(engine?.nativeScene){
  const canvas=$('#ocean'),profiling=q.get('ocean-profile')==='1',pass=q.get('profile-pass')||'native';
+ if(!profiling){
+  const priorCameraPose=updateCameraPose;
+  updateCameraPose=function(dt,wantsSky){
+   if(!state.playing&&!state.userLook&&!state.cameraReset&&!wantsSky&&!state.sheet)applyManualCamera(dt);
+   else priorCameraPose(dt,wantsSky);
+  };
+ }
  const debug=profiling||q.get('ocean-debug')==='1',direction=new THREE.Vector3();
  const badge=document.createElement('div');badge.id='ocean-engine-status';badge.setAttribute('role','status');$('#app').append(badge);
  const proof=window.__tidewater={backend:'loading',pin:'4811ba48d795197de5621985f404e765c0b7c0ef',metrics:null,error:null};

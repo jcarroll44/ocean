@@ -44,9 +44,9 @@ import {profileConfig,installShaderAblation,breakersForProfile} from './profile.
 const noop=()=>{};
 
 export class BeachApp extends App{
+ constructor(){super();this.profileConfig=profileConfig(location.search);}
  async init(onProgress=noop){
   // Phone quality changes sample density and budgets, never wave period or amplitude.
-  this.profileConfig=profileConfig(location.search);
   let FFTOcean=OceanFFT,Surface=WaterSurface,BreakerSystem=Breakers,underwaterLighting=installUnderwaterLighting;
   if(this.profileConfig?.pass==='grid128'){
    const modules=await Promise.all([import('./grid128/OceanFFT.js'),import('./grid128/WaterSurface.js'),import('./grid128/Breakers.js'),import('./grid128/UnderwaterLighting.js')]);

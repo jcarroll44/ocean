@@ -24,6 +24,7 @@ fs.cpSync('ui-reference','dist/ui-reference',{recursive:true});
 fs.cpSync('ui-review','dist/ui-review',{recursive:true});
 fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
+fs.copyFileSync('ocean-live.html','dist/ocean-live.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-host-profile.mjs'],{stdio:'inherit'});
@@ -32,6 +33,7 @@ execFileSync(process.execPath,['scripts/check-native-startup.mjs'],{stdio:'inher
 execFileSync(process.execPath,['scripts/check-loop-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-pipeline.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-adaptive-resolution.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-live-ocean.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});

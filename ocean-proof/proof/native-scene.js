@@ -16,6 +16,7 @@ import {AdaptiveResolution,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
+const completionListeners=new Set();
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
 try{
@@ -104,9 +105,12 @@ try{
   if(!capturing&&!profileRun?.done)adaptive?.observe(now,count);
   completed.push({now,count});while(completed.length&&completed[0].now<now-3000)completed.shift();
   const result=profileRun?.observe(now,count);if(result)void finish(result);
+  for(const listener of completionListeners){try{listener({now,count});}catch(e){completionListeners.delete(listener);console.warn('Completion subscriber stopped:',e);}}
   if(now-lastReport>1000){const fps=completed.reduce((n,e)=>n+e.count,0)/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:pipelined?'gpu-completed-pipelined':mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{})});}
  }
  const api=window.__daybuoyOcean={
+  subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
+  evidence(){return {waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

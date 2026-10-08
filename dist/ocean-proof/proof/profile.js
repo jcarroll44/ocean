@@ -46,7 +46,7 @@ export const PASSES = [
  ['host-post','Post / final composition bypass','Keep host layer draws/copies and native ocean scene rendering. Replace native AO, medium/underwater beauty, AA, bloom, lens, grading/exposure chain and final mask/overlay compositor with one direct HDR-to-display tone-map pass. Refraction and imported background remain. Diagnostic appearance differs.'],
  ['host-all','All four host cuts','Combine second-layer removal, shadow maps off, baked legacy background/frozen native atmosphere and post/final-compositor bypass. Full ocean simulation, materials, refraction, spray and DPR 2 remain. Diagnostic appearance differs.']
 ];
-export const PROFILE_REVISION='2026-10-07-adaptive-1';
+export const PROFILE_REVISION='2026-10-07-sky-1';
 export const HOST_PASSES=['proof-alone','host-single','host-shadows','host-sky','host-post','host-all'];
 export function hostCuts(config){
  const pass=config?.pass,all=pass==='host-all';

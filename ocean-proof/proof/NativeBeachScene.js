@@ -4,16 +4,23 @@ import {FullscreenPass} from '../vendor/tidewater/src/engine/render/FullscreenPa
 import {SCENE_FORMATS,DEPTH_FORMAT} from '../vendor/tidewater/src/engine/render/SceneRenderer.js';
 import {standard} from '../vendor/tidewater/src/materials/Materials.js';
 
+export function daylightProofWeight(sunY,cloud,rain){
+ const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
+ return smooth(.35,.65,sunY)*(1-smooth(.2,.7,cloud))*(1-smooth(.05,1,rain));
+}
+
 // Visible DayBuoy surroundings only. Tidewater water, sky-reflection lighting,
 // terrain wetness, curl, spray, FFT and foam implementations are untouched.
-// DayBuoy's directional sky palette is ported from sky()/installDayLighting.
+// Sunny midday samples the proof's existing atmospheric LUT. DayBuoy retains
+// its low-sun/night palette, cloud layers and astronomical sun/moon discs.
 export function installNativeBeach(app){
  const params=new UniformBlock('DayBuoySky',{
   sun:['vec3f',new Vector3(0,1,0)],moon:['vec3f',new Vector3(0,-1,0)],
   cloud:['vec3f',new Vector3()],rain:['f32',0],moonlight:['f32',0],afternoon:['f32',0],
-  sunRadius:['f32',.008],moonRadius:['f32',.008],flash:['f32',0]
+  sunRadius:['f32',.008],moonRadius:['f32',.008],flash:['f32',0],proofDaylight:['f32',0]
  });
  const pass=new FullscreenPass({label:'DayBuoy native sky and celestial bodies',
+  modules:[app.atmosphere.module],
   bindings:{beachSky:{uniform:params}},colorFormats:SCENE_FORMATS,depthFormat:DEPTH_FORMAT,depthCompare:'equal',depthWrite:false,depth:0,
   code:`
 fn beachHash(p:vec2f)->f32 {return fract(sin(dot(p,vec2f(127.1,311.7)))*43758.5453);}
@@ -37,8 +44,10 @@ fn beachSkyColour(rd:vec3f)->vec3f {
  horizon=mix(horizon,mix(horizon,vec3f(0.20,0.24,0.38),0.55),warm*(1.0-facing));
  let sd=max(dot(rd,sun),0.0);horizon+=vec3f(0.16,0.07,0.015)*pow(sd,5.0)*warm;
  var col=mix(zenith,horizon,low)*mix(1.0,mix(0.62,1.12,facing),warm);
- col=mix(col,mix(vec3f(0.012,0.019,0.027),vec3f(0.085,0.115,0.15),day),min(0.85,beachSky.rain*0.095));
  let cover=max(beachSky.cloud.x,max(beachSky.cloud.y,beachSky.cloud.z));
+ let clearMidday=beachSky.proofDaylight;
+ if(clearMidday>0.0){col=mix(col,atmosphereSkyLuminance(rd),clearMidday);}
+ col=mix(col,mix(vec3f(0.012,0.019,0.027),vec3f(0.085,0.115,0.15),day),min(0.85,beachSky.rain*0.095));
  col=mix(col,mix(vec3f(0.018,0.025,0.036),vec3f(0.20,0.27,0.33),day),cover*0.04);
  let visible=smoothstep(-0.06,0.015,sun.y)*exp(-beachSky.rain*0.10);
  let sunColour=mix(vec3f(1.0,0.46,0.19),vec3f(1.0,0.92,0.73),smoothstep(0.0,0.4,sun.y));
@@ -82,6 +91,7 @@ struct BeachSkyOut {@location(0) color:vec4f,@location(1) velocity:vec4f,@locati
   f.sun.value.set(-s[0],s[1],-s[2]);f.moon.value.set(-m[0],m[1],-m[2]);
   f.cloud.value.set(...['cloudLow','cloudMid','cloudHigh'].map(k=>Math.max(0,Math.min(1,(c[k]??c.cloud??0)/100))));
   f.rain.value=c.rain||0;f.moonlight.value=p.moonlight||0;f.afternoon.value=p.afternoon||0;f.flash.value=p.lightning||0;
+  f.proofDaylight.value=daylightProofWeight(s[1],Math.max(f.cloud.value.x,f.cloud.value.y,f.cloud.value.z),f.rain.value);
   const tan=Math.tan(app.camera.fov*Math.PI/360);f.sunRadius.value=tan*(18+6*Math.max(0,Math.min(1,s[1]/.5)))/innerHeight;
   f.moonRadius.value=Math.max((p.moonInfo?.[1]||.00454)*1.5,tan*20/innerHeight);
  }};

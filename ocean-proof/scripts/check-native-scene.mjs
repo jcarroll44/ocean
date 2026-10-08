@@ -9,13 +9,14 @@ const {MeshRenderer}=await import('../vendor/tidewater/src/engine/render/MeshRen
 const {Scene,PerspectiveCamera}=await import('../vendor/tidewater/src/engine/index.js');
 const {setFrameCamera}=await import('../vendor/tidewater/src/engine/render/Frame.js');
 const {installNativeBeach}=await import('../proof/NativeBeachScene.js');
+const {Atmosphere}=await import('../vendor/tidewater/src/sky/Atmosphere.js');
 const {NativeOverlays}=await import('../proof/NativeOverlays.js');
 const {BoxGeometry,Mesh}=await import('../vendor/tidewater/src/engine/index.js');
 const {Material}=await import('../vendor/tidewater/src/engine/render/Material.js');
 await GPU.init({headless:true});GPU.device.pushErrorScope('validation');new SunShadows();
 const camera=new PerspectiveCamera(61,390/689,.3,2500);camera.position.set(0,10,-28);camera.lookAt(0,4,20);camera.updateMatrixWorld();
 const scene=new Scene(),renderer=new MeshRenderer();const sceneRenderer=new SceneRenderer(renderer,scene,camera);sceneRenderer.setSize(780,1378);
-const app={camera,scene,sceneRenderer,terrainData:{heightAt:()=>2}},beach=installNativeBeach(app);
+const app={camera,scene,sceneRenderer,atmosphere:new Atmosphere(),terrainData:{heightAt:()=>2}},beach=installNativeBeach(app);
 beach.stand.frustumCulled=false;
 beach.update({sun:[-.3,.8,-.5],moon:[.2,-.3,-.5],moonInfo:[.5,.004,0,0],forecast:{cloud:0,rain:0}});
 const overlay=new NativeOverlays(scene),source=new Mesh(new BoxGeometry(1,1,1),new Material({color:'#ffffff',transparent:true,opacity:.5}));source.material.color=source.material.uniforms.color.value;source.position.set(0,10,0);overlay.update([source]);
