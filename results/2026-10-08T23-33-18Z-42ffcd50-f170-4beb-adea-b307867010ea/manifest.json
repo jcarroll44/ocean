@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-08T23-33-18Z-42ffcd50-f170-4beb-adea-b307867010ea",
+  "kind": "smoke",
+  "fingerprint": "8bd699cc4fee2bd5940f0e07211437336154773b01fbe2190b8e7f74d0f0381e",
+  "receivedAt": "2026-10-08T23:33:23.222Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 183,
+      "type": "application/json",
+      "sha256": "824bb16cde348e43d2dbf40bf31ded1bc26e7aee8387676806720abe66a9bc33"
+    },
+    {
+      "name": "transport.png",
+      "size": 5526,
+      "type": "image/png",
+      "sha256": "fb9fb74ad12770a72d9e69acea4cb28007658c6c5c14877679565d36483c7f58"
+    },
+    {
+      "name": "transport.mp4",
+      "size": 3765,
+      "type": "video/mp4",
+      "sha256": "4a04a9c0ff68f0b5ba18c1c734a02eac1390a5786d8b6c9021d1020d83c42482"
+    }
+  ]
+}
