@@ -1,6 +1,9 @@
 {
   "backend": "Dawn null (no pixels)",
   "nativeSkyCelestialStandAndOverlayPipelines": "PASS",
+  "guardedNativeLipPipeline": "PASS",
+  "sharedEnvironmentAndReflectionSkyInput": "PASS",
+  "fullEnvironmentFiltering": "Not tested: 18 KB workgroup storage exceeds container 16 KB limit",
   "phoneFPS": null,
   "screenshotPair": null,
   "visualAcceptance": false

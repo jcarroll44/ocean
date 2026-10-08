@@ -20,7 +20,7 @@ export function installNativeBeach(app){
   sunRadius:['f32',.008],moonRadius:['f32',.008],flash:['f32',0],proofDaylight:['f32',0]
  });
  const pass=new FullscreenPass({label:'DayBuoy native sky and celestial bodies',
-  modules:[app.atmosphere.module],
+  modules:[app.atmosphere.module,...(app.nativeWeather?[app.nativeWeather.module]:[])],
   bindings:{beachSky:{uniform:params}},colorFormats:SCENE_FORMATS,depthFormat:DEPTH_FORMAT,depthCompare:'equal',depthWrite:false,depth:0,
   code:`
 fn beachHash(p:vec2f)->f32 {return fract(sin(dot(p,vec2f(127.1,311.7)))*43758.5453);}
@@ -32,6 +32,7 @@ fn beachCloud(dir:vec3f,layer:f32,cover:f32)->f32 {
  return smoothstep(1.0-cover*0.85-0.06,1.0-cover*0.85+0.06,n)*smoothstep(0.0,0.08,dir.y)*mix(0.85,0.5,layer*0.5);
 }
 fn beachSkyColour(rd:vec3f)->vec3f {
+ ${app.nativeWeather?'if(nativeWeather.deck>=0.999){return nativeCloudDeck(rd);}':''}
  let sun=normalize(beachSky.sun);let day=smoothstep(-0.16,0.13,sun.y);let night=1.0-day;
  let low=pow(1.0-clamp(rd.y,0.0,1.0),6.0);
  let warm=(1.0-smoothstep(0.10,0.56,sun.y))*smoothstep(-0.16,0.035,sun.y)*mix(0.62,1.0,beachSky.afternoon);
@@ -68,6 +69,7 @@ fn beachSkyColour(rd:vec3f)->vec3f {
   c=mix(c,sunColour*0.65,warm*facing*0.65)+beachSky.flash*vec3f(0.11,0.14,0.20);
   col=mix(col,c,alpha);
  }
+ ${app.nativeWeather?'col=nativeWeatherSky(rd,col);':''}
  return max(col,vec3f(0.0));
 }
 struct BeachSkyOut {@location(0) color:vec4f,@location(1) velocity:vec4f,@location(2) mask:vec4f};

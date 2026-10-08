@@ -21,6 +21,7 @@ export function readLiveEvidence(win,now=Date.now()){
 }
 
 export function measureLiveCadence(proof,{validate,onProgress=()=>{},seconds=20,warmup=15}={}){
+ if(!Number.isFinite(seconds)||seconds<=0||seconds>120)throw Error('Unsupported live measurement duration');
  const run=new CompletedProfileRun({pass:'native-live',seconds,warmup});
  return new Promise((resolve,reject)=>{
   let unsubscribe,lastProgress=-Infinity;
@@ -32,7 +33,7 @@ export function measureLiveCadence(proof,{validate,onProgress=()=>{},seconds=20,
   unsubscribe=proof.subscribeCompleted(({now,count})=>{
    try{
     validate();const result=run.observe(now,count);
-    if(result){clean();resolve({...result,scope:'Live forecast, approved beachPose and production adaptive settings. Measured before recording; this 20-second check does not replace the 120-second gate.'});}
+    if(result){clean();resolve({...result,scope:seconds===120?'Live forecast, approved beachPose, production adaptive settings; 120 seconds, every whole second must reach 30 confirmed GPU completions. No video encoding during this gate.':'Live forecast, approved beachPose and production adaptive settings. Measured before recording; this short check does not replace the 120-second gate.'});}
     else if(now-lastProgress>=1000){lastProgress=now;onProgress(run.start===null?'Warming up before measurement…':`Measuring without recording · ${Math.min(seconds,Math.floor((now-run.start)/1000))} / ${seconds} s`);}
    }catch(e){abort(e.message);}
   });

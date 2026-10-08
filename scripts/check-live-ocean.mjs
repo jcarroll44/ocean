@@ -15,7 +15,7 @@ assert.equal(daylightProofWeight(.8086,0,0),1);
 for(const sun of [-1,-.05,.05,.3])assert.equal(daylightProofWeight(sun,0,0),0);
 assert.equal(daylightProofWeight(.8,1,0),0);assert.equal(daylightProofWeight(.8,0,2),0);
 assert(daylightProofWeight(.5,.4,.2)>0&&daylightProofWeight(.5,.4,.2)<1);
-const sky=fs.readFileSync('ocean-proof/proof/NativeBeachScene.js','utf8');assert(sky.includes('modules:[app.atmosphere.module]'));assert(sky.includes('col=mix(col,atmosphereSkyLuminance(rd),clearMidday)'));
+const sky=fs.readFileSync('ocean-proof/proof/NativeBeachScene.js','utf8');assert(sky.includes('modules:[app.atmosphere.module,'));assert(sky.includes('col=mix(col,atmosphereSkyLuminance(rd),clearMidday)'));
 
 const now=Date.now(),conditions={swell:2,period:5,direction:190,wind:9,windDirection:140,tide:.12};
 const state={live:true,time:now,data:{source:'live',retrievedAt:now,feedStatus:{tide:'fulfilled'}}};

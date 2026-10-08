@@ -1,16 +1,16 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DayBuoy · live phone recording</title>
 <style>body{margin:0;font:15px system-ui;color:#17394d;background:#edf4f5}iframe{position:fixed;inset:0;width:100%;height:100%;border:0}#controls{position:relative;z-index:2;margin:10px;padding:12px;background:#edf4f5ef;border-radius:10px}button,a{font:inherit}button{padding:10px;border:0;border-radius:8px;background:#17394d;color:white}p{margin:8px 0}small{display:block}video{position:relative;z-index:3;max-width:100%;max-height:75vh;background:#000}#downloads a{display:inline-block;margin:8px}</style>
 <iframe id="stage" src="/?ocean-debug=1" allow="webgpu" title="Today's live beach"></iframe>
-<div id="controls"><button id="record" disabled>Measure FPS, then record 10 seconds</button><p id="status">Loading current forecast…</p><small>Live conditions and approved beachPose. Measures GPU completions for 20 seconds after warm-up, then records separately. Keep Safari visible. <a href="/?ocean-debug=1">Open live app</a></small><div id="downloads"></div></div>
+<div id="controls"><button id="record" disabled>Measure FPS, then record 10 seconds</button> <button id="gate" disabled>Run live 120-second gate</button><p id="status">Loading current forecast…</p><small>Overcast revision · Oct 8. Clip: 20-second FPS check, then separate recording. Gate: 15-second warm-up, then 120 seconds without recording; every second must reach 30 GPU-completed FPS. Keep Safari visible. <a href="/?ocean-debug=1">Open live app</a></small><div id="downloads"></div></div>
 <video id="video" controls playsinline hidden></video>
 <script type="module">
 import {liveOcean,readLiveEvidence,measureLiveCadence,recordLiveCanvas} from './ocean-proof/proof/live-evidence.js';
 const $=id=>document.getElementById(id),stage=$('stage');let busy=false,finished=false;
-const read=()=>readLiveEvidence(stage.contentWindow);
-setInterval(()=>{if(busy||finished)return;try{const e=read(),c=e.conditions;$('record').disabled=false;$('status').textContent=`Live · ${c.swell.toFixed(1)} ft / ${c.period.toFixed(1)} s · wind ${c.wind.toFixed(1)} kt · tide ${c.tide.toFixed(2)} m · ${stage.contentWindow.__tidewater.metrics.fps.toFixed(1)} GPU done/s`;}catch(e){$('record').disabled=true;$('status').textContent=e.message;}},1000);
+const read=()=>{const e=readLiveEvidence(stage.contentWindow);if(e.native.revision!=='2026-10-08-overcast-1')throw Error('Waiting for the Oct 8 renderer. Reload this page if needed.');if(e.native.shoreFieldPending)throw Error('Updating shore direction and tide…');return e;};
+setInterval(()=>{if(busy||finished)return;try{const e=read(),c=e.conditions;$('record').disabled=$('gate').disabled=false;$('status').textContent=`Live · ${c.swell.toFixed(1)} ft / ${c.period.toFixed(1)} s · wind ${c.wind.toFixed(1)} kt · tide ${c.tide.toFixed(2)} m · ${stage.contentWindow.__tidewater.metrics.fps.toFixed(1)} GPU done/s`;}catch(e){$('record').disabled=$('gate').disabled=true;$('status').textContent=e.message;}},1000);
 const link=(blob,name,label)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.textContent=label;$('downloads').append(a);return a.href;};
 $('record').onclick=async()=>{
- busy=true;finished=false;$('record').disabled=true;
+ busy=true;finished=false;$('record').disabled=$('gate').disabled=true;
  try{
   const before=read(),win=stage.contentWindow;
   const cadence=await measureLiveCadence(liveOcean(win),{validate:read,onProgress:text=>$('status').textContent=text});
@@ -21,6 +21,23 @@ $('record').onclick=async()=>{
   link(new Blob([JSON.stringify({before,after:read(),cadence,clip:{...clip,blob:undefined}},null,2)],{type:'application/json'}),'daybuoy-live-evidence.json','Download conditions + FPS');
   $('status').textContent=`Recorded here · prior GPU FPS ${cadence.fps.toFixed(1)}, minimum ${cadence.minOneSecondFPS}. Send the clip and JSON.`;
  }catch(e){$('status').textContent=e.message;}
- finally{busy=false;finished=true;$('record').disabled=false;}
+ finally{busy=false;finished=true;$('record').disabled=$('gate').disabled=false;}
+};
+$('gate').onclick=async()=>{
+ busy=true;finished=false;$('record').disabled=$('gate').disabled=true;
+ try{
+  const before=read(),win=stage.contentWindow,size=[win.innerWidth,win.innerHeight],samples=[];let last=-Infinity;
+  const validate=()=>{
+   const e=readLiveEvidence(win);
+   if(size[0]!==win.innerWidth||size[1]!==win.innerHeight)throw Error('Viewport changed. Rerun the live gate.');
+   if(e.native.revision!=='2026-10-08-overcast-1'||e.native.post.aa!=='fxaa'||!e.native.post.flare)throw Error('Production settings changed. Rerun the live gate.');
+   const now=performance.now();if(now-last>=1000){last=now;samples.push({at:now,conditions:e.conditions,dpr:e.native.quality.dpr,shoreFieldPending:e.native.shoreFieldPending});}
+   return e;
+  };
+  const cadence=await measureLiveCadence(liveOcean(win),{validate,seconds:120,warmup:15,onProgress:text=>$('status').textContent=text});
+  link(new Blob([JSON.stringify({revision:'2026-10-08-overcast-1',before,after:readLiveEvidence(win),samples,cadence},null,2)],{type:'application/json'}),'daybuoy-live-120s.json','Download live 120-second results');
+  $('status').textContent=`${cadence.meetsCadenceTarget?'PASS':'NOT PASSED'} · ${cadence.fps.toFixed(1)} avg · ${cadence.minOneSecondFPS} minimum · ${cadence.secondsUnder30} seconds below 30. Send the JSON.`;
+ }catch(e){$('status').textContent=e.message;}
+ finally{busy=false;finished=true;$('record').disabled=$('gate').disabled=false;}
 };
 </script></html>
