@@ -25,6 +25,7 @@ fs.cpSync('ui-review','dist/ui-review',{recursive:true});
 fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
 fs.copyFileSync('ocean-live.html','dist/ocean-live.html');
+fs.copyFileSync('ocean-overcast-profile.html','dist/ocean-overcast-profile.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-host-profile.mjs'],{stdio:'inherit'});
@@ -35,6 +36,8 @@ execFileSync(process.execPath,['scripts/check-pipeline.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-adaptive-resolution.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-live-ocean.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-overcast-profile.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-overcast-runner.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
@@ -46,6 +49,7 @@ console.log('Built exact reference UI with one native WebGPU scene. Approved cam
 
 execFileSync(process.execPath,['scripts/build.mjs'],{cwd:'ocean-proof',stdio:'inherit'});
 fs.cpSync('ocean-proof/dist','dist/ocean-proof',{recursive:true});
+execFileSync(process.execPath,['scripts/build-overcast-baseline.mjs'],{stdio:'inherit'});
 for(const name of fs.readdirSync('ocean-proof/public'))fs.cpSync('ocean-proof/public/'+name,'dist/'+name,{recursive:true});
 execFileSync(process.execPath,['scripts/check-night.mjs'],{stdio:'inherit'});
 // Historical rollback regression remains available against its saved revision.

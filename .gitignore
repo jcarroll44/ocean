@@ -2,5 +2,7 @@ node_modules/
 .sites-runtime/
 .wrangler/
 *.tar.gz
+!benchmarks/pre-overcast-native.tar.gz
+dist/overcast-previous/
 
 ocean-proof/dist/

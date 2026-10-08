@@ -13,6 +13,7 @@ import {FramePipeline,throttleReadbacks} from './pipeline.js';
 import {PIPE_PASSES,CompletedProfileRun} from './pipeline-profile.js';
 import {AdaptiveResolution,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
 import {installNativeWeather,guardNativeBreakerLip} from './native-weather.js';
+import {overcastConfig} from './overcast-profile-config.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
@@ -23,13 +24,14 @@ window.addEventListener('error',e=>fail(e.error||e.message));window.addEventList
 try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();
+ const regression=overcastConfig(location.search);app.overcastDiagnostic=regression;
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
  const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
- app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};
+ app.configureNativeWeather=()=>{if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
-  guardNativeBreakerLip(app.breakers);
+  if(regression.lip)guardNativeBreakerLip(app.breakers);
   beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
   app.proofFlare=app.post.flare;
@@ -77,7 +79,7 @@ try{
  function rebuildShore(){
   if(shoreBusy||!pendingShore)return;shoreBusy=true;const p=pendingShore;pendingShore=null;
   const data=first?{size:app.terrainData.size,res:app.terrainData.res,texel:app.terrainData.texel,origin:app.terrainData.origin,heights:app.terrainData.heights}:null;first=false;
-  worker.postMessage({data,propagation:p.propagation,tide:p.tide});
+  worker.postMessage({data,propagation:p.propagation,tide:p.tide,retainSurf:regression.surf});
  }
  worker.onmessage=async e=>{try{await GPU.queue.onSubmittedWorkDone();if(!e.data.field)throw Error(e.data.error);app.shoreField=e.data.field;app.terrainGPU.shoreField=e.data.field;app.terrainGPU.setShoreField(e.data.field);const old=app.shore.dirTexture;app.shore.buildDirTexture({min:new Vector2(-190,-170),size:380});old?.destroy();shoreBusy=false;rebuildShore();}catch(e){fail(e);}};
  worker.onerror=e=>fail(e.message);
@@ -85,7 +87,7 @@ try{
   packet=p;const c=p.camera,a=app.camera;
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
-  app.nativeWeather.update(p);beach.update(p);overlays.update(p.overlays);
+  app.nativeWeather?.update(p);beach.update(p);overlays.update(p.overlays);
   const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
   if(f&&key!==forecastKey&&app.setForecast(f)){
    forecastKey=key;const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');

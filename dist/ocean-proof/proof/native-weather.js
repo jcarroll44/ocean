@@ -5,13 +5,13 @@ export function overcastState(sunY,cloud,rain=0){
  const daylight=smooth(.02,.25,sunY),wet=1-.15*smooth(.5,6,rain);
  return {deck,daylight,weight:deck*daylight,radiance:(.018+daylight*.722)*wet,exposure:1+.12*deck*daylight};
 }
-export function installNativeWeather(app){
+export function installNativeWeather(app,{cheap=false,exposure=true}={}){
  const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74]});
  const module=new ShaderModule({name:'nativeOvercast',uniforms,uniformName:'nativeWeather',code:`
 fn nativeCloudDeck(dir:vec3f)->vec3f {
  // Bounded direction coordinates: no horizon division, narrow columns or binary cloud masks.
- let detail=sin(dir.x*5.0+dir.z*3.0+frame.time*0.003)*sin(dir.z*4.0-dir.y*2.0)*0.018;
- let gradient=1.0+0.12*pow(1.0-clamp(dir.y,0.0,1.0),2.0);
+ ${cheap?'let detail=0.0; let h=1.0-clamp(dir.y,0.0,1.0); let gradient=1.0+0.12*h*h;':`let detail=sin(dir.x*5.0+dir.z*3.0+frame.time*0.003)*sin(dir.z*4.0-dir.y*2.0)*0.018;
+ let gradient=1.0+0.12*pow(1.0-clamp(dir.y,0.0,1.0),2.0);`}
  return vec3f(1.0,1.005,1.01)*nativeWeather.radiance*(gradient+detail);
 }
 fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
@@ -23,12 +23,20 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  const count=(sky.code.match(/return base;/g)||[]).length;
  if(count!==2)throw Error('Native weather expects the noClouds proof sky');
  sky.code=sky.code.replaceAll('return base;','return nativeWeatherSky(dir,base);');
+ if(cheap){
+  // At full overcast, do not compute the discarded clear-sky radiance first.
+  // Uniform branches preserve dawn/night/partial clouds without a second renderer.
+  for(const signature of ['fn skyRadianceWithClouds( dir: vec3f, withSun: bool ) -> vec3f {','fn skyReflectionRadiance( dir: vec3f ) -> vec3f {']){
+   if(!sky.code.includes(signature))throw Error('Pinned sky entry point changed');
+   sky.code=sky.code.replace(signature,signature+'\n if(nativeWeather.deck>=0.999){return nativeCloudDeck(dir);}');
+  }
+ }
  const baseExposure=app.settings.exposure;
  return {module,uniforms,state:overcastState(0,0),update(packet){
   const f=packet.forecast||{},cover=Math.max(f.cloud||0,f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0)/100;
   this.state=overcastState(packet.sun[1],cover,f.rain||0);
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
-  app.settings.exposure=baseExposure*this.state.exposure;
+  app.settings.exposure=baseExposure*(exposure?this.state.exposure:1);
  },light(G){
   const {weight,radiance}=this.state;
   G.sunColor.value.multiplyScalar(1-weight);

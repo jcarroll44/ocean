@@ -22,7 +22,8 @@ await GPU.init({headless:true});GPU.device.pushErrorScope('validation');new SunS
 const camera=new PerspectiveCamera(61,390/689,.3,2500);camera.position.set(0,10,-28);camera.lookAt(0,4,20);camera.updateMatrixWorld();
 const scene=new Scene(),renderer=new MeshRenderer();const sceneRenderer=new SceneRenderer(renderer,scene,camera);sceneRenderer.setSize(780,1378);
 const app={camera,scene,sceneRenderer,settings:{exposure:.55},atmosphere:new Atmosphere(),terrainData:{heightAt:()=>2}};
-app.sky=new Sky(app.atmosphere);app.nativeWeather=installNativeWeather(app);
+const cheap=process.argv.includes('--cheap-overcast');
+app.sky=new Sky(app.atmosphere);app.nativeWeather=installNativeWeather(app,{cheap});
 // Validate the exact sky module consumed by environment faces. Full upstream SH
 // filtering exceeds this container's 16 KB workgroup-storage limit (18 KB needed).
 const skySamples=new StorageBuffer({label:'native sky validation',count:2,type:'vec4f'});
@@ -39,5 +40,5 @@ const overlay=new NativeOverlays(scene),source=new Mesh(new BoxGeometry(1,1,1),n
 GPU.beginFrame();setFrameCamera(camera,780,1378);environmentInput.dispatch(1);sceneRenderer.render();GPU.submit();await GPU.queue.onSubmittedWorkDone();
 const error=await GPU.device.popErrorScope();assert(!error,error?.message);
 overlay.update([]);assert.equal(overlay.objects.size,0);assert.equal(scene.children.length,3);assert.equal(beach.stand.name,'DayBuoy empty lifeguard stand');
-const result={backend:'Dawn null (no pixels)',nativeSkyCelestialStandAndOverlayPipelines:'PASS',guardedNativeLipPipeline:'PASS',sharedEnvironmentAndReflectionSkyInput:'PASS',fullEnvironmentFiltering:'Not tested: 18 KB workgroup storage exceeds container 16 KB limit',phoneFPS:null,screenshotPair:null,visualAcceptance:false};
-fs.writeFileSync('../night-report/native-scene-validation.json',JSON.stringify(result,null,2));console.log(result);process.exit(0);
+const result={backend:'Dawn null (no pixels)',cheapOvercast:cheap,nativeSkyCelestialStandAndOverlayPipelines:'PASS',guardedNativeLipPipeline:'PASS',sharedEnvironmentAndReflectionSkyInput:'PASS',fullEnvironmentFiltering:'Not tested: 18 KB workgroup storage exceeds container 16 KB limit',phoneFPS:null,screenshotPair:null,visualAcceptance:false};
+fs.writeFileSync('../night-report/'+(cheap?'cheap-overcast-validation':'native-scene-validation')+'.json',JSON.stringify(result,null,2));console.log(result);process.exit(0);
