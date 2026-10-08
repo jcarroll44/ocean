@@ -3,14 +3,29 @@
 <main><div id="controls"><button id="capture" disabled>Loading native scene…</button> <span id="status"></span><small>Fixed test conditions. Forecast requests are paused on this comparison page; its offline banner does not indicate a failed live fetch. <a href="/ocean-live.html">Open live conditions / phone recording</a>.</small></div><iframe id="stage" allow="webgpu" title="Fixed native beach"></iframe><img id="pair" hidden alt="Actual device screenshots: embedded proof reference and native DayBuoy scene"><p id="note" hidden></p><a id="download" hidden>Download screenshot pair</a></main>
 <script type="module">
 import {PIPE_PASSES,profileConfig,comboQuery} from './profile.js';
+import {newRunId,jsonFile,uploadEvidence,retryPending} from './results-upload.js';
+import {collectClip} from './test-evidence.js';
 const $=id=>document.getElementById(id),stage=$('stage'),q=new URLSearchParams(location.search);
 const pass=PIPE_PASSES.includes(q.get('profile-pass'))?q.get('profile-pass'):'native-pipe';
 q.set('ocean-profile','1');q.set('profile-pass',pass);const config=profileConfig(q.toString());
 stage.src='/?review=1&hour=12&ocean-profile=1&profile-pass='+pass+comboQuery(config)+'&native-capture=1';
 let armed=false;
+const pending=retryPending(text=>$('status').textContent=text);
 window.addEventListener('message',e=>{if(e.origin!==location.origin||e.source!==stage.contentWindow||e.data?.type!=='daybuoy-profile')return;
  if(e.data.status==='failed'){$('status').textContent=e.data.reason;return;}
- if(e.data.status==='running'&&!armed){armed=true;$('capture').textContent='Capture proof / native';$('capture').disabled=false;$('status').textContent='Same ocean state and wave time. Capture is not an FPS test.';}
+ if(e.data.status==='running'&&!armed){armed=true;$('capture').textContent='Capture proof / native';$('capture').disabled=false;$('status').textContent='Same ocean state and wave time. Capture is not an FPS test.';if(q.get('run')!=='0')void pending.then(()=>$('capture').click());}
 });
-$('capture').onclick=async()=>{try{$('capture').disabled=true;$('status').textContent='Capturing both views…';const result=await stage.contentWindow.__tidewater.capturePair();const url=URL.createObjectURL(result.blob);$('pair').src=url;$('pair').hidden=false;$('download').href=url;$('download').download='daybuoy-native-proof-pair.png';$('download').hidden=false;$('note').textContent=result.metadata.note+' Candidate: '+JSON.stringify(result.metadata.candidate);$('note').hidden=false;stage.src='about:blank';stage.hidden=true;$('controls').hidden=true;}catch(e){$('status').textContent=e.message;$('capture').disabled=false;}};
+$('capture').onclick=async()=>{
+ const runId=newRunId(),files=[],report={schema:1,runId,kind:'comparison',startedAt:new Date().toISOString()};
+ try{
+  await pending;$('capture').disabled=true;$('status').textContent='Capturing both views…';const result=await stage.contentWindow.__tidewater.capturePair();
+  files.push({name:'proof-pair.png',blob:result.blob});report.metadata=result.metadata;
+  const url=URL.createObjectURL(result.blob);$('pair').src=url;$('pair').hidden=false;$('download').href=url;$('download').download='daybuoy-native-proof-pair.png';$('download').hidden=false;$('note').textContent=result.metadata.note+' Candidate: '+JSON.stringify(result.metadata.candidate);$('note').hidden=false;
+  $('status').textContent='Recording separate 10-second clip…';await collectClip(stage.contentWindow,files,report,()=>{if(document.hidden)throw Error('Recording interrupted while hidden.');});
+ }catch(e){report.error=e.message;$('status').textContent=e.message;}
+ finally{
+  stage.src='about:blank';stage.hidden=true;report.finishedAt=new Date().toISOString();
+  try{await uploadEvidence({runId,kind:'comparison',files:[jsonFile(report),...files]},text=>$('status').textContent=text);}catch{}
+ }
+};
 </script></html>

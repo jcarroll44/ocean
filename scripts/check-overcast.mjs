@@ -40,7 +40,10 @@ for(const dip of [false,true]){
  assert.equal(result.oneSecondFPS.length,120);assert.equal(result.meetsCadenceTarget,!dip);
  assert.equal(result.secondsUnder30,dip?1:0);
 }
-const page=fs.readFileSync('ocean-live.html','utf8'),gate=page.slice(page.indexOf("$('gate').onclick"));
-assert(gate.includes('seconds:120,warmup:15'));assert(gate.includes('Viewport changed'));assert(!gate.includes('recordLiveCanvas'));
+// The shared runner now records after either duration. Execute both paths in
+// check-capture-flow; keep the existing strict completion-bin assertions above.
+const page=fs.readFileSync('ocean-live.html','utf8');
+assert(page.includes("query.get('gate')==='1'?120:20"));assert(page.includes('seconds,warmup:15'));assert(page.includes('Viewport changed'));
+assert(page.indexOf('await measureLiveCadence')<page.indexOf('await recordLiveCanvas'));
 const host=fs.readFileSync('ocean-proof/proof/BeachApp.js','utf8');assert(host.indexOf('this.configureNativeWeather?.()')<host.indexOf('new Environment'));
 console.log('PASS: shared neutral overcast, unchanged clear exposure, symmetric lip bounds, H/2 and period, oblique surf retains phase/direction, strict live 120-second gate. CPU/source only, no phone pixel/FPS claim.');

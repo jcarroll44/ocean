@@ -6,3 +6,10 @@ node_modules/
 dist/overcast-previous/
 
 ocean-proof/dist/
+
+dist/client/
+dist/server/
+dist/.openai/
+hosting/public/
+.env*
+!.env.example

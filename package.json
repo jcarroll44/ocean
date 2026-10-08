@@ -1,1 +1,14 @@
-{"name":"daybuoy-preview","private":true,"type":"module","scripts":{"dev":"vite","build":"node scripts/build.mjs"},"devDependencies":{"linkedom":"^0.18.13","vite":"^6.1.0","webgpu":"^0.6.2"}}
+{
+  "name": "daybuoy-preview",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build.mjs && node scripts/build-hosting.mjs"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.13",
+    "vite": "^6.1.0",
+    "webgpu": "^0.6.2"
+  }
+}

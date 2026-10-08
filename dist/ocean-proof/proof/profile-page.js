@@ -1,7 +1,9 @@
 import {PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,ADAPTIVE_PASS,validateAdaptiveResult,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION} from './profile.js';
+import {newRunId,finishProfileEvidence} from './profile-evidence.js';
 const $=id=>document.getElementById(id),stage=$('stage'),key='daybuoy-iphone-profile-v1';
 let results=[];try{results=JSON.parse(localStorage.getItem(key)||'[]');}catch{}
 let queue=[],current=null,watchdog,lastDimensions,startedAt,pipelineRound=null;
+let uploadRunId=null,lastSceneURL=null,evidenceBusy=false;
 for(const [,label,scope] of PASSES){const p=document.createElement('p');p.textContent=label+': '+scope;$('definitions').append(p);}
 function save(){localStorage.setItem(key,JSON.stringify(results));}
 function render(){
@@ -24,6 +26,7 @@ function render(){
 function stop(reason=''){
  queue=[];current=null;pipelineRound=null;clearTimeout(watchdog);stage.src='about:blank';stage.style.display='none';$('progress').style.display='none';
  for(const id of ['adaptive','suite','round2','round3','native','loop','pipeline','nativeSustain','sustain','candidate'])$(id).disabled=false;$('error').textContent=reason;render();
+ if(uploadRunId){const runId=uploadRunId;uploadRunId=null;evidenceBusy=true;void finishProfileEvidence(stage,lastSceneURL,{...JSON.parse(report()),runId,error:reason||undefined},text=>$('error').textContent=text).finally(()=>{evidenceBusy=false;});}
 }
 function next(){
  clearTimeout(watchdog);
@@ -39,9 +42,12 @@ function next(){
  startedAt=performance.now();lastDimensions=[innerWidth,innerHeight];
  $('status').textContent=PASSES.find(p=>p[0]===current.pass)[1]+' · loading';
  stage.src=(current.pass==='proof-alone'?'/ocean-proof/proof/frame.html?noClouds=1&height=3&quality=0':'/?review=1&hour=12')+'&ocean-profile=1&profile-pass='+current.pass+'&profile-seconds='+current.seconds+(current.pass==='native-pipe-combo'?comboQuery(current):'');
+ lastSceneURL=stage.src;
  watchdog=setTimeout(()=>stop('This case stalled or could not initialize. No result was recorded. Retry this page in Safari.'),300000);
 }
 function start(mode='suite'){
+ if(evidenceBusy)return;
+ uploadRunId=newRunId();lastSceneURL=null;
  results=[];save();render();$('error').textContent='';
  const runId=new Date().toISOString();
  pipelineRound=mode==='pipeline'?{phase:'singles',runId}:null;

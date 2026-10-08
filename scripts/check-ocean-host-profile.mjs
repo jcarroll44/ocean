@@ -24,12 +24,12 @@ const cuts=SunShadows.prototype.update.call({frame:0,enabled:false},{updateMatri
 assert.deepEqual(cuts,[]);assert.equal(ShadowUniforms.fields.enabled.value,0);
 // Exercise the actual runner routing and JSON acceptance. Standalone proof must
 // never load the DayBuoy document. Resolution/output/geometry mismatches fail.
-const source=fs.readFileSync('ocean-proof/proof/profile-page.js','utf8').replace(/^import .*;\n/,'');
+const source=fs.readFileSync('ocean-proof/proof/profile-page.js','utf8').replace(/^import .*;\n/gm,'');
 function runner(mode='round3'){
  const elements=new Map(),events={},timeouts=[];
  const node=()=>({style:{},append(){},replaceChildren(){},contentWindow:{}});
  const $=id=>elements.get(id)||elements.set(id,node()).get(id);
- const c={PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,ADAPTIVE_PASS,validateAdaptiveResult,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
+ const c={newRunId:()=>"mock-run",finishProfileEvidence:()=>new Promise(()=>{}),PASSES,HOST_PASSES,NATIVE_PASSES,LOOP_PASSES,PIPE_PASSES,ADAPTIVE_PASS,validateAdaptiveResult,comboQuery,chooseCombo,chooseSustained,profileConfig,PROFILE_REVISION,document:{getElementById:$,createElement:node,addEventListener(k,f){events['doc-'+k]=f;}},window:{addEventListener(k,f){events[k]=f;}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},location:{origin:'https://test'},innerWidth:390,innerHeight:689,setTimeout(fn){timeouts.push(fn);return timeouts.length;},clearTimeout(){},URL,Blob,navigator:{clipboard:{writeText:noop}}};
  vm.createContext(c);vm.runInContext(source,c);$(mode).onclick();
  return {$,c,events,timeouts,result(pass,overrides={}){const r={pass,config:profileConfig('?ocean-profile=1&profile-pass='+pass),fps:30,minOneSecondFPS:30,p95FrameMs:33,resolution:[780,1378],output:[780,1378],resolutionVerifiedEveryFrame:true,oceanVisible:true,sprayVisible:true,breakerVisible:true,...overrides};events.message({origin:c.location.origin,source:$('stage').contentWindow,data:{type:'daybuoy-profile',status:'profile-result',result:r}});}};
 }
