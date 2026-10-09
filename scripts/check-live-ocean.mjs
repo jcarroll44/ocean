@@ -39,6 +39,6 @@ let stopped=0;class Recorder{static isTypeSupported(){return true;}constructor(s
 globalThis.MediaRecorder=Recorder;
 const canvas={width:585,height:1033,captureStream:()=>({getTracks:()=>[{stop(){stopped++;}}]})};
 const clip=await recordLiveCanvas(canvas,{validate:()=>{},duration:.001});assert.equal(clip.extension,'mp4');assert(clip.blob.size);assert.equal(stopped,1);
-const page=fs.readFileSync('ocean-live.html','utf8');assert(page.includes('src="/?ocean-debug=1"'));assert(!/review=1|ocean-profile=1|profile-pass=/.test(page));assert(page.indexOf('await measureLiveCadence')<page.indexOf('await recordLiveCanvas'));
+const page=fs.readFileSync('ocean-live.html','utf8');assert(page.includes('stage.src="/?ocean-debug=1"'));assert(!/review=1|ocean-profile=1|profile-pass=/.test(page));assert(page.indexOf('await measureLiveCadence')<page.indexOf('await recordLiveCanvas'));assert(page.includes('if(allowedDevice){stage.src='));assert(page.includes('viewport.verify(win,dpr)'));assert(page.includes('!e.native.adaptiveResolution'));
 assert(fs.readFileSync('ocean-proof/proof/native-compare.html','utf8').includes('Forecast requests are paused'));
 console.log('PASS: proof atmosphere selection, unchanged twilight/storm path, constructor-time diagnostic isolation, fresh live/tide evidence guards, completion measurement before encoding, interruption/encoder cleanup. CPU/mock encoder only; no iPhone clip or FPS.');

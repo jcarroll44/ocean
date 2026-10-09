@@ -1,6 +1,18 @@
 # DayBuoy — Tidewater handoff
 
-## Overcast speed regression diagnosis — October 8, 2026
+## Current: combined live gate — October 8, 11:35 PM Chicago
+
+This section supersedes the diagnostic instructions below. New integration branch: `wip/tidewater-verdict-first`; main, `proof/tidewater`, and the existing WIP code branch stay untouched. The approved exact Verdict-first v1 is already in the Tidewater source. Do not merge the older September 30 `app-v2` UI over it. Reference: `ui-reference/daybuoy-reference.html`, exact `src/reference.css` and bundled Poppins fonts. Tidewater pin: `4811ba48d795197de5621985f404e765c0b7c0ef`. Integration starts from GitHub WIP `2e9aab0481200280ffcf0d70cb225a70268bcc48` / Sites source `0b253b18e47aa73a1417f4dcc7a577fb7b48c49d`.
+
+Single device link: [live 120-second gate](https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-live.html?gate=1). iPhone only; open directly in Safari. Auto-run 15 seconds warmup, then 120 seconds of completed-frame evidence with adaptive DPR 1.25–1.6 / FXAA / flare, actual current time, fresh live marine and NOAA tide. No forced noon/clouds. Screenshots and a 10-second scene-only clip follow timing; upload is automatic. The existing server endpoint still saves evidence to `results/` on `wip/tidewater-in-app`; each report identifies the integration branch/revision. On “ran it,” retrieve that branch's `results/latest.json` and folder. Token remains server-only.
+
+The test pins its iframe, app and native layer to initial CSS dimensions. This overrides dynamic viewport units only inside the test, so Safari toolbars cannot change the render workload. Outer/visual viewport changes are logged; the FPS clock never restarts and slow/zero seconds are not discarded. Real output/DPR mismatches, missing adaptation, hidden pages and stale/incomplete data still reject the run. Normal product resizing and UI/scene/camera source are unchanged. Wake lock is requested and status/denial shown; it is not guaranteed in an embedded browser or under OS restrictions.
+
+Verified uploaded device report: `results/2026-10-09T04-32-36Z-c9ead86e-d5da-48aa-8a9b-8c10e7cb8b15/report.json`. Forced-noon overcast-1 baseline: **55.8248788045 average, minimum 54, DPR 1.5, 20 seconds**; aborted later with `DPR/output dimensions changed`. Wake lock was denied. The slow regression did not reproduce; this does **not** prove heat/mirroring caused earlier runs and is not a 120-second pass. Overcast diagnosis landing page is retired; cheap-sky candidate is not promoted. No more ablations requested.
+
+Verification required: all seven interaction checks; exact reference UI/fonts and pinned vendor preservation; actual capture handler with mocked toolbar resizes, adaptive steps, bad-DPR/output rejection and post-timing capture/upload order. This round has no new physical two-minute run or rendered UI verification.
+
+## Historical: overcast speed regression diagnosis — October 8, 2026 (closed)
 
 Jacob approves the smooth overcast sky, removed pillars, visible shore curl and neutral sand, but reports **6.7 FPS with DPR at 1.25**, versus his previous 42. No new raw device results were supplied here. Temperature and the responsible change are not established.
 
