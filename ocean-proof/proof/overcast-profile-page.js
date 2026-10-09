@@ -2,8 +2,13 @@ import {liveOcean,readLiveEvidence,measureLiveCadence} from './live-evidence.js'
 import {PRE_OVERCAST_COMMIT,OVERCAST_COMMIT,CASE_LABELS} from './overcast-profile-config.js';
 import {newRunId,jsonFile,uploadEvidence,retryPending} from './results-upload.js';
 import {collectScreenshot,collectClip} from './test-evidence.js';
+import {isIPhone,screenAwake} from './diagnostic-device.js';
 const $=id=>document.getElementById(id),stage=$('stage');let running=false,stopped=false,snapshot,evidence,report,objectURL;
 let files=[],runId;
+const allowedDevice=isIPhone(navigator);
+const awake=screenAwake(navigator,document,text=>$('awake').textContent=text,event=>report?.wakeLockEvents?.push(event));
+$('awake').onclick=()=>awake.retry();
+addEventListener('pagehide',()=>{stopped=true;void awake.stop();});
 const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const check=()=>{if(stopped||document.hidden)throw Error('Run interrupted. Keep Safari visible and rerun.');};
 async function until(fn,ms=180000){const start=performance.now();while(performance.now()-start<ms){check();const value=fn();if(value)return value;await pause(100);}throw Error('Scene or live forecast did not become ready. Reconnect and rerun.');}
@@ -11,7 +16,11 @@ const sourceFor=pass=>(pass==='previous'?'/overcast-previous/':'/')+'ocean-proof
 function installSnapshot(api){
  const original=api.draw.bind(api);let calls=0,total=0,max=0,active=false;
  api.draw=p=>{
-  if(!snapshot){const {overlays,...data}=p;snapshot=structuredClone(data);}
+  if(!snapshot){
+   const {overlays,...data}=p;
+   if(data.sun[1]<.25)throw Error('Forced noon did not reach the renderer; result rejected.');
+   snapshot=structuredClone({...data,forecast:{...data.forecast,...evidence.conditions,cloud:100,cloudLow:100,cloudMid:100,cloudHigh:100,rain:0},lightning:0,overlays:[]});
+  }
   const start=performance.now();const result=original({...p,...snapshot});
   if(active&&result!==false){const dt=performance.now()-start;calls++;total+=dt;max=Math.max(max,dt);}
   return result;
@@ -46,7 +55,7 @@ async function runCase(pass,index,total,seconds=20){
  const before=validate();cpu.begin();
  const cadence=await measureLiveCadence(api,{seconds,warmup:15,validate,onProgress:text=>$('status').textContent=`${index}/${total} · ${CASE_LABELS[pass]} · ${text}`});
  const row={pass,label:CASE_LABELS[pass],seconds,before,after:validate(),cpu:cpu.stats(),...cadence,
-  scope:'Captured fresh live scene, held identical across rows; fixed DPR 1.5 / FXAA / flare on. GPU completion counts; no recording.',
+  scope:'Fresh live marine snapshot with forced local noon / full overcast / no rain, held identical across rows; fixed DPR 1.5 / FXAA / flare on. GPU completion counts; no recording.',
   reaches40Average:cadence.fps>=40};
  row.pass=pass;report.rows.push(row);save();
  const tr=document.createElement('tr');for(const value of [row.label+(seconds===120?' · 120 s':''),row.fps.toFixed(1),row.minOneSecondFPS,row.cpu.meanDrawMs.toFixed(2)]){const td=document.createElement('td');td.textContent=value;tr.append(td);}$('rows').append(tr);
@@ -55,21 +64,30 @@ async function runCase(pass,index,total,seconds=20){
 }
 function save(){try{localStorage.setItem('daybuoy.overcast.results',JSON.stringify(report));}catch{}$('download').hidden=$('copy').hidden=false;}
 async function start(){
+ if(!allowedDevice){$('error').textContent='iPhone only. Open this link in Safari on your iPhone. No test was started.';$('start').disabled=true;return;}
  if(running)return;running=true;stopped=false;snapshot=null;evidence=null;
  files=[];runId=newRunId();
  $('start').disabled=true;$('rows').replaceChildren();$('error').textContent='';$('main').hidden=true;stage.hidden=$('hud').hidden=false;
- report={schema:1,revision:'2026-10-08-overcast-diagnosis-1',startedAt:new Date().toISOString(),previousCommit:PRE_OVERCAST_COMMIT,overcastCommit:OVERCAST_COMMIT,rows:[],notes:['Historical renderer is packaged from its exact commit, with shore-worker pending telemetry only.','All rows use the unchanged approved FOV. Old-FOV row is an explicit repeat control.','CPU draw timing includes warmup; FPS bins exclude warmup.','Repeated baselines expose drift but do not measure temperature.','30 fps every second is the sustained floor; 40 fps average is the recovery target.']};
+ report={schema:2,revision:'2026-10-09-overcast-forced-noon-2',startedAt:new Date().toISOString(),previousCommit:PRE_OVERCAST_COMMIT,overcastCommit:OVERCAST_COMMIT,rows:[],wakeLockEvents:[],notes:['Diagnostic sky is forced to noon/full overcast, not current observed weather. Marine data is captured fresh before the override.','Historical renderer is packaged from its exact commit, with shore-worker pending telemetry only.','All rows use the unchanged approved FOV. Old-FOV row is an explicit repeat control.','CPU draw timing includes warmup; FPS bins exclude warmup.','Repeated baselines expose drift but do not measure temperature.','30 fps every second is the sustained floor; 40 fps average is the recovery target.','iPhone gate uses browser identification; no hardware attestation. Hidden-page measurements are rejected, never counted as valid FPS.']};
  try{
+  await awake.start();
   await retryPending(text=>$('status').textContent=text);
   stage.src='/?ocean-debug=1&overcast-test=baseline';
   const win=stage.contentWindow;
   await until(()=>{try{evidence=readLiveEvidence(stage.contentWindow);return evidence;}catch{return false;}});
   report.viewport=[win.innerWidth,win.innerHeight];report.device=evidence.device;report.liveEvidence=evidence;
-  $('conditions').textContent=`${evidence.conditions.swell.toFixed(1)} ft / ${evidence.conditions.period.toFixed(1)} s · wind ${evidence.conditions.wind.toFixed(1)} kt · clouds ${evidence.conditions.cloud}% · captured ${new Date().toLocaleTimeString()}`;
+  const app=win.__daybuoy;
+  app.setHour(12);app.resetBeach();
+  report.scenario={sky:'forced full overcast',cloud:100,cloudLow:100,cloudMid:100,cloudHigh:100,rain:0,localHour:12,timeZone:'America/Chicago',astronomyTime:new Date(app.state.time).toISOString(),marineForecastTime:evidence.forecastTime};
+  $('status').textContent='Setting noon lighting and settling the approved beach camera…';
+  // The approved camera eases from the current-time view. Settle before freezing it.
+  await pause(20000);check();
+  if(app.uniforms.uSun.value.y<.25)throw Error('Could not establish daytime lighting. No timing results accepted.');
+  $('conditions').textContent=`Forced noon · 100% overcast · live ${evidence.conditions.swell.toFixed(1)} ft / ${evidence.conditions.period.toFixed(1)} s · wind ${evidence.conditions.wind.toFixed(1)} kt`;
   const cases=['baseline','previous','deck-off','surf-off','exposure-off','old-fov','lip-off','flat','baseline','previous'];
   for(let i=0;i<cases.length;i++){
    await runCase(cases[i],i+1,cases.length+1);
-   if(i===0){report.snapshot=snapshot;if(snapshot.sun[1]<.25||Math.max(...['cloud','cloudLow','cloudMid','cloudHigh'].map(k=>snapshot.forecast[k]||0))<98){report.warning='Current scene is not full daytime overcast; this run may not reproduce the reported regression.';}}
+   if(i===0)report.snapshot=snapshot;
   }
   await runCase('flat',cases.length+1,cases.length+1,120);
   const flats=report.rows.filter(r=>r.pass==='flat'),base=report.rows.filter(r=>r.pass==='baseline');
@@ -81,11 +99,11 @@ async function start(){
  finally{
   report.finishedAt=new Date().toISOString();report.runId=runId;report.captureScope='Native scene canvas screenshots after each pass; clip after the last timed pass.';save();stage.src='about:blank';stage.hidden=$('hud').hidden=true;$('main').hidden=false;
   try{const receipt=await uploadEvidence({runId,kind:'overcast',files:[jsonFile(report),...files]},text=>$('upload').textContent=text);report.upload=receipt;save();}catch{}
-  $('start').disabled=false;running=false;
+  await awake.stop();$('start').disabled=false;running=false;
  }
 }
-$('start').onclick=start;$('stop').onclick=()=>{stopped=true;};
+$('start').onclick=start;$('stop').onclick=()=>{stopped=true;void awake.stop();};
 $('download').onclick=()=>{if(objectURL)URL.revokeObjectURL(objectURL);objectURL=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=objectURL;a.download='daybuoy-overcast-diagnosis.json';a.click();};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText(JSON.stringify(report,null,2));$('copy').textContent='Copied';}catch{$('error').textContent='Clipboard unavailable. Use Download results.';}};
 try{const saved=localStorage.getItem('daybuoy.overcast.results');if(saved){report=JSON.parse(saved);$('download').hidden=$('copy').hidden=false;$('summary').textContent='Previous results are saved on this phone.';}}catch{}
-if(new URLSearchParams(location.search).get('run')!=='0')void start();
+if(!allowedDevice||new URLSearchParams(location.search).get('run')!=='0')void start();

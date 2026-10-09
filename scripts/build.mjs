@@ -40,6 +40,7 @@ execFileSync(process.execPath,['scripts/check-results-upload.mjs'],{stdio:'inher
 execFileSync(process.execPath,['scripts/check-overcast.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast-runner.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-diagnostic-device.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
