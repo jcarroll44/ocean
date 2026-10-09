@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "runId": "2026-10-09T00-06-11Z-7dd29aad-6142-4faa-be21-6ca892667500",
+  "kind": "overcast",
+  "fingerprint": "aea83fb89c36b8e04d39a4db1d9d8b91e102ed81643a10d6ae81a027e47f2b4e",
+  "receivedAt": "2026-10-09T00:06:11.993Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3912,
+      "type": "application/json",
+      "sha256": "553d936836c4632ded919f67029fb194e883392abc3051fe603e0212d450d2f1"
+    }
+  ]
+}
