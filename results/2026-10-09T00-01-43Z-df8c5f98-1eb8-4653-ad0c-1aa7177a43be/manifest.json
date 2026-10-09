@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-09T00-01-43Z-df8c5f98-1eb8-4653-ad0c-1aa7177a43be",
+  "kind": "overcast",
+  "fingerprint": "3adf8b116070fc17529117f0decf0cece38b21851dda025b1c2914b371ab53f0",
+  "receivedAt": "2026-10-09T00:05:59.747Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 15507,
+      "type": "application/json",
+      "sha256": "96a4b2fa541ae75adbb9acfee723eff3ffdd751fd28f7d5cf1df520c32d9a070"
+    },
+    {
+      "name": "01-baseline.png",
+      "size": 338697,
+      "type": "image/png",
+      "sha256": "cbbbc8cf50d43fdf500f10701796d4af56ba5b678efcca2cb8b9f6bd7d2487cf"
+    },
+    {
+      "name": "02-previous.png",
+      "size": 339556,
+      "type": "image/png",
+      "sha256": "03bdda5499a4eb5bd3a5602d35409cf5b785fbf2797166ece581217d98fa239a"
+    }
+  ]
+}
