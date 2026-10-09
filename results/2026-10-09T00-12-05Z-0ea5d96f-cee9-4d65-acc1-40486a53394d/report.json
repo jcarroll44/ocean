@@ -1,0 +1,551 @@
+{
+  "schema": 1,
+  "revision": "2026-10-08-overcast-diagnosis-1",
+  "startedAt": "2026-10-09T00:12:05.642Z",
+  "previousCommit": "b29957b11d46a92416233f2f4bcf8e2c44610404",
+  "overcastCommit": "9104aae084372722e6124c9c0995aaad45a639b7",
+  "rows": [
+    {
+      "pass": "baseline",
+      "label": "overcast-1 baseline",
+      "seconds": 20,
+      "before": {
+        "revision": "2026-10-08-overcast-1",
+        "waveSeconds": 43.16,
+        "marine": {
+          "heightM": 0.8958763555519722,
+          "amplitude": 0.4479381777759861,
+          "period": 4.65,
+          "windMps": 2.428493720712889,
+          "waveAngle": -170.7938177777778,
+          "windAngle": -232.41236444444445,
+          "propagation": [
+            -0.9871190081252897,
+            -0.1599876988950842
+          ],
+          "windVector": [
+            -0.6099741733798641,
+            0.7924212943943085
+          ],
+          "chop": 0.6680154555555556,
+          "tide": 0.14261854666666665,
+          "cloud": 1
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.5,
+          "lod": 2.5,
+          "spray": 32768,
+          "reflection": 0.5,
+          "reflectionSeconds": 3,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": true
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 159,
+          "completed": 157,
+          "outstanding": 2,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "adaptiveResolution": null,
+        "weather": {
+          "deck": 1,
+          "daylight": 0,
+          "weight": 0,
+          "radiance": 0.018,
+          "exposure": 1
+        },
+        "shoreFieldPending": false,
+        "dimensions": [
+          585,
+          1048,
+          585,
+          1048
+        ],
+        "diagnostic": {
+          "pass": "baseline",
+          "deck": true,
+          "surf": true,
+          "exposure": true,
+          "lip": true,
+          "cheap": false
+        }
+      },
+      "after": {
+        "revision": "2026-10-08-overcast-1",
+        "waveSeconds": 78.195,
+        "marine": {
+          "heightM": 0.8958763555519722,
+          "amplitude": 0.4479381777759861,
+          "period": 4.65,
+          "windMps": 2.428493720712889,
+          "waveAngle": -170.7938177777778,
+          "windAngle": -232.41236444444445,
+          "propagation": [
+            -0.9871190081252897,
+            -0.1599876988950842
+          ],
+          "windVector": [
+            -0.6099741733798641,
+            0.7924212943943085
+          ],
+          "chop": 0.6680154555555556,
+          "tide": 0.14261854666666665,
+          "cloud": 1
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.5,
+          "lod": 2.5,
+          "spray": 32768,
+          "reflection": 0.5,
+          "reflectionSeconds": 3,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": true
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 1817,
+          "completed": 1816,
+          "outstanding": 1,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "adaptiveResolution": null,
+        "weather": {
+          "deck": 1,
+          "daylight": 0,
+          "weight": 0,
+          "radiance": 0.018,
+          "exposure": 1
+        },
+        "shoreFieldPending": false,
+        "dimensions": [
+          585,
+          1048,
+          585,
+          1048
+        ],
+        "diagnostic": {
+          "pass": "baseline",
+          "deck": true,
+          "surf": true,
+          "exposure": true,
+          "lip": true,
+          "cheap": false
+        }
+      },
+      "cpu": {
+        "drawCalls": 1658,
+        "meanDrawMs": 0.7340168878165807,
+        "maxDrawMs": 3,
+        "scope": "Synchronous native draw JS/encoding only, not GPU time or whole browser main thread."
+      },
+      "duration": 20.014999999999997,
+      "frames": 900,
+      "fps": 44.96627529352986,
+      "minOneSecondFPS": 39,
+      "oneSecondFPS": [
+        46,
+        48,
+        44,
+        49,
+        48,
+        50,
+        42,
+        46,
+        46,
+        46,
+        47,
+        46,
+        39,
+        39,
+        39,
+        45,
+        45,
+        44,
+        45,
+        45
+      ],
+      "secondsUnder30": 0,
+      "metric": "gpu-completed-pipelined",
+      "measurement": "Frames covered by resolved asynchronous GPU queue fences; max 2 outstanding. Notification timestamps are CPU delivery times, not individual GPU timestamps or display scanout.",
+      "p95CompletionGapMs": 28,
+      "p99CompletionGapMs": 30,
+      "maxCompletionGapMs": 67,
+      "completionNotifications": 900,
+      "maxCompletionBatch": 1,
+      "meetsCadenceTarget": false,
+      "targetDefinition": "At least 30 confirmed GPU-completed frames in every whole second of a 120-second window. Notification gaps are reported separately; individual frame latency is not inferred from batched callbacks.",
+      "scope": "Captured fresh live scene, held identical across rows; fixed DPR 1.5 / FXAA / flare on. GPU completion counts; no recording.",
+      "reaches40Average": true
+    },
+    {
+      "pass": "previous",
+      "label": "Before overcast-1 (pinned source)",
+      "seconds": 20,
+      "before": {
+        "shoreFieldPending": false,
+        "waveSeconds": 31.91,
+        "marine": {
+          "heightM": 0.8958763555519722,
+          "amplitude": 0.4479381777759861,
+          "period": 4.65,
+          "windMps": 2.428493720712889,
+          "waveAngle": -170.7938177777778,
+          "windAngle": -232.41236444444445,
+          "propagation": [
+            -0.9871190081252897,
+            -0.1599876988950842
+          ],
+          "windVector": [
+            -0.6099741733798641,
+            0.7924212943943085
+          ],
+          "chop": 0.6680154555555556,
+          "tide": 0.14261854666666665,
+          "cloud": 1
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.5,
+          "lod": 2.5,
+          "spray": 32768,
+          "reflection": 0.5,
+          "reflectionSeconds": 3,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": true
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 77,
+          "completed": 76,
+          "outstanding": 1,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "dimensions": [
+          585,
+          1048,
+          585,
+          1048
+        ],
+        "diagnostic": {
+          "pass": "previous",
+          "commit": "b29957b11d46a92416233f2f4bcf8e2c44610404"
+        }
+      },
+      "after": {
+        "shoreFieldPending": false,
+        "waveSeconds": 66.96000000000001,
+        "marine": {
+          "heightM": 0.8958763555519722,
+          "amplitude": 0.4479381777759861,
+          "period": 4.65,
+          "windMps": 2.428493720712889,
+          "waveAngle": -170.7938177777778,
+          "windAngle": -232.41236444444445,
+          "propagation": [
+            -0.9871190081252897,
+            -0.1599876988950842
+          ],
+          "windVector": [
+            -0.6099741733798641,
+            0.7924212943943085
+          ],
+          "chop": 0.6680154555555556,
+          "tide": 0.14261854666666665,
+          "cloud": 1
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.5,
+          "lod": 2.5,
+          "spray": 32768,
+          "reflection": 0.5,
+          "reflectionSeconds": 3,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": true
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 1507,
+          "completed": 1506,
+          "outstanding": 1,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "dimensions": [
+          585,
+          1048,
+          585,
+          1048
+        ],
+        "diagnostic": {
+          "pass": "previous",
+          "commit": "b29957b11d46a92416233f2f4bcf8e2c44610404"
+        }
+      },
+      "cpu": {
+        "drawCalls": 1430,
+        "meanDrawMs": 0.7944055944052535,
+        "maxDrawMs": 2.000000000014552,
+        "scope": "Synchronous native draw JS/encoding only, not GPU time or whole browser main thread."
+      },
+      "duration": 20.018,
+      "frames": 798,
+      "fps": 39.864122289939054,
+      "minOneSecondFPS": 37,
+      "oneSecondFPS": [
+        41,
+        41,
+        41,
+        41,
+        41,
+        41,
+        41,
+        40,
+        39,
+        40,
+        41,
+        40,
+        39,
+        39,
+        40,
+        40,
+        39,
+        38,
+        38,
+        37
+      ],
+      "secondsUnder30": 0,
+      "metric": "gpu-completed-pipelined",
+      "measurement": "Frames covered by resolved asynchronous GPU queue fences; max 2 outstanding. Notification timestamps are CPU delivery times, not individual GPU timestamps or display scanout.",
+      "p95CompletionGapMs": 28,
+      "p99CompletionGapMs": 30,
+      "maxCompletionGapMs": 33,
+      "completionNotifications": 798,
+      "maxCompletionBatch": 1,
+      "meetsCadenceTarget": false,
+      "targetDefinition": "At least 30 confirmed GPU-completed frames in every whole second of a 120-second window. Notification gaps are reported separately; individual frame latency is not inferred from batched callbacks.",
+      "scope": "Captured fresh live scene, held identical across rows; fixed DPR 1.5 / FXAA / flare on. GPU completion counts; no recording.",
+      "reaches40Average": false
+    }
+  ],
+  "notes": [
+    "Historical renderer is packaged from its exact commit, with shore-worker pending telemetry only.",
+    "All rows use the unchanged approved FOV. Old-FOV row is an explicit repeat control.",
+    "CPU draw timing includes warmup; FPS bins exclude warmup.",
+    "Repeated baselines expose drift but do not measure temperature.",
+    "30 fps every second is the sustained floor; 40 fps average is the recovery target."
+  ],
+  "viewport": [
+    390,
+    699
+  ],
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "liveEvidence": {
+    "recordedAt": "2026-10-09T00:12:22.245Z",
+    "forecastTime": "2026-10-09T00:12:22.198Z",
+    "retrievedAt": "2026-10-09T00:12:19.506Z",
+    "source": "live",
+    "feedStatus": {
+      "weather": "fulfilled",
+      "marine": "fulfilled",
+      "air": "fulfilled",
+      "tide": "fulfilled",
+      "tideHiLo": "fulfilled"
+    },
+    "grids": {
+      "weather": {
+        "lat": 30.290878,
+        "lon": -85.99906
+      },
+      "marine": {
+        "lat": 30.208336,
+        "lon": -86.04166
+      }
+    },
+    "conditions": {
+      "swell": 2.9392279454533936,
+      "period": 4.65,
+      "direction": 120.20616611111109,
+      "wind": 4.720616611111112,
+      "windDirection": 58.58766777777777,
+      "tide": 0.14261849833333332,
+      "cloud": 100,
+      "rain": 0
+    },
+    "native": {
+      "revision": "2026-10-08-overcast-1",
+      "waveSeconds": 42.064,
+      "marine": {
+        "heightM": 0.8972922558340846,
+        "amplitude": 0.4486461279170423,
+        "period": 4.65,
+        "windMps": 2.4248517136892196,
+        "waveAngle": -170.8646127918837,
+        "windAngle": -232.27077441623265,
+        "propagation": [
+          -0.9873159363218321,
+          -0.1587678868189156
+        ],
+        "windVector": [
+          -0.6119305500198319,
+          0.7909115007081552
+        ],
+        "chop": 0.6678384680202909,
+        "tide": 0.14240616162434894,
+        "cloud": 1
+      },
+      "quality": {
+        "name": "High",
+        "dpr": 1.5,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "post": {
+        "aa": "fxaa",
+        "flare": true
+      },
+      "pipeline": {
+        "maxFramesInFlight": 2,
+        "maxObservedInFlight": 2,
+        "submitted": 108,
+        "completed": 108,
+        "outstanding": 0,
+        "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+      },
+      "adaptiveResolution": null,
+      "weather": {
+        "deck": 1,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.018,
+        "exposure": 1
+      },
+      "shoreFieldPending": true
+    },
+    "camera": {
+      "position": [
+        0.14948067900828557,
+        10.531106245327333,
+        27.771329121046303
+      ],
+      "fov": 56.20141647909444,
+      "projection": [
+        3.356594164246241,
+        0,
+        0,
+        0,
+        0,
+        1.8727778598798768,
+        0,
+        0,
+        0,
+        -4.110490885232184e-45,
+        -1.0000300004500067,
+        -1,
+        0,
+        0,
+        -0.600009000135002,
+        0
+      ]
+    },
+    "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1"
+  },
+  "snapshot": {
+    "camera": {
+      "position": [
+        0.11072958874271088,
+        10.415132609838198,
+        27.821101878015188
+      ],
+      "direction": [
+        0.005347710684829738,
+        -0.07877621307715327,
+        -0.9968779816224524
+      ],
+      "fov": 55.91076324817998,
+      "aspect": 0.5579399141630901,
+      "near": 0.3,
+      "far": 20000,
+      "shearX": 0,
+      "shearY": -2.90614615744107e-45
+    },
+    "sun": [
+      0.91191595716686,
+      -0.2070140267406574,
+      -0.354336675771882
+    ],
+    "moon": [
+      0.8920441875008439,
+      -0.44439627617659044,
+      -0.08227464534313503
+    ],
+    "moonInfo": [
+      0.03115230057557372,
+      0.0045185588047399845,
+      0,
+      0.9386658646800035
+    ],
+    "moonlight": 0,
+    "afternoon": 1,
+    "lightning": 0,
+    "forecast": {
+      "swell": 2.939226888293872,
+      "period": 4.65,
+      "direction": 120.2061822222222,
+      "wind": 4.720618222222222,
+      "windDirection": 58.58763555555555,
+      "tide": 0.14261854666666665,
+      "cloud": 100,
+      "rain": 0,
+      "cloudLow": 3.969088888888889,
+      "cloudMid": 97.31963111111111,
+      "cloudHigh": 100
+    }
+  },
+  "warning": "Current scene is not full daytime overcast; this run may not reproduce the reported regression.",
+  "error": "Scene or live forecast did not become ready. Reconnect and rerun.",
+  "finishedAt": "2026-10-09T00:16:38.951Z",
+  "runId": "2026-10-09T00-12-05Z-0ea5d96f-cee9-4d65-acc1-40486a53394d",
+  "captureScope": "Native scene canvas screenshots after each pass; clip after the last timed pass."
+}
