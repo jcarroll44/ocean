@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "runId": "2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62",
+  "kind": "weather",
+  "fingerprint": "805665252b0b9fc811436459aa217a3b28420d030fce0d129ae92a5a03f33b7f",
+  "receivedAt": "2026-10-11T20:55:23.040Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 176019,
+      "type": "application/json",
+      "sha256": "d8097a37211df79615721d00407934952fc0903e971ee9f09342c820769c26dd"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 1587039,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "a9fa750ca78514794482fd0617a1077464e586a2d60cb3572730f098e877fe32"
+    },
+    {
+      "name": "clear.png",
+      "size": 543901,
+      "type": "image/png",
+      "sha256": "ea8e284c1bc622b2d83629d19dcc2cd58ee70a45ca1ff412adfc70807add0a63"
+    },
+    {
+      "name": "partly-cloudy.png",
+      "size": 576936,
+      "type": "image/png",
+      "sha256": "65dc7bd0ee4e6e088123eac7be5c8a60af71bbef205b393504695de3f619dd68"
+    },
+    {
+      "name": "overcast.png",
+      "size": 448090,
+      "type": "image/png",
+      "sha256": "36a07daa21c64e15a25024d45a4d11b4495cc5e664247bc1eddabaaffb1f7b51"
+    },
+    {
+      "name": "fog.png",
+      "size": 417349,
+      "type": "image/png",
+      "sha256": "a311bd15ae9685a89d4a2f16cac3995bf6ef557a35c53c9b46b6cd03062f5bfb"
+    },
+    {
+      "name": "light-rain.png",
+      "size": 489303,
+      "type": "image/png",
+      "sha256": "9a33882930fbe0efc22536a7a200f411840eeef3e225aab5e73a05ab24849d44"
+    },
+    {
+      "name": "squall-approaching.png",
+      "size": 639555,
+      "type": "image/png",
+      "sha256": "374d262549343ef49dcc68daee9cc279cda7981406d3f0ddef42534ff1af1bdf"
+    },
+    {
+      "name": "thunderstorm.png",
+      "size": 549607,
+      "type": "image/png",
+      "sha256": "7eb0c89d6917798e278adbf906fca57f3f66dd4519fd2d22ddb1f7abe3694290"
+    },
+    {
+      "name": "clearing.png",
+      "size": 628183,
+      "type": "image/png",
+      "sha256": "d5950dcd3b6d0ad027526e41d900e3e3220638418ad9e814a98f66294c2e6934"
+    },
+    {
+      "name": "night-clear.png",
+      "size": 437654,
+      "type": "image/png",
+      "sha256": "9e5f226e6740a656e6616775bfb63e322252dad966b0697b25b9145fc5609bca"
+    },
+    {
+      "name": "night-storm.png",
+      "size": 478040,
+      "type": "image/png",
+      "sha256": "ba52cbc4ca21ec3a3486f1c09cbb7e8b7b7f7a5965defc1c00451eaf9945f48e"
+    }
+  ]
+}

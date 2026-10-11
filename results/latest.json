@@ -1,6 +1,6 @@
 {
-  "runId": "2026-10-11T17-03-50Z-077bc648-2041-4b1a-b497-631df8b4ee08",
-  "kind": "live",
-  "path": "results/2026-10-11T17-03-50Z-077bc648-2041-4b1a-b497-631df8b4ee08",
-  "receivedAt": "2026-10-11T17:06:20.319Z"
+  "runId": "2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62",
+  "kind": "weather",
+  "path": "results/2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62",
+  "receivedAt": "2026-10-11T20:55:23.040Z"
 }
