@@ -15,12 +15,13 @@ for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture']){
   measureLiveCadence:async(api,options)=>{assert.equal(options.seconds,120);assert.equal(options.warmup,15);assert.equal(state.fixtureId,HEAVIEST_FIXTURE);if(scenario==='bad-dpr')dpr=1;if(scenario==='wrong-fixture')state.fixtureId='clear';options.validate();measured=true;events.push('timed');return{fps:scenario==='fail'?29:40,minOneSecondFPS:scenario==='fail'?0:39,oneSecondFPS:[scenario==='fail'?0:39],meetsCadenceTarget:scenario!=='fail'};},
   recordLiveCanvas:async(canvas,{validate})=>{assert(measured);validate();events.push('clip');return{blob:new Blob(['test stub, no pixels']),extension:'mp4'};},
   captureScreenshot:async()=>{assert(measured);events.push(state.fixtureId);return new Blob(['test stub, no pixels']);},
+  fixtureContactSheet:async(entries,meta)=>{assert.equal(entries.length,10);assert.equal(meta.revision,INTEGRATION_BUILD.revision);assert(measured);events.push('contact-sheet');return{name:'fixtures-contact-sheet.jpg',blob:new Blob(['layout stub, no pixels'])};},
   uploadEvidence:async bundle=>{assert.equal(get('stage').src,'about:blank');submitted={...bundle,report:JSON.parse(await bundle.files[0].blob.text())};events.push('upload');}
  };
  vm.createContext(c);await vm.runInContext('(async()=>{'+code+'})()',c);
  if(scenario==='desktop'){assert.equal(get('stage').src,'');assert.equal(submitted,undefined);continue;}
  assert(submitted);assert.equal(submitted.kind,'weather');assert.equal(events.at(-1),'released');
  if(['bad-dpr','wrong-fixture'].includes(scenario)){assert(submitted.report.error);assert.equal(submitted.files.length,1);assert(!events.includes('clip'));}
- else{assert.equal(submitted.report.gallery.length,10);assert.equal(submitted.files.length,12);assert.equal(submitted.report.cadence.meetsCadenceTarget,scenario==='pass');assert(events.indexOf('timed')<events.indexOf('clip'));assert(events.indexOf('clip')<events.indexOf('clear'));}
+ else{assert.equal(submitted.report.gallery.length,10);assert.equal(submitted.files.length,13);assert.equal(submitted.report.contactSheet.revision,INTEGRATION_BUILD.revision);assert.equal(submitted.report.cadence.meetsCadenceTarget,scenario==='pass');assert(events.indexOf('timed')<events.indexOf('clip'));assert(events.indexOf('clip')<events.indexOf('clear'));assert(events.indexOf('night-storm')<events.indexOf('contact-sheet'));}
 }
 console.log('PASS: actual fixture runner rejects non-iPhone before scene load, fixes heaviest input, rejects changed fixture/DPR, retains failing result, measures before ten captures/clip, uploads and releases wake lock. Mock device only.');

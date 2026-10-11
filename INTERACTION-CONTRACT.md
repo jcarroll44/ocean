@@ -263,3 +263,17 @@ bins, before screenshots/clip/upload. No automatic check can invent a pass or
 rendered screenshot. Add fixtures and weather/data/material tests alongside all
 existing regression gates. Verify product/native paths; distinguish Linux checks,
 Mac compilation/signing, account configuration and physical-device acceptance.
+
+## October 11 — accepted weather gate; readable night storm
+
+Uploaded run `2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62`
+passed the heaviest fixture: 35.478 average, 31 minimum, zero seconds below 30.
+Jacob requests visible bolts every few seconds, coherent cloud/water lightning,
+rain curtains, readable 6 ft surf foam and night-storm ambient light. Use bounded
+shader/uniform work and reuse the existing fixed rain budget. No new FFT work,
+volumetric pass, particle spawns, dynamic shadows or per-strike compilation.
+Retain High/FXAA, DPR policy, two-frame pipeline, input physics and all gestures.
+Reduced motion disables flashes. Lightning is an illustration of sourced storm
+potential, not an observed strike. Clear-night astronomy/light stays unchanged.
+Contact sheets must use authentic captures with revision/run provenance. Prior
+phone captures and FPS do not validate newly changed pixels or performance.

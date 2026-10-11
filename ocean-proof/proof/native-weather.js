@@ -1,7 +1,7 @@
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
 import {Vector3} from '../vendor/tidewater/src/engine/index.js';
 import {cloudThreshold,PARTIAL_CLOUD_WGSL} from './partial-clouds.js';
-import {layeredFields,updateLayeredWeather,LAYERED_WEATHER_WGSL} from './layered-weather.js';
+import {layeredFields,updateLayeredWeather,stormBearing,LAYERED_WEATHER_WGSL} from './layered-weather.js';
 const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
 export function overcastState(sunY,cloud,rain=0){
  const cover=Math.max(0,Math.min(1,cloud)),deck=smooth(.7,.98,cover);
@@ -25,7 +25,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  colour=nativeOffshoreSky(dir,colour);
  let hazeDistance=1800.0/(max(dir.y,0.05)+0.12);
  let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*0.8*(1.0-smoothstep(0.0,0.5,dir.y));
- return mix(colour,nativeFogColour(),haze);`}
+ return mix(colour,nativeFogColour(),haze)+nativeStormBolt(dir);`}
 }`});
  // The same deck must light the sand, stand and reflected ocean, not just the backdrop.
  const sky=app.sky.module;
@@ -47,7 +47,13 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover,...updateLayeredWeather(uniforms,f)};
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
-  uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,f.rain||0);uniforms.fields.flash.value=packet.lightning||0;
+  uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);
+  const flash=f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
+  if(flash>.01&&uniforms.fields.flash.value<=.01){
+   this.strikeNumber=(this.strikeNumber||0)+1;
+   uniforms.fields.strike.value.set(stormBearing(f.offshore,this.strikeNumber),.48+.10*Math.abs(Math.sin(this.strikeNumber)),this.strikeNumber,0);
+  }
+  uniforms.fields.flash.value=flash;
   app.settings.exposure=baseExposure*(exposure?this.state.exposure:1);
  },light(G){
   const {weight,radiance}=this.state;
@@ -58,6 +64,15 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   }
   const f=uniforms.fields;
   if(f.daylight.value>.1){G.sunColor.value.multiplyScalar(f.direct.value*(.65+.35*f.energy.value));G.skyIrradiance.value.multiplyScalar(.7+.3*f.energy.value);}
+  if(!cheap){
+   // Display adaptation only for a rainy night. Clear-night moon phase/light
+   // and daytime radiance remain exact. Existing diffuse lighting reaches the
+   // spray and breaker faces too; no extra dynamic light or shadow map.
+   const night=f.storm.value*(1-f.daylight.value),flash=f.flash.value;
+   for(const key of ['skyIrradiance','horizonColor']){
+    const c=G[key].value;c.r+=night*.048+flash*.20;c.g+=night*.061+flash*.23;c.b+=night*.080+flash*.28;
+   }
+  }
  }};
 }
 

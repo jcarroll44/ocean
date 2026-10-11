@@ -4,7 +4,8 @@
     "water",
     "Terrain",
     "material5",
-    "Forecast rain streaks"
+    "Forecast rain streaks and sheets",
+    "BreakerLip"
   ],
   "bindingLimits": [
     "Water material needs 22 sampled textures; Dawn null supports 16. Binding/pipeline execution is not verified."

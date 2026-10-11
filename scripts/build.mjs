@@ -59,6 +59,7 @@ execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'})
 execFileSync(process.execPath,['scripts/check-release.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-data.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-gate.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-night-storm.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-product-audit.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-celestial.cjs'],{stdio:'inherit'});

@@ -60296,12 +60296,21 @@ function weatherScenePacket(c){
  return {...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
 }
 const weatherEffectsBase=updateWeatherEffects;
+// Illustrative thunder potential, not observed strikes. One bounded flash every
+// 5.2 seconds at full potential; a soft afterglow, not a rapid strobe. Kept on
+// the existing elapsed wave clock and disabled completely for reduced motion.
+function stormFlash(t,potential,reduceMotion){
+ if(reduceMotion||!Number.isFinite(potential)||potential<=0)return 0;
+ const p=Math.max(0,Math.min(1,potential)),phase=((t+1.7)%(5.2+3.2*(1-p)))-.35;
+ if(phase<0||phase>.95)return 0;
+ return p*(1-Math.exp(-phase*45))*Math.exp(-phase*5.5);
+}
 updateWeatherEffects=function(){
  if(!engine?.nativeScene){weatherEffectsBase();return;}
  // Native rain/dimples use fixed buffers compiled during load. Keep the solar
  // arc; do not create/dispose legacy rain meshes whenever precipitation changes.
  const c=conditions(),potential=Number.isFinite(c.thunder)?c.thunder:0,t=uniforms.uTime.value;
- uniforms.uLightning.value=reduced?0:potential*(.28*Math.exp(-Math.pow(((t+3.7)%19.7-1.2)/.22,2)));
+ uniforms.uLightning.value=stormFlash(t,potential,reduced);
  state.weatherEffects={rain:Number.isFinite(c.rain)?c.rain:null,thunder:potential,tide:c.tide,stand:false};
 };
 const weatherMethodBase=forecastMethod;

@@ -4,6 +4,7 @@ import {newRunId,jsonFile,captureScreenshot,uploadEvidence,retryPending} from '.
 import {isIPhone,screenAwake} from './diagnostic-device.js';
 import {pinTestViewport} from './test-viewport.js';
 import {INTEGRATION_BUILD} from './integration-build.js';
+import {fixtureContactSheet} from './fixture-contact-sheet.js';
 const $=id=>document.getElementById(id),stage=$('stage'),query=new URLSearchParams(location.search),gateRequested=query.get('gate')==='1',allowed=isIPhone(navigator),events=[],wakeEvents=[];
 const viewport=pinTestViewport(stage,window,e=>events.push(e)),awake=screenAwake(navigator,document,text=>$('awake').textContent=text,e=>wakeEvents.push(e));
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));let busy=false,selected=null;
@@ -27,11 +28,13 @@ function evidence(){
  return {source:'fixture',fixture:HEAVIEST_FIXTURE,forecastTime:app.state.time,conditions:c,native,dimensions};
 }
 async function collectGallery(files,report){
+ const captures=[];
  for(const f of WEATHER_FIXTURES){
   $('status').textContent='Capturing '+f.title+'…';await select(f.id);
-  try{const blob=await captureScreenshot(stage.contentWindow),name=f.id+'.png';files.push({name,blob});const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption');img.src=URL.createObjectURL(blob);img.alt=f.title+' · actual rendered synthetic fixture';caption.textContent=f.title;figure.append(img,caption);$('gallery').append(figure);report.gallery.push({id:f.id,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});}
+  try{const blob=await captureScreenshot(stage.contentWindow),name=f.id+'.png';files.push({name,blob});captures.push({id:f.id,title:f.title,blob});const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption');img.src=URL.createObjectURL(blob);img.alt=f.title+' · actual rendered synthetic fixture';caption.textContent=f.title;figure.append(img,caption);$('gallery').append(figure);report.gallery.push({id:f.id,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});}
   catch(e){(report.captureErrors??=[]).push({fixture:f.id,error:e.message});}
  }
+ if(captures.length===10){try{const sheet=await fixtureContactSheet(captures,{revision:INTEGRATION_BUILD.revision,runId:report.runId});files.push(sheet);report.contactSheet={name:sheet.name,revision:INTEGRATION_BUILD.revision,source:'ten actual rendered captures, unretouched'};download(sheet.blob,sheet.name,'All ten fixtures · contact sheet');}catch(e){(report.captureErrors??=[]).push({file:'contact-sheet',error:e.message});}}
 }
 async function run(){
  if(busy||!allowed)return;busy=true;$('start').disabled=$('fixture').disabled=true;
