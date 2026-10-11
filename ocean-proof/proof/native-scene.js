@@ -4,7 +4,6 @@ import {NativeOverlays} from './NativeOverlays.js';
 import {captureNativePair} from './native-capture.js';
 import {GPU} from '../vendor/tidewater/src/engine/gpu/GPU.js';
 import {G} from '../vendor/tidewater/src/core/Globals.js';
-import {Vector2} from '../vendor/tidewater/src/engine/index.js';
 import {WaveClock,renderAt} from './timing.js';
 import {PIN} from './inputs.js';
 import {ProfileRun,profileMetadata} from './profile.js';
@@ -15,11 +14,13 @@ import {AdaptiveResolution,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
 import {installNativeWeather,guardNativeBreakerLip} from './native-weather.js';
 import {overcastConfig} from './overcast-profile-config.js';
 import {installSmallSurf,smallSurfSpan} from './scene-polish.js';
+import {ShoreUpload} from './shore-upload.js';
+import {installHitchTrace} from './hitch-trace.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
-const completionListeners=new Set();
+const completionListeners=new Set();let trace,shoreUpload;
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
 try{
@@ -29,7 +30,7 @@ try{
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
  const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
- app.configureNativeWeather=()=>{if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
+ app.configureNativeWeather=()=>{if(parent.parent?.location?.pathname?.endsWith('/ocean-live.html'))trace=installHitchTrace(GPU);if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
  app.configureNativeShore=()=>{if(!app.profileConfig)installSmallSurf(app.shore);};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
@@ -39,7 +40,14 @@ try{
   app.proofFlare=app.post.flare;
   if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
   if(app.profileConfig?.pass==='native-flare'||settings.flare===false)app.post.flare=null;
-  await prepare();
+  // Compile with live marine/weather uniforms, then execute all production
+  // passes during load, after their async pipelines have finished.
+  if(!app.profileConfig&&initial?.state?.data?.source==='live'){
+   const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();app.nativeWeather?.update(packet);beach.update(packet);}
+  }
+  trace?.track(app);await prepare();
+  await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  trace?.event('precompile-complete',{syncCompiles:GPU.syncCompiles.slice()});
  };
  // Native terrain, sky and objects share Tidewater's one scene renderer.
  const originalReadback=app.applyAtmosphereReadback.bind(app);
@@ -81,9 +89,10 @@ try{
  function rebuildShore(){
   if(shoreBusy||!pendingShore)return;shoreBusy=true;const p=pendingShore;pendingShore=null;
   const data=first?{size:app.terrainData.size,res:app.terrainData.res,texel:app.terrainData.texel,origin:app.terrainData.origin,heights:app.terrainData.heights}:null;first=false;
+  trace?.event('shore-worker-start',{tide:p.tide,propagation:p.propagation});
   worker.postMessage({data,propagation:p.propagation,tide:p.tide,retainSurf:regression.surf});
  }
- worker.onmessage=async e=>{try{await GPU.queue.onSubmittedWorkDone();if(!e.data.field)throw Error(e.data.error);app.shoreField=e.data.field;app.terrainGPU.shoreField=e.data.field;app.terrainGPU.setShoreField(e.data.field);const old=app.shore.dirTexture;app.shore.buildDirTexture({min:new Vector2(-190,-170),size:380});old?.destroy();shoreBusy=false;rebuildShore();}catch(e){fail(e);}};
+ worker.onmessage=e=>{try{if(!e.data.field)throw Error(e.data.error);shoreUpload=new ShoreUpload(e.data.field,e.data.direction);trace?.event('shore-upload-start',{bytes:e.data.field.data.byteLength+e.data.direction.byteLength});}catch(e){fail(e);}};
  worker.onerror=e=>fail(e.message);
  function applyPacket(p){
   packet=p;const c=p.camera,a=app.camera;
@@ -92,7 +101,8 @@ try{
   app.nativeWeather?.update(p);beach.update(p);overlays.update(p.overlays);
   const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
   if(f&&key!==forecastKey&&app.setForecast(f)){
-   if(!app.profileConfig)app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);
+   if(!app.profileConfig){app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();}
+   trace?.event('forecast-spectrum',{key});
    forecastKey=key;const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
    // Fixed 201-degree / zero-tide diagnostics already match the initial field.
    if(!app.profileConfig&&next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
@@ -119,12 +129,13 @@ try{
  }
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
-  evidence(){return {revision:'2026-10-11-conditions-shore-sky',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
+  evidence(){return {revision:'2026-10-11-hitch-trace-recovery',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{
     if(adaptive&&!adaptive.prepare(performance.now(),gate.inFlight,dpr=>{
-     app.engine.setRenderScale(dpr);app.activeQuality={...app.activeQuality,dpr};app.post.taau._needsRestart=true;
+     trace?.event('dpr-resize',{from:adaptive.dpr,to:dpr});app.engine.setRenderScale(dpr);app.activeQuality={...app.activeQuality,dpr};app.post.taau._needsRestart=true;
      return [app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height];
     }))return false;
    }catch(e){fail(e);return false;}
@@ -138,7 +149,7 @@ try{
   },
   draw(p){
    if(failed||gate.busy||capturing||profileRun?.done||adaptive?.pending)return false;
-   const cpuStart=performance.now();
+   const cpuStart=performance.now();trace?.begin();
    applyPacket(p);
    if(adaptive){
     try{adaptive.verifyFrame(innerWidth,innerHeight,[app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height]);}catch(e){fail(e);return false;}
@@ -152,11 +163,16 @@ try{
    try{
     if(!mode.readbacks&&profileRun.start!==null&&(app.query._pending||app.atmosphere._irrPending))throw Error('CPU readback still pending after warm-up; result rejected.');
     if(mode.empty){const sample=clock.sample(performance.now());G.time.value=sample.seconds;clearFrame(GPU);}
-    else renderAt(app,G,clock.sample(performance.now()));
+    else {
+     if(shoreUpload?.step()){shoreUpload.commit(app,GPU);shoreUpload=null;shoreBusy=false;trace?.event('shore-upload-commit');rebuildShore();}
+     renderAt(app,G,clock.sample(performance.now()));
+    }
+    trace?.end(app);
     probe?.draw(performance.now()-cpuStart);
     if(pipelined)gate.submittedFrame();else gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);return true;
    }catch(e){fail(e);return false;}
   }
  };
+ trace?.event('scene-ready');
  send({status:'ready',backend:'WebGPU',pin:PIN,loadMs:performance.now()-started});
 }catch(e){fail(e);}

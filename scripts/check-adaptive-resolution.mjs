@@ -21,10 +21,19 @@ assert.equal(a.prepare(1050,0,resize),true);assert.equal(a.dpr,1.45);assert.equa
 // traverses 1.35 and stops at 1.25; sustained high cadence stops at 1.6.
 for(time=2000;time<=12000;time+=1000)a.prepare(time,0,resize);
 assert.equal(a.dpr,1.25);assert(a.changes.some(c=>c.to===1.35));assert(a.samples.some(s=>s.fps===0));
-for(;time<=25000;time+=1000){a.observe(time-1,40);a.prepare(time,0,resize);}
+for(;time<=85000;time+=1000){a.observe(time-1,40);a.prepare(time,0,resize);}
 assert.equal(a.dpr,1.6);assert(a.changes.every(c=>c.to>=1.25&&c.to<=1.6&&c.inFlight===0));
 a.verifyFrame(390,689,dimensions(a.dpr));assert.throws(()=>a.verifyFrame(390,689,[780,1378,780,1378]),/dimensions/);
 a.resetWindow();a.prepare(100000,0,resize);assert.equal(a.pending,null);assert.equal(a.dpr,1.6);
+// A 37-fps recovery no longer remains trapped in the 36–38 dead band.
+const recovery=new AdaptiveResolution();recovery.observe(0,11);recovery.prepare(1000,0,dimensions);
+assert.equal(recovery.dpr,1.45);
+for(let t=2000;t<=8000;t+=1000){recovery.observe(t-1,37);recovery.prepare(t,0,dimensions);assert.equal(recovery.dpr,1.45);}
+recovery.observe(8999,37);recovery.prepare(9000,0,dimensions);assert.equal(recovery.dpr,1.5);
+assert.equal(recovery.changes.at(-1).reason,'recovery');
+// Recovery does not push beyond the previous operating level at 37 FPS.
+for(let t=10000;t<=30000;t+=1000){recovery.observe(t-1,37);recovery.prepare(t,0,dimensions);}
+assert.equal(recovery.dpr,1.5);
 // Integrate the controller with actual profile accounting over 120 s. An
 // injected resize/drain-sized pause remains visible in the strict gate even
 // though the mean is comfortably above 30. Controller changes cannot reset it.

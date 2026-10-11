@@ -28,7 +28,7 @@ assert.equal(input.amplitude,.3048);assert.equal(input.period,5);assert.equal(in
 assert(smallSurfSpan(input.amplitude,input.period)>.21);
 assert.equal(smallSurfSpan(0,5),.13);assert.equal(smallSurfSpan(.8,5),.13);assert.equal(smallSurfSpan(.3,10),.13);
 const shore={module:{code:ShoreWaves.prototype._code.call({})}};installSmallSurf(shore);
-assert.equal(shore.module.code.split('0.3 + 0.25 * smoothstep').length-1,3);
+assert.equal(shore.module.code.split('mix( nativeSurf.foamFloor').length-1,3);
 assert(shore.module.code.includes('o.foam = s0.z * env * mix('),'Foam still requires physical breaking and shore envelope');
 assert(shore.module.code.includes('let landed = smoothstep( 0.86, 0.99, P.b );'),'No white paint on unbroken crests');
 assert.equal(RESOLUTION_POLICY.downBelow,36);assert.deepEqual(PRODUCTION_SETTINGS,{dpr:1.5,aa:'fxaa',flare:false});
