@@ -45,6 +45,8 @@ for(const altitude of [-20,0,50])for(const cloud of [0,.34,34,90])for(const risk
 assert(read('src/presentation.js').includes("'Forecast updated '+updated"));
 // Pinned implementation, physical input mapping, material and camera stay exact.
 for(const prefix of ['ocean-proof/vendor/tidewater/','ocean-proof/proof/forecast.js','src/camera.js','src/interaction.js']){
- const changes=execFileSync('git',['diff','bd558b501630041c1482968e3d727caa2717a5e5','--',prefix],{encoding:'utf8'});assert.equal(changes,'',prefix);
+ // The old local-only commit was never published. Use its published pre-polish
+ // predecessor: all four frozen paths are byte-identical (vendor tree f0d73bdc).
+ const changes=execFileSync('git',['diff','532dfcfccf30e65f9cca41b7bcefa2abb9537618','--',prefix],{encoding:'utf8'});assert.equal(changes,'',prefix);
 }
 console.log('PASS: daytime unlit moon, calibrated 34% partial-cloud coverage and percent units, shared reflections, bounded small shore surf, H/2 retained, flare off, DPR 36, condition-only copy and NWS disclosure. CPU/source only; no new phone FPS or pixels.');

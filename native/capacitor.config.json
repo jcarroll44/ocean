@@ -5,9 +5,20 @@
   "loggingBehavior": "none",
   "backgroundColor": "#edf4f5",
   "server": {
-    "url": "https://daybuoy.jacobcarroll51.chatgpt.site",
     "cleartext": false,
     "errorPath": "offline.html"
+  },
+  "plugins": {
+    "CapacitorUpdater": {
+      "autoUpdate": "off",
+      "defaultChannel": "beta",
+      "appReadyTimeout": 30000,
+      "autoDeleteFailed": true,
+      "autoDeletePrevious": false,
+      "statsUrl": "",
+      "allowModifyUrl": false,
+      "allowSetDefaultChannel": false
+    }
   },
   "ios": {
     "contentInset": "never",

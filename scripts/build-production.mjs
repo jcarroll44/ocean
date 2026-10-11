@@ -50,6 +50,7 @@ html=html.replace(/<script>([\s\S]*?)<\/script>/g,(_,s)=>{
  s=s.replace(/let compassHold;[^\n]+\n/,'').replace(/addEventListener\('keydown',e=>\{if\(e.key.toLowerCase\(\)==='d'[\s\S]*?\}\);\n/,'');
  // Retain only the scene's internal parent/iframe bridge, not testing APIs.
  s=s.replace(/window\.__daybuoy=\{[\s\S]*?;window\.__ocean=window\.__daybuoy;/,'window.__daybuoy={state,engine,uniforms,conditions};');
+ s=s.replace(/window\.__surf=\{[^\n]+\n/,'');
  s=s.replace('if(!navigator.gpu||oldProfile)','if(!navigator.gpu)');
  s=s.replace(/ const oldProfile=[^\n]+\n/,'');
  write('production/.app-input.js',s);return '<script src="/assets/app.js" defer></script>';
@@ -70,6 +71,7 @@ const mit=read('ocean-proof/vendor/tidewater/LICENSE');
 const ofl=read('src/NOTICE.txt');
 const licenses=[['Tidewater',mit],['Three.js r170',mit.replace('Copyright (c) 2026 DRG Software Solutions LLC','Copyright 2010-2024 Three.js Authors')],['Capacitor (iPhone wrapper)',read('native/node_modules/@capacitor/core/LICENSE')],['Poppins',ofl.replace('Bundled Nunito font license','Bundled Poppins font license').replace('Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)','Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)')],['Nunito (fallback)',ofl]];
 const escaped=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+licenses.push(['Capgo updater (native app)',read('native/node_modules/@capgo/capacitor-updater/LICENSE')],['Sentry Capacitor (native app)',read('native/node_modules/@sentry/capacitor/LICENSE')]);
 const credits=read('production/credits.html').replace('<!-- LICENSES -->',licenses.map(([title,text])=>'<h2>'+title+'</h2><pre>'+escaped(text)+'</pre>').join(''));
 for(const file of ['privacy.html','credits.html']){const content=file==='credits.html'?credits:read('production/'+file);write(out+'/'+file,content);write('native/www/'+file,content);}
 write(out+'/404.html','<!doctype html><title>DayBuoy · Not found</title><p>This page is not available.</p><a href="/">Open DayBuoy</a>');

@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "bounded NWS holiday date",
+    "valid cache survives fetch failure",
+    "expired risk explicitly last known",
+    "High-only chip; condition headline/action",
+    "UV and actual sun times without scores",
+    "Watch copy without removed estimates",
+    "scrub readout and startup-ready event"
+  ],
+  "verification": "Executed application in Node DOM. No rendered iPhone or native Swift claim."
+}

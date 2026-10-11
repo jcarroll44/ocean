@@ -6,6 +6,8 @@ import {Resvg} from '@resvg/resvg-js';
 import {PNG} from 'pngjs';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 process.chdir(root);
+execFileSync(process.execPath,['scripts/build.mjs'],{cwd:path.dirname(root),stdio:'inherit'});
+execFileSync(process.execPath,['scripts/build-production.mjs'],{cwd:path.dirname(root),stdio:'inherit'});
 const svg=fs.readFileSync('assets/icon.svg','utf8');
 const fontFamily=process.platform==='darwin'?'Helvetica':'DejaVu Sans';
 const png=(source,width)=>PNG.sync.write(PNG.sync.read(new Resvg(source,{fitTo:{mode:'width',value:width},font:{sansSerifFamily:fontFamily,defaultFontFamily:fontFamily}}).render().asPng()),{colorType:2});
@@ -16,6 +18,7 @@ const splash=`<svg xmlns="http://www.w3.org/2000/svg" width="2732" height="2732"
 for(const file of ['splash-2732x2732.png','splash-2732x2732-1.png','splash-2732x2732-2.png'])fs.writeFileSync(assets+'/Splash.imageset/'+file,png(splash,2732));
 if(fs.existsSync('../production/dist'))fs.writeFileSync('../production/dist/icon-180.png',png(svg,180));
 for(const file of ['privacy.html','credits.html'])if(!fs.existsSync('www/'+file))throw Error('Missing bundled legal page: '+file);
+execFileSync(process.execPath,['scripts/bundle.mjs',...process.argv.slice(2)],{stdio:'inherit'});
 execFileSync(process.execPath,['node_modules/@capacitor/cli/bin/capacitor','sync','ios'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check.mjs'],{stdio:'inherit'});
 console.log('Ready for Xcode. Signing, compilation and physical-iPhone testing must happen on your Mac.');

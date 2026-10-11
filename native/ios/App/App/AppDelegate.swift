@@ -1,5 +1,33 @@
 import UIKit
 import Capacitor
+import WebKit
+
+// Existing sun/hour detents now produce real iPhone feedback. No haptics in
+// the rendering loop. The weak proxy avoids retaining the view controller.
+private final class WeakHapticHandler: NSObject, WKScriptMessageHandler {
+    weak var owner: DayBuoyViewController?
+    init(_ owner: DayBuoyViewController) { self.owner = owner }
+    func userContentController(_ controller: WKUserContentController, didReceive message: WKScriptMessage) { owner?.receiveHaptic(message) }
+}
+class DayBuoyViewController: CAPBridgeViewController {
+    private let selection = UISelectionFeedbackGenerator()
+    private let impact = UIImpactFeedbackGenerator(style: .soft)
+    private var lastHaptic: CFTimeInterval = 0
+    override func capacitorDidLoad() {
+        super.capacitorDidLoad()
+        webView?.configuration.userContentController.add(WeakHapticHandler(self), name: "daybuoyHaptic")
+        selection.prepare(); impact.prepare()
+    }
+    fileprivate func receiveHaptic(_ message: WKScriptMessage) {
+        guard message.frameInfo.isMainFrame,
+              message.frameInfo.request.url?.host == "localhost",
+              let body = message.body as? [String: Any], let kind = body["kind"] as? String,
+              CACurrentMediaTime() - lastHaptic > 0.08 else { return }
+        lastHaptic = CACurrentMediaTime()
+        if kind == "moment" || kind == "boundary" { impact.impactOccurred(intensity: 0.55); impact.prepare() }
+        else { selection.selectionChanged(); selection.prepare() }
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

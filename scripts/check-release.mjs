@@ -1,0 +1,31 @@
+// Actual app startup and v1 product behavior. GPU/geometry are not simulated.
+import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import {parseHTML} from 'linkedom';
+const H=3600000,now=Date.parse('2026-10-11T19:30:00Z');
+class TestDate extends Date{constructor(...a){super(...(a.length?a:[now]));}static now(){return now;}}
+const dom=parseHTML(fs.readFileSync('dist/index.html','utf8')),{document}=dom,$=s=>document.querySelector(s);
+dom.HTMLElement.prototype.animate=()=>({cancel(){}});dom.HTMLElement.prototype.getBoundingClientRect=()=>({left:20,right:370,top:60,bottom:250,width:350,height:190});
+const cache=new Map([['daybuoy.welcomed','1']]),diagnostics=[];
+const c={document,window:{addEventListener(){},dispatchEvent:e=>diagnostics.push(e)},Event:dom.Event,CustomEvent:dom.CustomEvent,navigator:{onLine:true},console:{warn(){},log(){},error(){}},URL,URLSearchParams,TextDecoder,Date:TestDate,location:{search:'',origin:'https://test'},matchMedia:()=>({matches:false}),localStorage:{getItem:k=>cache.get(k)??null,setItem:(k,v)=>cache.set(k,v)},innerWidth:390,innerHeight:844,devicePixelRatio:3,performance:{now:()=>10000},setInterval(){},setTimeout(){},clearTimeout(){},requestAnimationFrame(){},addEventListener(){},AbortSignal,fetch:()=>new Promise(()=>{})};
+let code=$('script').textContent;
+code=code.replace(/\n\}\)\(\);\s*$/,`\nwindow.releaseTest={parseSurfProduct,ripRiskAt,releaseRipDetail,beachAnswer,referenceAction,buildStory,storySummary,loadRipForecast,setReport(v){surfForecast=v;surfRequestedAt=0;},resetFetch(){surfRequestedAt=0;}};\n})();`);
+vm.createContext(c);vm.runInContext(code,c);
+const app=c.window.__daybuoy,r=c.window.releaseTest;assert(r,'Exercise actual release layer');
+const state=app.state;state.data.source='live';state.data.retrievedAt=now;state.forecastLoaded=true;state.forecastFailed=false;state.time=now;state.live=false;
+const product={productCode:'SRF',id:'nws-holiday-fixture',issuanceTime:'2026-10-11T15:40:00Z',productText:'FLZ108-112015-\nSouth Walton-\n.REST OF TODAY...\nRip Current Risk............High.\n.COLUMBUS DAY...\nRip Current Risk............Moderate.\n.TUESDAY...Low rip current risk*.\n&&\n\nRip Current Risk Category\nHigh Risk - definition, not a forecast.\n$$\n'};
+const report=r.parseSurfProduct(product);assert.equal(report.periods.length,3);r.setReport(report);
+assert.equal(r.ripRiskAt(Date.parse('2026-10-12T17:00:00Z')).risk,'Moderate','Bounded holiday heading resolves Monday');
+assert.equal(r.ripRiskAt(Date.parse('2026-10-13T17:00:00Z')).risk,'Low');
+assert.throws(()=>r.parseSurfProduct({...product,issuanceTime:'2026-10-08T00:00:00Z'}));
+app.renderUI();assert.equal($('#release-rip-chip').hidden,false);assert(!/rip.current/i.test($('#story-detail').textContent));assert(!/rip.current/i.test($('#moment-action').textContent));
+app.openSheet('water');app.renderUI();assert.match($('#sheet-content').textContent,/Rip current: High · NWS/);assert.match($('#sheet-content').textContent,/Issued Oct 11/);
+c.fetch=async()=>{throw Error('Offline')};await r.loadRipForecast();assert.equal(r.ripRiskAt(now).risk,'High','Failed refresh retains still-valid cached period');assert.match(r.releaseRipDetail().detail,/Refresh unavailable · cached report/);assert(diagnostics.some(e=>e.detail?.source==='nws-surf'));
+r.setReport({...report,issued:now-31*H});assert.equal(r.ripRiskAt(now),null);assert.equal(r.releaseRipDetail().high,false);assert.match(r.releaseRipDetail().detail,/Last report: High/);assert.match(r.releaseRipDetail().detail,/Not current/);
+app.renderUI();assert.equal($('#release-rip-chip').hidden,true);assert.match($('#sheet-content').textContent,/Unavailable/);
+r.setReport(null);assert.equal(r.releaseRipDetail().risk,null);assert(!/Last report/.test(r.releaseRipDetail().detail));
+r.setReport(report);state.time=Date.parse('2026-10-12T17:00:00Z');app.renderUI();assert.equal($('#release-rip-chip').hidden,true,'Moderate is only in Water');
+state.time=now;app.openSheet('sun');app.renderUI();assert.match($('#sheet-content').textContent,/Sunrise/);assert.match($('#sheet-content').textContent,/Sunset/);assert.match($('#sheet-content').textContent,/UV/);assert(!/burn|\/10|tan speed|tan budget/i.test($('#sheet-content').textContent));
+assert(!/burn|\/10|rip.current/i.test(JSON.stringify(r.buildStory())));assert(!/\/10/.test(r.storySummary()));
+state.scrubbing=true;app.openSheet(null);app.renderUI();assert.match($('#story-detail').textContent,/Forecast updated/);assert($('#app').classList.contains('release-scrubbing'));
+const result={checks:['bounded NWS holiday date','valid cache survives fetch failure','expired risk explicitly last known','High-only chip; condition headline/action','UV and actual sun times without scores','Watch copy without removed estimates','scrub readout and startup-ready event'],verification:'Executed application in Node DOM. No rendered iPhone or native Swift claim.'};
+assert(diagnostics.some(e=>e.type==='daybuoy:ready'));
+fs.writeFileSync('night-report/release-checks.json',JSON.stringify(result,null,2));console.log('PASS: '+result.checks.join('; '));

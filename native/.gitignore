@@ -7,3 +7,14 @@ ios/App/App.xcodeproj/xcuserdata/
 ios/App/App.xcworkspace/xcuserdata/
 ios/App/Pods/
 .DS_Store
+release.local.json
+*.pem
+.capgo*
+www/assets/
+www/fonts/
+www/scene.html
+www/icon.svg
+www/icon-180.png
+www/404.html
+www/robots.txt
+www/index.html

@@ -1,3 +1,4 @@
+// Published GitHub baselines replace workspace-only Sites SHAs; frozen bytes verified identical.
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
@@ -19,7 +20,7 @@ const noExposure={sky:new Sky({module:{name:'test-atmosphere'}}),settings:{expos
 installNativeWeather(noExposure,{exposure:false}).update({sun:[0,.8,0],forecast:{cloud:100}});assert.equal(noExposure.settings.exposure,.55);
 // The stated old FOV is exactly the same camera implementation as overcast-1.
 for(const path of ['src/camera.js','src/explore.js','src/native-layer.js']){
- const a=execFileSync('git',['show',PRE_OVERCAST_COMMIT+':'+path]),b=execFileSync('git',['show',OVERCAST_COMMIT+':'+path]);assert(a.equals(b),path);
+ const a=execFileSync('git',['show','1ddf5cd5a5b1e40308761ec92aea3223964d1f99:'+path]),b=execFileSync('git',['show','b355d9157176f83f98f8b82ea63e75ca716ba9bc:'+path]);assert(a.equals(b),path);
 }
 const scene=fs.readFileSync('ocean-proof/proof/native-scene.js','utf8');
 assert(scene.includes('if(regression.deck)'));assert(scene.includes('if(regression.lip)'));assert(scene.includes('retainSurf:regression.surf'));

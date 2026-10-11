@@ -227,3 +227,18 @@ Jacob explicitly authorizes a separate public DayBuoy site containing only a min
 Production adapters may remove test-only wrappers and bundle/tree-shake the approved rendering modules; preserve the physical forecast mappings, camera/interaction code, reference CSS/fonts, weather/shore appearance, adaptive settings and bounded shore uploads. Keep legitimate shared-time URLs. Gate with the seven interaction tests, full build and `scripts/check-production.mjs`. Browser and physical iPhone verification remain separate from Node/DOM/shader checks.
 
 Add a Capacitor iPhone beta project loading the public HTTPS origin, with local offline/retry and legal pages, icon, launch screen and MIT attribution. No location/camera/microphone access or upload token is needed. Target iOS 26 for WebGPU, restrict app-bound domains, and disable web-view inspection. The requested `server.url` architecture is documented by Capacitor as a live-reload feature not intended for production; disclose that tradeoff and Apple's remote-code/minimum-functionality review risk. Do not promise App Store approval or native performance from the Safari gate. Signing, archival, device verification and TestFlight upload require Jacob's Mac and Apple account. Main and frozen proof are unchanged.
+# v1 release amendment · 2026-10-11
+
+The user approved a release product layer (`src/release.js`) around the pinned
+scene and input implementation. Preserve every existing gesture and ocean gate.
+Native scrubbing adds bounded selection haptics; the existing sun, tide, wind and
+wave interpolation remains the authority. Text updates remain capped at 10 Hz.
+Home headlines and the main action describe conditions. NWS rip risk belongs in
+Water; only a currently valid High period gets a small home chip. Failed fetches
+retain validated cache with its issue time. Expired or out-of-period values are
+explicitly last-known, never current. Holiday headings require bounded date
+inference. No burn-time or sunset-score display in Sun, Watch, or story summaries.
+The native app bundles production assets, has a current-conditions widget, and
+uses optional configured OTA and diagnostics. A configured service is not proof
+of an activated account or successful iPhone test. `check-release.mjs` covers the
+new behavior in addition to all seven unchanged gesture checks.

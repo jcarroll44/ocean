@@ -1,0 +1,6 @@
+{
+  "sentryDsn": "",
+  "capgoEnabled": false,
+  "capgoPublicKeyFile": "",
+  "channel": "beta"
+}

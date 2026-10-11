@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        DB0000000000000000000001 = {isa = PBXBuildFile; fileRef = DB0000000000000000000002; };
+        DB0000000000000000000003 = {isa = PBXBuildFile; fileRef = DB0000000000000000000004; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 4D22ABE82AF431CB00220026 /* CapApp-SPM */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -18,7 +20,20 @@
 		9582B6832FE993A70072D4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9582B6822FE993A50072D4E8 /* SceneDelegate.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+        DB000000000000000000000C = {isa = PBXCopyFilesBuildPhase; buildActionMask = 2147483647; dstPath = ""; dstSubfolderSpec = 13; files = (DB0000000000000000000003, ); name = "Embed Widget"; runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXCopyFilesBuildPhase section */
+/* Begin PBXContainerItemProxy section */
+        DB000000000000000000000E = {isa = PBXContainerItemProxy; containerPortal = 504EC2FC1FED79650016851F; proxyType = 1; remoteGlobalIDString = DB0000000000000000000007; remoteInfo = DayBuoyWidget; };
+/* End PBXContainerItemProxy section */
+/* Begin PBXTargetDependency section */
+        DB000000000000000000000D = {isa = PBXTargetDependency; target = DB0000000000000000000007; targetProxy = DB000000000000000000000E; };
+/* End PBXTargetDependency section */
+
 /* Begin PBXFileReference section */
+        DB0000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayBuoyWidget.swift; sourceTree = "<group>"; };
+        DB0000000000000000000004 = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = DayBuoyWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+        DB0000000000000000000005 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,6 +48,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+        DB000000000000000000000A = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 		504EC3011FED79650016851F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -44,11 +60,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+        DB0000000000000000000006 = {isa = PBXGroup; children = (DB0000000000000000000002, DB0000000000000000000005, ); path = DayBuoyWidget; sourceTree = "<group>"; };
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
+				DB0000000000000000000006 /* DayBuoyWidget */,
 				504EC3051FED79650016851F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -57,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				504EC3041FED79650016851F /* App.app */,
+				DB0000000000000000000004 /* DayBuoyWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,6 +99,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+        DB0000000000000000000007 = {isa = PBXNativeTarget; buildConfigurationList = DB0000000000000000000008; buildPhases = (DB0000000000000000000009, DB000000000000000000000A, DB000000000000000000000B, ); buildRules = (); dependencies = (); name = DayBuoyWidget; productName = DayBuoyWidget; productReference = DB0000000000000000000004; productType = "com.apple.product-type.app-extension"; };
 		504EC3031FED79650016851F /* App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 504EC3161FED79650016851F /* Build configuration list for PBXNativeTarget "App" */;
@@ -87,10 +107,12 @@
 				504EC3001FED79650016851F /* Sources */,
 				504EC3011FED79650016851F /* Frameworks */,
 				504EC3021FED79650016851F /* Resources */,
+				DB000000000000000000000C /* Embed Widget */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				DB000000000000000000000D,
 			);
 			name = App;
 			packageProductDependencies = (
@@ -133,11 +155,13 @@
 			projectRoot = "";
 			targets = (
 				504EC3031FED79650016851F /* App */,
+				DB0000000000000000000007 /* DayBuoyWidget */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+        DB000000000000000000000B = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
 		504EC3021FED79650016851F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -154,6 +178,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+        DB0000000000000000000009 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (DB0000000000000000000001, ); runOnlyForDeploymentPostprocessing = 0; };
 		504EC3001FED79650016851F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +210,8 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+        DB0000000000000000000010 = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = DayBuoyWidget/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 26.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.jacobcarroll.daybuoy.widget; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SKIP_INSTALL = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1"; }; name = Debug; };
+DB0000000000000000000011 = {isa = XCBuildConfiguration; buildSettings = {APPLICATION_EXTENSION_API_ONLY = YES; CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 1; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = DayBuoyWidget/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 26.0; LD_RUNPATH_SEARCH_PATHS = ("$(inherited)", "@executable_path/Frameworks", "@executable_path/../../Frameworks", ); MARKETING_VERSION = 1.0; PRODUCT_BUNDLE_IDENTIFIER = com.jacobcarroll.daybuoy.widget; PRODUCT_NAME = "$(TARGET_NAME)"; SDKROOT = iphoneos; SKIP_INSTALL = YES; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1"; }; name = Release; };
 		504EC3141FED79650016851F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 958DCC722DB07C7200EA8C5F /* debug.xcconfig */;
@@ -341,6 +368,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+        DB0000000000000000000008 = {isa = XCConfigurationList; buildConfigurations = (DB0000000000000000000010, DB0000000000000000000011, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
 		504EC2FF1FED79650016851F /* Build configuration list for PBXProject "App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

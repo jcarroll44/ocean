@@ -8,7 +8,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = CAPBridgeViewController()
+        window?.rootViewController = DayBuoyViewController()
         window?.makeKeyAndVisible()
 
         SceneDelegateProxy.shared.scene(scene, willConnectTo: session, options: connectionOptions)
@@ -16,6 +16,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         SceneDelegateProxy.shared.scene(scene, openURLContexts: URLContexts)
+        if URLContexts.contains(where: { $0.url.scheme == "daybuoy" && $0.url.host == "now" }),
+           let controller = window?.rootViewController as? DayBuoyViewController {
+            controller.webView?.evaluateJavaScript("window.dispatchEvent(new Event('daybuoy:now'))", completionHandler: nil)
+        }
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
