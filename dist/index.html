@@ -59303,25 +59303,21 @@ async function shareHome(){
 
 // Presentation and copy only. No scene uniforms, camera targets or gestures.
 const textHTML=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function conditionDescription(c){
+ const height=Number.isFinite(c.swell)?c.swell<1?'Under 1 ft':Math.floor(c.swell)===Math.ceil(c.swell)?Math.round(c.swell)+' ft':Math.floor(c.swell)+'–'+Math.ceil(c.swell)+' ft':'Waves unavailable';
+ const water=!Number.isFinite(c.swell)||!Number.isFinite(c.wind)?'Sea outlook':c.swell>=6||c.wind>=25?'Rough water':c.swell>=3||c.wind>=15?'Choppy water':c.wind>=7||c.swell>=1?'Light chop':'Small swell';
+ const sky=c.weatherCode>=95?'Thunderstorms':isStorm(c)?'Showers':!Number.isFinite(c.cloud)?'Cloud cover unavailable':c.cloud>=85?'Overcast':c.cloud>=60?'Mostly cloudy':c.cloud>=25?'Partly cloudy':c.cloud>=10?'Mostly clear':'Clear skies';
+ return {water,height,sky,title:water+', '+height+', '+sky.toLowerCase()};
+}
 function beachAnswer(){
- const c=conditions(),s=sunDay(state.time),uv=forecastUV(state.time),risk=ripRiskAt(state.time)?.risk;
- const answer=(title,detail,action,cta,hazard=false)=>({title,detail,action,cta,hazard});
- if(!realForecast())return answer('Your forecast is taking a break.','Reconnect to update your beach','retry','Try again');
- if(c.weatherCode>=95)return answer('Thunderstorms. Head indoors.',stormWindow(),'air','See the rain window',true);
- if(risk==='High')return answer('High rip risk. Stay ashore.','NWS · South Walton','water','Check water conditions',true);
- if(isStorm(c))return answer('Showers moving through.',stormWindow(),'air','See the rain window');
- if(risk==='Moderate')return answer('Moderate rip risk. Use caution.','NWS · South Walton','water','Check water conditions');
- if(state.time>=s.sunset-90*MIN&&state.time<=s.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return answer('Catch the last light.',Number.isFinite(score)?`Sunset ${Math.round(score)}/10 est. · ${clock(s.sunset)}`:`Sunset ${clock(s.sunset)}`,'sun','See the sunset outlook');}
- if(sunPosition(state.time).altitude<0){const n=nightInfo(),rough=c.wind>=15||c.swell>=3;return answer(rough?'Windy night on the Gulf.':c.cloud>=80?'Clouds over the coast.':'A little time by the water.',rough?`${Math.round(c.wind)} kt wind · ${c.swell.toFixed(1)} ft waves`:n.moon.altitude>0?`Moon ${Math.round(n.fraction*100)}% · ${n.description.toLowerCase()}`:n.rise?`Moonrise ${clock(n.rise)}`:`Sunrise ${clock(n.sunrise)}`,rough?'water':'sun',rough?'See the sea outlook':'See tonight’s sky');}
- if(c.swell>=3||c.wind>=15)return answer('Choppy water. Check the flags.',`${c.swell.toFixed(1)} ft waves · ${Math.round(c.wind)} kt wind`,'water','Check water conditions');
- if(Number.isFinite(uv)&&uv>=3){const burn=burnMinutes();return answer(uv>=6?'Strong sun. Make room for shade.':'Sun’s out. Bring your shade.',Number.isFinite(burn)?`UV ${Math.round(uv)} · burn ${Math.round(burn)} min est.`:`UV ${Math.round(uv)} · use sun protection`,'sun','See your sun outlook');}
- if(c.rainProbability>=50)return answer('Keep a rain plan.',`${Math.round(c.rainProbability)}% rain chance`,'air','See when it clears');
- if(c.cloud>=80)return answer('Soft light. A slower beach day.',Number.isFinite(c.sst)?`Water ${Math.round(cToF(c.sst))}° · check flags`:'Check posted beach flags','water','Explore the water');
- return answer(c.wind<7&&c.swell<2?'Easy breeze. Beach time.':'A sea breeze on the sand.',Number.isFinite(c.sst)?`Water ${Math.round(cToF(c.sst))}° · check flags`:'Check posted beach flags','water','Explore the water');
+ const c=conditions(),d=conditionDescription(c),risk=ripRiskAt(state.time)?.risk;
+ if(!realForecast())return {title:'Forecast unavailable',detail:'No current forecast',action:'retry',cta:'Retry forecast',hazard:false};
+ const detail=[Number.isFinite(c.wind)?Math.round(c.wind)+' kt wind':null,risk?risk+' rip-current risk · NWS':'Rip-current forecast unavailable'].filter(Boolean).join(' · ');
+ return {title:d.title,detail,action:isStorm(c)?'air':'water',cta:isStorm(c)?'Rain forecast':'Water conditions',hazard:c.weatherCode>=95||risk==='High'};
 }
 function sheetPeekAnswer(k){
  const c=conditions(),uv=forecastUV(state.time),value=(v,unit)=>Number.isFinite(v)?`${Math.round(v)}${unit}`:'—';
- return {water:Number.isFinite(c.tide)?`Tide ${ (c.tide*FT).toFixed(1)} ft · mean sea level`:'Tide forecast not available',waves:Number.isFinite(c.swell)?`${c.swell.toFixed(1)} ft · ${value(c.period,' s')} period`:'Wave forecast not available',wind:`${value(c.wind,' kt')} · from ${Number.isFinite(c.windDirection)?compass(c.windDirection):'—'}`,air:`${value(c.rainProbability,'%')} rain chance`,sun:sunPosition(state.time).altitude<0?`Moon ${Math.round(moonPhase(state.time).fraction*100)}% illuminated`:`UV ${value(uv,'')} · ${uv>=3?'bring sun protection':'lower UV'}`}[k]||'';
+ return {water:Number.isFinite(c.tide)?`Tide ${ (c.tide*FT).toFixed(1)} ft · mean sea level`:'Tide forecast not available',waves:Number.isFinite(c.swell)?`${c.swell.toFixed(1)} ft · ${value(c.period,' s')} period`:'Wave forecast not available',wind:`${value(c.wind,' kt')} · from ${Number.isFinite(c.windDirection)?compass(c.windDirection):'—'}`,air:`${value(c.rainProbability,'%')} rain chance`,sun:sunPosition(state.time).altitude<0?`Moon ${Math.round(moonPhase(state.time).fraction*100)}% illuminated`:`UV ${value(uv,'')} · ${uv>=3?'elevated UV':'lower UV'}`}[k]||'';
 }
 function forecastMethod(k){
  const stamp=Number.isFinite(state.data.retrievedAt)?`${weekday(state.data.retrievedAt)} · ${clock(state.data.retrievedAt)}`:'unknown';
@@ -59353,34 +59349,18 @@ function initPresentation(){
 }
 async function retryForecast(){if(state.refreshing)return;state.refreshing=true;state.dirty=true;try{await refresh();}finally{state.refreshing=false;state.dirty=true;}}
 function referenceVerdict(a){
- const c=conditions(),s=sunPosition(state.time),day=sunDay(state.time),risk=ripRiskAt(state.time)?.risk,uv=forecastUV(state.time);
- if(!realForecast())return 'Forecast paused.<br>Try again shortly.';
- if(c.weatherCode>=95)return 'Thunderstorms.<br>Head indoors.';
- if(risk==='High')return 'High rip risk.<br>Stay ashore.';
- if(isStorm(c))return 'Showers moving<br>through.';
- if(risk==='Moderate')return 'Rip currents.<br>Use caution.';
- if(state.time>=day.sunset-90*MIN&&state.time<=day.sunset+20*MIN)return (s.altitude>=0&&s.altitude<=6?'Golden hour.':'Sunset ahead.')+'<br>Stay for sunset.';
- if(s.altitude<0)return c.wind>=15||c.swell>=3?'Windy night.<br>Rough water.':c.cloud>=80?'Cloudy night.<br>Along the coast.':c.swell>=2||c.wind>=12?'Night on the Gulf.<br>Check the flags.':c.temperature>=70?'Warm night.<br>Calm water.':'Quiet night.<br>Calm water.';
- if(c.swell>=3||c.wind>=15)return 'Choppy water.<br>Check the flags.';
- if(uv>=6)return 'Peak sun.<br>Find some shade.';
- if(uv>=3)return 'Sun’s out.<br>Bring your shade.';
- if(c.rainProbability>=50)return 'Rain possible.<br>Have a backup.';
- return c.cloud>=80?'Soft light.<br>A quieter beach.':c.wind<7&&c.swell<2?'Easy breeze.<br>Beach time.':'A sea breeze.<br>Beach time.';
+ if(!realForecast())return 'Forecast<br>unavailable.';
+ const d=conditionDescription(conditions()),water=d.water==='Choppy water'?'Choppy':d.water;
+ return textHTML(water+', '+d.height)+'.<br>'+textHTML(d.sky)+'.';
 }
 function referenceAction(a){
- const c=conditions(),s=sunDay(state.time),uv=forecastUV(state.time);
- if(!realForecast())return{html:'Retry forecast',action:'retry'};
- if(c.weatherCode>=95)return{html:'Head indoors · storms',action:'air'};
- if(ripRiskAt(state.time)?.risk==='High')return{html:'Stay ashore · NWS outlook',action:'water'};
- if(isStorm(c))return{html:'Rain '+textHTML(stormWindow()),action:'air'};
- if(sunPosition(state.time).altitude<0){
-  const start=localDayStart(state.time+24*HOUR),rows=state.data.rows.filter(r=>r.time>=start&&r.time<start+24*HOUR&&sunPosition(r.time).altitude>0),runs=forecastRuns(rows,r=>r.rain<.2&&r.rainProbability<35&&r.weatherCode<95&&r.wind<12&&r.swell<2&&ripRiskAt(r.time)?.risk!=='High').sort((a,b)=>b.length-a.length),best=runs[0];
-  if(best?.length>=2)return{html:'Tomorrow: '+textHTML(timeRange(best[0].time,best.at(-1).time+HOUR)),action:'water',time:best[0].time};
-  return{html:'Tomorrow’s beach outlook',action:'water',time:Math.min(state.data.last,start+9*HOUR)};
- }
- if(state.time>=s.sunset-90*MIN&&state.time<=s.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return{html:'Sunset '+textHTML(clock(s.sunset).replace(':00',''))+(Number.isFinite(score)?`<em>${Math.round(score)}/10 est.</em>`:''),action:'sun'};}
- if(uv>=3){const rows=state.data.rows.filter(r=>r.time>=Math.max(state.time,s.sunrise)&&r.time<s.sunset),best=forecastRuns(rows,r=>r.uv>=1&&r.uv<=3&&r.rain<.2&&r.rainProbability<35).sort((a,b)=>b.length-a.length)[0];if(best?.length>=2)return{html:'Tan window '+textHTML(timeRange(best[0].time,Math.min(best.at(-1).time+HOUR,s.sunset)))+'<em>est.</em>',action:'sun'};}
- return{html:textHTML(a.cta),action:a.action};
+ if(!realForecast())return {html:'Retry forecast',action:'retry'};
+ const c=conditions();
+ if(c.weatherCode>=95)return {html:'Thunderstorm forecast',action:'air'};
+ if(isStorm(c))return {html:'Rain forecast',action:'air'};
+ if(ripRiskAt(state.time)?.risk==='High')return {html:'High rip-current risk · NWS',action:'water'};
+ if(sunPosition(state.time).altitude<0)return {html:'Tonight’s sky',action:'sun'};
+ return {html:textHTML(a.cta),action:a.action};
 }
 function renderPresentation(){
  initPresentation();const app=$('#app'),a=beachAnswer(),c=conditions(),s=sunPosition(state.time),available=realForecast(),loading=!available&&!state.forecastLoaded||!!intro||!state.uiFontsReady;
@@ -59398,8 +59378,11 @@ function renderPresentation(){
  const banner=$('#reference-banner'),stamp=Number.isFinite(state.data.retrievedAt)&&state.data.source!=='sample'?clock(state.data.retrievedAt):null;
  banner.hidden=!offline;banner.innerHTML=referenceIcons.off+`<span>${stamp?'Offline · forecast from '+textHTML(stamp):'Offline · no saved forecast'}</span>`;
  const headline=$('#headline'),detail=$('#story-detail'),temp=$('#hero-temp');
- if(!state.story){headline.innerHTML=referenceVerdict(a);detail.textContent=a.detail;}
- else{const moment=storyMoments[storyIndex];headline.innerHTML=moment?.kind==='golden'?'Golden hour.<br>Stay for sunset.':moment?.kind==='uv'?'Peak sun.<br>Find some shade.':textHTML(moment?.title||a.title);detail.textContent=moment?.detail||a.detail;}
+ headline.innerHTML=referenceVerdict(a);
+ const moment=state.story?storyMoments[storyIndex]:null;
+ const updated=stamp?(localDayStart(state.data.retrievedAt)===localDayStart(Date.now())?'':weekday(state.data.retrievedAt)+' ')+stamp:null;
+ detail.textContent=(moment?.detail||a.detail)+'\n'+(updated?'Forecast updated '+updated:'Forecast update unavailable');
+ detail.style.whiteSpace='pre-line';
  headline.setAttribute('aria-label',headline.innerText.replace(/\s+/g,' '));
  temp.textContent=available&&Number.isFinite(c.temperature)?Math.round(c.temperature)+'°':'—';temp.setAttribute('aria-label',available&&Number.isFinite(c.temperature)?`${Math.round(c.temperature)} degrees Fahrenheit`:'Air temperature not available');
  headline.hidden=loading;temp.parentElement.hidden=loading;detail.hidden=false;
@@ -59458,7 +59441,7 @@ function renderUI(){
  const day=localDayStart(state.time),today=localDayStart(review?reviewNow:Date.now());$('#days').innerHTML=Array.from({length:7},(_,i)=>{const t=today+i*24*HOUR;return`<button data-day="${t}" aria-pressed="${day===t}" ${t>state.data.last?'disabled':''}>${i===0?'Today':weekday(t+12*HOUR)}</button>`;}).join('');
  $('#metrics').innerHTML=metrics().map(([key,name,v])=>`<button class="metric" data-sheet="${key}" aria-label="${name}, ${v}. Open details"><strong>${v.replace(/ (ft|kt)$/,'<em>$1</em>')}</strong><small>${name.toUpperCase()}</small></button>`).join('');
  const action=$('#moment-action'),burn=burnMinutes();action.classList.toggle('storm',storm);
- action.innerHTML=storm?`${icon('storm')}<span class="action-copy">${review?'Storm warning · Head indoors':c.weatherCode>=95?'Thunderstorms · Head indoors':'Rain · View forecast'}</span>`:sunset?`${icon('bell')}<span class="action-copy">Remind me at ${clock((sunDay(state.time).sunset||state.time)-15*MIN)}</span>`:night?`${icon('sun')}<span class="action-copy">See tomorrow's sun</span>`:`${icon('sun')}<span class="action-copy">Tan · ${burn==null?'UV below 1':`burn in ${Math.round(burn)} min`}</span><span class="action-end">Start</span>`;
+ action.innerHTML=storm?`${icon('storm')}<span class="action-copy">${review?'Thunderstorm forecast':c.weatherCode>=95?'Thunderstorm forecast':'Rain · View forecast'}</span>`:sunset?`${icon('bell')}<span class="action-copy">Remind me at ${clock((sunDay(state.time).sunset||state.time)-15*MIN)}</span>`:night?`${icon('sun')}<span class="action-copy">See tomorrow's sun</span>`:`${icon('sun')}<span class="action-copy">Tan · ${burn==null?'UV below 1':`burn in ${Math.round(burn)} min`}</span><span class="action-end">Start</span>`;
  action.dataset.action=storm?'storm':sunset?'remind':night?'tomorrow':'sun';
  if(state.sheet)renderSheet();
  $('#watch-day').innerHTML=state.playing?`Stop · ${clock(state.time)}`:'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5 13 8 4 13.5z" fill="currentColor"/></svg>Watch the day';$('#watch-close').hidden=!state.playing;
@@ -59500,9 +59483,9 @@ function renderSheet(){
   const burn=burnMinutes(),burnText=burn==null?'No burn-time estimate':`Est. burn in <b>${Math.round(burn)} min</b>`;
   const elapsed=state.tanStarted?Math.floor((Date.now()-state.tanStarted)/MIN):0;
   main=`<div class="sun-answer">${burnText}<small>estimate · without sunscreen</small></div>`;
-  footer=`<div class="sun-tiles"><div class="mini-glass"><span>Tan speed</span><b>${uvNow()<3?'Slow':uvNow()<6?'Moderate':'Fast'}</b></div><button class="mini-glass" data-budget><span>Tan budget</span><b>${Math.max(0,(state.prefs.budget??25)-elapsed)} min</b></button><div class="mini-glass"><span>Reapply</span><b>${state.tanStarted?Math.max(0,120-elapsed)+' min':'2 h'}</b></div></div><div class="skin-chips"><button class="mini-glass" data-skin><i class="skin-dot" style="background:${['#f9d5b9','#e7bb91','#c79164','#a46b46','#754b34','#4c3329'][state.prefs.skin-1]}"></i>Skin · ${['Fair','Light','Medium','Olive','Brown','Deep'][state.prefs.skin-1]}</button><button class="mini-glass" data-spf>${icon('sun')}SPF ${state.prefs.spf}</button></div><button class="amber-action tanning-action" data-start-tan>${icon('sun')}<span>${state.tanStarted?'Tanning · '+elapsed+' min · Stop':'Start tanning'}</span></button><p class="estimate-note">Response varies. This estimate does not predict your skin’s response.</p>`;
+  footer=`<div class="sun-tiles"><div class="mini-glass"><span>Tan speed</span><b>${uvNow()<3?'Slow':uvNow()<6?'Moderate':'Fast'}</b></div><button class="mini-glass" data-budget><span>Tan budget</span><b>${Math.max(0,(state.prefs.budget??25)-elapsed)} min</b></button><div class="mini-glass"><span>Session elapsed</span><b>${state.tanStarted?elapsed+' min':'0 min'}</b></div></div><div class="skin-chips"><button class="mini-glass" data-skin><i class="skin-dot" style="background:${['#f9d5b9','#e7bb91','#c79164','#a46b46','#754b34','#4c3329'][state.prefs.skin-1]}"></i>Skin · ${['Fair','Light','Medium','Olive','Brown','Deep'][state.prefs.skin-1]}</button><button class="mini-glass" data-spf>${icon('sun')}SPF ${state.prefs.spf}</button></div><button class="amber-action tanning-action" data-start-tan>${icon('sun')}<span>${state.tanStarted?'Tanning · '+elapsed+' min · Stop':'Start tanning'}</span></button><p class="estimate-note">Response varies. This estimate does not predict your skin’s response.</p>`;
  } else if(k==='water'){
-  const risk=ripRiskAt(state.time)?.risk,verdict=waterVerdict().replace('stay out of the water','stay ashore');
+  const risk=ripRiskAt(state.time)?.risk,verdict=waterVerdict();
   main=`<p class="water-verdict" data-risk="${risk?.toLowerCase()||'unknown'}">${verdict}${risk?` <a href="${SURF_URL}" target="_blank" rel="noopener" aria-label="NWS South Walton rip current forecast">NWS ↗</a>`:''}</p><div class="sheet-readings"><div class="reading"><small>Water temp</small><strong>${Number.isFinite(c.sst)?Math.round(cToF(c.sst))+'°':'—'}</strong></div><button class="reading" data-water-detail="waves" aria-label="Open wave details"><small>Waves ↗</small><strong>${Number.isFinite(c.swell)?c.swell.toFixed(1):'—'}<em>ft</em></strong></button><button class="reading" data-water-detail="wind" aria-label="Open wind details"><small>Wind ↗</small><strong>${Number.isFinite(c.wind)?Math.round(c.wind):'—'}<em>kt</em></strong></button></div>`;
  } else if(k==='waves'){
   main=`<div class="sheet-readings"><div class="reading"><small>Height</small><strong>${Number.isFinite(c.swell)?c.swell.toFixed(1):'—'}<em>ft</em></strong></div><div class="reading"><small>Period</small><strong>${Number.isFinite(c.period)?Math.round(c.period):'—'}<em>s</em></strong></div><div class="reading"><small>From</small><strong>${Number.isFinite(c.direction)?compass(c.direction):'—'}</strong></div></div>`;
@@ -59585,14 +59568,7 @@ function renderOvernight(){
 }
 // Round 2: selected forecast time is the single source for every readout.
 function hourVerdict(){
- const c=conditions(),sun=sunDay(state.time),uv=forecastUV(state.time),burn=burnMinutes();
- if(isStorm(c))return `${c.weatherCode>=95?'Storms':'Rain'} ${stormWindow()} · plan indoors`;
- if(sun.sunset&&state.time>=sun.sunset-90*MIN&&state.time<=sun.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return `${Number.isFinite(score)?'Sunset outlook '+Math.round(score)+'/10':'Sunset '+clock(sun.sunset)} · arrive ${clock(sun.sunset-20*MIN)}`;}
- if(sunPosition(state.time).altitude<0)return `${c.cloud<25?'Clear':c.cloud<65?'Partly cloudy':'Cloudy'} night · Moon ${Math.round(moonPhase(state.time).fraction*100)}%`;
- if(uv!=null&&uv>=3)return `Strong sun · ${Number.isFinite(burn)?'est. burn '+Math.round(burn)+' min':'use sun protection'}`;
- if(c.rainProbability>=50)return `Rain ${Math.round(c.rainProbability)}% · bring a rain plan`;
- if(c.swell>=3||c.wind>=15)return `Choppy water · ${c.swell.toFixed(1)} ft · check flags`;
- return Number.isFinite(c.sst)?`Beach time · water ${Math.round(cToF(c.sst))}° · check flags`:'Beach time · check beach flags';
+ return realForecast()?conditionDescription(conditions()).title:'Forecast unavailable';
 }
 function renderTimeReadout(){
  const c=conditions(),active=!!state.scrubbing||exploreGesture?.kind==='arc'||drag?.type==='sun'||drag?.type==='ribbon';
@@ -59936,15 +59912,15 @@ async function loadRipForecast(){
 try{const cached=JSON.parse(localStorage.getItem('daybuoy.nws-surf')||'null');if(cached?.zone===SURF_ZONE&&Date.now()-cached.issued<30*HOUR&&cached.periods?.every(p=>['Low','Moderate','High'].includes(p.risk)))surfForecast=cached;}catch{}
 function waterVerdict(){
  const c=conditions(),risk=ripRiskAt(state.time)?.risk;
- if(risk==='High')return 'High rip risk · stay out of the water';
- if(c.weatherCode>=95)return 'Thunderstorms · stay out of the water';
- if(risk==='Moderate')return 'Moderate rip risk · use caution';
- if(c.rain>=1)return 'Rain moving through · plan around it';
- if(c.swell>=3||c.wind>=15)return 'Choppy water · check beach flags';
+ if(risk==='High')return 'High rip-current risk · NWS';
+ if(c.weatherCode>=95)return 'Thunderstorm forecast';
+ if(risk==='Moderate')return 'Moderate rip-current risk · NWS';
+ if(c.rain>=1)return 'Rain moving through';
+ if(c.swell>=3||c.wind>=15)return 'Choppy water';
  const d=localDayStart(state.time),rows=state.data.rows.filter(r=>r.time>=d&&r.time<d+24*HOUR&&sunPosition(r.time).altitude>5),calm=rows.filter(r=>ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2&&r.wind<12&&r.rain<.2&&r.rainProbability<35&&r.weatherCode<95);
  let best=[],run=[];for(const r of calm){run=run.length&&r.time-run.at(-1).time<=HOUR*1.1?[...run,r]:[r];if(run.length>best.length)best=run;}
- if(risk==='Low'&&best.length>=2){const a=best[0].time,b=Math.min(best.at(-1).time+HOUR,sunDay(state.time).sunset);return `Calmer water · best ${timeRange(a,b)}`;}
- return risk==='Low'?'Lower rip risk · check beach flags':'Beach conditions · check local flags';
+ if(risk==='Low'&&best.length>=2){const a=best[0].time,b=Math.min(best.at(-1).time+HOUR,sunDay(state.time).sunset);return `Calmer water · ${timeRange(a,b)}`;}
+ return risk==='Low'?'Low rip-current risk · NWS':'Rip-current forecast unavailable';
 }
 function ripRiskRow(){const period=ripRiskAt(state.time);if(!period)return '';return `<a class="rip-row" data-risk="${period.risk.toLowerCase()}" href="${SURF_URL}" target="_blank" rel="noopener"><span>Rip current risk <small>NWS</small></span><strong>${period.risk} ↗</strong></a>`;}
 window.__surf={parseSurfProduct,ripRiskAt,waterVerdict,loadRipForecast,get forecast(){return surfForecast;}};
@@ -59963,12 +59939,12 @@ function buildStory(){
  const at=t=>sampleAt(state.data.rows,t),cloudText=r=>r.cloud>=80?'Overcast':r.cloud>=40?'Cloudy spells':'Open skies';
  add(d.sunrise,'Sunrise',`${cloudText(at(d.sunrise))} · the beach wakes up`,'sunrise');
  const calm=forecastRuns(rows,r=>ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2&&Number.isFinite(r.wind)&&r.wind<12&&r.rain<.2&&r.rainProbability<35&&!isStorm(r)).sort((a,b)=>b.length-a.length)[0];
- if(calm?.length>=2){const first=calm[0],end=Math.min(calm.at(-1).time+HOUR,d.sunset);add(first.time,'Calmest water',`${timeRange(first.time,end)} · Low NWS rip risk · check flags`,'water');}
- else if(rows.length){const r=rows[Math.min(rows.length-1,2)],risk=ripRiskAt(r.time)?.risk;add(r.time,'Water outlook',risk==='High'?'High NWS rip risk · stay out of the water':risk==='Moderate'?'Moderate NWS rip risk · use caution':'Check local beach flags before entering','water');}
+ if(calm?.length>=2){const first=calm[0],end=Math.min(calm.at(-1).time+HOUR,d.sunset);add(first.time,'Calmest water',`${timeRange(first.time,end)} · Low NWS rip-current risk`,'water');}
+ else if(rows.length){const r=rows[Math.min(rows.length-1,2)],risk=ripRiskAt(r.time)?.risk;add(r.time,'Water outlook',risk==='High'?'High NWS rip-current risk':risk==='Moderate'?'Moderate NWS rip-current risk':'Rip-current forecast unavailable','water');}
  const uvRows=rows.filter(r=>Number.isFinite(r.uv));
- if(uvRows.length){const peak=uvRows.reduce((a,b)=>b.uv>a.uv?b:a);if(peak.uv>=3){const burn=uvFor(state.data,peak.time).minutesTo(peak.time,burnThreshold(state.prefs.skin,0));add(peak.time,`Peak UV ${Math.round(peak.uv)}`,Number.isFinite(burn)?`Est. burn ${Math.round(burn)} min · unprotected skin`:'Use sun protection','uv');}}
+ if(uvRows.length){const peak=uvRows.reduce((a,b)=>b.uv>a.uv?b:a);if(peak.uv>=3){const burn=uvFor(state.data,peak.time).minutesTo(peak.time,burnThreshold(state.prefs.skin,0));add(peak.time,`Peak UV ${Math.round(peak.uv)}`,Number.isFinite(burn)?`Est. burn ${Math.round(burn)} min · unprotected skin`:'UV forecast','uv');}}
  const thunderRuns=forecastRuns(rows,r=>r.weatherCode>=95),wet=(thunderRuns.length?thunderRuns:forecastRuns(rows,isStorm)).sort((a,b)=>b.length-a.length)[0];
- if(wet){const thunder=wet.some(r=>r.weatherCode>=95),end=Math.min(wet.at(-1).time+HOUR,d.sunset);add(wet[0].time,thunder?'Thunderstorm window':'Rain window',`${timeRange(wet[0].time,end)} · ${thunder?'head indoors':'plan around the showers'}`,'rain');}
+ if(wet){const thunder=wet.some(r=>r.weatherCode>=95),end=Math.min(wet.at(-1).time+HOUR,d.sunset);add(wet[0].time,thunder?'Thunderstorm window':'Rain window',`${timeRange(wet[0].time,end)} · ${thunder?'thunderstorms':'showers'}`,'rain');}
  const evening=at(d.goldenEveningStart);add(d.goldenEveningStart,'Evening light',evening.cloud>=80?'Overcast · soft silver light':'Golden-hour light on the beach','golden');
  const score=sunsetFor(state.data,state.time).score?.score;add(d.sunset,'Sunset',Number.isFinite(score)?`Outlook ${Math.round(score)}/10 · forecast estimate`:'Last light on your beach','sunset');
  // A minute is one story stop. Hazards take precedence over optional light/UV stops.
@@ -59982,7 +59958,7 @@ function storySummary(day=storyDay??state.time){
  const best=predicate=>forecastRuns(rows,predicate).sort((a,b)=>b.length-a.length)[0];
  const calm=best(r=>dry(r)&&ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2),beach=best(dry),run=calm?.length>=2?calm:beach;
  const score=sunsetFor(state.data,day).score?.score;
- let summary=run?.length>=2?`Best: ${run===calm?'calm water':'dry beach'} ${timeRange(run[0].time,Math.min(run.at(-1).time+HOUR,sun.sunset))}`:rows.some(r=>isStorm(r)||r.rainProbability>=35)?'Showery day · plan around the rain':'Beach outlook · check wind and flags';
+ let summary=run?.length>=2?`Conditions: ${run===calm?'calm water':'dry beach'} ${timeRange(run[0].time,Math.min(run.at(-1).time+HOUR,sun.sunset))}`:rows.some(r=>isStorm(r)||r.rainProbability>=35)?'Showers through the day':'Beach conditions · wind and wave forecast';
  if(Number.isFinite(score))summary+=` · sunset ${Math.round(score)}/10 est.`;
  return summary;
 }

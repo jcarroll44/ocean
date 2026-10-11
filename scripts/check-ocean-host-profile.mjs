@@ -84,7 +84,7 @@ for(const slow of [false,true]){
  if(slow){row.oneSecondFPS[71]=28;row.minOneSecondFPS=28;row.secondsUnder30=1;row.meetsCadenceTarget=false;}
  assert(r.$('stage').src.includes('profile-pass=native-adaptive&profile-seconds=120'));
  pipeResult(r,36,row);assert.equal(r.$('error').textContent,'');r.timeouts.at(-1)();assert.equal(r.$('stage').src,'about:blank');
- assert(r.$('captureCandidate').href.includes('profile-pass=native-pipe-combo&profile-dpr=1.5&profile-aa=fxaa&profile-flare=1'));
+ assert(r.$('captureCandidate').href.includes('profile-pass=native-pipe-combo&profile-dpr=1.5&profile-aa=fxaa&profile-flare=0'));
 }
 for(const alter of [r=>r.adaptiveResolution=null,r=>r.output=[780,1378],r=>r.adaptiveResolution.policy.floor=1,r=>r.adaptiveResolution.changes[0].inFlight=1,r=>r.adaptiveResolution.changes[0].fps=40,r=>r.adaptiveResolution.verifiedFrames=899,r=>r.nativePost={aa:'taa',lensFlare:true},r=>r.oneSecondFPS[5]=28,r=>r.config={...profileConfig('?ocean-profile=1&profile-pass=native-adaptive&profile-seconds=120'),adaptive:false}]){
  const r=runner('adaptive'),row=structuredClone(adaptiveRow);alter(row);pipeResult(r,36,row);assert(r.$('error').textContent);

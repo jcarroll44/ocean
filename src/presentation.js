@@ -1,24 +1,20 @@
 // Presentation and copy only. No scene uniforms, camera targets or gestures.
 const textHTML=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function conditionDescription(c){
+ const height=Number.isFinite(c.swell)?c.swell<1?'Under 1 ft':Math.floor(c.swell)===Math.ceil(c.swell)?Math.round(c.swell)+' ft':Math.floor(c.swell)+'–'+Math.ceil(c.swell)+' ft':'Waves unavailable';
+ const water=!Number.isFinite(c.swell)||!Number.isFinite(c.wind)?'Sea outlook':c.swell>=6||c.wind>=25?'Rough water':c.swell>=3||c.wind>=15?'Choppy water':c.wind>=7||c.swell>=1?'Light chop':'Small swell';
+ const sky=c.weatherCode>=95?'Thunderstorms':isStorm(c)?'Showers':!Number.isFinite(c.cloud)?'Cloud cover unavailable':c.cloud>=85?'Overcast':c.cloud>=60?'Mostly cloudy':c.cloud>=25?'Partly cloudy':c.cloud>=10?'Mostly clear':'Clear skies';
+ return {water,height,sky,title:water+', '+height+', '+sky.toLowerCase()};
+}
 function beachAnswer(){
- const c=conditions(),s=sunDay(state.time),uv=forecastUV(state.time),risk=ripRiskAt(state.time)?.risk;
- const answer=(title,detail,action,cta,hazard=false)=>({title,detail,action,cta,hazard});
- if(!realForecast())return answer('Your forecast is taking a break.','Reconnect to update your beach','retry','Try again');
- if(c.weatherCode>=95)return answer('Thunderstorms. Head indoors.',stormWindow(),'air','See the rain window',true);
- if(risk==='High')return answer('High rip risk. Stay ashore.','NWS · South Walton','water','Check water conditions',true);
- if(isStorm(c))return answer('Showers moving through.',stormWindow(),'air','See the rain window');
- if(risk==='Moderate')return answer('Moderate rip risk. Use caution.','NWS · South Walton','water','Check water conditions');
- if(state.time>=s.sunset-90*MIN&&state.time<=s.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return answer('Catch the last light.',Number.isFinite(score)?`Sunset ${Math.round(score)}/10 est. · ${clock(s.sunset)}`:`Sunset ${clock(s.sunset)}`,'sun','See the sunset outlook');}
- if(sunPosition(state.time).altitude<0){const n=nightInfo(),rough=c.wind>=15||c.swell>=3;return answer(rough?'Windy night on the Gulf.':c.cloud>=80?'Clouds over the coast.':'A little time by the water.',rough?`${Math.round(c.wind)} kt wind · ${c.swell.toFixed(1)} ft waves`:n.moon.altitude>0?`Moon ${Math.round(n.fraction*100)}% · ${n.description.toLowerCase()}`:n.rise?`Moonrise ${clock(n.rise)}`:`Sunrise ${clock(n.sunrise)}`,rough?'water':'sun',rough?'See the sea outlook':'See tonight’s sky');}
- if(c.swell>=3||c.wind>=15)return answer('Choppy water. Check the flags.',`${c.swell.toFixed(1)} ft waves · ${Math.round(c.wind)} kt wind`,'water','Check water conditions');
- if(Number.isFinite(uv)&&uv>=3){const burn=burnMinutes();return answer(uv>=6?'Strong sun. Make room for shade.':'Sun’s out. Bring your shade.',Number.isFinite(burn)?`UV ${Math.round(uv)} · burn ${Math.round(burn)} min est.`:`UV ${Math.round(uv)} · use sun protection`,'sun','See your sun outlook');}
- if(c.rainProbability>=50)return answer('Keep a rain plan.',`${Math.round(c.rainProbability)}% rain chance`,'air','See when it clears');
- if(c.cloud>=80)return answer('Soft light. A slower beach day.',Number.isFinite(c.sst)?`Water ${Math.round(cToF(c.sst))}° · check flags`:'Check posted beach flags','water','Explore the water');
- return answer(c.wind<7&&c.swell<2?'Easy breeze. Beach time.':'A sea breeze on the sand.',Number.isFinite(c.sst)?`Water ${Math.round(cToF(c.sst))}° · check flags`:'Check posted beach flags','water','Explore the water');
+ const c=conditions(),d=conditionDescription(c),risk=ripRiskAt(state.time)?.risk;
+ if(!realForecast())return {title:'Forecast unavailable',detail:'No current forecast',action:'retry',cta:'Retry forecast',hazard:false};
+ const detail=[Number.isFinite(c.wind)?Math.round(c.wind)+' kt wind':null,risk?risk+' rip-current risk · NWS':'Rip-current forecast unavailable'].filter(Boolean).join(' · ');
+ return {title:d.title,detail,action:isStorm(c)?'air':'water',cta:isStorm(c)?'Rain forecast':'Water conditions',hazard:c.weatherCode>=95||risk==='High'};
 }
 function sheetPeekAnswer(k){
  const c=conditions(),uv=forecastUV(state.time),value=(v,unit)=>Number.isFinite(v)?`${Math.round(v)}${unit}`:'—';
- return {water:Number.isFinite(c.tide)?`Tide ${ (c.tide*FT).toFixed(1)} ft · mean sea level`:'Tide forecast not available',waves:Number.isFinite(c.swell)?`${c.swell.toFixed(1)} ft · ${value(c.period,' s')} period`:'Wave forecast not available',wind:`${value(c.wind,' kt')} · from ${Number.isFinite(c.windDirection)?compass(c.windDirection):'—'}`,air:`${value(c.rainProbability,'%')} rain chance`,sun:sunPosition(state.time).altitude<0?`Moon ${Math.round(moonPhase(state.time).fraction*100)}% illuminated`:`UV ${value(uv,'')} · ${uv>=3?'bring sun protection':'lower UV'}`}[k]||'';
+ return {water:Number.isFinite(c.tide)?`Tide ${ (c.tide*FT).toFixed(1)} ft · mean sea level`:'Tide forecast not available',waves:Number.isFinite(c.swell)?`${c.swell.toFixed(1)} ft · ${value(c.period,' s')} period`:'Wave forecast not available',wind:`${value(c.wind,' kt')} · from ${Number.isFinite(c.windDirection)?compass(c.windDirection):'—'}`,air:`${value(c.rainProbability,'%')} rain chance`,sun:sunPosition(state.time).altitude<0?`Moon ${Math.round(moonPhase(state.time).fraction*100)}% illuminated`:`UV ${value(uv,'')} · ${uv>=3?'elevated UV':'lower UV'}`}[k]||'';
 }
 function forecastMethod(k){
  const stamp=Number.isFinite(state.data.retrievedAt)?`${weekday(state.data.retrievedAt)} · ${clock(state.data.retrievedAt)}`:'unknown';
@@ -50,34 +46,18 @@ function initPresentation(){
 }
 async function retryForecast(){if(state.refreshing)return;state.refreshing=true;state.dirty=true;try{await refresh();}finally{state.refreshing=false;state.dirty=true;}}
 function referenceVerdict(a){
- const c=conditions(),s=sunPosition(state.time),day=sunDay(state.time),risk=ripRiskAt(state.time)?.risk,uv=forecastUV(state.time);
- if(!realForecast())return 'Forecast paused.<br>Try again shortly.';
- if(c.weatherCode>=95)return 'Thunderstorms.<br>Head indoors.';
- if(risk==='High')return 'High rip risk.<br>Stay ashore.';
- if(isStorm(c))return 'Showers moving<br>through.';
- if(risk==='Moderate')return 'Rip currents.<br>Use caution.';
- if(state.time>=day.sunset-90*MIN&&state.time<=day.sunset+20*MIN)return (s.altitude>=0&&s.altitude<=6?'Golden hour.':'Sunset ahead.')+'<br>Stay for sunset.';
- if(s.altitude<0)return c.wind>=15||c.swell>=3?'Windy night.<br>Rough water.':c.cloud>=80?'Cloudy night.<br>Along the coast.':c.swell>=2||c.wind>=12?'Night on the Gulf.<br>Check the flags.':c.temperature>=70?'Warm night.<br>Calm water.':'Quiet night.<br>Calm water.';
- if(c.swell>=3||c.wind>=15)return 'Choppy water.<br>Check the flags.';
- if(uv>=6)return 'Peak sun.<br>Find some shade.';
- if(uv>=3)return 'Sun’s out.<br>Bring your shade.';
- if(c.rainProbability>=50)return 'Rain possible.<br>Have a backup.';
- return c.cloud>=80?'Soft light.<br>A quieter beach.':c.wind<7&&c.swell<2?'Easy breeze.<br>Beach time.':'A sea breeze.<br>Beach time.';
+ if(!realForecast())return 'Forecast<br>unavailable.';
+ const d=conditionDescription(conditions()),water=d.water==='Choppy water'?'Choppy':d.water;
+ return textHTML(water+', '+d.height)+'.<br>'+textHTML(d.sky)+'.';
 }
 function referenceAction(a){
- const c=conditions(),s=sunDay(state.time),uv=forecastUV(state.time);
- if(!realForecast())return{html:'Retry forecast',action:'retry'};
- if(c.weatherCode>=95)return{html:'Head indoors · storms',action:'air'};
- if(ripRiskAt(state.time)?.risk==='High')return{html:'Stay ashore · NWS outlook',action:'water'};
- if(isStorm(c))return{html:'Rain '+textHTML(stormWindow()),action:'air'};
- if(sunPosition(state.time).altitude<0){
-  const start=localDayStart(state.time+24*HOUR),rows=state.data.rows.filter(r=>r.time>=start&&r.time<start+24*HOUR&&sunPosition(r.time).altitude>0),runs=forecastRuns(rows,r=>r.rain<.2&&r.rainProbability<35&&r.weatherCode<95&&r.wind<12&&r.swell<2&&ripRiskAt(r.time)?.risk!=='High').sort((a,b)=>b.length-a.length),best=runs[0];
-  if(best?.length>=2)return{html:'Tomorrow: '+textHTML(timeRange(best[0].time,best.at(-1).time+HOUR)),action:'water',time:best[0].time};
-  return{html:'Tomorrow’s beach outlook',action:'water',time:Math.min(state.data.last,start+9*HOUR)};
- }
- if(state.time>=s.sunset-90*MIN&&state.time<=s.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return{html:'Sunset '+textHTML(clock(s.sunset).replace(':00',''))+(Number.isFinite(score)?`<em>${Math.round(score)}/10 est.</em>`:''),action:'sun'};}
- if(uv>=3){const rows=state.data.rows.filter(r=>r.time>=Math.max(state.time,s.sunrise)&&r.time<s.sunset),best=forecastRuns(rows,r=>r.uv>=1&&r.uv<=3&&r.rain<.2&&r.rainProbability<35).sort((a,b)=>b.length-a.length)[0];if(best?.length>=2)return{html:'Tan window '+textHTML(timeRange(best[0].time,Math.min(best.at(-1).time+HOUR,s.sunset)))+'<em>est.</em>',action:'sun'};}
- return{html:textHTML(a.cta),action:a.action};
+ if(!realForecast())return {html:'Retry forecast',action:'retry'};
+ const c=conditions();
+ if(c.weatherCode>=95)return {html:'Thunderstorm forecast',action:'air'};
+ if(isStorm(c))return {html:'Rain forecast',action:'air'};
+ if(ripRiskAt(state.time)?.risk==='High')return {html:'High rip-current risk · NWS',action:'water'};
+ if(sunPosition(state.time).altitude<0)return {html:'Tonight’s sky',action:'sun'};
+ return {html:textHTML(a.cta),action:a.action};
 }
 function renderPresentation(){
  initPresentation();const app=$('#app'),a=beachAnswer(),c=conditions(),s=sunPosition(state.time),available=realForecast(),loading=!available&&!state.forecastLoaded||!!intro||!state.uiFontsReady;
@@ -95,8 +75,11 @@ function renderPresentation(){
  const banner=$('#reference-banner'),stamp=Number.isFinite(state.data.retrievedAt)&&state.data.source!=='sample'?clock(state.data.retrievedAt):null;
  banner.hidden=!offline;banner.innerHTML=referenceIcons.off+`<span>${stamp?'Offline · forecast from '+textHTML(stamp):'Offline · no saved forecast'}</span>`;
  const headline=$('#headline'),detail=$('#story-detail'),temp=$('#hero-temp');
- if(!state.story){headline.innerHTML=referenceVerdict(a);detail.textContent=a.detail;}
- else{const moment=storyMoments[storyIndex];headline.innerHTML=moment?.kind==='golden'?'Golden hour.<br>Stay for sunset.':moment?.kind==='uv'?'Peak sun.<br>Find some shade.':textHTML(moment?.title||a.title);detail.textContent=moment?.detail||a.detail;}
+ headline.innerHTML=referenceVerdict(a);
+ const moment=state.story?storyMoments[storyIndex]:null;
+ const updated=stamp?(localDayStart(state.data.retrievedAt)===localDayStart(Date.now())?'':weekday(state.data.retrievedAt)+' ')+stamp:null;
+ detail.textContent=(moment?.detail||a.detail)+'\n'+(updated?'Forecast updated '+updated:'Forecast update unavailable');
+ detail.style.whiteSpace='pre-line';
  headline.setAttribute('aria-label',headline.innerText.replace(/\s+/g,' '));
  temp.textContent=available&&Number.isFinite(c.temperature)?Math.round(c.temperature)+'°':'—';temp.setAttribute('aria-label',available&&Number.isFinite(c.temperature)?`${Math.round(c.temperature)} degrees Fahrenheit`:'Air temperature not available');
  headline.hidden=loading;temp.parentElement.hidden=loading;detail.hidden=false;

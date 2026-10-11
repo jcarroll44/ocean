@@ -14,6 +14,7 @@ import {PIPE_PASSES,CompletedProfileRun} from './pipeline-profile.js';
 import {AdaptiveResolution,PRODUCTION_SETTINGS} from './adaptive-resolution.js';
 import {installNativeWeather,guardNativeBreakerLip} from './native-weather.js';
 import {overcastConfig} from './overcast-profile-config.js';
+import {installSmallSurf,smallSurfSpan} from './scene-polish.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
@@ -29,6 +30,7 @@ try{
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
  const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
  app.configureNativeWeather=()=>{if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
+ app.configureNativeShore=()=>{if(!app.profileConfig)installSmallSurf(app.shore);};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
   if(regression.lip)guardNativeBreakerLip(app.breakers);
@@ -36,7 +38,7 @@ try{
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
   app.proofFlare=app.post.flare;
   if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
-  if(app.profileConfig?.pass==='native-flare'||app.profileConfig?.flare===false)app.post.flare=null;
+  if(app.profileConfig?.pass==='native-flare'||settings.flare===false)app.post.flare=null;
   await prepare();
  };
  // Native terrain, sky and objects share Tidewater's one scene renderer.
@@ -90,6 +92,7 @@ try{
   app.nativeWeather?.update(p);beach.update(p);overlays.update(p.overlays);
   const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
   if(f&&key!==forecastKey&&app.setForecast(f)){
+   if(!app.profileConfig)app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);
    forecastKey=key;const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
    // Fixed 201-degree / zero-tide diagnostics already match the initial field.
    if(!app.profileConfig&&next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
@@ -116,7 +119,7 @@ try{
  }
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
-  evidence(){return {revision:'2026-10-08-overcast-1',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-11-conditions-shore-sky',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

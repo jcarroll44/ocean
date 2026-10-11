@@ -3,6 +3,7 @@ import {Vector3,Mesh,BoxGeometry,mergeGeometries} from '../vendor/tidewater/src/
 import {FullscreenPass} from '../vendor/tidewater/src/engine/render/FullscreenPass.js';
 import {SCENE_FORMATS,DEPTH_FORMAT} from '../vendor/tidewater/src/engine/render/SceneRenderer.js';
 import {standard} from '../vendor/tidewater/src/materials/Materials.js';
+import {DAYLIGHT_MOON_WGSL} from './scene-polish.js';
 
 export function daylightProofWeight(sunY,cloud,rain){
  const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
@@ -60,15 +61,15 @@ fn beachSkyColour(rd:vec3f)->vec3f {
   let tangent=(rd-moon*md)/max(radius,0.0001);let z=sqrt(max(0.0,1.0-dot(tangent,tangent)));
   let normal=normalize(tangent-moon*z);let lit=max(dot(normal,sun),0.0);
   let edge=smoothstep(1.0,0.93,length(tangent));
-  col=mix(col,vec3f(0.59,0.64,0.72)*(0.025+lit*1.8),edge*smoothstep(-0.02,0.01,moon.y));
+  ${DAYLIGHT_MOON_WGSL}
  }
- for(var j=0;j<3;j++){
+ ${app.nativeWeather?'':`for(var j=0;j<3;j++){
   let layer=2-j;let alpha=beachCloud(rd,f32(layer),beachSky.cloud[layer]);
   let storm=smoothstep(0.4,3.0,beachSky.rain);
   var c=mix(vec3f(0.012,0.024,0.064),mix(vec3f(0.74,0.79,0.80),vec3f(0.08,0.105,0.14),storm),day);
   c=mix(c,sunColour*0.65,warm*facing*0.65)+beachSky.flash*vec3f(0.11,0.14,0.20);
   col=mix(col,c,alpha);
- }
+ }`}
  ${app.nativeWeather?'col=nativeWeatherSky(rd,col);':''}
  return max(col,vec3f(0.0));
 }

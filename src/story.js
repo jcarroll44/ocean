@@ -12,12 +12,12 @@ function buildStory(){
  const at=t=>sampleAt(state.data.rows,t),cloudText=r=>r.cloud>=80?'Overcast':r.cloud>=40?'Cloudy spells':'Open skies';
  add(d.sunrise,'Sunrise',`${cloudText(at(d.sunrise))} · the beach wakes up`,'sunrise');
  const calm=forecastRuns(rows,r=>ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2&&Number.isFinite(r.wind)&&r.wind<12&&r.rain<.2&&r.rainProbability<35&&!isStorm(r)).sort((a,b)=>b.length-a.length)[0];
- if(calm?.length>=2){const first=calm[0],end=Math.min(calm.at(-1).time+HOUR,d.sunset);add(first.time,'Calmest water',`${timeRange(first.time,end)} · Low NWS rip risk · check flags`,'water');}
- else if(rows.length){const r=rows[Math.min(rows.length-1,2)],risk=ripRiskAt(r.time)?.risk;add(r.time,'Water outlook',risk==='High'?'High NWS rip risk · stay out of the water':risk==='Moderate'?'Moderate NWS rip risk · use caution':'Check local beach flags before entering','water');}
+ if(calm?.length>=2){const first=calm[0],end=Math.min(calm.at(-1).time+HOUR,d.sunset);add(first.time,'Calmest water',`${timeRange(first.time,end)} · Low NWS rip-current risk`,'water');}
+ else if(rows.length){const r=rows[Math.min(rows.length-1,2)],risk=ripRiskAt(r.time)?.risk;add(r.time,'Water outlook',risk==='High'?'High NWS rip-current risk':risk==='Moderate'?'Moderate NWS rip-current risk':'Rip-current forecast unavailable','water');}
  const uvRows=rows.filter(r=>Number.isFinite(r.uv));
- if(uvRows.length){const peak=uvRows.reduce((a,b)=>b.uv>a.uv?b:a);if(peak.uv>=3){const burn=uvFor(state.data,peak.time).minutesTo(peak.time,burnThreshold(state.prefs.skin,0));add(peak.time,`Peak UV ${Math.round(peak.uv)}`,Number.isFinite(burn)?`Est. burn ${Math.round(burn)} min · unprotected skin`:'Use sun protection','uv');}}
+ if(uvRows.length){const peak=uvRows.reduce((a,b)=>b.uv>a.uv?b:a);if(peak.uv>=3){const burn=uvFor(state.data,peak.time).minutesTo(peak.time,burnThreshold(state.prefs.skin,0));add(peak.time,`Peak UV ${Math.round(peak.uv)}`,Number.isFinite(burn)?`Est. burn ${Math.round(burn)} min · unprotected skin`:'UV forecast','uv');}}
  const thunderRuns=forecastRuns(rows,r=>r.weatherCode>=95),wet=(thunderRuns.length?thunderRuns:forecastRuns(rows,isStorm)).sort((a,b)=>b.length-a.length)[0];
- if(wet){const thunder=wet.some(r=>r.weatherCode>=95),end=Math.min(wet.at(-1).time+HOUR,d.sunset);add(wet[0].time,thunder?'Thunderstorm window':'Rain window',`${timeRange(wet[0].time,end)} · ${thunder?'head indoors':'plan around the showers'}`,'rain');}
+ if(wet){const thunder=wet.some(r=>r.weatherCode>=95),end=Math.min(wet.at(-1).time+HOUR,d.sunset);add(wet[0].time,thunder?'Thunderstorm window':'Rain window',`${timeRange(wet[0].time,end)} · ${thunder?'thunderstorms':'showers'}`,'rain');}
  const evening=at(d.goldenEveningStart);add(d.goldenEveningStart,'Evening light',evening.cloud>=80?'Overcast · soft silver light':'Golden-hour light on the beach','golden');
  const score=sunsetFor(state.data,state.time).score?.score;add(d.sunset,'Sunset',Number.isFinite(score)?`Outlook ${Math.round(score)}/10 · forecast estimate`:'Last light on your beach','sunset');
  // A minute is one story stop. Hazards take precedence over optional light/UV stops.
@@ -31,7 +31,7 @@ function storySummary(day=storyDay??state.time){
  const best=predicate=>forecastRuns(rows,predicate).sort((a,b)=>b.length-a.length)[0];
  const calm=best(r=>dry(r)&&ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2),beach=best(dry),run=calm?.length>=2?calm:beach;
  const score=sunsetFor(state.data,day).score?.score;
- let summary=run?.length>=2?`Best: ${run===calm?'calm water':'dry beach'} ${timeRange(run[0].time,Math.min(run.at(-1).time+HOUR,sun.sunset))}`:rows.some(r=>isStorm(r)||r.rainProbability>=35)?'Showery day · plan around the rain':'Beach outlook · check wind and flags';
+ let summary=run?.length>=2?`Conditions: ${run===calm?'calm water':'dry beach'} ${timeRange(run[0].time,Math.min(run.at(-1).time+HOUR,sun.sunset))}`:rows.some(r=>isStorm(r)||r.rainProbability>=35)?'Showers through the day':'Beach conditions · wind and wave forecast';
  if(Number.isFinite(score))summary+=` · sunset ${Math.round(score)}/10 est.`;
  return summary;
 }

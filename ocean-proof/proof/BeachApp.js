@@ -87,6 +87,7 @@ export class BeachApp extends App{
   this.surface=new Surface({fft:this.fft,cdlod:this.oceanLOD,foamTexture:this.foamTexture});this.surface.terrain=this.terrainGPU;
   this.seaDetail=new SeaDetail();this.surface.detail=this.seaDetail;
   this.shore=new ShoreWaves(this.terrainGPU);this.surface.shore=this.shore;
+  this.configureNativeShore?.();
   installShaderAblation(this,this.profileConfig,'shore');
   this.caustics=new Caustics(engine,this.fft);if(this.caustics)this.caustics.detail=this.seaDetail;
   this.shoreSim=new ShoreSim(engine,{terrainGPU:this.terrainGPU,shore:this.shore,center:new Vector2(0,20),size:380,res:768});

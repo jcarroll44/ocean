@@ -35,15 +35,15 @@ async function loadRipForecast(){
 try{const cached=JSON.parse(localStorage.getItem('daybuoy.nws-surf')||'null');if(cached?.zone===SURF_ZONE&&Date.now()-cached.issued<30*HOUR&&cached.periods?.every(p=>['Low','Moderate','High'].includes(p.risk)))surfForecast=cached;}catch{}
 function waterVerdict(){
  const c=conditions(),risk=ripRiskAt(state.time)?.risk;
- if(risk==='High')return 'High rip risk · stay out of the water';
- if(c.weatherCode>=95)return 'Thunderstorms · stay out of the water';
- if(risk==='Moderate')return 'Moderate rip risk · use caution';
- if(c.rain>=1)return 'Rain moving through · plan around it';
- if(c.swell>=3||c.wind>=15)return 'Choppy water · check beach flags';
+ if(risk==='High')return 'High rip-current risk · NWS';
+ if(c.weatherCode>=95)return 'Thunderstorm forecast';
+ if(risk==='Moderate')return 'Moderate rip-current risk · NWS';
+ if(c.rain>=1)return 'Rain moving through';
+ if(c.swell>=3||c.wind>=15)return 'Choppy water';
  const d=localDayStart(state.time),rows=state.data.rows.filter(r=>r.time>=d&&r.time<d+24*HOUR&&sunPosition(r.time).altitude>5),calm=rows.filter(r=>ripRiskAt(r.time)?.risk==='Low'&&Number.isFinite(r.swell)&&r.swell<2&&r.wind<12&&r.rain<.2&&r.rainProbability<35&&r.weatherCode<95);
  let best=[],run=[];for(const r of calm){run=run.length&&r.time-run.at(-1).time<=HOUR*1.1?[...run,r]:[r];if(run.length>best.length)best=run;}
- if(risk==='Low'&&best.length>=2){const a=best[0].time,b=Math.min(best.at(-1).time+HOUR,sunDay(state.time).sunset);return `Calmer water · best ${timeRange(a,b)}`;}
- return risk==='Low'?'Lower rip risk · check beach flags':'Beach conditions · check local flags';
+ if(risk==='Low'&&best.length>=2){const a=best[0].time,b=Math.min(best.at(-1).time+HOUR,sunDay(state.time).sunset);return `Calmer water · ${timeRange(a,b)}`;}
+ return risk==='Low'?'Low rip-current risk · NWS':'Rip-current forecast unavailable';
 }
 function ripRiskRow(){const period=ripRiskAt(state.time);if(!period)return '';return `<a class="rip-row" data-risk="${period.risk.toLowerCase()}" href="${SURF_URL}" target="_blank" rel="noopener"><span>Rip current risk <small>NWS</small></span><strong>${period.risk} ↗</strong></a>`;}
 window.__surf={parseSurfProduct,ripRiskAt,waterVerdict,loadRipForecast,get forecast(){return surfForecast;}};

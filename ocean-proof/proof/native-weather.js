@@ -1,4 +1,6 @@
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
+import {Vector3} from '../vendor/tidewater/src/engine/index.js';
+import {cloudThreshold,PARTIAL_CLOUD_WGSL} from './partial-clouds.js';
 const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
 export function overcastState(sunY,cloud,rain=0){
  const cover=Math.max(0,Math.min(1,cloud)),deck=smooth(.7,.98,cover);
@@ -6,8 +8,9 @@ export function overcastState(sunY,cloud,rain=0){
  return {deck,daylight,weight:deck*daylight,radiance:(.018+daylight*.722)*wet,exposure:1+.12*deck*daylight};
 }
 export function installNativeWeather(app,{cheap=false,exposure=true}={}){
- const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74]});
+ const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0]});
  const module=new ShaderModule({name:'nativeOvercast',uniforms,uniformName:'nativeWeather',code:`
+${PARTIAL_CLOUD_WGSL}
 fn nativeCloudDeck(dir:vec3f)->vec3f {
  // Bounded direction coordinates: no horizon division, narrow columns or binary cloud masks.
  ${cheap?'let detail=0.0; let h=1.0-clamp(dir.y,0.0,1.0); let gradient=1.0+0.12*h*h;':`let detail=sin(dir.x*5.0+dir.z*3.0+frame.time*0.003)*sin(dir.z*4.0-dir.y*2.0)*0.018;
@@ -15,7 +18,8 @@ fn nativeCloudDeck(dir:vec3f)->vec3f {
  return vec3f(1.0,1.005,1.01)*nativeWeather.radiance*(gradient+detail);
 }
 fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
- return mix(clear,nativeCloudDeck(dir),nativeWeather.deck);
+ if(nativeWeather.deck>=0.999){return nativeCloudDeck(dir);}
+ return mix(nativePartialCloud(dir,clear),nativeCloudDeck(dir),nativeWeather.deck);
 }`});
  // The same deck must light the sand, stand and reflected ocean, not just the backdrop.
  const sky=app.sky.module;
@@ -33,9 +37,11 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  }
  const baseExposure=app.settings.exposure;
  return {module,uniforms,state:overcastState(0,0),update(packet){
-  const f=packet.forecast||{},cover=Math.max(f.cloud||0,f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0)/100;
-  this.state=overcastState(packet.sun[1],cover,f.rain||0);
+  const f=packet.forecast||{},cover=Math.max(0,Math.min(1,(Number.isFinite(f.cloud)?f.cloud:Math.max(f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0))/100));
+  this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover};
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
+  uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
+  uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,f.rain||0);uniforms.fields.flash.value=packet.lightning||0;
   app.settings.exposure=baseExposure*(exposure?this.state.exposure:1);
  },light(G){
   const {weight,radiance}=this.state;

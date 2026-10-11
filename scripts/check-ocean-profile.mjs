@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {execFileSync} from 'node:child_process';
+import {applyApprovedCopy} from './approved-condition-copy.mjs';
 import {PASSES,profileConfig,ProfileRun,installShaderAblation,installRuntimeAblation,breakersForProfile} from '../ocean-proof/proof/profile.js';
 import {Breakers} from '../ocean-proof/vendor/tidewater/src/ocean/Breakers.js';
 import {WaterSurface} from '../ocean-proof/vendor/tidewater/src/ocean/WaterSurface.js';
@@ -97,8 +98,10 @@ assert.equal(packet.camera.fov,2*Math.atan(.59)*180/Math.PI);assert.equal(packet
 message({status:'profile-result',result:{pass:'foam'}});
 assert.equal(sent.at(-1).d.type,'daybuoy-profile');assert.equal(sent.at(-1).d.result.pass,'foam');assert.equal(sent.at(-1).origin,'https://test');
 // Protect the other workstream byte-for-byte against the supplied checkpoint.
-for(const file of ['src/daybuoy.js','src/home.js','src/presentation.js','src/scene-ui.js','src/sheets.js','src/index.html','src/reference.css','src/reference-host.css','src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js']){
- assert.equal(fs.readFileSync(file,'utf8'),execFileSync('git',['show','dcb23fa253afb0c50225d045d0811cdb805ae0ee:'+file],{encoding:'utf8',maxBuffer:16000000}),file+' changed outside wave scope');
+// Presentation copy is now explicitly condition-first (Oct 11) and covered
+// by check-scene-polish plus the real parsed-DOM reference journey.
+for(const file of ['src/daybuoy.js','src/home.js','src/scene-ui.js','src/sheets.js','src/index.html','src/reference.css','src/reference-host.css','src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js']){
+ assert.equal(fs.readFileSync(file,'utf8'),applyApprovedCopy(file,execFileSync('git',['show','dcb23fa253afb0c50225d045d0811cdb805ae0ee:'+file],{encoding:'utf8',maxBuffer:16000000})),file+' changed outside approved scene/copy scope');
 }
 for(const file of ['src/ocean-layer.js','ocean-proof/proof/profile.js','ocean-proof/proof/profile-page.js','ocean-proof/proof/ocean-only.js'])execFileSync(process.execPath,['--check',file]);
 console.log('PASS: opt-in profiling; real upstream shader-source hooks; isolated runtime switches; elapsed-time/stall statistics; UI/camera byte preservation. CPU/source tests only; iPhone, WGSL pipelines and screenshots unverified.');

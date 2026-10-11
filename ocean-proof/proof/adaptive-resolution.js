@@ -1,6 +1,6 @@
-export const PRODUCTION_SETTINGS=Object.freeze({dpr:1.5,aa:'fxaa',flare:true});
+export const PRODUCTION_SETTINGS=Object.freeze({dpr:1.5,aa:'fxaa',flare:false});
 export const ADAPTIVE_PASS='native-adaptive';
-export const RESOLUTION_POLICY=Object.freeze({initial:1.5,floor:1.25,ceiling:1.6,step:.05,downBelow:32,upAbove:38,windowMs:1000});
+export const RESOLUTION_POLICY=Object.freeze({initial:1.5,floor:1.25,ceiling:1.6,step:.05,downBelow:36,upAbove:38,windowMs:1000});
 const target=(dpr,fps)=>Number(Math.max(RESOLUTION_POLICY.floor,Math.min(RESOLUTION_POLICY.ceiling,
  dpr+(fps<RESOLUTION_POLICY.downBelow?-RESOLUTION_POLICY.step:fps>RESOLUTION_POLICY.upAbove?RESOLUTION_POLICY.step:0))).toFixed(2));
 const bounded=d=>Number.isFinite(d)&&d>=1.25&&d<=1.6&&Math.abs(d*20-Math.round(d*20))<1e-8;

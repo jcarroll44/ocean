@@ -47,14 +47,7 @@ function renderOvernight(){
 }
 // Round 2: selected forecast time is the single source for every readout.
 function hourVerdict(){
- const c=conditions(),sun=sunDay(state.time),uv=forecastUV(state.time),burn=burnMinutes();
- if(isStorm(c))return `${c.weatherCode>=95?'Storms':'Rain'} ${stormWindow()} · plan indoors`;
- if(sun.sunset&&state.time>=sun.sunset-90*MIN&&state.time<=sun.sunset+20*MIN){const score=sunsetFor(state.data,state.time).score?.score;return `${Number.isFinite(score)?'Sunset outlook '+Math.round(score)+'/10':'Sunset '+clock(sun.sunset)} · arrive ${clock(sun.sunset-20*MIN)}`;}
- if(sunPosition(state.time).altitude<0)return `${c.cloud<25?'Clear':c.cloud<65?'Partly cloudy':'Cloudy'} night · Moon ${Math.round(moonPhase(state.time).fraction*100)}%`;
- if(uv!=null&&uv>=3)return `Strong sun · ${Number.isFinite(burn)?'est. burn '+Math.round(burn)+' min':'use sun protection'}`;
- if(c.rainProbability>=50)return `Rain ${Math.round(c.rainProbability)}% · bring a rain plan`;
- if(c.swell>=3||c.wind>=15)return `Choppy water · ${c.swell.toFixed(1)} ft · check flags`;
- return Number.isFinite(c.sst)?`Beach time · water ${Math.round(cToF(c.sst))}° · check flags`:'Beach time · check beach flags';
+ return realForecast()?conditionDescription(conditions()).title:'Forecast unavailable';
 }
 function renderTimeReadout(){
  const c=conditions(),active=!!state.scrubbing||exploreGesture?.kind==='arc'||drag?.type==='sun'||drag?.type==='ribbon';

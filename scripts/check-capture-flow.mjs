@@ -10,7 +10,7 @@ for(const scenario of ['clip','gate','bad-dpr','bad-dimensions','no-adaptive','d
  const native={innerWidth:390,innerHeight:844,__app:{engine:{width:585,height:1266,canvas:{width:585,height:1266}}}};
  const frame={...node(),contentWindow:native},app=node(),win={innerWidth:390,innerHeight:844,document:{getElementById:id=>id==='app'?app:frame},__daybuoy:{engine:{getSceneCanvas:()=>native.__app.engine.canvas}}};get('stage').contentWindow=win;
  const listeners=new Map(),outer={innerWidth:390,innerHeight:844,addEventListener:(k,v)=>listeners.set(k,v),removeEventListener:k=>listeners.delete(k)};
- const evidence={native:{revision:'2026-10-08-overcast-1',post:{aa:'fxaa',flare:true},quality:{dpr:1.5},adaptiveResolution:{currentDpr:1.5}},conditions:{}};
+ const evidence={native:{revision:'2026-10-11-conditions-shore-sky',post:{aa:'fxaa',flare:false},quality:{dpr:1.5},adaptiveResolution:{currentDpr:1.5}},conditions:{}};
  const ctx={document:{getElementById:get,createElement:node,addEventListener(){},removeEventListener(){}},window:outer,addEventListener(){},location:{search:'?run=0'},navigator:{userAgent:scenario==='desktop'?'Macintosh':'iPhone',maxTouchPoints:5,wakeLock:{async request(){return{addEventListener(){},async release(){wakeReleased++;}};}}},isIPhone,screenAwake,pinTestViewport,INTEGRATION_BUILD,performance:{now:()=>ticks+=1000},setInterval(){},URL,URLSearchParams,Date,Blob,
   newRunId:()=> 'mock-run',readLiveEvidence:()=>structuredClone(evidence),liveOcean:()=>({}),jsonFile:r=>({name:'report.json',blob:new Blob([JSON.stringify(r)])}),retryPending:async()=>events.push('retry'),
   measureLiveCadence:async(api,options)=>{

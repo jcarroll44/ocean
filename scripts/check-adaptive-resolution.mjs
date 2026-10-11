@@ -4,10 +4,10 @@ import {AdaptiveResolution,PRODUCTION_SETTINGS} from '../ocean-proof/proof/adapt
 import {profileConfig} from '../ocean-proof/proof/profile.js';
 import {CompletedProfileRun} from '../ocean-proof/proof/pipeline-profile.js';
 const dimensions=d=>[Math.floor(390*d),Math.floor(689*d),Math.floor(390*d),Math.floor(689*d)];
-assert.deepEqual(PRODUCTION_SETTINGS,{dpr:1.5,aa:'fxaa',flare:true});
-// Strict thresholds: neither 32 nor 38 changes resolution. Count frames in a
+assert.deepEqual(PRODUCTION_SETTINGS,{dpr:1.5,aa:'fxaa',flare:false});
+// Strict thresholds: neither 36 nor 38 changes resolution. Count frames in a
 // completion batch individually and exclude a completion on the next boundary.
-for(const [fps,expected] of [[28,1.45],[31,1.45],[32,1.5],[36,1.5],[38,1.5],[39,1.55]]){
+for(const [fps,expected] of [[28,1.45],[31,1.45],[32,1.45],[35,1.45],[36,1.5],[38,1.5],[39,1.55]]){
  const a=new AdaptiveResolution();a.observe(0,fps);
  a.observe(1000,3);a.prepare(1000,0,dimensions);
  assert.equal(a.dpr,expected);assert.equal(a.frames,3);
@@ -29,7 +29,7 @@ a.resetWindow();a.prepare(100000,0,resize);assert.equal(a.pending,null);assert.e
 // injected resize/drain-sized pause remains visible in the strict gate even
 // though the mean is comfortably above 30. Controller changes cannot reset it.
 const config=profileConfig('?ocean-profile=1&profile-pass=native-adaptive&profile-seconds=120');
-assert.equal(config.adaptive,true);assert.equal(config.dpr,1.5);assert.equal(config.aa,'fxaa');assert.equal(config.flare,true);
+assert.equal(config.adaptive,true);assert.equal(config.dpr,1.5);assert.equal(config.aa,'fxaa');assert.equal(config.flare,false);
 const run=new CompletedProfileRun(config),adaptive=new AdaptiveResolution();let result;
 for(let ms=0;ms<=136000;ms+=25){
  adaptive.prepare(ms,0,dimensions);
@@ -45,4 +45,4 @@ assert(source.includes('adaptive.prepare(performance.now(),gate.inFlight'));
 assert(source.includes('adaptive.verifyFrame(innerWidth,innerHeight'));
 assert(source.includes('a.projectionMatrix.elements[9]=c.shearY'));
 assert(source.includes('clock.sample(performance.now())'));
-console.log('PASS: production settings, exact 32/38 thresholds, idle-only resizing, zero-completion seconds, bounded 1.25–1.6 steps, unchanged fixed cases/capture and strict gate retaining stalls. Synthetic accounting only; no iPhone FPS or pixels.');
+console.log('PASS: production settings, exact 36/38 thresholds, idle-only resizing, zero-completion seconds, bounded 1.25–1.6 steps, unchanged fixed cases/capture and strict gate retaining stalls. Synthetic accounting only; no iPhone FPS or pixels.');

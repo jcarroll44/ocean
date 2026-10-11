@@ -17,7 +17,7 @@
       "scope": "CPU / source checks; not rendered"
     },
     {
-      "check": "Camera, gestures, astronomy, weather and story source hashes preserved",
+      "check": "Camera, gestures, astronomy, weather and story behavior preserved; approved condition-copy exception only",
       "result": "PASS",
       "scope": "CPU / source checks; not rendered"
     },

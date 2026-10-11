@@ -38,6 +38,7 @@ execFileSync(process.execPath,['scripts/check-live-ocean.mjs'],{stdio:'inherit'}
 execFileSync(process.execPath,['scripts/check-capture-flow.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-results-upload.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-scene-polish.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-overcast-runner.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-diagnostic-device.mjs'],{stdio:'inherit'});
