@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "share copies only a submitted drawable; no resize",
+    "ten fixtures × five sheets",
+    "numbers forwarded with native units",
+    "missing readings unavailable, no zero tide",
+    "UV chart and readout share one forecast",
+    "credits/privacy routes",
+    "synthetic fixture disclosure"
+  ],
+  "rendered": false,
+  "phoneTested": false
+}

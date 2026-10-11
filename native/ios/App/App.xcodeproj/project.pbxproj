@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+        DB0000000000000000000020 = {isa = PBXBuildFile; fileRef = DB0000000000000000000021; };
         DB0000000000000000000001 = {isa = PBXBuildFile; fileRef = DB0000000000000000000002; };
         DB0000000000000000000003 = {isa = PBXBuildFile; fileRef = DB0000000000000000000004; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
@@ -31,6 +32,7 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXFileReference section */
+        DB0000000000000000000021 = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
         DB0000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayBuoyWidget.swift; sourceTree = "<group>"; };
         DB0000000000000000000004 = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; path = DayBuoyWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
         DB0000000000000000000005 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				504EC30E1FED79650016851F /* Assets.xcassets */,
 				504EC3101FED79650016851F /* LaunchScreen.storyboard */,
 				504EC3131FED79650016851F /* Info.plist */,
+                DB0000000000000000000021,
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
 			);
@@ -167,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */,
+                DB0000000000000000000020,
 				50B271D11FEDC1A000F3C39B /* public in Resources */,
 				504EC30F1FED79650016851F /* Assets.xcassets in Resources */,
 				50379B232058CBB4000EE86E /* capacitor.config.json in Resources */,

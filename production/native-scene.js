@@ -9,6 +9,7 @@ import {AdaptiveResolution,PRODUCTION_SETTINGS} from '../ocean-proof/proof/adapt
 import {installNativeWeather,guardNativeBreakerLip} from '../ocean-proof/proof/native-weather.js';
 import {installSmallSurf,smallSurfSpan} from '../ocean-proof/proof/scene-polish.js';
 import {ShoreUpload} from '../ocean-proof/proof/shore-upload.js';
+import {installWeatherSurfaces} from '../ocean-proof/proof/weather-surfaces.js';
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,failed=false,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,shoreUpload;
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});}
@@ -21,7 +22,7 @@ try{
  const initial=parent.__daybuoy;if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
-  guardNativeBreakerLip(app.breakers);beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);
+  guardNativeBreakerLip(app.breakers);beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};app.post.aaMode='fxaa';app.post.flare=null;
   if(initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();app.nativeWeather.update(packet);beach.update(packet);}
@@ -59,9 +60,9 @@ try{
   packet=p;const c=p.camera,a=app.camera;
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
-  app.nativeWeather.update(p);beach.update(p);overlays.update(p.overlays);
-  const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
-  if(f&&key!==forecastKey&&app.setForecast(f)){
+  app.nativeWeather.update(p);app.weatherSurfaces.update();beach.update(p);overlays.update(p.overlays);
+  const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2)]):'';
+  if(f&&key!==forecastKey&&app.setForecast({...f,tide:seaLevel})){
    app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();forecastKey=key;
    const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
    if(next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}

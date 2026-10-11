@@ -1,7 +1,7 @@
-# Public DayBuoy release
+# DayBuoy protected production beta
 
-Public project: `appgprj_6acbce20c2508191bd5f0bb8ef426c08`.
-Public origin: <https://daybuoy.jacobcarroll51.chatgpt.site>.
+Production project: `appgprj_6acbce20c2508191bd5f0bb8ef426c08`, owner-private until explicit launch approval.
+Production origin: <https://daybuoy.jacobcarroll51.chatgpt.site>.
 Private development project: `appgprj_6ac49343ea048191b93c8d1135390e39`. Its owner-only audience, diagnostic routes, evidence Worker and runtime secret are unchanged.
 
 Only `production/dist/` is published through the separate public Sites checkout. Never deploy the repository-root `dist/` or root hosting manifest to that public project: those are the private development build. Never clone its runtime environment variables. The public project has no Worker/API endpoint or token. Preserve the exact public project ID in its own `.openai/hosting.json`.
@@ -29,12 +29,18 @@ Checks cover the seven registered interactions, preserved camera/UI sources, mar
 
 ## Deployment and rollback
 
-Copy **only** the verified `production/dist` contents into the public checkout's `dist/`, preserving its own hosting manifest. Use the Sites workflow to push that exact public source, package the static artifact, save the pushed commit as a version and publish it. Set only this new project's audience to public, as explicitly approved. Keep the private project's audience untouched.
+Copy **only** the verified `production/dist` contents into the production checkout's `dist/`, preserving its own hosting manifest. Use the Sites workflow to push that exact source, package the static artifact, save the pushed commit as a version and deploy privately. Preserve both owner-private audiences until Jacob explicitly says launch. Protection uses platform sign-in; a separate shared-password mode is unavailable.
 
 Future rollback: redeploy the prior saved public version. Do not reset main/proof or overwrite the private testing deployment. The frozen GitHub branch `baseline/iphone-gate-2026-10-11` points at `0f6ff5b83dad580a9ea6c2272bb79aa67d556ce4`.
 
-## Hosted iPhone beta caveat
+## Bundled iPhone beta
 
-Capacitor's `server.url` is documented for live reload, not production. The wrapper implements the explicitly requested hosted architecture with HTTPS, app-bound navigation, inspection off and local error/legal pages. It remains a beta pending Mac/device testing and Apple's minimum-functionality/remote-code review. App Store approval is not guaranteed. Native permission/plugin changes require a new reviewed binary; hosted updates must not be used to evade review.
+The app bundles the minified web build; Capacitor `server.url` is absent. Native sharing, scrub haptics, offline/legal pages and a current-conditions WidgetKit extension are included. Capgo encrypted updates and Sentry crash/feed reporting remain off until configured in the user's accounts. Follow `native/TESTFLIGHT.md`. The unsigned macOS workflow can establish compilation, not signing, service delivery or device acceptance. Native permission/plugin/widget changes require a new binary. Compatible OTA changes must remain within the reviewed functionality.
+
+## Layered weather evidence
+
+The October 11 pass adds data-driven low/mid/high clouds and shadows, humidity/visibility fog, rain/dimples/wet sand, radiation lighting, gust spray, heat shimmer and 21 offshore samples at 5/20/40 miles. Offshore storm movement uses wind-advection interpolation between exact hourly forecast knots. Shapes, layer heights and sub-hour placement are labelled estimates, not radar or exact arrival predictions. Missing rain remains unavailable; missing tide holds the last sea level with disclosure. Existing astronomical sun/moon calculations are unchanged.
+
+`weather-fixtures.html?gate=1` on the private preview is iPhone-only. It tests synthetic night storm for 120 seconds with production DPR/FXAA/pipeline settings, preserving every slow bin, then captures all ten fixture screenshots and a clip and uploads them to the existing results branch. No weather phone pass or rendered gallery is claimed before those files exist. Linux validation covers shader semantics, data/unit/missingness behavior, product DOM/interaction logic, upload/gate logic and minified/native packaging. Dawn null cannot execute the complete ocean pipeline because of texture/storage limits; it is not pixel or performance evidence.
 
 Review forecast-provider commercial licensing/capacity before monetization or a large launch. The current app uses existing public forecast endpoints; this deployment does not purchase commercial API service or guarantee provider availability. The published privacy page describes current behavior, not a substitute for the operator's own policy review.

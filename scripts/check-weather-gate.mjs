@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
+import {WEATHER_FIXTURES,HEAVIEST_FIXTURE,fixtureData} from '../ocean-proof/proof/weather-fixtures.js';
+import {INTEGRATION_BUILD} from '../ocean-proof/proof/integration-build.js';
+import {isIPhone} from '../ocean-proof/proof/diagnostic-device.js';
+const code=fs.readFileSync('ocean-proof/proof/weather-fixture-page.js','utf8').replace(/^import .*;\n/gm,'');
+for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture']){
+ const elements=new Map(),events=[];let tick=0,measured=false,submitted;
+ const node=()=>({style:{},append(){},hidden:false,textContent:'',disabled:false,value:'',src:''});const get=id=>elements.get(id)||elements.set(id,node()).get(id);
+ const state={forecastLoaded:true},app={state,engine:{getSceneCanvas:()=>({})},conditions:()=>state.data.rows[0]};
+ let dpr=1.5;const native={ready:true,evidence:()=>({revision:INTEGRATION_BUILD.revision,weather:{offshoreSamples:21},quality:{dpr},post:{aa:'fxaa',flare:false},adaptiveResolution:{},pipeline:{maxFramesInFlight:2}})};
+ const win={__daybuoy:app,__daybuoyFixture:{apply(data){Object.assign(state,{fixture:true,fixtureId:data.id,data,time:data.time,live:false});}}};get('stage').contentWindow=win;
+ const c={WEATHER_FIXTURES,HEAVIEST_FIXTURE,fixtureData,INTEGRATION_BUILD,isIPhone,document:{hidden:false,getElementById:get,createElement:node},window:{},location:{search:'?gate=1'},navigator:{userAgent:scenario==='desktop'?'Macintosh':'iPhone',maxTouchPoints:5},performance:{now:()=>tick+=100},URL,URLSearchParams,Date,Blob,setTimeout:f=>{queueMicrotask(f);return 1;},addEventListener(){},
+  liveOcean:()=>native,pinTestViewport:()=>({size:[390,844],bindScene(){},verify(w,v){return[v*390,v*844];},dispose(){}}),screenAwake:()=>({start:async()=>events.push('awake'),stop:async()=>events.push('released')}),retryPending:async()=>events.push('retry'),
+  newRunId:()=> 'test',jsonFile:r=>({name:'report.json',blob:new Blob([JSON.stringify(r)])}),
+  measureLiveCadence:async(api,options)=>{assert.equal(options.seconds,120);assert.equal(options.warmup,15);assert.equal(state.fixtureId,HEAVIEST_FIXTURE);if(scenario==='bad-dpr')dpr=1;if(scenario==='wrong-fixture')state.fixtureId='clear';options.validate();measured=true;events.push('timed');return{fps:scenario==='fail'?29:40,minOneSecondFPS:scenario==='fail'?0:39,oneSecondFPS:[scenario==='fail'?0:39],meetsCadenceTarget:scenario!=='fail'};},
+  recordLiveCanvas:async(canvas,{validate})=>{assert(measured);validate();events.push('clip');return{blob:new Blob(['test stub, no pixels']),extension:'mp4'};},
+  captureScreenshot:async()=>{assert(measured);events.push(state.fixtureId);return new Blob(['test stub, no pixels']);},
+  uploadEvidence:async bundle=>{assert.equal(get('stage').src,'about:blank');submitted={...bundle,report:JSON.parse(await bundle.files[0].blob.text())};events.push('upload');}
+ };
+ vm.createContext(c);await vm.runInContext('(async()=>{'+code+'})()',c);
+ if(scenario==='desktop'){assert.equal(get('stage').src,'');assert.equal(submitted,undefined);continue;}
+ assert(submitted);assert.equal(submitted.kind,'weather');assert.equal(events.at(-1),'released');
+ if(['bad-dpr','wrong-fixture'].includes(scenario)){assert(submitted.report.error);assert.equal(submitted.files.length,1);assert(!events.includes('clip'));}
+ else{assert.equal(submitted.report.gallery.length,10);assert.equal(submitted.files.length,12);assert.equal(submitted.report.cadence.meetsCadenceTarget,scenario==='pass');assert(events.indexOf('timed')<events.indexOf('clip'));assert(events.indexOf('clip')<events.indexOf('clear'));}
+}
+console.log('PASS: actual fixture runner rejects non-iPhone before scene load, fixes heaviest input, rejects changed fixture/DPR, retains failing result, measures before ten captures/clip, uploads and releases wake lock. Mock device only.');

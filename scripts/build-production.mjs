@@ -38,6 +38,7 @@ const shore=await build({...opts,entryPoints:['ocean-proof/proof/shore-worker.js
 for(const p of Object.keys(scene.metafile.inputs))assert(!/\/(?:profile|native-capture|hitch-trace|results-upload|grid128|DebugViews|Profiler|Game|Input)\b/.test(p),'Diagnostic dependency shipped: '+p);
 let html=read('dist/index.html');
 html=replace(html,read('src/native-layer.js'),read('production/native-layer.js'));
+html=replace(html,read('src/fixture-bridge.js'),'');
 html=replace(html,read('src/ocean-layer.js'),'');
 html=html.replace(/<script>([\s\S]*?)<\/script>/g,(_,s)=>{
  s=s.replace("const q=new URLSearchParams(location.search),review=q.get('review')==='1';","const q=new URLSearchParams([...new URLSearchParams(location.search)].filter(([k])=>['hour','t','sheet'].includes(k))),review=false;");
@@ -72,6 +73,7 @@ const ofl=read('src/NOTICE.txt');
 const licenses=[['Tidewater',mit],['Three.js r170',mit.replace('Copyright (c) 2026 DRG Software Solutions LLC','Copyright 2010-2024 Three.js Authors')],['Capacitor (iPhone wrapper)',read('native/node_modules/@capacitor/core/LICENSE')],['Poppins',ofl.replace('Bundled Nunito font license','Bundled Poppins font license').replace('Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)','Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)')],['Nunito (fallback)',ofl]];
 const escaped=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
 licenses.push(['Capgo updater (native app)',read('native/node_modules/@capgo/capacitor-updater/LICENSE')],['Sentry Capacitor (native app)',read('native/node_modules/@sentry/capacitor/LICENSE')]);
+for(const name of ['share','filesystem'])licenses.push(['Capacitor '+name+' (native app)',read('native/node_modules/@capacitor/'+name+'/LICENSE')]);
 const credits=read('production/credits.html').replace('<!-- LICENSES -->',licenses.map(([title,text])=>'<h2>'+title+'</h2><pre>'+escaped(text)+'</pre>').join(''));
 for(const file of ['privacy.html','credits.html']){const content=file==='credits.html'?credits:read('production/'+file);write(out+'/'+file,content);write('native/www/'+file,content);}
 write(out+'/404.html','<!doctype html><title>DayBuoy · Not found</title><p>This page is not available.</p><a href="/">Open DayBuoy</a>');

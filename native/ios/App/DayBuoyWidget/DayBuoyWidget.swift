@@ -12,6 +12,7 @@ private struct Conditions: Codable {
     let code: Double
     var description: String {
         if code >= 95 { return "Thunderstorms" }
+        if code == 45 || code == 48 { return "Fog" }
         if code >= 51 { return "Showers" }
         if clouds >= 85 { return "Overcast" }
         if clouds >= 60 { return "Mostly cloudy" }
@@ -23,15 +24,17 @@ private struct Conditions: Codable {
 private struct Weather: Decodable {
     struct Hourly: Decodable { let time: [Double]; let temperature_2m: [Double?]; let wind_speed_10m: [Double?]; let cloud_cover: [Double?]; let weather_code: [Double?] }
     let hourly: Hourly
+    let hourly_units: [String: String]
 }
 private struct Marine: Decodable {
     struct Hourly: Decodable { let time: [Double]; let wave_height: [Double?] }
     let hourly: Hourly
+    let hourly_units: [String: String]
 }
 private enum ForecastStore {
     static var cacheURL: URL { FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask)[0].appendingPathComponent("daybuoy-widget.json") }
     static func cached() -> Conditions? {
-        guard let data = try? Data(contentsOf: cacheURL), let value = try? JSONDecoder().decode(Conditions.self, from: data), Date().timeIntervalSince(value.fetchedAt) < 86400 else { return nil }
+        guard let data = try? Data(contentsOf: cacheURL), let value = try? JSONDecoder().decode(Conditions.self, from: data), (-300..<86400).contains(Date().timeIntervalSince(value.fetchedAt)) else { return nil }
         return value
     }
     static func request<T: Decodable>(_ url: String, as type: T.Type) async throws -> T {
@@ -46,15 +49,25 @@ private enum ForecastStore {
         async let marine = request("https://marine-api.open-meteo.com/v1/marine?latitude=30.24&longitude=-86.0&hourly=wave_height&cell_selection=sea&timeformat=unixtime&forecast_days=2", as: Marine.self)
         let (w, m) = try await (weather, marine)
         let now = Date()
-        guard let i = w.hourly.time.lastIndex(where: { $0 <= now.timeIntervalSince1970 }),
-              now.timeIntervalSince1970 - w.hourly.time[i] < 3600,
-              let j = m.hourly.time.firstIndex(of: w.hourly.time[i]),
-              i < w.hourly.temperature_2m.count, i < w.hourly.wind_speed_10m.count,
-              i < w.hourly.cloud_cover.count, i < w.hourly.weather_code.count, j < m.hourly.wave_height.count,
-              let t = w.hourly.temperature_2m[i], let wind = w.hourly.wind_speed_10m[i],
-              let clouds = w.hourly.cloud_cover[i], let code = w.hourly.weather_code[i], let waves = m.hourly.wave_height[j],
+        guard w.hourly_units["time"] == "unixtime", w.hourly_units["temperature_2m"] == "°F",
+              w.hourly_units["wind_speed_10m"] == "kn", w.hourly_units["cloud_cover"] == "%",
+              m.hourly_units["time"] == "unixtime", m.hourly_units["wave_height"] == "m" else { throw URLError(.cannotParseResponse) }
+        func sample(_ times: [Double], _ values: [Double?], categorical: Bool = false) -> Double? {
+            let time = now.timeIntervalSince1970
+            guard let i = times.lastIndex(where: { $0 <= time }), i + 1 < times.count,
+                  i + 1 < values.count, times[i + 1] > times[i], times[i + 1] - times[i] <= 3600,
+                  let a = values[i], let b = values[i + 1], a.isFinite, b.isFinite else { return nil }
+            let f = (time - times[i]) / (times[i + 1] - times[i])
+            guard (0...1).contains(f) else { return nil }
+            return categorical ? (f < 0.5 ? a : b) : a + (b - a) * f
+        }
+        guard let t = sample(w.hourly.time, w.hourly.temperature_2m),
+              let wind = sample(w.hourly.time, w.hourly.wind_speed_10m),
+              let clouds = sample(w.hourly.time, w.hourly.cloud_cover),
+              let code = sample(w.hourly.time, w.hourly.weather_code, categorical: true),
+              let waves = sample(m.hourly.time, m.hourly.wave_height),
               [t, wind, clouds, code, waves].allSatisfy({ $0.isFinite }), wind >= 0, waves >= 0 else { throw URLError(.cannotParseResponse) }
-        let value = Conditions(forecastAt: Date(timeIntervalSince1970: w.hourly.time[i]), fetchedAt: now, temperature: t, wind: wind, waves: waves * 3.280839895, clouds: clouds, code: code)
+        let value = Conditions(forecastAt: now, fetchedAt: now, temperature: t, wind: wind, waves: waves * 3.280839895, clouds: clouds, code: code)
         if let data = try? JSONEncoder().encode(value) { try? data.write(to: cacheURL, options: .atomic) }
         return value
     }

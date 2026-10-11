@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-11T20:04:20.091Z",
+  "elapsedMs": 4716,
+  "source": "Open-Meteo",
+  "requestedLocations": 22,
+  "returnedLocations": 22,
+  "localGrid": {
+    "lat": 30.26438,
+    "lon": -86.00293
+  },
+  "currentHour": {
+    "time": 1791748800000,
+    "cloud": 0,
+    "cloudLow": 0,
+    "cloudMid": 0,
+    "cloudHigh": 0,
+    "rain": 0,
+    "weatherCode": 0,
+    "visibility": 34600,
+    "humidity": 56,
+    "temperature": 80.2,
+    "wind": 10.2,
+    "windDirection": 286,
+    "gust": 14.8,
+    "cape": 0,
+    "lightningPotential": null,
+    "radiation": 606.3,
+    "directRadiation": 504.1,
+    "lowWind": 22.9,
+    "lowDirection": 333,
+    "midWind": 24,
+    "midDirection": 279,
+    "highWind": 52.4,
+    "highDirection": 227
+  },
+  "offshoreNonNull": 21,
+  "note": "Server fetch and unit parsing only; not iPhone evidence."
+}

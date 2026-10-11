@@ -121,8 +121,10 @@
     "ocean-proof/proof/pipeline.js",
     "ocean-proof/proof/adaptive-resolution.js",
     "ocean-proof/proof/partial-clouds.js",
+    "ocean-proof/proof/layered-weather.js",
     "ocean-proof/proof/native-weather.js",
     "ocean-proof/proof/shore-upload.js",
+    "ocean-proof/proof/weather-surfaces.js",
     "production/native-scene.js"
   ],
   "workerInputs": [

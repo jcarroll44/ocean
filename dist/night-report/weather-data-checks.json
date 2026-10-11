@@ -1,0 +1,13 @@
+{
+  "checks": [
+    "21 samples at 5/20/40 miles",
+    "22-location request and validated units",
+    "bounded time interpolation, no extrapolation or borrowed nulls",
+    "circular wind interpolation",
+    "potential requires forecast support",
+    "24-hour cache expiry",
+    "ten labelled synthetic fixtures"
+  ],
+  "phoneFPS": null,
+  "renderedScreenshots": null
+}

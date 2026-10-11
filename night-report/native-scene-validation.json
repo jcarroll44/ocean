@@ -1,5 +1,6 @@
 {
   "backend": "Dawn null (no pixels)",
+  "cheapOvercast": false,
   "nativeSkyCelestialStandAndOverlayPipelines": "PASS",
   "guardedNativeLipPipeline": "PASS",
   "sharedEnvironmentAndReflectionSkyInput": "PASS",

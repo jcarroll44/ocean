@@ -22,7 +22,7 @@ if(engine?.nativeScene){
  $('#app').prepend(host);badge.textContent='Loading native beach…';
  let ready=false,failed=false,first=true;
  const send=d=>{if(profiling)parent.postMessage({...d,type:'daybuoy-profile'},location.origin);};
- const fallback=reason=>{if(failed)return;failed=true;ready=false;host.remove();canvas.style.opacity='1';proof.backend='WebGL fallback';proof.error=reason;badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;engine.activateFallback();send({status:'failed',reason});};
+ const fallback=reason=>{if(failed)return;failed=true;ready=false;host.remove();canvas.style.opacity='1';proof.backend='WebGL fallback';proof.error=reason;badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;releaseReport('renderer','unavailable');engine.activateFallback();send({status:'failed',reason});};
  const timeout=setTimeout(()=>{if(!ready)fallback('Native beach initialization timed out');},180000);
  if(profiling){
   // Wrap the existing callback only in diagnostics; original UI/camera source
@@ -54,7 +54,7 @@ if(engine?.nativeScene){
    uniforms.uSun.value.set(-.33561098722843147,.8086223263512117,-.48321340893844417);
   }
   a.getWorldDirection(direction);const c=conditions();
-  const forecast=profiling?{swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0,rain:0}:realForecast()?Object.fromEntries(['swell','period','direction','wind','windDirection','tide','cloud','rain','cloudLow','cloudMid','cloudHigh'].map(k=>[k,c[k]])):null;
+  const forecast=profiling?{swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0,rain:0}:realForecast()?weatherScenePacket(c):null;
   if(!forecast){badge.hidden=false;badge.textContent='Waiting for marine forecast';return;}
   try{
    native.draw({camera:{position:a.position.toArray(),direction:direction.toArray(),fov:a.fov,aspect:a.aspect,near:a.near,far:a.far,shearX:a.projectionMatrix.elements[8],shearY:a.projectionMatrix.elements[9]},sun:uniforms.uSun.value.toArray(),moon:uniforms.uMoon.value.toArray(),moonInfo:uniforms.uMoonInfo.value.toArray(),moonlight:uniforms.uMoonInfo.value.z,afternoon:uniforms.uAfternoon.value,lightning:uniforms.uLightning.value,overlays:[...uvArcGlow,...rainRings.filter(r=>r.visible)],forecast});

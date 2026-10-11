@@ -16,6 +16,7 @@ import {overcastConfig} from './overcast-profile-config.js';
 import {installSmallSurf,smallSurfSpan} from './scene-polish.js';
 import {ShoreUpload} from './shore-upload.js';
 import {installHitchTrace} from './hitch-trace.js';
+import {installWeatherSurfaces} from './weather-surfaces.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
@@ -30,12 +31,12 @@ try{
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
  const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
- app.configureNativeWeather=()=>{if(parent.parent?.location?.pathname?.endsWith('/ocean-live.html'))trace=installHitchTrace(GPU);if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
+ app.configureNativeWeather=()=>{if(['/ocean-live.html','/weather-fixtures.html'].some(p=>parent.parent?.location?.pathname?.endsWith(p)))trace=installHitchTrace(GPU);if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
  app.configureNativeShore=()=>{if(!app.profileConfig)installSmallSurf(app.shore);};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
   if(regression.lip)guardNativeBreakerLip(app.breakers);
-  beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);
+  beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
   app.proofFlare=app.post.flare;
   if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
@@ -98,9 +99,9 @@ try{
   packet=p;const c=p.camera,a=app.camera;
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
-  app.nativeWeather?.update(p);beach.update(p);overlays.update(p.overlays);
-  const f=p.forecast,key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),(f.tide||0).toFixed(2),Math.round(f.cloud||0)]):'';
-  if(f&&key!==forecastKey&&app.setForecast(f)){
+  app.nativeWeather?.update(p);app.weatherSurfaces?.update();beach.update(p);overlays.update(p.overlays);
+  const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2)]):'';
+  if(f&&key!==forecastKey&&app.setForecast({...f,tide:seaLevel})){
    if(!app.profileConfig){app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();}
    trace?.event('forecast-spectrum',{key});
    forecastKey=key;const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
@@ -130,7 +131,7 @@ try{
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:'2026-10-11-hitch-trace-recovery',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-11-layered-weather-v1',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

@@ -1,6 +1,7 @@
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
 import {Vector3} from '../vendor/tidewater/src/engine/index.js';
 import {cloudThreshold,PARTIAL_CLOUD_WGSL} from './partial-clouds.js';
+import {layeredFields,updateLayeredWeather,LAYERED_WEATHER_WGSL} from './layered-weather.js';
 const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
 export function overcastState(sunY,cloud,rain=0){
  const cover=Math.max(0,Math.min(1,cloud)),deck=smooth(.7,.98,cover);
@@ -8,9 +9,9 @@ export function overcastState(sunY,cloud,rain=0){
  return {deck,daylight,weight:deck*daylight,radiance:(.018+daylight*.722)*wet,exposure:1+.12*deck*daylight};
 }
 export function installNativeWeather(app,{cheap=false,exposure=true}={}){
- const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0]});
+ const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
  const module=new ShaderModule({name:'nativeOvercast',uniforms,uniformName:'nativeWeather',code:`
-${PARTIAL_CLOUD_WGSL}
+${cheap?PARTIAL_CLOUD_WGSL:PARTIAL_CLOUD_WGSL.slice(0,PARTIAL_CLOUD_WGSL.indexOf('fn nativePartialCloud'))+LAYERED_WEATHER_WGSL}
 fn nativeCloudDeck(dir:vec3f)->vec3f {
  // Bounded direction coordinates: no horizon division, narrow columns or binary cloud masks.
  ${cheap?'let detail=0.0; let h=1.0-clamp(dir.y,0.0,1.0); let gradient=1.0+0.12*h*h;':`let detail=sin(dir.x*5.0+dir.z*3.0+frame.time*0.003)*sin(dir.z*4.0-dir.y*2.0)*0.018;
@@ -18,8 +19,13 @@ fn nativeCloudDeck(dir:vec3f)->vec3f {
  return vec3f(1.0,1.005,1.01)*nativeWeather.radiance*(gradient+detail);
 }
 fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
- if(nativeWeather.deck>=0.999){return nativeCloudDeck(dir);}
- return mix(nativePartialCloud(dir,clear),nativeCloudDeck(dir),nativeWeather.deck);
+ ${cheap?'if(nativeWeather.deck>=0.999){return nativeCloudDeck(dir);} return mix(nativePartialCloud(dir,clear),nativeCloudDeck(dir),nativeWeather.deck);':`
+ var colour=nativeCloudDeck(dir);
+ if(nativeWeather.deck<0.999){colour=mix(nativePartialCloud(dir,clear),colour,nativeWeather.deck);}
+ colour=nativeOffshoreSky(dir,colour);
+ let hazeDistance=1800.0/(max(dir.y,0.05)+0.12);
+ let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*0.8*(1.0-smoothstep(0.0,0.5,dir.y));
+ return mix(colour,nativeFogColour(),haze);`}
 }`});
  // The same deck must light the sand, stand and reflected ocean, not just the backdrop.
  const sky=app.sky.module;
@@ -36,9 +42,9 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   }
  }
  const baseExposure=app.settings.exposure;
- return {module,uniforms,state:overcastState(0,0),update(packet){
+ return {module,uniforms,cheap,state:overcastState(0,0),update(packet){
   const f=packet.forecast||{},cover=Math.max(0,Math.min(1,(Number.isFinite(f.cloud)?f.cloud:Math.max(f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0))/100));
-  this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover};
+  this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover,...updateLayeredWeather(uniforms,f)};
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,f.rain||0);uniforms.fields.flash.value=packet.lightning||0;
@@ -50,6 +56,8 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
    const c=G[key].value,target=radiance*(key==='horizonColor'?1.12:1.04);
    c.r+=(target-c.r)*weight;c.g+=(target*1.005-c.g)*weight;c.b+=(target*1.01-c.b)*weight;
   }
+  const f=uniforms.fields;
+  if(f.daylight.value>.1){G.sunColor.value.multiplyScalar(f.direct.value*(.65+.35*f.energy.value));G.skyIrradiance.value.multiplyScalar(.7+.3*f.energy.value);}
  }};
 }
 

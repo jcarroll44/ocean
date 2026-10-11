@@ -242,3 +242,24 @@ The native app bundles production assets, has a current-conditions widget, and
 uses optional configured OTA and diagnostics. A configured service is not proof
 of an activated account or successful iPhone test. `check-release.mjs` covers the
 new behavior in addition to all seven unchanged gesture checks.
+
+## October 11 — data-driven weather release pass
+
+On `wip/tidewater-verdict-first` only, Jacob authorizes separate low/mid/high
+forecast cloud layers, visibility/humidity haze, precipitation effects, offshore
+5–40-mile forecast sampling, storm potential, wind/gust effects, solar radiation,
+heat shimmer and existing astronomical moonlight. Use bounded layered rendering,
+not a volumetric port. Preserve the vendor tree, H/2, approved camera, seven
+gestures, High ocean settings, FXAA, DPR policy and strict completed-frame gate.
+Missing fields remain unavailable; label appearance and derived potential `est.`
+with Open-Meteo attribution. Hourly gridded forecasts cannot establish observed
+strikes, exact cell boundaries or minute-accurate arrivals; disclose that limit.
+
+Keep the public beta, diagnostics and uploader behind platform authentication
+until launch. Test fixtures are explicitly synthetic and private, never live
+forecast evidence. The heaviest-fixture gate must measure 120 seconds on iPhone
+with at least 30 GPU completions in every whole second, preserving zero/slow
+bins, before screenshots/clip/upload. No automatic check can invent a pass or
+rendered screenshot. Add fixtures and weather/data/material tests alongside all
+existing regression gates. Verify product/native paths; distinguish Linux checks,
+Mac compilation/signing, account configuration and physical-device acceptance.

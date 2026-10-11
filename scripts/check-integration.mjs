@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {applyApprovedCopy} from './approved-condition-copy.mjs';
+import {applyApprovedWeather} from './approved-weather-changes.mjs';
 import {INTEGRATION_BUILD} from '../ocean-proof/proof/integration-build.js';
 const read=p=>fs.readFileSync(p,'utf8');
 assert.equal(INTEGRATION_BUILD.branch,'wip/tidewater-verdict-first');
@@ -15,7 +16,7 @@ assert(app.includes('class="db-screen'));
 // checked by check-scene-polish, including the unchanged pinned ocean vendor.
 for(const file of ['src/index.html','src/daybuoy.js','src/reference.css','src/reference-host.css','src/reference-fonts.css','src/home.js','src/camera.js','src/native-layer.js']){
  const before=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:20000000});
- assert.equal(read(file),applyApprovedCopy(file,before),file+' must remain byte-identical except approved condition copy');
+ assert.equal(read(file),applyApprovedWeather(file,applyApprovedCopy(file,before)),file+' must remain byte-identical except explicitly authorized copy/weather packet');
 }
 const retired=read('ocean-overcast-profile.html');assert(retired.includes('diagnosis closed'));assert(!retired.includes('<script'));assert(retired.includes('/ocean-live.html?gate=1'));
 const live=read('ocean-live.html');assert(live.includes('INTEGRATION_BUILD'));assert(live.includes('pinTestViewport'));assert(!live.includes('overcast-test='));assert(!live.includes('native-capture='));

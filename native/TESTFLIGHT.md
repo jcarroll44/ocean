@@ -1,8 +1,12 @@
 # DayBuoy → first TestFlight build
 
-This branch is a release candidate, not an uploaded or signed iPhone build. The web app is bundled locally, with offline forecasts/fallback, a WidgetKit extension, native scrub haptics and configurable Sentry/Capgo integrations. The ocean and seven gesture contracts remain the approved baseline. iPhone/iOS 26+ only.
+This branch is a release candidate, not an uploaded or signed iPhone build. The web app is bundled locally, with offline forecasts/fallback, a WidgetKit extension, native sharing/scrub haptics and configurable Sentry/Capgo integrations. The camera, ocean settings and seven gesture contracts remain the approved baseline; layered weather is new and requires a new phone gate. iPhone/iOS 26+ only.
 
-The website is owner-private behind platform sign-in. The app itself needs no site login. Main, preview capture tools and the server-held evidence token are separate.
+The website is owner-private behind platform sign-in, not a shared-password form. The app itself needs no site login. Main, preview capture tools and the server-held evidence token are separate.
+
+Before the native beta, run the private [weather gate](https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1) on a cool iPhone, unplugged and without mirroring. It performs 15 seconds of warmup, measures 120 seconds of the synthetic night storm, then records a clip and ten screenshots. Leave it open through “Uploaded”; everything goes to `results/` on `wip/tidewater-in-app`. A pass requires 30 or more GPU-completed frames in every one-second bin. The gallery is captured after timing. Safari passing does not establish WKWebView performance.
+
+The branch includes an unsigned macOS/Xcode compile workflow for the app and widget. Its result is compiler evidence only; it does not produce a signed TestFlight archive or establish device behavior.
 
 ## 1. Your accounts and Mac
 

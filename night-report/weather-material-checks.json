@@ -1,0 +1,15 @@
+{
+  "backend": "Dawn null: shader semantics, no pixels",
+  "validated": [
+    "water",
+    "Terrain",
+    "material5",
+    "Forecast rain streaks"
+  ],
+  "bindingLimits": [
+    "Water material needs 22 sampled textures; Dawn null supports 16. Binding/pipeline execution is not verified."
+  ],
+  "computeDispatch": "Not tested",
+  "environmentLimit": "Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).",
+  "physicalDevice": false
+}
