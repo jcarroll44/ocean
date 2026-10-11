@@ -1,0 +1,19 @@
+{
+  "appId": "com.jacobcarroll.daybuoy",
+  "appName": "DayBuoy",
+  "webDir": "www",
+  "loggingBehavior": "none",
+  "backgroundColor": "#edf4f5",
+  "server": {
+    "url": "https://daybuoy.jacobcarroll51.chatgpt.site",
+    "cleartext": false,
+    "errorPath": "offline.html"
+  },
+  "ios": {
+    "contentInset": "never",
+    "scrollEnabled": false,
+    "preferredContentMode": "mobile",
+    "webContentsDebuggingEnabled": false,
+    "limitsNavigationsToAppBoundDomains": true
+  }
+}

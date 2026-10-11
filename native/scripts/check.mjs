@@ -1,0 +1,16 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const read=p=>fs.readFileSync(p,'utf8');
+const config=JSON.parse(read('capacitor.config.json'));
+assert.equal(config.server.url,'https://daybuoy.jacobcarroll51.chatgpt.site');
+assert.equal(config.server.errorPath,'offline.html');assert.equal(config.server.cleartext,false);
+assert.equal(config.ios.webContentsDebuggingEnabled,false);assert.equal(config.ios.limitsNavigationsToAppBoundDomains,true);
+assert(!config.server.allowNavigation);assert(!config.plugins);
+const info=read('ios/App/App/Info.plist');assert(info.includes('<key>WKAppBoundDomains</key>'));assert(info.includes('<string>localhost</string>'));assert(info.includes('<string>daybuoy.jacobcarroll51.chatgpt.site</string>'));assert(!info.includes('NSAllowsArbitraryLoads'));
+assert(!info.match(/NS(Location|Camera|Microphone|PhotoLibrary).*UsageDescription/));
+const project=read('ios/App/App.xcodeproj/project.pbxproj');assert.equal((project.match(/IPHONEOS_DEPLOYMENT_TARGET = 26.0/g)||[]).length,4);assert.equal((project.match(/TARGETED_DEVICE_FAMILY = "1"/g)||[]).length,2);
+for(const page of ['offline.html','privacy.html','credits.html'])assert(fs.existsSync('ios/App/App/public/'+page));
+assert(read('www/offline.html').includes(config.server.url));assert(read('www/credits.html').includes('2026 DRG Software Solutions LLC'));
+const png=fs.readFileSync('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png');assert.equal(png.readUInt32BE(16),1024);assert.equal(png.readUInt32BE(20),1024);
+assert.equal(png[25],2,'App Store icon must be RGB, without an alpha channel');
+assert(!/github_pat_|ghp_[A-Za-z0-9]{20}|GITHUB_RESULTS_TOKEN|ocean-live\.html/.test(JSON.stringify(config)+read('www/offline.html')));
+console.log('PASS: hosted HTTPS origin, local offline/legal bundle, iPhone-only iOS 26, app-bound domains, generated icon and no credentials/permissions. Xcode/iPhone not executed.');

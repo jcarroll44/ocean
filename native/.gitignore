@@ -1,0 +1,9 @@
+node_modules/
+ios/App/App/public/
+ios/App/App/capacitor.config.json
+ios/App/App/Assets.xcassets/AppIcon.appiconset/*.png
+ios/App/App/Assets.xcassets/Splash.imageset/*.png
+ios/App/App.xcodeproj/xcuserdata/
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/Pods/
+.DS_Store

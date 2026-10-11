@@ -1,0 +1,8 @@
+{
+  "branch": "baseline/iphone-gate-2026-10-11",
+  "commit": "0f6ff5b83dad580a9ea6c2272bb79aa67d556ce4",
+  "acceptance": "User-reported; latest uploaded report still references the earlier failed run",
+  "iphoneGate": {"seconds":120,"averageFps":37.3,"minimumFps":30,"secondsBelow30":0},
+  "settings": {"detail":"High","initialDpr":1.5,"minimumDpr":1.25,"maximumDpr":1.6,"step":0.05,"downBelowFps":36,"aa":"FXAA","flare":false,"maximumFramesInFlight":2},
+  "nativeGate": "Not yet run in WKWebView/TestFlight"
+}

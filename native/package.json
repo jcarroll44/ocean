@@ -1,0 +1,13 @@
+{
+  "name": "daybuoy-iphone",
+  "private": true,
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "prepare:ios": "node scripts/prepare-ios.mjs",
+    "open:ios": "cap open ios",
+    "check": "node scripts/check.mjs"
+  },
+  "dependencies": {"@capacitor/core": "8.5.3", "@capacitor/ios": "8.5.3"},
+  "devDependencies": {"@capacitor/cli": "8.5.3", "acorn": "8.15.0", "@resvg/resvg-js": "2.6.2", "pngjs": "7.0.0"}
+}
