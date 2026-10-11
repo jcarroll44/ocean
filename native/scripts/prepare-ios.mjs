@@ -20,5 +20,9 @@ if(fs.existsSync('../production/dist'))fs.writeFileSync('../production/dist/icon
 for(const file of ['privacy.html','credits.html'])if(!fs.existsSync('www/'+file))throw Error('Missing bundled legal page: '+file);
 execFileSync(process.execPath,['scripts/bundle.mjs',...process.argv.slice(2)],{stdio:'inherit'});
 execFileSync(process.execPath,['node_modules/@capacitor/cli/bin/capacitor','sync','ios'],{stdio:'inherit'});
+// Capacitor emits tools-version 5.9 plus .v26, an enum introduced only in
+// PackageDescription 6.2. The string form preserves iOS 26 and Swift 5 mode.
+const manifest='ios/App/CapApp-SPM/Package.swift';
+fs.writeFileSync(manifest,fs.readFileSync(manifest,'utf8').replace('.iOS(.v26)','.iOS("26.0")'));
 execFileSync(process.execPath,['scripts/check.mjs'],{stdio:'inherit'});
 console.log('Ready for Xcode. Signing, compilation and physical-iPhone testing must happen on your Mac.');

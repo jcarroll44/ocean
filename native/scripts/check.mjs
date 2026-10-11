@@ -16,6 +16,7 @@ assert(Object.values(objects.PBXCopyFilesBuildPhase).some(p=>p.dstSubfolderSpec=
 assert(read('ios/App/App/SceneDelegate.swift').includes('DayBuoyViewController()'));
 assert(read('ios/App/CapApp-SPM/Package.swift').includes('SentryCapacitor'));assert(read('ios/App/CapApp-SPM/Package.swift').includes('CapgoCapacitorUpdater'));
 for(const plugin of ['CapacitorShare','CapacitorFilesystem'])assert(read('ios/App/CapApp-SPM/Package.swift').includes(plugin),plugin);
+assert(read('ios/App/CapApp-SPM/Package.swift').includes('.iOS("26.0")'),'iOS 26 manifest must work with its declared PackageDescription 5.9');
 assert(read('ios/App/App/PrivacyInfo.xcprivacy').includes('C617.1'));
 assert(Object.values(objects.PBXFileReference).some(f=>String(f.path).includes('PrivacyInfo.xcprivacy')));
 for(const page of ['index.html','scene.html','assets/app.js','assets/scene.js','assets/shore.js','assets/native.js','offline.html','privacy.html','credits.html'])assert(fs.existsSync('ios/App/App/public/'+page),'Missing bundled '+page);
