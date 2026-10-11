@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "runId": "2026-10-11T17-03-50Z-077bc648-2041-4b1a-b497-631df8b4ee08",
+  "kind": "live",
+  "fingerprint": "70f6edf77c84c45d64d69fd20f4c8be3828760091e8d4824a79ebbfa12458ffb",
+  "receivedAt": "2026-10-11T17:06:20.319Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 74825,
+      "type": "application/json",
+      "sha256": "7ff989e1b16a2dd1fc075b8f068f0aa1443685a2a3ea121de1d419c7dcf6e2d8"
+    },
+    {
+      "name": "scene-1.png",
+      "size": 510481,
+      "type": "image/png",
+      "sha256": "dad7edb1ff59b27a37b88ef21d96e8ed2540dbf559afedb5c8d97de9302aae83"
+    },
+    {
+      "name": "scene-2.png",
+      "size": 511340,
+      "type": "image/png",
+      "sha256": "ce00894d22d9968295b9423ee4781480f2beeee168b0dbac92d55ef78a6d1b68"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 1578574,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "ca4320e2da0caed0fe788d40b9eeddcb182871a5488cbc9d1fb99965ae27a5bd"
+    }
+  ]
+}

@@ -1,0 +1,3249 @@
+{
+  "schema": 2,
+  "build": {
+    "revision": "2026-10-11-conditions-shore-sky",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "runId": "2026-10-11T17-03-50Z-077bc648-2041-4b1a-b497-631df8b4ee08",
+  "kind": "live",
+  "startedAt": "2026-10-11T17:03:50.853Z",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "seconds": 120,
+  "viewportPolicy": "Fixed initial CSS render viewport; browser chrome changes logged, not rejected or removed from FPS.",
+  "viewport": [
+    390,
+    699
+  ],
+  "viewportEvents": [],
+  "wakeLockEvents": [
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-11T17:03:44.333Z"
+    }
+  ],
+  "samples": [
+    {
+      "at": 11303,
+      "conditions": {
+        "swell": 1.9727118328879971,
+        "period": 4.887174333333333,
+        "direction": 207.25651333333337,
+        "wind": 8.044889833333333,
+        "windDirection": 272.3206416666667,
+        "tide": 0.09785972166666666,
+        "cloud": 1.0641283333333333,
+        "rain": 0
+      },
+      "dpr": 1.5,
+      "dimensions": [
+        585,
+        1048,
+        585,
+        1048
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 12319,
+      "conditions": {
+        "swell": 1.9727303514065155,
+        "period": 4.8871178888888895,
+        "direction": 207.25764222222222,
+        "wind": 8.04508738888889,
+        "windDirection": 272.3220527777778,
+        "tide": 0.09786790611111111,
+        "cloud": 1.0644105555555556,
+        "rain": 0
+      },
+      "dpr": 1.55,
+      "dimensions": [
+        604,
+        1083,
+        604,
+        1083
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 13330,
+      "conditions": {
+        "swell": 1.9727488881519224,
+        "period": 4.887061388888889,
+        "direction": 207.2587722222222,
+        "wind": 8.04528513888889,
+        "windDirection": 272.3234652777778,
+        "tide": 0.09787609861111111,
+        "cloud": 1.0646930555555556,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 14332,
+      "conditions": {
+        "swell": 1.972767115040228,
+        "period": 4.887005833333333,
+        "direction": 207.2598833333334,
+        "wind": 8.045479583333334,
+        "windDirection": 272.3248541666667,
+        "tide": 0.09788415416666667,
+        "cloud": 1.0649708333333334,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 15338.000000000002,
+      "conditions": {
+        "swell": 1.9727853419285335,
+        "period": 4.886950277777778,
+        "direction": 207.26099444444446,
+        "wind": 8.045674027777778,
+        "windDirection": 272.32624305555555,
+        "tide": 0.09789220972222222,
+        "cloud": 1.065248611111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 16355,
+      "conditions": {
+        "swell": 1.9728038786739401,
+        "period": 4.886893777777778,
+        "direction": 207.26212444444445,
+        "wind": 8.045871777777778,
+        "windDirection": 272.32765555555557,
+        "tide": 0.09790040222222222,
+        "cloud": 1.0655311111111112,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 17377,
+      "conditions": {
+        "swell": 1.9728227070495599,
+        "period": 4.886836388888889,
+        "direction": 207.2632722222222,
+        "wind": 8.046072638888889,
+        "windDirection": 272.3290902777778,
+        "tide": 0.09790872361111111,
+        "cloud": 1.0658180555555556,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 18387,
+      "conditions": {
+        "swell": 1.9728409339378654,
+        "period": 4.886780833333334,
+        "direction": 207.2643833333334,
+        "wind": 8.046267083333333,
+        "windDirection": 272.3304791666667,
+        "tide": 0.09791677916666666,
+        "cloud": 1.0660958333333332,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 19395,
+      "conditions": {
+        "swell": 1.972859470683272,
+        "period": 4.8867243333333334,
+        "direction": 207.26551333333327,
+        "wind": 8.046464833333333,
+        "windDirection": 272.3318916666667,
+        "tide": 0.09792497166666667,
+        "cloud": 1.0663783333333334,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 20403,
+      "conditions": {
+        "swell": 1.9728776975715776,
+        "period": 4.886668777777778,
+        "direction": 207.26662444444446,
+        "wind": 8.046659277777778,
+        "windDirection": 272.3332805555556,
+        "tide": 0.09793302722222222,
+        "cloud": 1.066656111111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 21406,
+      "conditions": {
+        "swell": 1.9728959244598832,
+        "period": 4.8866132222222225,
+        "direction": 207.26773555555553,
+        "wind": 8.046853722222222,
+        "windDirection": 272.33466944444444,
+        "tide": 0.09794108277777779,
+        "cloud": 1.0669338888888888,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 22418,
+      "conditions": {
+        "swell": 1.97291446120529,
+        "period": 4.886556722222222,
+        "direction": 207.26886555555552,
+        "wind": 8.047051472222222,
+        "windDirection": 272.33608194444446,
+        "tide": 0.09794927527777778,
+        "cloud": 1.0672163888888888,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 23430,
+      "conditions": {
+        "swell": 1.9729329797238084,
+        "period": 4.886500277777778,
+        "direction": 207.26999444444448,
+        "wind": 8.047249027777777,
+        "windDirection": 272.33749305555557,
+        "tide": 0.09795745972222222,
+        "cloud": 1.067498611111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 24451,
+      "conditions": {
+        "swell": 1.972951516469215,
+        "period": 4.886443777777778,
+        "direction": 207.27112444444447,
+        "wind": 8.047446777777777,
+        "windDirection": 272.3389055555556,
+        "tide": 0.09796565222222223,
+        "cloud": 1.067781111111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 25458.000000000004,
+      "conditions": {
+        "swell": 1.972969761584409,
+        "period": 4.886388166666667,
+        "direction": 207.27223666666669,
+        "wind": 8.047641416666666,
+        "windDirection": 272.34029583333336,
+        "tide": 0.09797371583333334,
+        "cloud": 1.0680591666666666,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 26481,
+      "conditions": {
+        "swell": 1.9729885899600286,
+        "period": 4.886330777777778,
+        "direction": 207.27338444444445,
+        "wind": 8.047842277777777,
+        "windDirection": 272.3417305555556,
+        "tide": 0.09798203722222222,
+        "cloud": 1.068346111111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 27492,
+      "conditions": {
+        "swell": 1.9730068168483341,
+        "period": 4.886275222222222,
+        "direction": 207.27449555555552,
+        "wind": 8.048036722222221,
+        "windDirection": 272.3431194444445,
+        "tide": 0.09799009277777777,
+        "cloud": 1.0686238888888888,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 28514,
+      "conditions": {
+        "swell": 1.9730256452239539,
+        "period": 4.886217833333333,
+        "direction": 207.2756433333334,
+        "wind": 8.048237583333334,
+        "windDirection": 272.34455416666674,
+        "tide": 0.09799841416666667,
+        "cloud": 1.0689108333333333,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 29532,
+      "conditions": {
+        "swell": 1.9730441819693607,
+        "period": 4.886161333333334,
+        "direction": 207.27677333333327,
+        "wind": 8.048435333333334,
+        "windDirection": 272.34596666666664,
+        "tide": 0.09800660666666666,
+        "cloud": 1.0691933333333332,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 30552,
+      "conditions": {
+        "swell": 1.9730627187147673,
+        "period": 4.8861048333333335,
+        "direction": 207.27790333333337,
+        "wind": 8.048633083333334,
+        "windDirection": 272.34737916666666,
+        "tide": 0.09801479916666667,
+        "cloud": 1.0694758333333334,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 31566,
+      "conditions": {
+        "swell": 1.9730812554601742,
+        "period": 4.886048333333334,
+        "direction": 207.27903333333336,
+        "wind": 8.048830833333334,
+        "windDirection": 272.34879166666667,
+        "tide": 0.09802299166666667,
+        "cloud": 1.0697583333333334,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 32586,
+      "conditions": {
+        "swell": 1.9730997922055808,
+        "period": 4.885991833333334,
+        "direction": 207.28016333333335,
+        "wind": 8.049028583333333,
+        "windDirection": 272.3502041666667,
+        "tide": 0.09803118416666667,
+        "cloud": 1.0700408333333333,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 33587,
+      "conditions": {
+        "swell": 1.9731180190938864,
+        "period": 4.885936277777778,
+        "direction": 207.28127444444442,
+        "wind": 8.049223027777778,
+        "windDirection": 272.35159305555555,
+        "tide": 0.09803923972222223,
+        "cloud": 1.0703186111111112,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 34596,
+      "conditions": {
+        "swell": 1.9731365376124048,
+        "period": 4.885879833333334,
+        "direction": 207.28240333333338,
+        "wind": 8.049420583333333,
+        "windDirection": 272.35300416666666,
+        "tide": 0.09804742416666667,
+        "cloud": 1.0706008333333332,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 35602.00000000001,
+      "conditions": {
+        "swell": 1.9731547645007104,
+        "period": 4.885824277777778,
+        "direction": 207.28351444444445,
+        "wind": 8.049615027777778,
+        "windDirection": 272.35439305555553,
+        "tide": 0.09805547972222223,
+        "cloud": 1.070878611111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 36619,
+      "conditions": {
+        "swell": 1.9731733012461172,
+        "period": 4.885767777777778,
+        "direction": 207.28464444444444,
+        "wind": 8.049812777777777,
+        "windDirection": 272.35580555555555,
+        "tide": 0.09806367222222222,
+        "cloud": 1.071161111111111,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 37619,
+      "conditions": {
+        "swell": 1.9731915281344228,
+        "period": 4.885712222222223,
+        "direction": 207.28575555555562,
+        "wind": 8.050007222222222,
+        "windDirection": 272.3571944444444,
+        "tide": 0.09807172777777778,
+        "cloud": 1.0714388888888888,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 38642,
+      "conditions": {
+        "swell": 1.9732100648798294,
+        "period": 4.885655722222222,
+        "direction": 207.2868855555555,
+        "wind": 8.050204972222222,
+        "windDirection": 272.35860694444443,
+        "tide": 0.09807992027777777,
+        "cloud": 1.0717213888888888,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 39649,
+      "conditions": {
+        "swell": 1.9732286016252363,
+        "period": 4.885599222222223,
+        "direction": 207.2880155555556,
+        "wind": 8.050402722222222,
+        "windDirection": 272.36001944444445,
+        "tide": 0.09808811277777778,
+        "cloud": 1.072003888888889,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 40671,
+      "conditions": {
+        "swell": 1.973247138370643,
+        "period": 4.8855427222222225,
+        "direction": 207.2891455555556,
+        "wind": 8.050600472222222,
+        "windDirection": 272.36143194444446,
+        "tide": 0.09809630527777778,
+        "cloud": 1.072286388888889,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 41672.00000000001,
+      "conditions": {
+        "swell": 1.9732653652589485,
+        "period": 4.885487166666667,
+        "direction": 207.29025666666666,
+        "wind": 8.050794916666666,
+        "windDirection": 272.36282083333333,
+        "tide": 0.09810436083333333,
+        "cloud": 1.0725641666666668,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 42672.00000000001,
+      "conditions": {
+        "swell": 1.9732836103741425,
+        "period": 4.885431555555556,
+        "direction": 207.29136888888888,
+        "wind": 8.050989555555555,
+        "windDirection": 272.3642111111111,
+        "tide": 0.09811242444444444,
+        "cloud": 1.0728422222222223,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 43672.00000000001,
+      "conditions": {
+        "swell": 1.973301837262448,
+        "period": 4.885376,
+        "direction": 207.29248000000007,
+        "wind": 8.051184,
+        "windDirection": 272.3656,
+        "tide": 0.09812048,
+        "cloud": 1.07312,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 44688,
+      "conditions": {
+        "swell": 1.9733203740078546,
+        "period": 4.8853195000000005,
+        "direction": 207.29360999999994,
+        "wind": 8.05138175,
+        "windDirection": 272.3670125,
+        "tide": 0.0981286725,
+        "cloud": 1.0734025,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 45688,
+      "conditions": {
+        "swell": 1.9733386008961602,
+        "period": 4.885263944444445,
+        "direction": 207.29472111111113,
+        "wind": 8.051576194444444,
+        "windDirection": 272.36840138888897,
+        "tide": 0.09813672805555555,
+        "cloud": 1.0736802777777779,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 46689,
+      "conditions": {
+        "swell": 1.9733568277844658,
+        "period": 4.8852083888888895,
+        "direction": 207.2958322222222,
+        "wind": 8.05177063888889,
+        "windDirection": 272.36979027777784,
+        "tide": 0.09814478361111112,
+        "cloud": 1.0739580555555555,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 47689,
+      "conditions": {
+        "swell": 1.9733750546727713,
+        "period": 4.885152833333334,
+        "direction": 207.29694333333327,
+        "wind": 8.051965083333334,
+        "windDirection": 272.3711791666667,
+        "tide": 0.09815283916666667,
+        "cloud": 1.0742358333333333,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 48700,
+      "conditions": {
+        "swell": 1.9733935914181782,
+        "period": 4.885096333333333,
+        "direction": 207.29807333333338,
+        "wind": 8.052162833333334,
+        "windDirection": 272.3725916666667,
+        "tide": 0.09816103166666666,
+        "cloud": 1.0745183333333332,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 49715,
+      "conditions": {
+        "swell": 1.9734121281635848,
+        "period": 4.885039833333334,
+        "direction": 207.29920333333337,
+        "wind": 8.052360583333334,
+        "windDirection": 272.37400416666674,
+        "tide": 0.09816922416666667,
+        "cloud": 1.0748008333333334,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 50739.00000000001,
+      "conditions": {
+        "swell": 1.9734306466821032,
+        "period": 4.884983388888889,
+        "direction": 207.3003322222222,
+        "wind": 8.05255813888889,
+        "windDirection": 272.37541527777785,
+        "tide": 0.09817740861111111,
+        "cloud": 1.0750830555555555,
+        "rain": 0
+      },
+      "dpr": 1.6,
+      "dimensions": [
+        624,
+        1118,
+        624,
+        1118
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 51759,
+      "conditions": {
+        "swell": 1.97344918342751,
+        "period": 4.884926888888889,
+        "direction": 207.3014622222222,
+        "wind": 8.052755888888889,
+        "windDirection": 272.37682777777786,
+        "tide": 0.09818560111111112,
+        "cloud": 1.0753655555555555,
+        "rain": 0
+      },
+      "dpr": 1.55,
+      "dimensions": [
+        604,
+        1083,
+        604,
+        1083
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 52769,
+      "conditions": {
+        "swell": 1.9734677201729167,
+        "period": 4.884870388888889,
+        "direction": 207.3025922222222,
+        "wind": 8.052953638888889,
+        "windDirection": 272.37824027777776,
+        "tide": 0.09819379361111111,
+        "cloud": 1.0756480555555556,
+        "rain": 0
+      },
+      "dpr": 1.5,
+      "dimensions": [
+        585,
+        1048,
+        585,
+        1048
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 53771,
+      "conditions": {
+        "swell": 1.9734859652881107,
+        "period": 4.884814777777778,
+        "direction": 207.3037044444444,
+        "wind": 8.053148277777778,
+        "windDirection": 272.37963055555554,
+        "tide": 0.09820185722222223,
+        "cloud": 1.0759261111111111,
+        "rain": 0
+      },
+      "dpr": 1.45,
+      "dimensions": [
+        565,
+        1013,
+        565,
+        1013
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 54787,
+      "conditions": {
+        "swell": 1.9735045020335173,
+        "period": 4.884758277777778,
+        "direction": 207.3048344444444,
+        "wind": 8.053346027777778,
+        "windDirection": 272.38104305555555,
+        "tide": 0.09821004972222222,
+        "cloud": 1.076208611111111,
+        "rain": 0
+      },
+      "dpr": 1.4,
+      "dimensions": [
+        546,
+        978,
+        546,
+        978
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 55861.00000000001,
+      "conditions": {
+        "swell": 1.9735239501233395,
+        "period": 4.884699,
+        "direction": 207.30602,
+        "wind": 8.0535535,
+        "windDirection": 272.382525,
+        "tide": 0.09821864500000001,
+        "cloud": 1.076505,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 56912,
+      "conditions": {
+        "swell": 1.9735430883560603,
+        "period": 4.884640666666667,
+        "direction": 207.30718666666667,
+        "wind": 8.053757666666666,
+        "windDirection": 272.3839833333334,
+        "tide": 0.09822710333333333,
+        "cloud": 1.0767966666666666,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 57947,
+      "conditions": {
+        "swell": 1.97356191673168,
+        "period": 4.884583277777778,
+        "direction": 207.30833444444443,
+        "wind": 8.053958527777779,
+        "windDirection": 272.38541805555553,
+        "tide": 0.09823542472222223,
+        "cloud": 1.077083611111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 58968,
+      "conditions": {
+        "swell": 1.9735807633341877,
+        "period": 4.884525833333334,
+        "direction": 207.30948333333333,
+        "wind": 8.054159583333334,
+        "windDirection": 272.3868541666667,
+        "tide": 0.09824375416666667,
+        "cloud": 1.0773708333333334,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 59973,
+      "conditions": {
+        "swell": 1.9735989902224935,
+        "period": 4.884470277777778,
+        "direction": 207.3105944444444,
+        "wind": 8.054354027777778,
+        "windDirection": 272.38824305555556,
+        "tide": 0.09825180972222222,
+        "cloud": 1.0776486111111112,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 60985,
+      "conditions": {
+        "swell": 1.9736175269679002,
+        "period": 4.8844137777777785,
+        "direction": 207.3117244444445,
+        "wind": 8.054551777777778,
+        "windDirection": 272.3896555555556,
+        "tide": 0.09826000222222223,
+        "cloud": 1.0779311111111112,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 61988,
+      "conditions": {
+        "swell": 1.9736357538562057,
+        "period": 4.884358222222223,
+        "direction": 207.31283555555558,
+        "wind": 8.054746222222223,
+        "windDirection": 272.39104444444445,
+        "tide": 0.09826805777777778,
+        "cloud": 1.0782088888888888,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 63014,
+      "conditions": {
+        "swell": 1.9736542906016126,
+        "period": 4.884301722222222,
+        "direction": 207.31396555555557,
+        "wind": 8.054943972222222,
+        "windDirection": 272.39245694444446,
+        "tide": 0.09827625027777778,
+        "cloud": 1.078491388888889,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 64042,
+      "conditions": {
+        "swell": 1.9736731372041205,
+        "period": 4.884244277777778,
+        "direction": 207.31511444444448,
+        "wind": 8.055145027777778,
+        "windDirection": 272.3938930555555,
+        "tide": 0.09828457972222222,
+        "cloud": 1.078778611111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 65062,
+      "conditions": {
+        "swell": 1.973691655722639,
+        "period": 4.884187833333334,
+        "direction": 207.31624333333332,
+        "wind": 8.055342583333333,
+        "windDirection": 272.3953041666666,
+        "tide": 0.09829276416666667,
+        "cloud": 1.0790608333333334,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 66092,
+      "conditions": {
+        "swell": 1.9737105023251469,
+        "period": 4.884130388888889,
+        "direction": 207.31739222222222,
+        "wind": 8.055543638888889,
+        "windDirection": 272.3967402777778,
+        "tide": 0.09830109361111111,
+        "cloud": 1.0793480555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 67107,
+      "conditions": {
+        "swell": 1.9737290390705535,
+        "period": 4.8840738888888895,
+        "direction": 207.3185222222222,
+        "wind": 8.055741388888888,
+        "windDirection": 272.3981527777778,
+        "tide": 0.09830928611111112,
+        "cloud": 1.0796305555555556,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 68116,
+      "conditions": {
+        "swell": 1.9737469196479813,
+        "period": 4.884019388888889,
+        "direction": 207.3196122222222,
+        "wind": 8.055932138888888,
+        "windDirection": 272.3995152777777,
+        "tide": 0.0983171886111111,
+        "cloud": 1.0799030555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 69144,
+      "conditions": {
+        "swell": 1.9737660214269255,
+        "period": 4.883961166666667,
+        "direction": 207.3207766666667,
+        "wind": 8.056135916666667,
+        "windDirection": 272.4009708333333,
+        "tide": 0.09832563083333333,
+        "cloud": 1.0801941666666666,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 70200,
+      "conditions": {
+        "swell": 1.9737853237016412,
+        "period": 4.883902333333333,
+        "direction": 207.32195333333334,
+        "wind": 8.056341833333333,
+        "windDirection": 272.4024416666666,
+        "tide": 0.09833416166666667,
+        "cloud": 1.0804883333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 71242,
+      "conditions": {
+        "swell": 1.973804407253697,
+        "period": 4.883844166666667,
+        "direction": 207.3231166666667,
+        "wind": 8.056545416666667,
+        "windDirection": 272.4038958333333,
+        "tide": 0.09834259583333334,
+        "cloud": 1.0807791666666666,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 72257,
+      "conditions": {
+        "swell": 1.973822907545327,
+        "period": 4.883787777777778,
+        "direction": 207.3242444444445,
+        "wind": 8.056742777777778,
+        "windDirection": 272.4053055555555,
+        "tide": 0.09835077222222223,
+        "cloud": 1.081061111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 73261,
+      "conditions": {
+        "swell": 1.973841152660521,
+        "period": 4.883732166666667,
+        "direction": 207.32535666666672,
+        "wind": 8.056937416666667,
+        "windDirection": 272.4066958333333,
+        "tide": 0.09835883583333334,
+        "cloud": 1.0813391666666667,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 74288,
+      "conditions": {
+        "swell": 1.9738599810361406,
+        "period": 4.883674777777778,
+        "direction": 207.32650444444448,
+        "wind": 8.057138277777778,
+        "windDirection": 272.40813055555554,
+        "tide": 0.09836715722222222,
+        "cloud": 1.0816261111111112,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 75314,
+      "conditions": {
+        "swell": 1.9738785177815474,
+        "period": 4.883618277777778,
+        "direction": 207.32763444444447,
+        "wind": 8.057336027777778,
+        "windDirection": 272.40954305555556,
+        "tide": 0.09837534972222223,
+        "cloud": 1.0819086111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 76327,
+      "conditions": {
+        "swell": 1.973897054526954,
+        "period": 4.8835617777777784,
+        "direction": 207.32876444444446,
+        "wind": 8.057533777777778,
+        "windDirection": 272.4109555555556,
+        "tide": 0.09838354222222223,
+        "cloud": 1.082191111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 77350.00000000001,
+      "conditions": {
+        "swell": 1.9739155730454727,
+        "period": 4.883505333333334,
+        "direction": 207.3298933333333,
+        "wind": 8.057731333333333,
+        "windDirection": 272.4123666666667,
+        "tide": 0.09839172666666667,
+        "cloud": 1.0824733333333334,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 78370,
+      "conditions": {
+        "swell": 1.9739344196479804,
+        "period": 4.883447888888889,
+        "direction": 207.3310422222222,
+        "wind": 8.057932388888888,
+        "windDirection": 272.41380277777785,
+        "tide": 0.0984000561111111,
+        "cloud": 1.0827605555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 79375,
+      "conditions": {
+        "swell": 1.9739526465362862,
+        "period": 4.883392333333334,
+        "direction": 207.33215333333328,
+        "wind": 8.058126833333333,
+        "windDirection": 272.4151916666667,
+        "tide": 0.09840811166666667,
+        "cloud": 1.0830383333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 80382,
+      "conditions": {
+        "swell": 1.9739708734245918,
+        "period": 4.883336777777778,
+        "direction": 207.33326444444447,
+        "wind": 8.058321277777777,
+        "windDirection": 272.4165805555556,
+        "tide": 0.09841616722222223,
+        "cloud": 1.0833161111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 81382,
+      "conditions": {
+        "swell": 1.9739891003128973,
+        "period": 4.883281222222222,
+        "direction": 207.33437555555554,
+        "wind": 8.058515722222221,
+        "windDirection": 272.41796944444445,
+        "tide": 0.09842422277777778,
+        "cloud": 1.083593888888889,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 82388,
+      "conditions": {
+        "swell": 1.974007637058304,
+        "period": 4.883224722222223,
+        "direction": 207.33550555555553,
+        "wind": 8.058713472222221,
+        "windDirection": 272.41938194444447,
+        "tide": 0.09843241527777778,
+        "cloud": 1.083876388888889,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 83418,
+      "conditions": {
+        "swell": 1.9740261738037108,
+        "period": 4.883168222222222,
+        "direction": 207.33663555555552,
+        "wind": 8.058911222222223,
+        "windDirection": 272.4207944444445,
+        "tide": 0.09844060777777779,
+        "cloud": 1.084158888888889,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 84438,
+      "conditions": {
+        "swell": 1.9740450021793303,
+        "period": 4.883110833333333,
+        "direction": 207.3377833333334,
+        "wind": 8.059112083333334,
+        "windDirection": 272.42222916666674,
+        "tide": 0.09844892916666667,
+        "cloud": 1.0844458333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 85466.00000000001,
+      "conditions": {
+        "swell": 1.9740635389247372,
+        "period": 4.883054333333334,
+        "direction": 207.33891333333327,
+        "wind": 8.059309833333334,
+        "windDirection": 272.42364166666664,
+        "tide": 0.09845712166666667,
+        "cloud": 1.0847283333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 86471,
+      "conditions": {
+        "swell": 1.9740820756701438,
+        "period": 4.8829978333333335,
+        "direction": 207.34004333333337,
+        "wind": 8.059507583333334,
+        "windDirection": 272.42505416666665,
+        "tide": 0.09846531416666666,
+        "cloud": 1.0850108333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 87504,
+      "conditions": {
+        "swell": 1.9741009040457635,
+        "period": 4.882940444444444,
+        "direction": 207.34119111111113,
+        "wind": 8.059708444444444,
+        "windDirection": 272.4264888888889,
+        "tide": 0.09847363555555556,
+        "cloud": 1.0852977777777777,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 88522,
+      "conditions": {
+        "swell": 1.9741194407911702,
+        "period": 4.882883944444445,
+        "direction": 207.34232111111112,
+        "wind": 8.059906194444444,
+        "windDirection": 272.4279013888888,
+        "tide": 0.09848182805555555,
+        "cloud": 1.0855802777777779,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 89548,
+      "conditions": {
+        "swell": 1.9741379593096886,
+        "period": 4.8828275,
+        "direction": 207.34344999999996,
+        "wind": 8.06010375,
+        "windDirection": 272.4293124999999,
+        "tide": 0.0984900125,
+        "cloud": 1.0858625,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 90550,
+      "conditions": {
+        "swell": 1.9741562044248826,
+        "period": 4.88277188888889,
+        "direction": 207.34456222222218,
+        "wind": 8.060298388888889,
+        "windDirection": 272.4307027777777,
+        "tide": 0.09849807611111111,
+        "cloud": 1.0861405555555557,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 91562,
+      "conditions": {
+        "swell": 1.974174722943401,
+        "period": 4.882715444444445,
+        "direction": 207.34569111111114,
+        "wind": 8.060495944444444,
+        "windDirection": 272.4321138888888,
+        "tide": 0.09850626055555556,
+        "cloud": 1.0864227777777777,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 92565,
+      "conditions": {
+        "swell": 1.9741929498317066,
+        "period": 4.882659888888889,
+        "direction": 207.3468022222222,
+        "wind": 8.060690388888888,
+        "windDirection": 272.4335027777778,
+        "tide": 0.09851431611111111,
+        "cloud": 1.0867005555555556,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 93577,
+      "conditions": {
+        "swell": 1.9742114865771132,
+        "period": 4.88260338888889,
+        "direction": 207.3479322222222,
+        "wind": 8.060888138888888,
+        "windDirection": 272.4349152777778,
+        "tide": 0.09852250861111111,
+        "cloud": 1.0869830555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 94598,
+      "conditions": {
+        "swell": 1.97423002332252,
+        "period": 4.882546888888889,
+        "direction": 207.3490622222222,
+        "wind": 8.061085888888888,
+        "windDirection": 272.4363277777777,
+        "tide": 0.09853070111111112,
+        "cloud": 1.0872655555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 95607,
+      "conditions": {
+        "swell": 1.9742485418410385,
+        "period": 4.882490444444445,
+        "direction": 207.35019111111114,
+        "wind": 8.061283444444445,
+        "windDirection": 272.4377388888888,
+        "tide": 0.09853888555555555,
+        "cloud": 1.0875477777777778,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 96617,
+      "conditions": {
+        "swell": 1.974266768729344,
+        "period": 4.8824348888888895,
+        "direction": 207.35130222222222,
+        "wind": 8.06147788888889,
+        "windDirection": 272.4391277777778,
+        "tide": 0.09854694111111112,
+        "cloud": 1.0878255555555556,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 97640,
+      "conditions": {
+        "swell": 1.974285615331852,
+        "period": 4.882377444444445,
+        "direction": 207.35245111111112,
+        "wind": 8.061678944444445,
+        "windDirection": 272.44056388888885,
+        "tide": 0.09855527055555556,
+        "cloud": 1.0881127777777777,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 98648,
+      "conditions": {
+        "swell": 1.9743038422201575,
+        "period": 4.882321888888889,
+        "direction": 207.3535622222222,
+        "wind": 8.06187338888889,
+        "windDirection": 272.4419527777777,
+        "tide": 0.09856332611111111,
+        "cloud": 1.0883905555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 99656,
+      "conditions": {
+        "swell": 1.974322360738676,
+        "period": 4.882265444444445,
+        "direction": 207.35469111111115,
+        "wind": 8.062070944444445,
+        "windDirection": 272.4433638888888,
+        "tide": 0.09857151055555556,
+        "cloud": 1.0886727777777778,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 100656,
+      "conditions": {
+        "swell": 1.97434060585387,
+        "period": 4.8822098333333335,
+        "direction": 207.35580333333337,
+        "wind": 8.062265583333334,
+        "windDirection": 272.4447541666666,
+        "tide": 0.09857957416666667,
+        "cloud": 1.0889508333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 101656,
+      "conditions": {
+        "swell": 1.9743588327421755,
+        "period": 4.882154277777778,
+        "direction": 207.35691444444444,
+        "wind": 8.062460027777778,
+        "windDirection": 272.4461430555556,
+        "tide": 0.09858762972222222,
+        "cloud": 1.0892286111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 102677,
+      "conditions": {
+        "swell": 1.974377351260694,
+        "period": 4.882097833333334,
+        "direction": 207.3580433333334,
+        "wind": 8.062657583333333,
+        "windDirection": 272.4475541666667,
+        "tide": 0.09859581416666667,
+        "cloud": 1.0895108333333334,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 103680,
+      "conditions": {
+        "swell": 1.9743955781489995,
+        "period": 4.882042277777778,
+        "direction": 207.35915444444447,
+        "wind": 8.062852027777778,
+        "windDirection": 272.44894305555556,
+        "tide": 0.09860386972222222,
+        "cloud": 1.089788611111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 104692,
+      "conditions": {
+        "swell": 1.974414114894406,
+        "period": 4.881985777777778,
+        "direction": 207.36028444444446,
+        "wind": 8.063049777777778,
+        "windDirection": 272.4503555555556,
+        "tide": 0.09861206222222223,
+        "cloud": 1.0900711111111112,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 105719.00000000001,
+      "conditions": {
+        "swell": 1.9744326334129245,
+        "period": 4.881929333333334,
+        "direction": 207.3614133333333,
+        "wind": 8.063247333333333,
+        "windDirection": 272.4517666666667,
+        "tide": 0.09862024666666667,
+        "cloud": 1.0903533333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 106745,
+      "conditions": {
+        "swell": 1.9744514800154325,
+        "period": 4.881871888888889,
+        "direction": 207.3625622222222,
+        "wind": 8.063448388888888,
+        "windDirection": 272.45320277777773,
+        "tide": 0.09862857611111112,
+        "cloud": 1.0906405555555556,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 107746.00000000001,
+      "conditions": {
+        "swell": 1.974469706903738,
+        "period": 4.881816333333334,
+        "direction": 207.36367333333328,
+        "wind": 8.063642833333333,
+        "windDirection": 272.4545916666666,
+        "tide": 0.09863663166666667,
+        "cloud": 1.0909183333333334,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 108746.00000000001,
+      "conditions": {
+        "swell": 1.9744879337920436,
+        "period": 4.881760777777778,
+        "direction": 207.36478444444447,
+        "wind": 8.063837277777777,
+        "windDirection": 272.4559805555556,
+        "tide": 0.09864468722222222,
+        "cloud": 1.091196111111111,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 109763,
+      "conditions": {
+        "swell": 1.9745064523105622,
+        "period": 4.881704333333333,
+        "direction": 207.3659133333333,
+        "wind": 8.064034833333332,
+        "windDirection": 272.4573916666667,
+        "tide": 0.09865287166666667,
+        "cloud": 1.0914783333333333,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 110765,
+      "conditions": {
+        "swell": 1.9745246791988678,
+        "period": 4.881648777777778,
+        "direction": 207.3670244444445,
+        "wind": 8.064229277777777,
+        "windDirection": 272.45878055555556,
+        "tide": 0.09866092722222222,
+        "cloud": 1.0917561111111111,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 111781,
+      "conditions": {
+        "swell": 1.9745432159442744,
+        "period": 4.881592277777778,
+        "direction": 207.36815444444449,
+        "wind": 8.064427027777779,
+        "windDirection": 272.4601930555556,
+        "tide": 0.09866911972222223,
+        "cloud": 1.0920386111111111,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 112783,
+      "conditions": {
+        "swell": 1.97456144283258,
+        "period": 4.881536722222222,
+        "direction": 207.36926555555556,
+        "wind": 8.064621472222223,
+        "windDirection": 272.46158194444445,
+        "tide": 0.09867717527777778,
+        "cloud": 1.092316388888889,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 113798,
+      "conditions": {
+        "swell": 1.9745799613510984,
+        "period": 4.881480277777778,
+        "direction": 207.3703944444444,
+        "wind": 8.064819027777778,
+        "windDirection": 272.46299305555556,
+        "tide": 0.09868535972222223,
+        "cloud": 1.0925986111111112,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 114816,
+      "conditions": {
+        "swell": 1.9745984980965052,
+        "period": 4.881423777777778,
+        "direction": 207.3715244444445,
+        "wind": 8.065016777777778,
+        "windDirection": 272.4644055555556,
+        "tide": 0.09869355222222223,
+        "cloud": 1.0928811111111112,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 115821,
+      "conditions": {
+        "swell": 1.9746170166150236,
+        "period": 4.881367333333333,
+        "direction": 207.37265333333335,
+        "wind": 8.065214333333333,
+        "windDirection": 272.4658166666667,
+        "tide": 0.09870173666666666,
+        "cloud": 1.0931633333333333,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 116828,
+      "conditions": {
+        "swell": 1.9746352435033292,
+        "period": 4.881311777777778,
+        "direction": 207.37376444444442,
+        "wind": 8.065408777777778,
+        "windDirection": 272.46720555555555,
+        "tide": 0.09870979222222223,
+        "cloud": 1.093441111111111,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 117840,
+      "conditions": {
+        "swell": 1.9746537802487358,
+        "period": 4.881255277777778,
+        "direction": 207.3748944444444,
+        "wind": 8.065606527777778,
+        "windDirection": 272.46861805555557,
+        "tide": 0.09871798472222222,
+        "cloud": 1.093723611111111,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 118854,
+      "conditions": {
+        "swell": 1.9746722987672543,
+        "period": 4.881198833333333,
+        "direction": 207.37602333333336,
+        "wind": 8.065804083333333,
+        "windDirection": 272.4700291666667,
+        "tide": 0.09872616916666667,
+        "cloud": 1.0940058333333333,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 119854,
+      "conditions": {
+        "swell": 1.97469052565556,
+        "period": 4.881143277777778,
+        "direction": 207.37713444444444,
+        "wind": 8.065998527777777,
+        "windDirection": 272.47141805555555,
+        "tide": 0.09873422472222222,
+        "cloud": 1.0942836111111112,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 120861,
+      "conditions": {
+        "swell": 1.9747087525438656,
+        "period": 4.881087722222222,
+        "direction": 207.37824555555562,
+        "wind": 8.066192972222222,
+        "windDirection": 272.4728069444445,
+        "tide": 0.09874228027777777,
+        "cloud": 1.094561388888889,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 121866,
+      "conditions": {
+        "swell": 1.9747269976590593,
+        "period": 4.881032111111112,
+        "direction": 207.37935777777784,
+        "wind": 8.06638761111111,
+        "windDirection": 272.4741972222223,
+        "tide": 0.0987503438888889,
+        "cloud": 1.0948394444444445,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 122888,
+      "conditions": {
+        "swell": 1.974745826034679,
+        "period": 4.880974722222223,
+        "direction": 207.3805055555556,
+        "wind": 8.066588472222222,
+        "windDirection": 272.47563194444444,
+        "tide": 0.09875866527777778,
+        "cloud": 1.095126388888889,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 123897,
+      "conditions": {
+        "swell": 1.9747640529229846,
+        "period": 4.880919166666667,
+        "direction": 207.38161666666667,
+        "wind": 8.066782916666666,
+        "windDirection": 272.4770208333333,
+        "tide": 0.09876672083333334,
+        "cloud": 1.0954041666666667,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 124910,
+      "conditions": {
+        "swell": 1.974782571441503,
+        "period": 4.880862722222223,
+        "direction": 207.38274555555552,
+        "wind": 8.066980472222221,
+        "windDirection": 272.4784319444444,
+        "tide": 0.09877490527777778,
+        "cloud": 1.0956863888888888,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 125932,
+      "conditions": {
+        "swell": 1.9748011081869097,
+        "period": 4.880806222222223,
+        "direction": 207.3838755555555,
+        "wind": 8.067178222222223,
+        "windDirection": 272.47984444444444,
+        "tide": 0.09878309777777777,
+        "cloud": 1.095968888888889,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 126957.00000000001,
+      "conditions": {
+        "swell": 1.9748199365625294,
+        "period": 4.8807488333333335,
+        "direction": 207.38502333333327,
+        "wind": 8.067379083333334,
+        "windDirection": 272.4812791666666,
+        "tide": 0.09879141916666667,
+        "cloud": 1.0962558333333334,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 127971,
+      "conditions": {
+        "swell": 1.974838473307936,
+        "period": 4.880692333333334,
+        "direction": 207.38615333333337,
+        "wind": 8.067576833333334,
+        "windDirection": 272.4826916666666,
+        "tide": 0.09879961166666668,
+        "cloud": 1.0965383333333334,
+        "rain": 0
+      },
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 128990.00000000001,
+      "conditions": {
+        "swell": 1.9748569918264545,
+        "period": 4.880635888888889,
+        "direction": 207.3872822222222,
+        "wind": 8.067774388888889,
+        "windDirection": 272.4841027777777,
+        "tide": 0.09880779611111111,
+        "cloud": 1.0968205555555555,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 129996.00000000001,
+      "conditions": {
+        "swell": 1.97487521871476,
+        "period": 4.8805803333333335,
+        "direction": 207.3883933333334,
+        "wind": 8.067968833333333,
+        "windDirection": 272.4854916666667,
+        "tide": 0.09881585166666666,
+        "cloud": 1.0970983333333333,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 131017,
+      "conditions": {
+        "swell": 1.9748937554601669,
+        "period": 4.880523833333334,
+        "direction": 207.38952333333327,
+        "wind": 8.068166583333333,
+        "windDirection": 272.4869041666666,
+        "tide": 0.09882404416666667,
+        "cloud": 1.0973808333333332,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 132037,
+      "conditions": {
+        "swell": 1.9749125838357866,
+        "period": 4.880466444444445,
+        "direction": 207.39067111111115,
+        "wind": 8.068367444444444,
+        "windDirection": 272.48833888888885,
+        "tide": 0.09883236555555555,
+        "cloud": 1.0976677777777777,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 133044,
+      "conditions": {
+        "swell": 1.9749308107240922,
+        "period": 4.880410888888889,
+        "direction": 207.39178222222222,
+        "wind": 8.068561888888889,
+        "windDirection": 272.4897277777777,
+        "tide": 0.09884042111111112,
+        "cloud": 1.0979455555555555,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 134067,
+      "conditions": {
+        "swell": 1.9749493474694988,
+        "period": 4.88035438888889,
+        "direction": 207.3929122222222,
+        "wind": 8.068759638888888,
+        "windDirection": 272.49114027777773,
+        "tide": 0.09884861361111111,
+        "cloud": 1.0982280555555555,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 135082,
+      "conditions": {
+        "swell": 1.9749678659880172,
+        "period": 4.880297944444445,
+        "direction": 207.39404111111116,
+        "wind": 8.068957194444444,
+        "windDirection": 272.49255138888884,
+        "tide": 0.09885679805555556,
+        "cloud": 1.0985102777777778,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 136094,
+      "conditions": {
+        "swell": 1.974986402733424,
+        "period": 4.880241444444445,
+        "direction": 207.39517111111115,
+        "wind": 8.069154944444444,
+        "windDirection": 272.49396388888886,
+        "tide": 0.09886499055555556,
+        "cloud": 1.0987927777777777,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 137110,
+      "conditions": {
+        "swell": 1.9750049212519425,
+        "period": 4.880185,
+        "direction": 207.3963,
+        "wind": 8.0693525,
+        "windDirection": 272.49537499999997,
+        "tide": 0.09887317500000001,
+        "cloud": 1.099075,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 138124,
+      "conditions": {
+        "swell": 1.9750234579973491,
+        "period": 4.8801285000000005,
+        "direction": 207.39742999999999,
+        "wind": 8.06955025,
+        "windDirection": 272.4967875,
+        "tide": 0.0988813675,
+        "cloud": 1.0993575,
+        "rain": 0
+      },
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 139148,
+      "conditions": {
+        "swell": 1.975041994742756,
+        "period": 4.880072,
+        "direction": 207.39855999999997,
+        "wind": 8.069748,
+        "windDirection": 272.4982,
+        "tide": 0.09888956,
+        "cloud": 1.09964,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 140170.00000000003,
+      "conditions": {
+        "swell": 1.9750608231183755,
+        "period": 4.880014611111111,
+        "direction": 207.39970777777785,
+        "wind": 8.069948861111111,
+        "windDirection": 272.49963472222225,
+        "tide": 0.09889788138888889,
+        "cloud": 1.0999269444444444,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 141175,
+      "conditions": {
+        "swell": 1.975079050006681,
+        "period": 4.879959055555556,
+        "direction": 207.40081888888892,
+        "wind": 8.070143305555556,
+        "windDirection": 272.5010236111111,
+        "tide": 0.09890593694444444,
+        "cloud": 1.1002047222222222,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 142195,
+      "conditions": {
+        "swell": 1.975097586752088,
+        "period": 4.879902555555556,
+        "direction": 207.4019488888889,
+        "wind": 8.070341055555556,
+        "windDirection": 272.50243611111114,
+        "tide": 0.09891412944444444,
+        "cloud": 1.1004872222222222,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 143209,
+      "conditions": {
+        "swell": 1.9751161052706063,
+        "period": 4.879846111111111,
+        "direction": 207.40307777777775,
+        "wind": 8.070538611111111,
+        "windDirection": 272.50384722222225,
+        "tide": 0.09892231388888889,
+        "cloud": 1.1007694444444445,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 144213,
+      "conditions": {
+        "swell": 1.9751343321589119,
+        "period": 4.879790555555556,
+        "direction": 207.40418888888894,
+        "wind": 8.070733055555555,
+        "windDirection": 272.5052361111111,
+        "tide": 0.09893036944444444,
+        "cloud": 1.1010472222222223,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 145227,
+      "conditions": {
+        "swell": 1.9751528689043187,
+        "period": 4.879734055555556,
+        "direction": 207.40531888888893,
+        "wind": 8.070930805555555,
+        "windDirection": 272.50664861111113,
+        "tide": 0.09893856194444445,
+        "cloud": 1.1013297222222223,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    },
+    {
+      "at": 146250,
+      "conditions": {
+        "swell": 1.9751714056497254,
+        "period": 4.879677555555556,
+        "direction": 207.40644888888892,
+        "wind": 8.071128555555555,
+        "windDirection": 272.50806111111115,
+        "tide": 0.09894675444444445,
+        "cloud": 1.1016122222222222,
+        "rain": 0
+      },
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "shoreFieldPending": false
+    }
+  ],
+  "before": {
+    "recordedAt": "2026-10-11T17:03:50.868Z",
+    "forecastTime": "2026-10-11T17:03:50.862Z",
+    "retrievedAt": "2026-10-11T17:03:46.091Z",
+    "source": "live",
+    "feedStatus": {
+      "weather": "fulfilled",
+      "marine": "fulfilled",
+      "air": "fulfilled",
+      "tide": "fulfilled",
+      "tideHiLo": "fulfilled"
+    },
+    "grids": {
+      "weather": {
+        "lat": 30.290878,
+        "lon": -85.99906
+      },
+      "marine": {
+        "lat": 30.208336,
+        "lon": -86.04166
+      }
+    },
+    "conditions": {
+      "swell": 1.9727118328879971,
+      "period": 4.887174333333333,
+      "direction": 207.25651333333337,
+      "wind": 8.044889833333333,
+      "windDirection": 272.3206416666667,
+      "tide": 0.09785972166666666,
+      "cloud": 1.0641283333333333,
+      "rain": 0
+    },
+    "native": {
+      "revision": "2026-10-11-conditions-shore-sky",
+      "waveSeconds": 32.984,
+      "marine": {
+        "heightM": 0.6006167599802364,
+        "amplitude": 0.3003083799901182,
+        "period": 4.893832400173611,
+        "windMps": 4.126657096537803,
+        "waveAngle": -83.87664800347216,
+        "windAngle": -18.84581000434025,
+        "propagation": [
+          0.10666932404570509,
+          -0.9942945515829966
+        ],
+        "windVector": [
+          0.94639129473364,
+          -0.32302247174520915
+        ],
+        "chop": 0.7505396649848091,
+        "tide": 0.09689430197482639,
+        "cloud": 0.010308379991319444
+      },
+      "quality": {
+        "name": "High",
+        "dpr": 1.5,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "post": {
+        "aa": "fxaa",
+        "flare": false
+      },
+      "pipeline": {
+        "maxFramesInFlight": 2,
+        "maxObservedInFlight": 2,
+        "submitted": 115,
+        "completed": 113,
+        "outstanding": 2,
+        "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+      },
+      "adaptiveResolution": {
+        "currentDpr": 1.5,
+        "minDpr": 1.5,
+        "maxDpr": 1.55,
+        "verifiedFrames": 115
+      },
+      "weather": {
+        "deck": 0,
+        "daylight": 1,
+        "weight": 0,
+        "radiance": 0.74,
+        "exposure": 1,
+        "cover": 0.010641283333333333
+      },
+      "shoreDisplay": {
+        "breakSpan": 0.22
+      },
+      "shoreFieldPending": false
+    },
+    "camera": {
+      "position": [
+        13.677819105669112,
+        17.003946688036663,
+        42.84015594266831
+      ],
+      "fov": 79.99999942578094,
+      "projection": [
+        2.135989153079078,
+        0,
+        0,
+        0,
+        0,
+        1.1917536047222324,
+        0,
+        0,
+        0,
+        -1.9612960412021724e-13,
+        -1.0000300004500067,
+        -1,
+        0,
+        0,
+        -0.600009000135002,
+        0
+      ]
+    },
+    "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1"
+  },
+  "cadence": {
+    "pass": "native-live",
+    "duration": 120.018,
+    "frames": 4097,
+    "fps": 34.136546184738954,
+    "minOneSecondFPS": 11,
+    "oneSecondFPS": [
+      42,
+      42,
+      41,
+      42,
+      40,
+      41,
+      41,
+      40,
+      40,
+      40,
+      41,
+      40,
+      41,
+      41,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      40,
+      39,
+      37,
+      35,
+      28,
+      22,
+      15,
+      11,
+      11,
+      14,
+      21,
+      26,
+      30,
+      34,
+      35,
+      35,
+      35,
+      35,
+      32,
+      28,
+      22,
+      17,
+      16,
+      17,
+      19,
+      23,
+      27,
+      30,
+      32,
+      32,
+      33,
+      34,
+      34,
+      32,
+      32,
+      30,
+      29,
+      27,
+      26,
+      26,
+      28,
+      28,
+      31,
+      33,
+      35,
+      37,
+      39,
+      38,
+      36,
+      36,
+      35,
+      34,
+      35,
+      35,
+      36,
+      37,
+      37,
+      37,
+      37,
+      37,
+      38,
+      38,
+      39,
+      37,
+      37,
+      39,
+      39,
+      37,
+      36,
+      36,
+      36,
+      37,
+      37,
+      37,
+      37,
+      39,
+      38,
+      37,
+      37,
+      36,
+      35,
+      36,
+      36,
+      35,
+      37,
+      38,
+      38,
+      38,
+      38,
+      36,
+      34,
+      37,
+      37,
+      35,
+      37,
+      35,
+      37,
+      38,
+      38
+    ],
+    "secondsUnder30": 22,
+    "metric": "gpu-completed-pipelined",
+    "measurement": "Frames covered by resolved asynchronous GPU queue fences; max 2 outstanding. Notification timestamps are CPU delivery times, not individual GPU timestamps or display scanout.",
+    "p95CompletionGapMs": 42,
+    "p99CompletionGapMs": 67.00000000000728,
+    "maxCompletionGapMs": 146,
+    "completionNotifications": 4097,
+    "maxCompletionBatch": 1,
+    "meetsCadenceTarget": false,
+    "targetDefinition": "At least 30 confirmed GPU-completed frames in every whole second of a 120-second window. Notification gaps are reported separately; individual frame latency is not inferred from batched callbacks.",
+    "scope": "Live forecast, approved beachPose, production adaptive settings; 120 seconds, every whole second must reach 30 confirmed GPU completions. No video encoding during this gate."
+  },
+  "after": {
+    "recordedAt": "2026-10-11T17:06:05.920Z",
+    "forecastTime": "2026-10-11T17:06:05.887Z",
+    "retrievedAt": "2026-10-11T17:03:46.091Z",
+    "source": "live",
+    "feedStatus": {
+      "weather": "fulfilled",
+      "marine": "fulfilled",
+      "air": "fulfilled",
+      "tide": "fulfilled",
+      "tideHiLo": "fulfilled"
+    },
+    "grids": {
+      "weather": {
+        "lat": 30.290878,
+        "lon": -85.99906
+      },
+      "marine": {
+        "lat": 30.208336,
+        "lon": -86.04166
+      }
+    },
+    "conditions": {
+      "swell": 1.9751729184814548,
+      "period": 4.879672944444445,
+      "direction": 207.4065411111111,
+      "wind": 8.071144694444444,
+      "windDirection": 272.50817638888884,
+      "tide": 0.09894742305555555,
+      "cloud": 1.1016352777777778,
+      "rain": 0
+    },
+    "native": {
+      "revision": "2026-10-11-conditions-shore-sky",
+      "waveSeconds": 168.01,
+      "marine": {
+        "heightM": 0.6020004111087032,
+        "amplitude": 0.3010002055543516,
+        "period": 4.879995888888889,
+        "windMps": 4.151570482277556,
+        "waveAngle": -83.59991777777782,
+        "windAngle": -18.499897222222216,
+        "propagation": [
+          0.11147035831136781,
+          -0.9937677591962497
+        ],
+        "windVector": [
+          0.9483242243891361,
+          -0.3173029552915376
+        ],
+        "chop": 0.7517503597222223,
+        "tide": 0.09890059611111111,
+        "cloud": 0.011000205555555555
+      },
+      "quality": {
+        "name": "High",
+        "dpr": 1.25,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "post": {
+        "aa": "fxaa",
+        "flare": false
+      },
+      "pipeline": {
+        "maxFramesInFlight": 2,
+        "maxObservedInFlight": 2,
+        "submitted": 4867,
+        "completed": 4866,
+        "outstanding": 1,
+        "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+      },
+      "adaptiveResolution": {
+        "currentDpr": 1.25,
+        "minDpr": 1.25,
+        "maxDpr": 1.6,
+        "verifiedFrames": 4867
+      },
+      "weather": {
+        "deck": 0,
+        "daylight": 1,
+        "weight": 0,
+        "radiance": 0.74,
+        "exposure": 1,
+        "cover": 0.011016352777777778
+      },
+      "shoreDisplay": {
+        "breakSpan": 0.22
+      },
+      "shoreFieldPending": false
+    },
+    "camera": {
+      "position": [
+        27.588786409329135,
+        25.999999999999993,
+        64.33396352585478
+      ],
+      "fov": 79.99999999999997,
+      "projection": [
+        2.1359891313419315,
+        0,
+        0,
+        0,
+        0,
+        1.1917535925942107,
+        0,
+        0,
+        0,
+        -5.180071449372618e-177,
+        -1.0000300004500067,
+        -1,
+        0,
+        0,
+        -0.600009000135002,
+        0
+      ]
+    },
+    "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1"
+  },
+  "clip": {
+    "extension": "mp4",
+    "duration": 10.20000000000003,
+    "initialResolution": [
+      487,
+      873
+    ],
+    "captureRateRequested": 30,
+    "note": "Real device canvas recording. Encoder output rate is not GPU-completed or display FPS. Adaptive DPR remains enabled and may change during capture.",
+    "scope": "Displayed scene canvas, recorded after FPS measurement."
+  },
+  "finishedAt": "2026-10-11T17:06:16.363Z"
+}
