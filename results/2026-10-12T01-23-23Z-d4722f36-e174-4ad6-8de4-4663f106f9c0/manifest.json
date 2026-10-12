@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-12T01-23-23Z-d4722f36-e174-4ad6-8de4-4663f106f9c0",
+  "kind": "weather",
+  "fingerprint": "967a7da8a10ca617e24a6d39786fa08550f0de5b3a97449c28951a2349f65069",
+  "receivedAt": "2026-10-12T01:27:40.007Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 220659,
+      "type": "application/json",
+      "sha256": "d9687d429920981575de16aaedf2fb6b634597facf5fc0ef29a178876dafc998"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 3911831,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "711cb12f6162ae36fa201f634114a1f3fe7ff45015299ac95e6a26ba6daa9bd3"
+    },
+    {
+      "name": "clear.png",
+      "size": 478647,
+      "type": "image/png",
+      "sha256": "41ce386eb5c8a1f1df2e7c4d956bd6db87de8f9c23ec07065dc866306688b0ec"
+    }
+  ]
+}
