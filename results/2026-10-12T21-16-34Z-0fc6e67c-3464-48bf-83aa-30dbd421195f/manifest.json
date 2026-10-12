@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "runId": "2026-10-12T21-16-34Z-0fc6e67c-3464-48bf-83aa-30dbd421195f",
+  "kind": "weather",
+  "fingerprint": "90ec7cf20b7896b1af8a68003228eef17ebd9a9c5b5ed997e466208e78824cad",
+  "receivedAt": "2026-10-12T21:20:12.106Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1414840,
+      "type": "application/json",
+      "sha256": "9b414ab175e172196b8089ec39bdc74483a70e78ef07d6e5e25d311522d56fbc"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 2595944,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "902a095ec857a5150b664da0c04c445cc01bd47450bf44869d88d0e1b967f592"
+    },
+    {
+      "name": "clear.jpg",
+      "size": 44207,
+      "type": "image/jpeg",
+      "sha256": "b061686122e1d1d5217483b21de16942fe4936abe1e1aecf578cf732328c9a00"
+    },
+    {
+      "name": "partly-cloudy.jpg",
+      "size": 56885,
+      "type": "image/jpeg",
+      "sha256": "12a25998cd553f5d40d0b0ae41427b3e622fc324dc075094e45444e78935fc92"
+    },
+    {
+      "name": "overcast.jpg",
+      "size": 41614,
+      "type": "image/jpeg",
+      "sha256": "f119714e48c76aceb563b7cc4300a1ebcbfaa910cb877113162fc13ee999cb45"
+    },
+    {
+      "name": "fog.jpg",
+      "size": 25127,
+      "type": "image/jpeg",
+      "sha256": "297b66cafd21f85a232757215122f173c6ddb6b966ee97fb71d15eceee68041c"
+    },
+    {
+      "name": "light-rain.jpg",
+      "size": 43127,
+      "type": "image/jpeg",
+      "sha256": "bb3c07378b12a2c6e720a7dd571132ae8241f92cbe98b608264e9646ce375c51"
+    },
+    {
+      "name": "squall-approaching.jpg",
+      "size": 55390,
+      "type": "image/jpeg",
+      "sha256": "ca7845656b352d2b3a1c4cc73b1702304790a50b9b0f03615b6b065cdae7e708"
+    },
+    {
+      "name": "thunderstorm.jpg",
+      "size": 55307,
+      "type": "image/jpeg",
+      "sha256": "299ab527e5a2eaef5547e1e57dd3d5fdfcc660f7fcf72e6c57f671388323d4c8"
+    },
+    {
+      "name": "clearing.jpg",
+      "size": 62135,
+      "type": "image/jpeg",
+      "sha256": "cd625177278fed690caa702e5547ccecf477cfd819e67b2223e849bf99954ee3"
+    },
+    {
+      "name": "night-clear.jpg",
+      "size": 44226,
+      "type": "image/jpeg",
+      "sha256": "8370c0c6aea15909e743955bb7e84de4ce5fdbd3b1b4cd1552af20a2ab63fa5c"
+    },
+    {
+      "name": "night-storm.jpg",
+      "size": 43892,
+      "type": "image/jpeg",
+      "sha256": "e3dd59795f7ef28aa272c0ee07b4ffa7d5de8beae9a25e36737327850a221743"
+    },
+    {
+      "name": "fixtures-contact-sheet.jpg",
+      "size": 319997,
+      "type": "image/jpeg",
+      "sha256": "a1657372d236821df31c86ea1667344d82dfac528e2dd1ccc730d6b8df3402f2"
+    },
+    {
+      "name": "wave-small.jpg",
+      "size": 46594,
+      "type": "image/jpeg",
+      "sha256": "28d7a7883ea46c5c1fc73ff3d5ddf7232a5e2e571838fd502344ae39c5f22cbd"
+    },
+    {
+      "name": "wave-medium.jpg",
+      "size": 47114,
+      "type": "image/jpeg",
+      "sha256": "34ec8fb2afa04f1a8c1201af28617d293f48ec611df655cb6747b2d0c097e0b8"
+    },
+    {
+      "name": "wave-groundswell.jpg",
+      "size": 47006,
+      "type": "image/jpeg",
+      "sha256": "5dace5fdd5f24b4ea3ed6082f58b9fb34b8ef3511a29edc62cd51e6a0ffb1951"
+    },
+    {
+      "name": "wave-onshore.jpg",
+      "size": 51725,
+      "type": "image/jpeg",
+      "sha256": "35bfdbe418310a9157e8c65ec3596c679555272fb3d703b3a4b23ec954be0e9e"
+    },
+    {
+      "name": "wave-offshore.jpg",
+      "size": 48109,
+      "type": "image/jpeg",
+      "sha256": "9ff6771b14d28d5c836228249ee84f4f3f2705af63421d1504eba6bb86412f8b"
+    },
+    {
+      "name": "waves-contact-sheet.jpg",
+      "size": 185977,
+      "type": "image/jpeg",
+      "sha256": "bb7791a993889a7e6103b5806538c2f90ac372583156c17f0f208403ed3af0ba"
+    },
+    {
+      "name": "scrub-day.mp4",
+      "size": 2269973,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "9a10245e1a076f9f4077ef766190cfe2d4b6879e6c059edfcfe6e7512854f543"
+    }
+  ]
+}
