@@ -27,10 +27,11 @@ try{
   if(initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();app.nativeWeather.update(packet);beach.update(packet);}
   }
-  await prepare();await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  await app.nativeWeather.cache?.warm();await prepare();await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
  };
  const originalReadback=app.applyAtmosphereReadback.bind(app);
  app.applyAtmosphereReadback=()=>{
+  app.nativeWeather.cache?.step();
   originalReadback();if(!packet)return;
   const cover=Math.max(0,Math.min(1,(packet.forecast?.cloud||0)/100)),moon=packet.moon,moonStrength=packet.moonlight||0;
   if(packet.sun[1]<-.07)G.sunColor.value.setRGB(.6,.7,1).multiplyScalar(moon?.[1]>0?.12*moonStrength*(1-cover*.9):0);

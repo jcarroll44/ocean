@@ -1,7 +1,7 @@
 import fs from 'node:fs';import path from 'node:path';import vm from 'node:vm';import assert from 'node:assert/strict';import {parseHTML} from 'linkedom';
 const read=p=>fs.readFileSync(p,'utf8'),dir='production/dist';
 const files=fs.readdirSync(dir,{recursive:true}).filter(p=>fs.statSync(path.join(dir,p)).isFile());
-for(const p of files){assert(/^(index\.html|scene\.html|privacy\.html|credits\.html|404\.html|robots\.txt|icon\.svg|icon-180\.png|assets\/(app\.js|scene\.js|shore\.js|app\.css)|fonts\/poppins-latin-(200|300|400|500|600)-normal\.woff2)$/.test(p),'Unapproved published file '+p);
+for(const p of files){assert(/^(index\.html|scene\.html|privacy\.html|credits\.html|404\.html|robots\.txt|icon\.svg|icon-180\.png|assets\/(app\.js|scene\.js|shore\.js|app\.css|takram-shape\.bin|takram-detail\.bin)|fonts\/poppins-latin-(200|300|400|500|600)-normal\.woff2)$/.test(p),'Unapproved published file '+p);
  if(/\.(html|js|css|svg)$/.test(p))assert(!/sourceMappingURL|github_pat_|ghp_[A-Za-z0-9]{20}|GITHUB_RESULTS_TOKEN|api\/results|daybuoy-night-pass|ocean-live\.html|native-capture|hitch-trace|profile-pass|renderForCapture|captureFrame/.test(read(dir+'/'+p)),'Private/test code in '+p);
 }
 assert(files.includes('icon-180.png'));assert(read(dir+'/credits.html').includes('Copyright (c) 2026 DRG Software Solutions LLC'));assert(read(dir+'/credits.html').includes('SIL OPEN FONT LICENSE'));

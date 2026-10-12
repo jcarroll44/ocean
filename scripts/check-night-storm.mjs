@@ -23,14 +23,14 @@ function setup(day,rain,lightning=0,reducedMotion=false){
  const G={sunColor:{value:new Color(.01,.01,.01)},skyIrradiance:{value:new Color(.01,.01,.01)},horizonColor:{value:new Color(.01,.01,.01)}};weather.light(G);return{weather,app,G};
 }
 const clear=setup(false,0),storm=setup(false,12),lit=setup(false,12,.7),reduced=setup(false,12,.7,true);
-assert.equal(clear.G.skyIrradiance.value.r,.01,'Clear night ambient must be unchanged');
+assert.equal(clear.G.skyIrradiance.value.r,.036,'Explicitly approved clear-night readability floor');
 assert(storm.G.skyIrradiance.value.r>.055);assert(lit.G.skyIrradiance.value.r>storm.G.skyIrradiance.value.r+.13);
 assert.equal(reduced.weather.uniforms.fields.flash.value,0);
 assert.equal(reduced.G.skyIrradiance.value.r,storm.G.skyIrradiance.value.r);
 assert.equal(storm.app.settings.exposure,.55,'No exposure/tonemap change');
 const surfaces=read('ocean-proof/proof/weather-surfaces.js');
 assert(surfaces.includes('geometry.instanceCount=384'));assert(surfaces.includes('const rain=new Mesh('));assert.equal((surfaces.match(/new Mesh\(/g)||[]).length,1);
-assert(surfaces.includes('let sheet=v.instance<8u'));assert(surfaces.includes('nativeWeather.rain>.001'));
+assert(!surfaces.includes('rainSheet')&&!surfaces.includes('let sheet=')&&!surfaces.includes('let threads='));assert(surfaces.includes('nativeWeather.rain>.001'));
 assert(surfaces.includes('foamLit + nativeStormFoam()'));
 const shader=read('ocean-proof/proof/layered-weather.js');
 assert(shader.includes('nativeWeather.flash<0.003'));assert(shader.includes('fn nativeStormBolt'));assert(!shader.includes('frame.time*0.32'));
@@ -43,5 +43,5 @@ const contact=await fixtureContactSheet(captures,{revision:'test-revision',runId
 assert.equal(contact.name,'fixtures-contact-sheet.jpg');assert.equal(draws.length,10);assert.equal(closed,10);assert(labels.some(t=>t.includes('test-revision')));
 for(let i=0;i<10;i++){assert.equal(draws[i][0].blob,captures[i].blob);assert(Math.abs(draws[i][3]/draws[i][4]-487/873)<1e-10,'No crop/stretch/colour edit');}
 await assert.rejects(fixtureContactSheet(captures.slice(0,9),{},env),/all ten/);
-const result={checks:['5.2-second storm flash cadence; no rapid strobe','reduced motion and absent potential suppress flashes','supported offshore bearing selection','clear-night ambient unchanged','storm diffuse floor and shared flash light','384 total quads, eight sheets, one rain mesh; dry quads collapsed','no exposure or ocean-input change'],scope:'CPU/uniform/source assertions, not pixels or iPhone FPS',acceptedPriorRun:'2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62',newDeviceGate:null};
+const result={checks:['5.2-second storm flash cadence; no rapid strobe','reduced motion and absent potential suppress flashes','supported offshore bearing selection','explicit clear-night readability floor','storm diffuse floor and shared flash light','384 thin particles, no sheets or stripe texture, one mesh; dry quads collapsed','no exposure or ocean-input change'],scope:'CPU/uniform/source assertions, not pixels or iPhone FPS',acceptedPriorRun:'2026-10-11T20-52-12Z-23f4d081-f473-4db4-bdc7-b57d517b3a62',newDeviceGate:null};
 fs.writeFileSync('night-report/night-storm-checks.json',JSON.stringify(result,null,2));console.log('PASS: '+result.checks.join('; '));

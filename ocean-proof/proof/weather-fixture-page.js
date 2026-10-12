@@ -16,7 +16,10 @@ async function select(id){
  selected=fixtureData(id);stage.contentWindow.__daybuoyFixture.apply(selected);viewport.bindScene();
  await untilReady(()=>{const api=liveOcean(stage.contentWindow),e=api.evidence();return api.ready&&e.weather?.offshoreSamples===21&&!e.shoreFieldPending;});
  // Let stateful shore/lighting settle outside, and before, the fixed gate warmup.
- await wait(2500);$('status').textContent='Fixture · '+selected.title;return selected;
+ await wait(2500);
+ // Never pair new fixture numbers with a partially baked or older sky.
+ await untilReady(()=>liveOcean(stage.contentWindow).evidence().weather?.cloudCache?.ready);
+ $('status').textContent='Fixture · '+selected.title;return selected;
 }
 function evidence(){
  const win=stage.contentWindow,app=win.__daybuoy,native=liveOcean(win).evidence();viewport.bindScene();

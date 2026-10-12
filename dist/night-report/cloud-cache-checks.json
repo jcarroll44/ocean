@@ -1,0 +1,30 @@
+{
+  "revision": "2026-10-11-volume-clouds-v1",
+  "checks": [
+    "coherent triple-buffer publication",
+    "400 ms whole-cache crossfade",
+    "512 cache pixels per submitted frame",
+    "18 primary and 3 shadow samples bounded",
+    "real 3D bake WGSL/pipeline/bindings validate",
+    "sun/moon and offshore layer inputs",
+    "no stencil clouds or curtain sheets in native path"
+  ],
+  "budget": {
+    "width": 256,
+    "height": 128,
+    "rows": 2,
+    "layers": 3,
+    "primarySteps": 18,
+    "shadowSteps": 3,
+    "refreshMs": 3000,
+    "fadeMs": 400
+  },
+  "assetHashes": {
+    "shape": "ef65cf6156894720c00bf572c49e3e254f8899c4b5158246e5a35a1922e2519c",
+    "detail": "c09112199c6e0281b74ff5283c11c2943ae082650b9b67978cf5d59ed2956e4f"
+  },
+  "takramCommit": "b012ad06d858fc035d88aacfd73f092f93c994e4",
+  "backend": "Dawn null",
+  "renderedPixels": false,
+  "physicalIPhoneFPS": null
+}

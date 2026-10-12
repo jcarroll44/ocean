@@ -72,6 +72,7 @@ export class BeachApp extends App{
   if(this.clouds){await this.clouds.ready;this.sky.clouds=this.clouds;}
   // Native-only weather must be installed before environment compute shaders compile.
   this.configureNativeWeather?.();
+  await this.nativeWeather?.initialize?.();
   this.shadows=this.csm=new SunShadows({size:2048,splits:[10,60,400],lightMargin:200,normalBias:[.015,.06,.3],bias:.00002});
   this.shadows.layerMask=(1<<LAYERS.OPAQUE)|(1<<LAYERS.TRANSPARENT);
   this.environment=new Environment(engine,scene,this.sky,phoneDevice()?64:128);

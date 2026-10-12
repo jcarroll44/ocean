@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';import fs from 'node:fs';
 import {create,globals} from 'webgpu';Object.assign(globalThis,globals);
 Object.defineProperty(globalThis,'navigator',{value:{gpu:create(['backend=null']),userAgent:'validation'},configurable:true});
 globalThis.location={search:'?noClouds=1&quality=0'};globalThis.window=globalThis;globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=1;
-globalThis.document={getElementById:()=>null};globalThis.fetch=async url=>new Response(fs.readFileSync('ocean-proof/public/'+String(url).replace(/^\//,'')));
+globalThis.document={getElementById:()=>null};globalThis.fetch=async url=>new Response(fs.readFileSync(url instanceof URL?url:'ocean-proof/public/'+String(url).replace(/^\//,'')));
 const {GPU}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js');
 const {Engine}=await import('../ocean-proof/vendor/tidewater/src/engine/Engine.js');
 const {MeshRenderer}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshRenderer.js');
@@ -35,8 +35,9 @@ app.precompile=async()=>{
   assert.equal(info.messages.filter(m=>m.type==='error').length,0,material.name+' '+info.messages.map(m=>m.message).join('\n'));validated.push(material.name);
  }
  const error=await GPU.device.popErrorScope();
- if(error){assert(error.message.includes('sampled textures (22)')&&error.message.includes('limit (16)'),error.message);bindingLimits.push('Water material needs 22 sampled textures; Dawn null supports 16. Binding/pipeline execution is not verified.');}
- assert(Object.values(app.nativeWeather.module.bindings).every(s=>s.uniform),'Weather adds uniform data only, no sampled textures');
+ if(error){assert(error.message.includes('sampled textures (23)')&&error.message.includes('limit (16)'),error.message);bindingLimits.push('Water material needs 23 sampled textures including the single cloud atlas; Dawn null supports 16. Binding/pipeline execution is not verified.');}
+ assert.equal(Object.keys(app.nativeWeather.cache.module.bindings).filter(k=>k==='cloudAtlas').length,1);
+ assert(!app.nativeWeather.module.code.includes('marchLayer'),'No per-frame volumetric march');
 };
 let environmentLimit=null;
 try{await app.init();}catch(e){if(!e.message.includes('storage textures (5)')||!e.message.includes('envSource mips'))throw e;environmentLimit='Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).';}

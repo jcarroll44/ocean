@@ -7,14 +7,14 @@ for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture']){
  const elements=new Map(),events=[];let tick=0,measured=false,submitted;
  const node=()=>({style:{},append(){},hidden:false,textContent:'',disabled:false,value:'',src:''});const get=id=>elements.get(id)||elements.set(id,node()).get(id);
  const state={forecastLoaded:true},app={state,engine:{getSceneCanvas:()=>({})},conditions:()=>state.data.rows[0]};
- let dpr=1.5;const native={ready:true,evidence:()=>({revision:INTEGRATION_BUILD.revision,weather:{offshoreSamples:21},quality:{dpr},post:{aa:'fxaa',flare:false},adaptiveResolution:{},pipeline:{maxFramesInFlight:2}})};
- const win={__daybuoy:app,__daybuoyFixture:{apply(data){Object.assign(state,{fixture:true,fixtureId:data.id,data,time:data.time,live:false});}}};get('stage').contentWindow=win;
+ let dpr=1.5,cacheReads=0;const native={ready:true,evidence:()=>({revision:INTEGRATION_BUILD.revision,weather:{offshoreSamples:21,cloudCache:{ready:++cacheReads>3}},quality:{dpr},post:{aa:'fxaa',flare:false},adaptiveResolution:{},pipeline:{maxFramesInFlight:2}})};
+ const win={__daybuoy:app,__daybuoyFixture:{apply(data){cacheReads=0;Object.assign(state,{fixture:true,fixtureId:data.id,data,time:data.time,live:false});}}};get('stage').contentWindow=win;
  const c={WEATHER_FIXTURES,HEAVIEST_FIXTURE,fixtureData,INTEGRATION_BUILD,isIPhone,document:{hidden:false,getElementById:get,createElement:node},window:{},location:{search:'?gate=1'},navigator:{userAgent:scenario==='desktop'?'Macintosh':'iPhone',maxTouchPoints:5},performance:{now:()=>tick+=100},URL,URLSearchParams,Date,Blob,setTimeout:f=>{queueMicrotask(f);return 1;},addEventListener(){},
   liveOcean:()=>native,pinTestViewport:()=>({size:[390,844],bindScene(){},verify(w,v){return[v*390,v*844];},dispose(){}}),screenAwake:()=>({start:async()=>events.push('awake'),stop:async()=>events.push('released')}),retryPending:async()=>events.push('retry'),
   newRunId:()=> 'test',jsonFile:r=>({name:'report.json',blob:new Blob([JSON.stringify(r)])}),
   measureLiveCadence:async(api,options)=>{assert.equal(options.seconds,120);assert.equal(options.warmup,15);assert.equal(state.fixtureId,HEAVIEST_FIXTURE);if(scenario==='bad-dpr')dpr=1;if(scenario==='wrong-fixture')state.fixtureId='clear';options.validate();measured=true;events.push('timed');return{fps:scenario==='fail'?29:40,minOneSecondFPS:scenario==='fail'?0:39,oneSecondFPS:[scenario==='fail'?0:39],meetsCadenceTarget:scenario!=='fail'};},
   recordLiveCanvas:async(canvas,{validate})=>{assert(measured);validate();events.push('clip');return{blob:new Blob(['test stub, no pixels']),extension:'mp4'};},
-  captureScreenshot:async()=>{assert(measured);events.push(state.fixtureId);return new Blob(['test stub, no pixels']);},
+  captureScreenshot:async()=>{assert(measured);assert(cacheReads>3,'Capture must await a complete matching cloud cache');events.push(state.fixtureId);return new Blob(['test stub, no pixels']);},
   fixtureContactSheet:async(entries,meta)=>{assert.equal(entries.length,10);assert.equal(meta.revision,INTEGRATION_BUILD.revision);assert(measured);events.push('contact-sheet');return{name:'fixtures-contact-sheet.jpg',blob:new Blob(['layout stub, no pixels'])};},
   uploadEvidence:async bundle=>{assert.equal(get('stage').src,'about:blank');submitted={...bundle,report:JSON.parse(await bundle.files[0].blob.text())};events.push('upload');}
  };

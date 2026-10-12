@@ -80,7 +80,7 @@ export function sampledOffshore(field,time,now=Date.now()){
    const endpoints=[sampleWeather(p.rows,bracket.a.time),sampleWeather(p.rows,bracket.b.time)],position=xy(p);
    const origins=endpoints.map((v,i)=>{if(!Number.isFinite(v?.wind)||!Number.isFinite(v?.windDirection))return position;const seconds=(time-(i?bracket.b.time:bracket.a.time))/1000,d=v.wind*.514444*seconds,a=v.windDirection*R;return [position[0]+Math.sin(a)*d,position[1]+Math.cos(a)*d];});
    const mix=key=>{const a=spatial(grids[0],origins[0],key),b=spatial(grids[1],origins[1],key);return Number.isFinite(a)&&Number.isFinite(b)?a+(b-a)*bracket.f:null;};
-   c={...c,cloud:mix('cloud'),rain:mix('rain')};const value=mix('potential');potential=value===null?null:{value,method:'Wind-advection interpolation est. · Open-Meteo'};
+   c={...c,cloud:mix('cloud'),cloudLow:mix('cloudLow'),cloudMid:mix('cloudMid'),cloudHigh:mix('cloudHigh'),rain:mix('rain')};const value=mix('potential');potential=value===null?null:{value,method:'Wind-advection interpolation est. · Open-Meteo'};
   }
   return {bearing:p.bearing,miles:p.miles,sector:p.sector,grid:p.grid,conditions:c,potential};
  });

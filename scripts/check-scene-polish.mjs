@@ -22,7 +22,7 @@ for(const cover of [.1,.25,.34,.5,.7,.9]){
 }
 const fake={settings:{exposure:.55},sky:{module:{deps:[],code:'fn a(){return base;} fn b(){return base;}'}}},weather=installNativeWeather(fake);
 for(const cloud of [0,.34,34,100]){weather.update({sun:[0,.8,0],forecast:{cloud,cloudLow:cloud,cloudMid:0}});assert.equal(weather.state.cover,cloud/100);}
-assert.equal(weather.state.weight,1);assert(weather.module.code.includes('nativePartialCloud(dir,clear)'));
+assert.equal(weather.state.weight,1);assert(weather.module.code.includes('cachedCloud(dir)'));assert(!weather.module.code.includes('fn nativePartialCloud'));
 const input=marineInput({swell:2,period:5,direction:203,wind:8,windDirection:267,tide:.07});
 assert.equal(input.amplitude,.3048);assert.equal(input.period,5);assert.equal(input.tide,.07);
 assert(smallSurfSpan(input.amplitude,input.period)>.21);
@@ -49,4 +49,4 @@ for(const prefix of ['ocean-proof/vendor/tidewater/','ocean-proof/proof/forecast
  // predecessor: all four frozen paths are byte-identical (vendor tree f0d73bdc).
  const changes=execFileSync('git',['diff','532dfcfccf30e65f9cca41b7bcefa2abb9537618','--',prefix],{encoding:'utf8'});assert.equal(changes,'',prefix);
 }
-console.log('PASS: daytime unlit moon, calibrated 34% partial-cloud coverage and percent units, shared reflections, bounded small shore surf, H/2 retained, flare off, DPR 36, condition-only copy and NWS disclosure. CPU/source only; no new phone FPS or pixels.');
+console.log('PASS: daytime unlit moon, historical cloud calibration, forecast percent units, shared cached-cloud reflections, bounded small shore surf, H/2 retained, flare off, DPR 36, condition-only copy and NWS disclosure. CPU/source only; no new phone FPS or pixels.');

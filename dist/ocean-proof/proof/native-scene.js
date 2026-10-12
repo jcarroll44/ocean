@@ -46,13 +46,14 @@ try{
   if(!app.profileConfig&&initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();app.nativeWeather?.update(packet);beach.update(packet);}
   }
-  trace?.track(app);await prepare();
+  await app.nativeWeather?.cache?.warm();trace?.track(app);await prepare();
   await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
   trace?.event('precompile-complete',{syncCompiles:GPU.syncCompiles.slice()});
  };
  // Native terrain, sky and objects share Tidewater's one scene renderer.
  const originalReadback=app.applyAtmosphereReadback.bind(app);
  app.applyAtmosphereReadback=()=>{
+  app.nativeWeather?.cache?.step();
   originalReadback();if(!packet)return;
   const cover=Math.max(0,Math.min(1,(packet.forecast?.cloud||0)/100));
   const moon=packet.moon,moonStrength=packet.moonlight||0;
@@ -131,7 +132,7 @@ try{
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:'2026-10-11-night-storm-v2',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:app.nativeWeather?.state,shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-11-volume-clouds-v1',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

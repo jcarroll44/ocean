@@ -2,6 +2,7 @@ import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shad
 import {Vector3} from '../vendor/tidewater/src/engine/index.js';
 import {cloudThreshold,PARTIAL_CLOUD_WGSL} from './partial-clouds.js';
 import {layeredFields,updateLayeredWeather,stormBearing,LAYERED_WEATHER_WGSL} from './layered-weather.js';
+import {createCloudCache} from './cloud-cache.js';
 const smooth=(a,b,x)=>{const t=Math.max(0,Math.min(1,(x-a)/(b-a)));return t*t*(3-2*t);};
 export function overcastState(sunY,cloud,rain=0){
  const cover=Math.max(0,Math.min(1,cloud)),deck=smooth(.7,.98,cover);
@@ -10,7 +11,8 @@ export function overcastState(sunY,cloud,rain=0){
 }
 export function installNativeWeather(app,{cheap=false,exposure=true}={}){
  const uniforms=new UniformBlock('NativeWeather',{deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
- const module=new ShaderModule({name:'nativeOvercast',uniforms,uniformName:'nativeWeather',code:`
+ const cache=cheap?null:createCloudCache(uniforms);
+ const module=new ShaderModule({name:'nativeOvercast',deps:cache?[cache.module]:[],uniforms,uniformName:'nativeWeather',code:`
 ${cheap?PARTIAL_CLOUD_WGSL:PARTIAL_CLOUD_WGSL.slice(0,PARTIAL_CLOUD_WGSL.indexOf('fn nativePartialCloud'))+LAYERED_WEATHER_WGSL}
 fn nativeCloudDeck(dir:vec3f)->vec3f {
  // Bounded direction coordinates: no horizon division, narrow columns or binary cloud masks.
@@ -20,9 +22,12 @@ fn nativeCloudDeck(dir:vec3f)->vec3f {
 }
 fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  ${cheap?'if(nativeWeather.deck>=0.999){return nativeCloudDeck(dir);} return mix(nativePartialCloud(dir,clear),nativeCloudDeck(dir),nativeWeather.deck);':`
- var colour=nativeCloudDeck(dir);
- if(nativeWeather.deck<0.999){colour=mix(nativePartialCloud(dir,clear),colour,nativeWeather.deck);}
- colour=nativeOffshoreSky(dir,colour);
+ let night=1.0-nativeWeather.daylight;
+ let moon=nativeWeather.moonlight*smoothstep(-.02,.18,nativeWeather.moon.y);
+ let glow=vec3f(.019,.032,.058)*(1.0+moon*.75)*(1.0+.35*pow(1.0-clamp(dir.y,0.0,1.0),3.0));
+ let background=mix(clear,max(clear,glow),night);
+ let cloud=cachedCloud(dir);
+ var colour=background*(1.0-cloud.a)+cloud.rgb+vec3f(.42,.49,.62)*nativeStormGlow(dir)*cloud.a;
  let hazeDistance=1800.0/(max(dir.y,0.05)+0.12);
  let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*0.8*(1.0-smoothstep(0.0,0.5,dir.y));
  return mix(colour,nativeFogColour(),haze)+nativeStormBolt(dir);`}
@@ -42,12 +47,14 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   }
  }
  const baseExposure=app.settings.exposure;
- return {module,uniforms,cheap,state:overcastState(0,0),update(packet){
+ return {module,uniforms,cheap,cache,initialize:()=>cache?.initialize(),state:overcastState(0,0),update(packet){
   const f=packet.forecast||{},cover=Math.max(0,Math.min(1,(Number.isFinite(f.cloud)?f.cloud:Math.max(f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0))/100));
   this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover,...updateLayeredWeather(uniforms,f)};
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);
+  const moon=packet.moon||[0,-1,0];uniforms.fields.moon.value.set(-moon[0],moon[1],-moon[2]);uniforms.fields.moonlight.value=packet.moonlight||0;
+  cache?.setKey(JSON.stringify([f.forecastTime,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]));
   const flash=f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
   if(flash>.01&&uniforms.fields.flash.value<=.01){
    this.strikeNumber=(this.strikeNumber||0)+1;
@@ -65,12 +72,11 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   const f=uniforms.fields;
   if(f.daylight.value>.1){G.sunColor.value.multiplyScalar(f.direct.value*(.65+.35*f.energy.value));G.skyIrradiance.value.multiplyScalar(.7+.3*f.energy.value);}
   if(!cheap){
-   // Display adaptation only for a rainy night. Clear-night moon phase/light
-   // and daytime radiance remain exact. Existing diffuse lighting reaches the
-   // spray and breaker faces too; no extra dynamic light or shadow map.
-   const night=f.storm.value*(1-f.daylight.value),flash=f.flash.value;
+   // Bounded display adaptation for readable clear and storm nights; actual
+   // moon direction/phase still controls directional moonlight separately.
+   const night=1-f.daylight.value,storm=night*f.storm.value,flash=f.flash.value;
    for(const key of ['skyIrradiance','horizonColor']){
-    const c=G[key].value;c.r+=night*.048+flash*.20;c.g+=night*.061+flash*.23;c.b+=night*.080+flash*.28;
+    const c=G[key].value;c.r+=night*.026+storm*.036+flash*.20;c.g+=night*.038+storm*.043+flash*.23;c.b+=night*.060+storm*.050+flash*.28;
    }
   }
  }};

@@ -33,7 +33,7 @@ fn beachCloud(dir:vec3f,layer:f32,cover:f32)->f32 {
  return smoothstep(1.0-cover*0.85-0.06,1.0-cover*0.85+0.06,n)*smoothstep(0.0,0.08,dir.y)*mix(0.85,0.5,layer*0.5);
 }
 fn beachSkyColour(rd:vec3f)->vec3f {
- ${app.nativeWeather?'if(nativeWeather.deck>=0.999){return nativeWeatherSky(rd,vec3f(0.0));}':''}
+ ${app.nativeWeather?.cheap?'if(nativeWeather.deck>=0.999){return nativeWeatherSky(rd,vec3f(0.0));}':''}
  let sun=normalize(beachSky.sun);let day=smoothstep(-0.16,0.13,sun.y);let night=1.0-day;
  let low=pow(1.0-clamp(rd.y,0.0,1.0),6.0);
  let warm=(1.0-smoothstep(0.10,0.56,sun.y))*smoothstep(-0.16,0.035,sun.y)*mix(0.62,1.0,beachSky.afternoon);

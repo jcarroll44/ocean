@@ -277,3 +277,19 @@ Reduced motion disables flashes. Lightning is an illustration of sourced storm
 potential, not an observed strike. Clear-night astronomy/light stays unchanged.
 Contact sheets must use authentic captures with revision/run provenance. Prior
 phone captures and FPS do not validate newly changed pixels or performance.
+
+## October 11 — rejected stencil weather; amortized volumetric replacement
+
+Run 2026-10-11T22-25-52Z-f0b85086-fdf0-47d5-ab14-f25645871a55 failed:
+33.058 average, 27 minimum, eight seconds under 30. The user explicitly
+supersedes the layered-only and unchanged-clear-night restrictions above.
+Replace stencil silhouettes and eight rain sheets with soft 3D procedural
+density, erosion and sun/moon self-shadowing following Takram three-clouds MIT.
+Bake a bounded low-resolution cloud atlas across frames; never raymarch the
+full-screen sky/water. Publish only complete generations with a crossfade.
+Keep 384 thin rain particles, all forecast mappings, true moon phase, unchanged
+ocean inputs/quality, gestures, DPR policy and strict 120-second completion gate.
+Night sky/reflection glow and foam may be lifted for readability. Preserve
+Tidewater notices and add Takram notices. Main and audience stay unchanged.
+New screenshots must wait for a completed cache matching the selected fixture.
+Linux shader/scheduler checks cannot establish pixels or physical iPhone FPS.

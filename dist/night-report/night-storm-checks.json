@@ -3,9 +3,9 @@
     "5.2-second storm flash cadence; no rapid strobe",
     "reduced motion and absent potential suppress flashes",
     "supported offshore bearing selection",
-    "clear-night ambient unchanged",
+    "explicit clear-night readability floor",
     "storm diffuse floor and shared flash light",
-    "384 total quads, eight sheets, one rain mesh; dry quads collapsed",
+    "384 thin particles, no sheets or stripe texture, one mesh; dry quads collapsed",
     "no exposure or ocean-input change"
   ],
   "scope": "CPU/uniform/source assertions, not pixels or iPhone FPS",

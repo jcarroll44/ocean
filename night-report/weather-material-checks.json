@@ -4,11 +4,11 @@
     "water",
     "Terrain",
     "material5",
-    "Forecast rain streaks and sheets",
+    "Forecast thin rain particles",
     "BreakerLip"
   ],
   "bindingLimits": [
-    "Water material needs 22 sampled textures; Dawn null supports 16. Binding/pipeline execution is not verified."
+    "Water material needs 23 sampled textures including the single cloud atlas; Dawn null supports 16. Binding/pipeline execution is not verified."
   ],
   "computeDispatch": "Not tested",
   "environmentLimit": "Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).",

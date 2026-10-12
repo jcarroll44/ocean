@@ -69,13 +69,15 @@ write(out+'/scene.html',read('ocean-proof/proof/native-scene.html').replace('src
 fs.cpSync('ui-reference/fonts',out+'/fonts',{recursive:true});
 fs.copyFileSync('native/assets/icon.svg',out+'/icon.svg');
 const mit=read('ocean-proof/vendor/tidewater/LICENSE');
+for(const file of ['takram-shape.bin','takram-detail.bin'])fs.copyFileSync('ocean-proof/proof/'+file,out+'/assets/'+file);
 const ofl=read('src/NOTICE.txt');
 const licenses=[['Tidewater',mit],['Three.js r170',mit.replace('Copyright (c) 2026 DRG Software Solutions LLC','Copyright 2010-2024 Three.js Authors')],['Capacitor (iPhone wrapper)',read('native/node_modules/@capacitor/core/LICENSE')],['Poppins',ofl.replace('Bundled Nunito font license','Bundled Poppins font license').replace('Copyright 2014 The Nunito Project Authors (https://github.com/googlefonts/nunito)','Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)')],['Nunito (fallback)',ofl]];
 const escaped=s=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+licenses.push(['Takram three-clouds — procedural cloud adaptation and noise assets',read('ocean-proof/proof/takram-LICENSE.txt')]);
 licenses.push(['Capgo updater (native app)',read('native/node_modules/@capgo/capacitor-updater/LICENSE')],['Sentry Capacitor (native app)',read('native/node_modules/@sentry/capacitor/LICENSE')]);
 for(const name of ['share','filesystem'])licenses.push(['Capacitor '+name+' (native app)',read('native/node_modules/@capacitor/'+name+'/LICENSE')]);
 const credits=read('production/credits.html').replace('<!-- LICENSES -->',licenses.map(([title,text])=>'<h2>'+title+'</h2><pre>'+escaped(text)+'</pre>').join(''));
-for(const file of ['privacy.html','credits.html']){const content=file==='credits.html'?credits:read('production/'+file);write(out+'/'+file,content);write('native/www/'+file,content);}
+for(const file of ['privacy.html','credits.html']){const content=file==='credits.html'?credits:read('production/'+file);write(out+'/'+file,content);write('native/www/'+file,content);write('dist/'+file,content);}
 write(out+'/404.html','<!doctype html><title>DayBuoy · Not found</title><p>This page is not available.</p><a href="/">Open DayBuoy</a>');
 write(out+'/robots.txt','User-agent: *\nAllow: /\n');
 write('production/build-manifest.json',JSON.stringify({baseline:'0f6ff5b83dad580a9ea6c2272bb79aa67d556ce4',inputs:Object.keys(scene.metafile.inputs),workerInputs:Object.keys(shore.metafile.inputs),sourceMaps:false,minified:true},null,2));
