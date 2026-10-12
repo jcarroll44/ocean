@@ -60,21 +60,37 @@ fn nativeStormGlow(dir:vec3f)->f32 {
  let angle=atan2(-dir.x,dir.z);let d=angle-nativeWeather.strike.x;
  return nativeWeather.flash*(0.25+0.75*exp(-d*d*5.0));
 }
+fn boltNoise(y:f32,scale:f32,seed:f32)->f32 {
+ let t=y*scale;let a=floor(t);
+ return mix(nativeCloudHash(vec2f(a,seed)),nativeCloudHash(vec2f(a+1.0,seed)),fract(t))-.5;
+}
+fn boltPath(y:f32,seed:f32)->f32 {
+ // Three continuous scales: a meandering leader, irregular kinks and fine
+ // branching detail. Fixed work only inside the flash's narrow bounding box.
+ return boltNoise(y,7.0,seed)*.095+boltNoise(y,23.0,seed+31.0)*.030+boltNoise(y,71.0,seed+67.0)*.010;
+}
 fn nativeStormBolt(dir:vec3f)->vec3f {
  // No mesh spawn, texture, extra pass or per-event compilation. The thin bolt
  // is evaluated only during a flash and inside its small angular bounding box.
  if(nativeWeather.flash<0.003||dir.y<0.008||dir.y>nativeWeather.strike.y){return vec3f(0.0);}
- let x=atan2(-dir.x,dir.z)-nativeWeather.strike.x;if(abs(x)>0.19){return vec3f(0.0);}
- let y=dir.y/nativeWeather.strike.y;let segment=y*8.0;let a=floor(segment);
+ let x=atan2(-dir.x,dir.z)-nativeWeather.strike.x;if(abs(x)>0.21){return vec3f(0.0);}
+ let y=dir.y/nativeWeather.strike.y;
  let seed=nativeWeather.strike.z;
- let p0=(nativeCloudHash(vec2f(a,seed))-.5)*.11;
- let p1=(nativeCloudHash(vec2f(a+1.0,seed))-.5)*.11;
- let line=mix(p0,p1,fract(segment));let d=abs(x-line);
- let core=1.0-smoothstep(.0012,.0032,d);let halo=1.0-smoothstep(.003,.018,d);
- let branchY=clamp((y-.40)/.25,0.0,1.0);
- let fork=abs(x-(line+.10*(1.0-branchY)));
- let branch=(1.0-smoothstep(.001,.0028,fork))*step(.40,y)*step(y,.65);
- return vec3f(.78,.88,1.0)*(core*3.8+halo*.25+branch*1.6)*nativeWeather.flash;
+ let d=abs(x-boltPath(y,seed));let width=.0010;
+ let core=1.0-smoothstep(width,width*2.0,d);let halo=exp(-d*d/0.000045)*.30;
+ var branches=0.0;
+ for(var i=0;i<3;i++){
+  let fi=f32(i);let joint=.37+fi*.21;let length=.17+nativeCloudHash(vec2f(seed,fi))*.11;
+  let t=(joint-y)/length;
+  if(t>0.0&&t<1.0){
+   let direction=select(-1.0,1.0,fract(seed*.37+fi*.61)>.5);
+   let root=boltPath(joint,seed);let irregular=boltNoise(t,17.0,seed+fi*11.0+100.0)*.026*sin(t*1.5708);
+   let fork=root+direction*t*(.065+fi*.023)+irregular;
+   let distance=abs(x-fork);let taper=1.0-smoothstep(.55,1.0,t);
+   branches+=(1.0-smoothstep(width*.55,width*1.5,distance)+exp(-distance*distance/.000018)*.12)*taper*.9;
+  }
+ }
+ return vec3f(.78,.88,1.0)*(core*3.8+halo+branches)*nativeWeather.flash;
 }
 fn nativeCloudShadow(P:vec3f)->f32 {
  if(nativeWeather.covers.x<0.001||nativeWeather.sun.y<=0.02){return 1.0;}

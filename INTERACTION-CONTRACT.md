@@ -293,3 +293,29 @@ Night sky/reflection glow and foam may be lifted for readability. Preserve
 Tidewater notices and add Takram notices. Main and audience stay unchanged.
 New screenshots must wait for a completed cache matching the selected fixture.
 Linux shader/scheduler checks cannot establish pixels or physical iPhone FPS.
+
+## October 12 — accepted volume baseline; storm texture and sky-charm scrubber
+
+Uploaded run `2026-10-12T01-23-23Z-d4722f36-e174-4ad6-8de4-4663f106f9c0`
+passed 120 seconds: 37.634 average, 34 minimum, zero seconds below 30.
+Its gallery was interrupted by visibility loss after Clear; there is no complete
+new contact sheet. Keep the breaking waves, thin rain, wet-sand reflections and
+performance policy. Refine branching lightning and internal cloud illumination,
+and textured sun/moon/city-lit overcast with the existing bounded cloud cache.
+Do not raymarch the full-screen sky or change water physics or camera ownership.
+
+Jacob explicitly permits an additive scrubber presentation layer: selected-hour
+sky charm with true moon phase, drag time label, astronomical light gradient,
+sourced high/low tide marks and rain patches, hourly native haptics with stronger
+sunrise/sunset/high-tide ticks, and rolling real readouts. Keep reference CSS/fonts
+verbatim, all seven gestures, midnight boundaries, missing/stale disclosures and
+reduced-motion behavior. No invented live weather or tide marks. Safari need not
+provide native haptics. Continuous scrubbing may bake a lower-resolution coherent
+cloud generation within the SAME 512-pixel frame budget, then refine at rest.
+
+The strict gate still rejects hidden measurement and retains every slow second.
+After timing only, gallery work may pause for visibility and resume; interrupted
+clips must be discarded/retried, never labelled continuous. Add a synthetic
+clear → storm → clearing day-scrub recording after timing, with source/revision
+and capture limitations recorded. Actual contact sheet and clip delivery await
+real rendered evidence, not mocked tests or generated artwork.

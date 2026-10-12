@@ -1,5 +1,5 @@
 {
-  "revision": "2026-10-11-volume-clouds-v1",
+  "revision": "2026-10-12-storm-scrub-v2",
   "checks": [
     "coherent triple-buffer publication",
     "400 ms whole-cache crossfade",

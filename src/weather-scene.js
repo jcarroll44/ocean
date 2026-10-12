@@ -9,7 +9,7 @@ function weatherScenePacket(c){
   const w=__mods['weather-data.js'];
   weatherPacketCache={key,offshore:w.sampledOffshore(field,state.time),drift:['low','mid','high'].map(layer=>field?.series?.[0]?w.integrateCloudWind(field.series[0].rows,state.time,layer):null)};
  }
- return {...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
+ return {...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,scrubbing:!!state.scrubbing||!!state.playing,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
 }
 const weatherEffectsBase=updateWeatherEffects;
 // Illustrative thunder potential, not observed strikes. One bounded flash every

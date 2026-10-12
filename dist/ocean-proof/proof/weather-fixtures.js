@@ -25,3 +25,23 @@ export function fixtureData(id,now=Date.now()){
  })}));
  return {id,title:fixture.title,time,source:'fixture',retrievedAt:now,rows,weatherField:{schema:1,source:'Synthetic test fixture',retrievedAt:now,series},feedStatus:{weather:'fixture',marine:'fixture',tide:'fixture',offshore:'fixture'},fixture:true};
 }
+
+// Private transition test, never an alternate live data source. Hourly rows are
+// sampled by the SAME application interpolation as real forecast hours.
+export function scrubDayData(now=Date.now()){
+ const data=fixtureData('clear',now),H=3600000,start=FIXTURE_DATE-12*H;
+ const values=id=>({...base,...WEATHER_FIXTURES.find(f=>f.id===id).values});
+ const anchors=[[0,'clear'],[8,'clear'],[12,'thunderstorm'],[15,'thunderstorm'],[19,'clearing'],[24,'clear']].map(([h,id])=>[h,values(id)]);
+ data.id='scrub-day';data.title='Day scrub · clear → storm → clearing';data.time=start;
+ data.rows=data.rows.map(row=>{
+  const h=((row.time-start)/H%24+24)%24;let index=1;while(anchors[index][0]<h)index++;
+  const [a,av]=anchors[index-1],[b,bv]=anchors[index],f=(h-a)/(b-a),r={...row};
+  for(const k of Object.keys(base))if(Number.isFinite(av[k])&&Number.isFinite(bv[k]))r[k]=av[k]+(bv[k]-av[k])*f;
+  r.weatherCode=h>=11&&h<=16?95:r.rain>.05?61:r.cloud>10?2:0;
+  r.tide=.35*Math.cos((h-9)*Math.PI/6.2);const daylight=Math.max(0,Math.sin((h-6)/12*Math.PI));
+  for(const k of ['radiation','directRadiation','uv','uvClear'])r[k]*=daylight;
+  return r;
+ });
+ data.weatherField.series=data.weatherField.series.map(p=>({...p,rows:data.rows.map(r=>({...r}))}));
+ return data;
+}

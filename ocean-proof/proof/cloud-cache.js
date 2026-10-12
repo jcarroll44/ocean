@@ -7,6 +7,7 @@ import {Texture} from '../vendor/tidewater/src/engine/gpu/Texture.js';
 import {ComputeKernel} from '../vendor/tidewater/src/engine/gpu/Compute.js';
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
 export const CLOUD_BUDGET=Object.freeze({width:256,height:128,rows:2,layers:3,primarySteps:18,shadowSteps:3,refreshMs:3000,fadeMs:400});
+export const SCRUB_CLOUD_BUDGET=Object.freeze({width:128,height:32,rows:4}); // same 512 pixels/frame
 const clone=v=>Array.isArray(v)?v.map(clone):v?.clone?v.clone():v;
 export class CloudSchedule {
  constructor(){this.current=0;this.previous=0;this.staging=1;this.row=0;this.valid=false;this.active=false;this.completedKey=null;this.bakedAt=-Infinity;this.changedAt=-Infinity;this.generations=0;}
@@ -17,20 +18,24 @@ export class CloudSchedule {
 export function createCloudCache(weather){
  const b=CLOUD_BUDGET,schedule=new CloudSchedule();
  const atlas=new Texture({label:'Weather cloud cache',width:b.width,height:b.height,depth:3,dimension:'2d-array',format:'rgba16float',usage:['sample','storage']});
- const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0]});
+ const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0],currentSmall:['f32',0],previousSmall:['f32',0]});
  const module=new ShaderModule({name:'cachedVolumeClouds',uniforms:display,uniformName:'cloudDisplay',bindings:{cloudAtlas:{texture:atlas}},code:`
 fn cachedCloud(dir:vec3f)->vec4f {
  if(cloudDisplay.valid<0.5){return vec4f(0.0);}
  let uv=vec2f(atan2(dir.x,dir.z)/6.2831853+0.5,clamp(sqrt(max(0.0,(asin(clamp(dir.y,-1.0,1.0))+.07)/1.6407963)),.00390625,.99609375));
- let b=textureSampleLevel(cloudAtlas,smpLinearRepeat,uv,cloudDisplay.current,0.0);
+ let bScale=mix(vec2f(1.0),vec2f(.5,.25),cloudDisplay.currentSmall);
+ let bUV=clamp(uv*bScale,vec2f(.001953125,.00390625),bScale-vec2f(.001953125,.00390625));
+ let b=textureSampleLevel(cloudAtlas,smpLinearRepeat,bUV,cloudDisplay.current,0.0);
  if(cloudDisplay.blend>=.999){return b;}
- let a=textureSampleLevel(cloudAtlas,smpLinearRepeat,uv,cloudDisplay.previous,0.0);
+ let aScale=mix(vec2f(1.0),vec2f(.5,.25),cloudDisplay.previousSmall);
+ let aUV=clamp(uv*aScale,vec2f(.001953125,.00390625),aScale-vec2f(.001953125,.00390625));
+ let a=textureSampleLevel(cloudAtlas,smpLinearRepeat,aUV,cloudDisplay.previous,0.0);
  return mix(a,b,cloudDisplay.blend);
 }`});
  const snapshot=new UniformBlock('CloudSnapshot',Object.fromEntries(weather.order.map(k=>[k,[weather.layout[k].typeStr,clone(weather.fields[k].value)]])));
- const bake=new UniformBlock('CloudBake',{row:['u32',0],layer:['i32',1]});
- let kernel,targetKey='initial';
- const api={module,schedule,setKey(key){targetKey=String(key??'live');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,generations:schedule.generations,targetKey,completedKey:schedule.completedKey};},async initialize(){
+ const bake=new UniformBlock('CloudBake',{row:['u32',0],layer:['i32',1],width:['u32',256],height:['u32',128]});
+ let kernel,targetKey='initial',scrubbing=false,work=b;const small=[0,0,0];
+ const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height]};},async initialize(){
   const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(async name=>{const r=await fetch(new URL('./'+name,import.meta.url));if(!r.ok)throw Error('Cloud noise asset unavailable: '+name);return new Uint8Array(await r.arrayBuffer());}));
   if(shape.length!==128**3||detail.length!==32**3)throw Error('Cloud noise asset length mismatch');
   const noise=(label,size,data)=>new Texture({label,width:size,height:size,depth:size,dimension:'3d',format:'r8unorm',data});
@@ -38,14 +43,21 @@ fn cachedCloud(dir:vec3f)->vec4f {
   await GPU.pipelinesReady();
  },step(now=performance.now()){
   if(!kernel)return;
+  // Drop only an unpublished full-resolution generation when a drag begins.
+  // Subsequent changing keys never restart work, so continuous drags cannot
+  // starve publication. Current/previous complete textures remain untouched.
+  if(schedule.active&&scrubbing&&work===b)schedule.active=false;
   if(!schedule.active&&schedule.mix(now)===1&&(!schedule.valid||schedule.completedKey!==targetKey||now-schedule.bakedAt>=b.refreshMs)){
-   schedule.begin(targetKey,now);for(const k of weather.order)snapshot.fields[k].value=clone(weather.fields[k].value);
+   schedule.begin(targetKey,now);work=scrubbing?SCRUB_CLOUD_BUDGET:b;small[schedule.staging]=scrubbing?1:0;
+   bake.fields.width.value=work.width;bake.fields.height.value=work.height;
+   for(const k of weather.order)snapshot.fields[k].value=clone(weather.fields[k].value);
   }
   if(schedule.active){
-   bake.fields.row.value=schedule.row;bake.fields.layer.value=schedule.staging;kernel.dispatch([b.width/8,1]);schedule.row+=b.rows;
-   if(schedule.row>=b.height)schedule.complete(now);
+   bake.fields.row.value=schedule.row;bake.fields.layer.value=schedule.staging;kernel.dispatch([work.width/8,work.rows/2]);schedule.row+=work.rows;
+   if(schedule.row>=work.height)schedule.complete(now);
   }
   display.fields.current.value=schedule.current;display.fields.previous.value=schedule.previous;display.fields.blend.value=schedule.mix(now);display.fields.valid.value=schedule.valid?1:0;
+  display.fields.currentSmall.value=small[schedule.current];display.fields.previousSmall.value=small[schedule.previous];
  },async warm(){
   // Loading only: each stripe has its own submission, so snapshot/row writes
   // cannot alias a later stripe in the same command buffer. Never used in gate.
@@ -92,9 +104,12 @@ fn density(p:vec3f,layer:i32,w:vec3f)->f32 {
  if(layer==2){q*=vec3f(.5,1.0,3.5);}
  let shape=textureSampleLevel(cloudShape,smpLinearRepeat,q,0.0).r;
  // Quantiles measured from the pinned 128^3 asset; cover remains percentage.
- let quantiles=array<f32,17>(0.0,.670588,.705882,.729412,.749020,.764706,.776471,.792157,.803922,.815686,.827451,.843137,.854902,.866667,.886275,.905882,.992157);
+ let quantiles=array<f32,17>(.60,.670588,.705882,.729412,.749020,.764706,.776471,.792157,.803922,.815686,.827451,.843137,.854902,.866667,.886275,.905882,.992157);
  let quant=clamp((1.0-w.x)*16.0,0.0,15.999);let idx=i32(floor(quant));let threshold=mix(quantiles[idx],quantiles[idx+1],fract(quant));
- let profile=smoothstep(0.0,.15,h)*(1.0-smoothstep(.55,1.0,h));
+ // A varying, feathered condensation base avoids a flat opaque slab even at
+ // 100% cover. The volume still closes across multiple cells along the ray.
+ let baseRelief=(1.0-shape)*.38;
+ let profile=smoothstep(baseRelief,baseRelief+.16,h)*(1.0-smoothstep(.55,1.0,h));
  let erosion=textureSampleLevel(cloudErosion,smpLinearRepeat,q*5.7,0.0).r;
  let body=smoothstep(threshold-.04,threshold+.10,shape-(1.0-profile)*.19-(1.0-erosion)*.045);
  return body*profile*mix(.55,1.0,smoothstep(.55,.95,shape))*mix(.55,1.35,clamp(w.y*.5+w.z*.5,0.0,1.0));
@@ -121,7 +136,11 @@ fn marchLayer(rd:vec3f,layer:i32)->vec4f {
   for(var j=0;j<3;j++){let distance=160.0*pow(2.8,f32(j));optical+=density(p+light*distance,layer,w)*distance*extinction;}
   let shadow=exp(-optical);let multiple=.16*exp(-optical*.22);
   let heightLight=.60+.40*smoothstep(base,top,altitude(p));
-  let ambient=mix(vec3f(.040,.054,.079),vec3f(.38,.43,.48)*mix(.62,1.0,weather.energy),weather.daylight)*heightLight*(.72+.28*exp(-d*1.6));
+  // Broad skylight is occluded by the same 3D optical depth as the key light;
+  // retain underside folds in overcast instead of a constant ambient fill.
+  let occlusion=.34+.66*exp(-optical*.50);
+  let city=vec3f(.012,.008,.006)*(1.0-weather.daylight)*(1.0-smoothstep(base,top,altitude(p)));
+  let ambient=(mix(vec3f(.060,.078,.108)*(1.0+moonPower*.35),vec3f(.46,.49,.52)*mix(.62,1.0,weather.energy),weather.daylight)*heightLight+city)*occlusion*(.64+.36*exp(-d*2.2));
   let radiance=ambient+lightColour*direct*(shadow*phase*.50+multiple);
   colour+=trans*alpha*radiance;trans*=1.0-alpha;if(trans<.008){break;}
  }
@@ -129,8 +148,8 @@ fn marchLayer(rd:vec3f,layer:i32)->vec4f {
 }
 @compute @workgroup_size(WG_X,WG_Y,WG_Z)
 fn main(@builtin(global_invocation_id) gid:vec3u){
- let pixel=vec2u(gid.x,bake.row+gid.y);if(pixel.x>=256u||pixel.y>=128u){return;}
- let uv=(vec2f(pixel)+.5)/vec2f(256.0,128.0);let angle=(uv.x-.5)*6.2831853;let elevation=uv.y*uv.y*1.6407963-.07;
+ let pixel=vec2u(gid.x,bake.row+gid.y);if(pixel.x>=bake.width||pixel.y>=bake.height){return;}
+ let uv=(vec2f(pixel)+.5)/vec2f(f32(bake.width),f32(bake.height));let angle=(uv.x-.5)*6.2831853;let elevation=uv.y*uv.y*1.6407963-.07;
  let rd=vec3f(sin(angle)*cos(elevation),sin(elevation),cos(angle)*cos(elevation));
  var result=vec4f(0.0);
  // Front to back: opaque low overcast does not spend time baking hidden

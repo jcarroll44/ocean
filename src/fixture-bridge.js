@@ -9,4 +9,12 @@ window.__daybuoyFixture={apply(data){
  state.fixture=true;state.fixtureTitle=data.title;state.fixtureId=data.id;state.live=false;state.review=false;state.forecastFailed=false;state.forecastLoaded=true;
  state.data=finalize(data);state.data.version=++state.version;state.time=data.time;state.sheet=null;state.dirty=true;weatherPacketCache.key=null;
  stopWatch(true);resetBeach();
-}};
+},beginScrub(){
+ if(!state.fixture)throw Error('Private fixture required');
+ cancelTimeMotion();stopWatch(true);state.scrubbing=true;setDockCompact(true);setSkyView(true);state.dirty=true;
+ return selectedDayBounds();
+},scrubTo(t){
+ if(!state.fixture||!state.scrubbing)throw Error('Fixture scrub must be active');
+ setTime(clampDay(t));
+ return {time:state.time,conditions:conditions(),charm:skyCharm(conditions(),state.time).kind};
+},endScrub(){state.scrubbing=false;setSkyView(false);dockRestoreAt=performance.now()+1500;state.dirty=true;}};

@@ -27,9 +27,16 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  let glow=vec3f(.019,.032,.058)*(1.0+moon*.75)*(1.0+.35*pow(1.0-clamp(dir.y,0.0,1.0),3.0));
  let background=mix(clear,max(clear,glow),night);
  let cloud=cachedCloud(dir);
- var colour=background*(1.0-cloud.a)+cloud.rgb+vec3f(.42,.49,.62)*nativeStormGlow(dir)*cloud.a;
+ // Illuminate the cached volume's folds from within. This reuses its density
+ // and optical-depth shading, not a new noise/raymarch pass per sky pixel.
+ let cloudTone=dot(cloud.rgb,vec3f(.2126,.7152,.0722))/max(cloud.a,.01);
+ let internal=cloud.a*(.16+1.55*smoothstep(.015,.14,cloudTone));
+ var colour=background*(1.0-cloud.a)+cloud.rgb+vec3f(.42,.49,.62)*nativeStormGlow(dir)*internal;
  let hazeDistance=1800.0/(max(dir.y,0.05)+0.12);
- let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*0.8*(1.0-smoothstep(0.0,0.5,dir.y));
+ // Dense ground fog still closes the horizon; elevated rain haze need not
+ // erase the entire cloud deck. Both regimes follow forecast visibility.
+ let fogWeight=mix(.42,1.0,smoothstep(.003,.008,nativeWeather.extinction));
+ let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*fogWeight*(1.0-smoothstep(0.0,0.5,dir.y));
  return mix(colour,nativeFogColour(),haze)+nativeStormBolt(dir);`}
 }`});
  // The same deck must light the sand, stand and reflected ocean, not just the backdrop.
@@ -54,7 +61,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);
   const moon=packet.moon||[0,-1,0];uniforms.fields.moon.value.set(-moon[0],moon[1],-moon[2]);uniforms.fields.moonlight.value=packet.moonlight||0;
-  cache?.setKey(JSON.stringify([f.forecastTime,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]));
+  cache?.setKey(JSON.stringify([f.forecastTime,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]),f.scrubbing);
   const flash=f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
   if(flash>.01&&uniforms.fields.flash.value<=.01){
    this.strikeNumber=(this.strikeNumber||0)+1;

@@ -27,14 +27,24 @@ export async function retryPending(onStatus=()=>{}){
 }
 export function nativeCanvas(win){return win.__daybuoy?.engine?.getSceneCanvas?.()||win.__app?.engine?.canvas||win.document.querySelector('canvas');}
 export async function captureScreenshot(win){
+ if(document.hidden)throw Error('Screenshot interrupted while hidden.');
+ let interrupted=false;
+ const visibility=()=>{if(document.hidden)interrupted=true;};
+ document.addEventListener('visibilitychange',visibility);
+ try{
  const child=win.document.getElementById('tidewater-ocean-layer')?.contentWindow||win;
  const api=child.__daybuoyOcean,canvas=nativeCanvas(win);
  if(!canvas)throw Error('No displayed canvas to capture.');
  const copy=win.document.createElement('canvas');copy.width=canvas.width;copy.height=canvas.height;const ctx=copy.getContext('2d');
  if(api?.draw){
   // Copy synchronously in the successful draw, before WebGPU clears its drawable.
-  await new Promise((resolve,reject)=>{const original=api.draw;const timer=setTimeout(()=>{if(api.draw===wrapped)api.draw=original;reject(Error('Screenshot frame timed out.'));},10000);
-   function wrapped(...args){const result=original.apply(this,args);if(result!==false){try{copy.width=canvas.width;copy.height=canvas.height;ctx.drawImage(canvas,0,0);clearTimeout(timer);api.draw=original;resolve();}catch(error){clearTimeout(timer);api.draw=original;reject(error);}}return result;}api.draw=wrapped;});
+  await new Promise((resolve,reject)=>{const original=api.draw;
+   const clean=()=>{clearTimeout(timer);document.removeEventListener('visibilitychange',hidden);if(api.draw===wrapped)api.draw=original;};
+   const hidden=()=>{if(document.hidden){clean();reject(Error('Screenshot interrupted while hidden.'));}};
+   const timer=setTimeout(()=>{clean();reject(Error('Screenshot frame timed out.'));},10000);
+   function wrapped(...args){const result=original.apply(this,args);if(result!==false){try{if(document.hidden)throw Error('Screenshot interrupted while hidden.');copy.width=canvas.width;copy.height=canvas.height;ctx.drawImage(canvas,0,0);clean();resolve();}catch(error){clean();reject(error);}}return result;}
+   document.addEventListener('visibilitychange',hidden);api.draw=wrapped;});
  }else{await new Promise(resolve=>win.requestAnimationFrame(()=>{ctx.drawImage(canvas,0,0);resolve();}));}
- const blob=await new Promise(resolve=>copy.toBlob(resolve,'image/png'));if(!blob)throw Error('Screenshot export failed.');return blob;
+ const blob=await new Promise(resolve=>copy.toBlob(resolve,'image/png'));if(interrupted||document.hidden)throw Error('Screenshot interrupted while hidden.');if(!blob)throw Error('Screenshot export failed.');return blob;
+ }finally{document.removeEventListener('visibilitychange',visibility);}
 }

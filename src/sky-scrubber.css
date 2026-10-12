@@ -1,0 +1,14 @@
+/* Explicitly approved additive scrubber layer; reference CSS remains verbatim. */
+#week-scrubber .db-line{height:4px;top:9px;border-radius:8px}
+#week-scrubber .sky-charm{left:var(--selected)!important;width:28px;height:28px;top:-3px;border:1px solid #ffffffd9;border-radius:50%;background:#edf4f1;box-shadow:0 2px 9px #15385233;z-index:4;pointer-events:none}
+.sky-charm svg{display:block;width:24px;height:24px;margin:1px;overflow:visible}
+#week-scrubber .sky-charm.moon{background:#273e57}
+.sky-track-extras{position:absolute;inset:0;pointer-events:none}
+.sky-rain-track{position:absolute;left:0;right:0;top:4px;height:12px;border-radius:12px;filter:blur(2px);opacity:.75}
+.sky-tide-mark{position:absolute;top:12px;transform:translateX(-50%);font:500 7px/8px Poppins,sans-serif;color:#315978}
+.sky-tide-mark i{display:block;width:1px;height:3px;background:#528aab;margin:0 auto 1px}
+.sky-tide-mark.low{color:#597587}
+.sky-time-label{position:absolute;left:clamp(9%,var(--selected),91%)!important;top:-32px;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#edf5f3;color:#17394d;font:500 11px/17px Poppins,sans-serif;box-shadow:0 2px 9px #17394d1c;pointer-events:none;z-index:5}
+.sky-track-extras[hidden],.sky-time-label[hidden]{display:none!important}
+#metrics .db-stat b{display:block;font-variant-numeric:tabular-nums}
+@media(prefers-reduced-motion:reduce){.sky-charm,.sky-time-label{transition:none!important}}

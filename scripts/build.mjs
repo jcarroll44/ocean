@@ -17,8 +17,9 @@ html=html.replace('/* DAYBUOY_CELESTIAL */',()=>read('celestial.js'));
 // The scene shaders and all geometry remain byte-for-byte original.
 html=html.replace('new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:', 'new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:');
 html=html.replace('/* DAYBUOY_OVERNIGHT */',()=>read('overnight.js')+'\n'+read('weather-effects.js')+'\n'+read('interaction.js')+'\n'+read('surf.js')+'\n'+read('story.js'));
-html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('weather-scene.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
+html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('sky-scrubber.js')+'\n'+read('weather-scene.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
 html=html.replace('</style>',()=>read('release.css')+'\n</style>');
+html=html.replace('</style>',()=>read('sky-scrubber.css')+'\n</style>');
 html=html.replace('</style>',()=>read('ocean-layer.css')+'\n</style>');
 html=html.replace('window.__ocean=window.__daybuoy;',()=> 'window.__ocean=window.__daybuoy;\n'+read('native-layer.js')+'\nif(!engine?.nativeScene){'+read('ocean-layer.js')+'\n}');
 // Both share paths use the actual displayed ocean. No story/camera edits.
@@ -57,8 +58,10 @@ execFileSync(process.execPath,['scripts/check-integration.mjs'],{stdio:'inherit'
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-release.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-sky-scrubber.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-data.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-gate.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-screenshot-visibility.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-night-storm.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-cloud-cache.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-product-audit.mjs'],{stdio:'inherit'});
