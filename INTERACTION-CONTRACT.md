@@ -410,3 +410,37 @@ Explicit exceptions to the prior appearance/source freeze for this pass:
 Validate cache publication/real WGSL, sky-orb WGSL/shared-source identity, bounded
 readback, real-app DOM state, full-app capture orchestration, and all seven input
 checks. Keep genuine native TestFlight signing steps separate from browser evidence.
+
+## October 12 — overnight complete pass (current authority)
+
+Jacob explicitly authorizes the work on `wip/tidewater-verdict-first`, commits,
+private deployments, dependencies and routine decisions without questions.
+Never commit to main or expose secrets. Preserve the Tidewater pinned vendor,
+approved camera/gestures, teal lips/whitewater, wet-sand lightning, thin rain,
+clear-night astronomy/moon path, overcast, fog and storm solar occlusion.
+
+This request supersedes previous wave-input, terrain, header, tile and orb freezes:
+- Four coherent model wave partitions share Tidewater's existing FFT transforms;
+  real periods/directions and Hs drive them. Typical, labelled two-bar bathymetry
+  drives 0.78-depth breaking with tide, period/steepness and wind shape controls.
+  Regional buoy residuals only provide bounded, disclosed near-now estimates.
+  Optional/absent fields remain unavailable. NOAA tide and MSL are never added.
+- Correct storm horizon aliasing, shelf/rain structure, checkerboard reconstruction,
+  sunrise occluded-swash colour and complete-cloud-cache crossfades. Keep night
+  clear celestial/water lighting exact; never substitute a low-resolution sky.
+- Replace GPU sky orb with 42px custom weather glyphs, real lunar phase,
+  smooth swaps, glass rim/glow and hold growth. Keep time/tide/rain/light/haptics.
+- Calm kicker/meta/update text, quiet High-only rip chip; five tappable icon tiles
+  and all five hourly charts, marine partitions and gust/direction details.
+  Replace generic action with Hour by hour. Debug copy is developer-only.
+- Record all ten weather fixtures plus five wave cases and the full app day
+  scrub. No fabricated captures: unsupported browser rendering remains pending
+  the charged iPhone run. Keep 120 seconds, every second >=30 completed frames,
+  heaviest night storm with new waves. No render/capture/encoding during timing.
+
+Update obsolete source-identity/display assertions narrowly for these explicit
+changes while preserving all seven gesture, data validity and performance gates.
+New checks must cover units/nulls/circular direction, partition energy, regional
+freshness/calibration, bar-depth thresholds, period wavelength, all detail charts,
+true glyph phase and coherent cache publication. TestFlight signing remains Mac
+and Apple-account work; Linux checks do not imply a device or visual pass.

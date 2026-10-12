@@ -16,10 +16,27 @@ export const WEATHER_FIXTURES=Object.freeze([
  {id:'night-storm',title:'Night storm',night:true,offshore:true,values:{cloud:94,cloudLow:82,cloudMid:76,cloudHigh:91,rain:12,rainProbability:95,weatherCode:95,visibility:1600,humidity:97,cape:2400,lightningPotential:12,wind:26,gust:42,swell:6,period:7,tide:.35,uv:0,uvClear:0,radiation:0,directRadiation:0}}
 ]);
 export const HEAVIEST_FIXTURE='night-storm'; // all layers, all rain/surf, 21 storm samples; no daytime deck shortcut
+export const WAVE_FIXTURES=Object.freeze([
+ {id:'wave-small',title:'Small · 1 ft / 3 s',values:{swell:1,period:3,wind:6,gust:8}},
+ {id:'wave-medium',title:'Medium · 3 ft / 7 s',values:{swell:3,period:7,wind:8,gust:11}},
+ {id:'wave-groundswell',title:'Groundswell · 6 ft / 11 s',values:{swell:6,period:11,wind:7,gust:10,windDirection:21}},
+ {id:'wave-onshore',title:'Onshore · blown out',values:{swell:4,period:5,wind:24,gust:31,windDirection:201}},
+ {id:'wave-offshore',title:'Offshore · clean',values:{swell:4,period:9,wind:17,gust:22,windDirection:21}}
+]);
+export function fixturePartitions(row){
+ const height=row.swell*.3048,windFraction=row.period<=4?.88:row.wind>=20?.58:.12,secondary=.12,tertiary=row.swell>=6?.03:0,primary=1-windFraction-secondary-tertiary;
+ const component=(name,energy,period,direction)=>({[name+'_height']:Math.sqrt(Math.max(0,energy))*height,[name+'_period']:period,[name+'_direction']:direction});
+ return {...row,wave_height:height,wave_period:row.period,wave_peak_period:null,wave_direction:row.direction,
+  ...component('wind_wave',windFraction,Math.min(row.period,4.5),row.windDirection),
+  ...component('swell_wave',primary,row.period,row.direction),
+  ...component('secondary_swell_wave',secondary,row.period*.84,row.direction+32),
+  ...component('tertiary_swell_wave',tertiary,row.period*1.22,row.direction-28),
+  ocean_current_velocity:.12,ocean_current_direction:105,sea_level_height_msl:row.tide,marineFixture:true};
+}
 export function fixtureData(id,now=Date.now()){
- const fixture=WEATHER_FIXTURES.find(f=>f.id===id);if(!fixture)throw Error('Unknown weather fixture');
+ const fixture=[...WEATHER_FIXTURES,...WAVE_FIXTURES].find(f=>f.id===id);if(!fixture)throw Error('Unknown weather fixture');
  const time=fixture.time??FIXTURE_DATE+(fixture.night?10:0)*3600000,start=(fixture.time??FIXTURE_DATE)-36*3600000,site={lat:30.28,lon:-86,facing:201};
- const rows=Array.from({length:193},(_,i)=>({time:start+i*3600000,...base,...fixture.values,gate:{low:0,mid:0,high:0,rain:0}}));
+ const rows=Array.from({length:193},(_,i)=>fixturePartitions({time:start+i*3600000,...base,...fixture.values,marineFixture:true,gate:{low:0,mid:0,high:0,rain:0}}));
  const series=[{...site,miles:0,sector:-1,bearing:201},...offshorePoints(site)].map((point,i)=>({...point,grid:{lat:point.lat,lon:point.lon},rows:rows.map(row=>{
   const p={...row};if(i&&fixture.offshore){const near=point.miles===5,approach=id==='squall-approaching',active=!approach||(!near&&Math.abs(point.sector-3)<=1);
    Object.assign(p,{cloud:active?(approach?100:96):35,cloudLow:approach?(active?100:30):row.cloudLow,cloudMid:approach?(active?90:20):row.cloudMid,cloudHigh:approach?(active?80:15):row.cloudHigh,rain:active?12:0,weatherCode:active?95:2,cape:active?2400:0,lightningPotential:active?12:0});
@@ -40,9 +57,10 @@ export function scrubDayData(now=Date.now()){
   const [a,av]=anchors[index-1],[b,bv]=anchors[index],f=(h-a)/(b-a),r={...row};
   for(const k of Object.keys(base))if(Number.isFinite(av[k])&&Number.isFinite(bv[k]))r[k]=av[k]+(bv[k]-av[k])*f;
   r.weatherCode=h>=11&&h<=16?95:r.rain>.05?61:r.cloud>10?2:0;
+  r.temperature=72+10*Math.max(0,Math.sin((h-6)/12*Math.PI))-r.rain*.18;r.apparent=r.temperature+2;r.sst=26.5+.35*Math.sin((h-8)/12*Math.PI);
   r.tide=.35*Math.cos((h-9)*Math.PI/6.2);const daylight=Math.max(0,Math.sin((h-6)/12*Math.PI));
   for(const k of ['radiation','directRadiation','uv','uvClear'])r[k]*=daylight;
-  return r;
+  return fixturePartitions(r);
  });
  data.weatherField.series=data.weatherField.series.map(p=>({...p,rows:data.rows.map(r=>({...r}))}));
  return data;

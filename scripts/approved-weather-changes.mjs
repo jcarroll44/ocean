@@ -3,6 +3,7 @@
 export function applyApprovedWeather(file,source){
  if(file!=='src/native-layer.js')return source;
  return source.replace("Object.fromEntries(['swell','period','direction','wind','windDirection','tide','cloud','rain','cloudLow','cloudMid','cloudHigh'].map(k=>[k,c[k]]))",'weatherScenePacket(c)')
+ .replace("badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';","badge.hidden=!debug;badge.textContent=debug?'Standard ocean · Tidewater unavailable':'';")
  .replace('engine.activateFallback();',"releaseReport('renderer','unavailable');engine.activateFallback();");
 }
 export function applyMissingRain(source){

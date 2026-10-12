@@ -14,8 +14,8 @@ function scrubDayModel(){
 }
 function skyCharm(c,t){
  const night=sunPosition(t).altitude<0,phase=moonPhase(t),rain=Number.isFinite(c.rain)&&c.rain>.05,storm=Number.isFinite(c.thunder)&&c.thunder>.12||c.weatherCode>=95;
- const kind=storm?'lightning':rain?'rain':!Number.isFinite(c.cloud)?'unknown':c.cloud>=85?'overcast':c.cloud>=10?'partly-cloudy':night?'moon':'sun';
- return{kind,fraction:phase.fraction,waxing:phase.waxing,label:(kind==='unknown'?'Weather unavailable':kind.replaceAll('-',' '))+(night?' · Moon '+Math.round(phase.fraction*100)+'% illuminated':'')};
+ const fog=Number.isFinite(c.visibility)&&c.visibility<1000||c.weatherCode===45||c.weatherCode===48,kind=storm?'lightning':fog?'fog':rain?'rain':!Number.isFinite(c.cloud)?'unknown':c.cloud>=85?'overcast':c.cloud>=10?'partly-cloudy':night?'moon':'sun';
+ return{kind,night,fraction:phase.fraction,waxing:phase.waxing,label:(kind==='unknown'?'Weather unavailable':kind.replaceAll('-',' '))+(night?' · Moon '+Math.round(phase.fraction*100)+'% illuminated':'')};
 }
 // Exact current values roll into their existing boxes. There are no fabricated
 // intermediate readings, duplicate text layers or per-digit animation loops.
@@ -48,7 +48,13 @@ renderPresentation=function(){
  const altitude=sunPosition(state.time).altitude;
  thumb.style.setProperty('--orb-glow',altitude< -6?'#c4d9ee70':altitude<8?'#f4c78299':'#a4dafa66');
  thumb.style.setProperty('--orb-base',altitude< -6?'#172b48':c.cloud>=85?'#737e86':altitude<8?'#cba775':'#729fba');
- if(!thumb.querySelector('canvas')){thumb.innerHTML='<canvas class="sky-orb-pixels" width="64" height="64" aria-hidden="true"></canvas>';if(scrubOrbPixels)paintSkyOrb(scrubOrbPixels);}
+ const iconKey=[charm.kind,charm.night,Math.round(charm.fraction*100),charm.waxing].join(':');
+ if(thumb.dataset.iconKey!==iconKey){
+  thumb.querySelector('.is-leaving')?.remove();
+  const old=thumb.querySelector('.sky-weather-icon');if(old){old.classList.add('is-leaving');setTimeout(()=>old.remove(),180);}
+  thumb.insertAdjacentHTML('beforeend',weatherCharmGlyph(charm));thumb.dataset.iconKey=iconKey;
+ }
+ thumb.dataset.ready='true';
  track.setAttribute('aria-valuetext',weekday(state.time)+' '+clock(state.time)+' · '+charm.label);
  track.setAttribute('aria-description',state.fixture?'Synthetic fixture. Rain and tide marks are test data.':'Light track: solar position. Rain forecast: Open-Meteo. H and L: tide times est. · NOAA predictions.');
  track.querySelector('.db-line').style.background=model.gradient;
@@ -61,13 +67,3 @@ renderPresentation=function(){
  tooltip.textContent=weekday(state.time)+' '+clock(state.time);tooltip.style.left=clamp(model.pct(state.time),9,91)+'%';
 };
 
-// A 64px readback from the existing WebGPU device, at most one in flight.
-// Cache it across UI state changes; never substitute an icon or weather picture.
-let scrubOrbPixels=null;
-function paintSkyOrb(data){
- const canvas=document.querySelector('.sky-orb-pixels');if(!canvas||typeof ImageData==='undefined')return;
- const ctx=canvas.getContext('2d');if(!ctx)return;
- ctx.putImageData(new ImageData(new Uint8ClampedArray(data.bytes),data.width,data.height),0,0);
- canvas.dataset.sequence=String(data.sequence);canvas.parentElement.dataset.ready='true';
-}
-window.__daybuoySkyOrb=data=>{scrubOrbPixels=data;paintSkyOrb(data);};

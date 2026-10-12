@@ -22,7 +22,7 @@ if(engine?.nativeScene){
  $('#app').prepend(host);badge.textContent='Loading native beach…';
  let ready=false,failed=false,first=true;
  const send=d=>{if(profiling)parent.postMessage({...d,type:'daybuoy-profile'},location.origin);};
- const fallback=reason=>{if(failed)return;failed=true;ready=false;host.remove();canvas.style.opacity='1';proof.backend='WebGL fallback';proof.error=reason;badge.hidden=false;badge.textContent='Standard ocean · Tidewater unavailable';badge.title=reason;releaseReport('renderer','unavailable');engine.activateFallback();send({status:'failed',reason});};
+ const fallback=reason=>{if(failed)return;failed=true;ready=false;host.remove();canvas.style.opacity='1';proof.backend='WebGL fallback';proof.error=reason;badge.hidden=!debug;badge.textContent=debug?'Standard ocean · Tidewater unavailable':'';badge.title=reason;releaseReport('renderer','unavailable');engine.activateFallback();send({status:'failed',reason});};
  const timeout=setTimeout(()=>{if(!ready)fallback('Native beach initialization timed out');},180000);
  if(profiling){
   // Wrap the existing callback only in diagnostics; original UI/camera source

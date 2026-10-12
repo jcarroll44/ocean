@@ -40,7 +40,7 @@ export function measureLiveCadence(proof,{validate,onProgress=()=>{},seconds=20,
  });
 }
 
-export function recordLiveCanvas(canvas,{validate,duration=10}={}){
+export function recordLiveCanvas(canvas,{validate,duration=10,videoBitsPerSecond=6000000}={}){
  if(!globalThis.MediaRecorder||typeof canvas.captureStream!=='function')throw Error('Canvas recording unavailable. Use iPhone Screen Recording on the live app.');
  const type=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm'].find(t=>MediaRecorder.isTypeSupported(t));
  if(!type)throw Error('Recording codec unavailable. Use iPhone Screen Recording on the live app.');
@@ -52,10 +52,10 @@ export function recordLiveCanvas(canvas,{validate,duration=10}={}){
   const abort=message=>{if(done)return;done=true;if(recorder?.state==='recording')recorder.stop();clean();reject(Error(message));};
   const hidden=()=>{if(document.hidden)abort('Recording discarded: keep this page visible.');};
   try{
-   recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:6000000});
+   recorder=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond});
    recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};
    recorder.onerror=e=>abort(e.error?.message||'Recording failed.');
-   recorder.onstop=()=>{if(done)return;done=true;clean();if(!chunks.length){reject(Error('No video was produced. Use iPhone Screen Recording.'));return;}resolve({blob:new Blob(chunks,{type:recorder.mimeType}),extension:type.startsWith('video/mp4')?'mp4':'webm',duration:(performance.now()-started)/1000,initialResolution:size,captureRateRequested:30,note:'Real device canvas recording. Encoder output rate is not GPU-completed or display FPS. Adaptive DPR remains enabled and may change during capture.'});};
+   recorder.onstop=()=>{if(done)return;done=true;clean();if(!chunks.length){reject(Error('No video was produced. Use iPhone Screen Recording.'));return;}resolve({blob:new Blob(chunks,{type:recorder.mimeType}),extension:type.startsWith('video/mp4')?'mp4':'webm',duration:(performance.now()-started)/1000,initialResolution:size,captureRateRequested:30,videoBitsPerSecondRequested:videoBitsPerSecond,note:'Real device canvas recording. Encoder output rate is not GPU-completed or display FPS. Adaptive DPR remains enabled and may change during capture.'});};
    document.addEventListener('visibilitychange',hidden);
    recorder.start(1000);timer=setTimeout(()=>recorder.stop(),duration*1000);
    check=setInterval(()=>{try{validate();}catch(e){abort(e.message);}},500);

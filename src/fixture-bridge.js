@@ -3,7 +3,7 @@ const fixtureRealForecast=realForecast,fixtureAdopt=adopt,fixtureRefresh=refresh
 realForecast=function(){return state.data?.source==='fixture'&&state.fixture===true||fixtureRealForecast();};
 adopt=function(data){if(state.fixture)return;fixtureAdopt(data);};
 refresh=async function(){if(state.fixture)return;return fixtureRefresh();};
-renderPresentation=function(){fixturePresentation();if(state.fixture){$('#source-label').textContent='FIXTURE · '+state.fixtureTitle;const b=$('#reference-banner');b.hidden=false;b.textContent='Synthetic weather fixture · not a live forecast';}};
+renderPresentation=function(){fixturePresentation();if(state.fixture&&new URLSearchParams(location.search).get('ocean-debug')==='1'){$('#app').dataset.developer='true';$('#source-label').textContent='FIXTURE · '+state.fixtureTitle;const b=$('#reference-banner');b.hidden=false;b.textContent='Synthetic weather fixture · not a live forecast';}};
 window.__daybuoyFixture={apply(data){
  if(data?.source!=='fixture'||data.fixture!==true||!Array.isArray(data.rows)||data.rows.length!==193||!Number.isFinite(data.time))throw Error('Invalid private fixture');
  state.fixture=true;state.fixtureTitle=data.title;state.fixtureId=data.id;state.live=false;state.review=false;state.forecastFailed=false;state.forecastLoaded=true;

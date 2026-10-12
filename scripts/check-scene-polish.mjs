@@ -44,9 +44,13 @@ for(const altitude of [-20,0,50])for(const cloud of [0,.34,34,90])for(const risk
 }
 assert(read('src/presentation.js').includes("'Forecast updated '+updated"));
 // Pinned implementation, physical input mapping, material and camera stay exact.
-for(const prefix of ['ocean-proof/vendor/tidewater/','ocean-proof/proof/forecast.js','src/camera.js','src/interaction.js']){
+for(const prefix of ['ocean-proof/vendor/tidewater/','src/camera.js','src/interaction.js']){
  // The old local-only commit was never published. Use its published pre-polish
  // predecessor: all four frozen paths are byte-identical (vendor tree f0d73bdc).
  const changes=execFileSync('git',['diff','532dfcfccf30e65f9cca41b7bcefa2abb9537618','--',prefix],{encoding:'utf8'});assert.equal(changes,'',prefix);
 }
+// October 12 explicitly authorizes an additive forecast spectrum adapter.
+const originalForecast=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:ocean-proof/proof/forecast.js'],{encoding:'utf8'});
+const baseForecast=read('ocean-proof/proof/forecast.js').replace("import {applyWaveSpectrum} from './forecast-waves.js';\n",'').replace(/ if\(app\.forecastSurf\)\{[\s\S]*?\n \}\n/,'');
+assert.equal(baseForecast,originalForecast,'Original physical mapping remains exact outside the authorized wave adapter');
 console.log('PASS: daytime unlit moon, historical cloud calibration, forecast percent units, shared cached-cloud reflections, bounded small shore surf, H/2 retained, flare off, DPR 36, condition-only copy and NWS disclosure. CPU/source only; no new phone FPS or pixels.');

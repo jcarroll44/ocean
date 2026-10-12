@@ -12,7 +12,12 @@ export function installWeatherSurfaces(app,beach){
  // The atmosphere CPU readback trails fast scrubs. Sample the current sky for
  // the swash's occluded reflection instead of retaining an orange old horizon.
  water.output=replace(water.output,'var reflCol = mix( frame.horizonColor * 0.35, skyRefl, horizonOcc );',`var edgeHorizon=frame.horizonColor;
- if(nativeWeather.transition>.001&&horizonOcc<.999){edgeHorizon=mix(edgeHorizon,skyReflectionRadiance(normalize(vec3f(R.x,.04,R.z))),nativeWeather.transition);}
+ if(horizonOcc<.999){
+  let dawn=(1.0-nativeWeather.afternoon)*smoothstep(-.02,.06,nativeWeather.sun.y)*(1.0-smoothstep(.08,.25,nativeWeather.sun.y));
+  // Occluded swash receives broad sky light, never the low solar disc's HDR red.
+  // Keep the direct Fresnel sun path and all clear-night reflections unchanged.
+  if(max(nativeWeather.transition,dawn)>.001){edgeHorizon=mix(edgeHorizon,skyReflectionRadiance(normalize(vec3f(R.x,.65,R.z))),max(nativeWeather.transition,dawn));}
+ }
  var reflCol=mix(edgeHorizon*.35,skyRefl,horizonOcc);`);
  water.output=replace(water.output,'let Nup = normalize( mix( surf.normal,','let Nup = normalize( mix( normalize(surf.normal + nativeRainNormal(pos)),');
  water.output=replace(water.output,'var sunLight = frame.sunColor * sunShadowPCF','var sunLight = frame.sunColor * nativeCloudShadow(pos) * sunShadowPCF');

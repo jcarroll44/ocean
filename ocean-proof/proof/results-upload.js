@@ -26,7 +26,7 @@ export async function retryPending(onStatus=()=>{}){
  for(const bundle of list){try{await send(bundle,onStatus);}catch(error){onStatus('Previous results are saved here; upload will retry next time.');break;}}
 }
 export function nativeCanvas(win){return win.__daybuoy?.engine?.getSceneCanvas?.()||win.__app?.engine?.canvas||win.document.querySelector('canvas');}
-export async function captureScreenshot(win){
+export async function captureScreenshot(win,{type='image/png',quality=.88}={}){
  if(document.hidden)throw Error('Screenshot interrupted while hidden.');
  let interrupted=false;
  const visibility=()=>{if(document.hidden)interrupted=true;};
@@ -45,6 +45,6 @@ export async function captureScreenshot(win){
    function wrapped(...args){const result=original.apply(this,args);if(result!==false){try{if(document.hidden)throw Error('Screenshot interrupted while hidden.');copy.width=canvas.width;copy.height=canvas.height;ctx.drawImage(canvas,0,0);clean();resolve();}catch(error){clean();reject(error);}}return result;}
    document.addEventListener('visibilitychange',hidden);api.draw=wrapped;});
  }else{await new Promise(resolve=>win.requestAnimationFrame(()=>{ctx.drawImage(canvas,0,0);resolve();}));}
- const blob=await new Promise(resolve=>copy.toBlob(resolve,'image/png'));if(interrupted||document.hidden)throw Error('Screenshot interrupted while hidden.');if(!blob)throw Error('Screenshot export failed.');return blob;
+ const blob=await new Promise(resolve=>copy.toBlob(resolve,type,quality));if(interrupted||document.hidden)throw Error('Screenshot interrupted while hidden.');if(!blob)throw Error('Screenshot export failed.');return blob;
  }finally{document.removeEventListener('visibilitychange',visibility);}
 }

@@ -14,4 +14,5 @@ for(const failure of [false,true]){
  capture.stop();assert.equal(api.draw,original,'Always restore actual native draw hook');
 }
 assert(!fs.readFileSync('ocean-proof/proof/scrub-evidence.js','utf8').includes('recordLiveCanvas(app.engine.getSceneCanvas()'),'Full day must record the actual UI composite');
+assert(fs.readFileSync('ocean-proof/proof/scrub-evidence.js','utf8').includes('videoBitsPerSecond:2400000'));assert(24*2400000/8<8*1024*1024,'Full-app requested video payload stays below the 12 MB per-file cap with headroom');
 console.log('PASS: live scene + actual DOM/orb composition, raster failure propagation, hidden rejection and draw restoration. Mock canvas; rendered iPhone clip pending.');

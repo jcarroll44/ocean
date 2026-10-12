@@ -33,19 +33,14 @@ fn nativeOvercastBackground()->vec3f {
  return mix(vec3f(.030,.036,.047),vec3f(.28,.285,.29)*(.7+.3*nativeWeather.energy),nativeWeather.daylight);
 }
 fn nativeHorizonColour(dir:vec3f)->vec3f {
- // Sample the actual horizon cloud/rain column, not a white fog stripe.
- // Only the narrow weather horizon uses this extra atlas lookup.
- let ray=normalize(vec3f(dir.x,0.0,dir.z));let cloud=cachedCloud(ray);
- let base=mix(mix(vec3f(.012,.027,.072),vec3f(.23,.44,.62),nativeWeather.daylight),nativeOvercastBackground(),nativeWeather.closed);
- let tone=dot(cloud.rgb,vec3f(.2126,.7152,.0722))/max(cloud.a,.01);
- let internal=cloud.a*(.16+1.55*smoothstep(.015,.14,tone));
- let colour=base*(1.0-cloud.a)+cloud.rgb+vec3f(.42,.49,.62)*nativeStormGlow(ray)*internal;
- let haze=(1.0-exp(-nativeWeather.extinction*(1800.0/.17)))*mix(.42,1.0,smoothstep(.003,.008,nativeWeather.extinction));
- return mix(colour,nativeFogColour(),max(nativeWeather.fog,haze));
+ // At grazing angles kilometres of haze erase individual cloud columns.
+ // A shared broad tone avoids magnifying one atlas row into comb stripes.
+ let tone=mix(nativeOvercastBackground(),nativeFogColour(),.58);
+ return tone+vec3f(.035,.043,.055)*nativeStormGlow(dir);
 }
 fn nativeHorizonBlend(dir:vec3f)->f32 {
  let weather=max(1.0-exp(-nativeWeather.extinction*60000.0),max(nativeWeather.closed,max(nativeWeather.fog,nativeWeather.storm)));
- return weather*(1.0-smoothstep(0.0,.014,abs(dir.y)));
+ return weather*(1.0-smoothstep(0.0,.055,abs(dir.y)));
 }
 fn nativeSandLight(col:vec3f,P:vec3f)->vec3f {
  // Quartz sand retains a warm neutral diffuse response under a cloud deck.

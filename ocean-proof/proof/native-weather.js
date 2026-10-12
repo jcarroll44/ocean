@@ -47,8 +47,8 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*fogWeight*(1.0-smoothstep(0.0,0.5,dir.y));
  let fog=max(nativeWeather.fog,max(haze,nativeHorizonBlend(dir)));
  var result=mix(colour,nativeFogColour(),fog);
- if(nativeWeather.horizonWeather>.001&&nativeWeather.fog<.999&&abs(dir.y)<.035){
-  result=mix(result,nativeHorizonColour(dir),nativeWeather.horizonWeather*(1.0-smoothstep(0.0,.035,abs(dir.y))));
+ if(nativeWeather.horizonWeather>.001&&nativeWeather.fog<.999&&abs(dir.y)<.075){
+  result=mix(result,nativeHorizonColour(dir),nativeWeather.horizonWeather*(1.0-smoothstep(0.0,.075,abs(dir.y))));
  }
  return result+nativeStormBolt(dir)*(1.0-nativeWeather.fog);`}
 }`});

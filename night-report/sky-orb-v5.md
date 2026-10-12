@@ -22,7 +22,8 @@ Changes:
   requests and rolling actual readings verified in the real built UI under Node DOM.
 - Full-app 24 s day recording after the FPS gate: actual DOM/orb over the native
   drawable. This is a DOM/scene composite, not an OS recording; backdrop blur can
-  differ. Raster errors are reported, never replaced by a scene-only video.
+  differ. At CSS phone resolution the 24 s clip requests 2.4 Mbps (~7.2 MB),
+  leaving room under the existing 12 MB/file and 24 MB/bundle upload caps. Raster errors are reported, never replaced by a scene-only video.
 
 Validation completed:
 - All seven registered input/geometry contract checks and full build passed.

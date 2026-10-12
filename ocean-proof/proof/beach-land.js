@@ -7,7 +7,17 @@ export function coastalHeight(x,z){
  const ridge=2.2+1.7*Math.exp(-(((z-50-7*Math.sin(x*.035))/17)**2));
  return shore*(1-ease)+ridge*ease;
 }
-export function createBeachTerrain(){
+// Typical Gulf two-sandbar profile, NOT a surveyed Inlet Beach seabed.
+// Keep the approved dry beach/swash slope; only submerged terrain changes.
+export function barredHeight(x,z){
+ const distance=-z-3.5;if(distance<=7)return coastalHeight(x,z);
+ const ramp=Math.min(1,(distance-7)/8),blend=ramp*ramp*(3-2*ramp);
+ const along=.8*Math.sin(x*.017)+.35*Math.sin(x*.063);
+ const inner=45+along*3,outer=125+along*6;
+ const depth=.65+distance*.022- .68*Math.exp(-(((distance-inner)/13)**2))-1.05*Math.exp(-(((distance-outer)/25)**2));
+ return coastalHeight(x,z)*(1-blend)-depth*blend;
+}
+export function createBeachTerrain({bars=false}={}){
  const t=Object.create(TerrainData.prototype);
  Object.assign(t,{size:2048,res:512,texel:4,origin:-1024,pads:[],rockSites:[]});
  const n=t.res*t.res;t.heights=new Float32Array(n);t.rock=new Float32Array(n);
@@ -17,7 +27,7 @@ export function createBeachTerrain(){
   const x=t.origin+(i+.5)*t.texel,z=t.origin+(j+.5)*t.texel;
   // Native coordinates are DayBuoy rotated 180 degrees. Cap distant inland
   // ground at a low dune; the entire visible foreshore keeps the old slope.
-  t.heights[j*t.res+i]=Math.max(-90,Math.min(4,coastalHeight(-x,-z)));
+  t.heights[j*t.res+i]=Math.max(-90,Math.min(4,(bars?barredHeight(-x,-z):coastalHeight(-x,-z))));
  }
  t.buildMinMax();return t;
 }

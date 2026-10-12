@@ -1,6 +1,6 @@
 /* Explicitly approved additive scrubber layer; reference CSS remains verbatim. */
 #week-scrubber .db-line{height:4px;top:9px;border-radius:8px}
-#week-scrubber .sky-charm{left:var(--selected)!important;width:30px;height:30px;top:-4px;border:1px solid #ffffffdf;border-radius:50%;background:var(--orb-base,#7e9eaf);box-shadow:0 2px 7px #102b4133,0 0 10px var(--orb-glow,#b0d6e766);z-index:4;pointer-events:none;overflow:hidden;transform:translateX(-50%) scale(1);transition:transform 220ms cubic-bezier(.2,.8,.25,1),box-shadow 220ms ease}
+#week-scrubber .sky-charm{left:var(--selected)!important;width:42px;height:42px;top:-10px;border:1px solid #ffffffdf;border-radius:50%;background:var(--orb-base,#7e9eaf);box-shadow:0 2px 7px #102b4133,0 0 10px var(--orb-glow,#b0d6e766);z-index:4;pointer-events:none;overflow:hidden;transform:translateX(-50%) scale(1);transition:transform 220ms cubic-bezier(.2,.8,.25,1),box-shadow 220ms ease}
 #week-scrubber .sky-charm.is-dragging{transform:translateX(-50%) scale(1.17);box-shadow:0 5px 13px #102b414d,0 0 16px var(--orb-glow)}
 .sky-charm .sky-orb-pixels{display:block;width:100%;height:100%;border-radius:50%;opacity:0}
 .sky-charm[data-ready=true] .sky-orb-pixels{opacity:1}
@@ -11,7 +11,9 @@
 .sky-tide-mark{position:absolute;top:12px;transform:translateX(-50%);font:500 7px/8px Poppins,sans-serif;color:#315978}
 .sky-tide-mark i{display:block;width:1px;height:3px;background:#528aab;margin:0 auto 1px}
 .sky-tide-mark.low{color:#597587}
-.sky-time-label{position:absolute;left:clamp(9%,var(--selected),91%)!important;top:-39px;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#edf5f3;color:#17394d;font:500 11px/17px Poppins,sans-serif;box-shadow:0 2px 9px #17394d1c;pointer-events:none;z-index:5}
+.sky-time-label{position:absolute;left:clamp(9%,var(--selected),91%)!important;top:-45px;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#edf5f3;color:#17394d;font:500 11px/17px Poppins,sans-serif;box-shadow:0 2px 9px #17394d1c;pointer-events:none;z-index:5}
 .sky-track-extras[hidden],.sky-time-label[hidden]{display:none!important}
 #metrics .db-stat b{display:block;font-variant-numeric:tabular-nums}
 @media(prefers-reduced-motion:reduce){.sky-charm,.sky-time-label{transition:none!important}}
+
+.sky-weather-icon{position:absolute;inset:0;width:100%;height:100%;animation:weather-in 180ms ease-out both}.sky-weather-icon.is-leaving{animation:weather-out 180ms ease-in both} @keyframes weather-in{from{opacity:0;transform:scale(.87)}to{opacity:1;transform:scale(1)}}@keyframes weather-out{to{opacity:0;transform:scale(1.06)}}@media(prefers-reduced-motion:reduce){.sky-weather-icon{animation:none}.sky-weather-icon.is-leaving{display:none}}

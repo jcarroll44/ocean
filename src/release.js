@@ -22,7 +22,10 @@ parseSurfProduct=function(product,now=Date.now()){
   const before=offset(headers[i-1][1]),after=offset(headers[i+1][1]);
   if(before!==null&&after===before+2){const name=weekdays[(base+before+1)%7];text=text.slice(0,h.index)+'.'+name+'...'+text.slice(h.index+h[0].length);}
  }
- return releaseBase.parseSurfProduct({...product,productText:text},now);
+ const result=releaseBase.parseSurfProduct({...product,productText:text},now);
+ const section=text.split(/\n\$\$\s*(?:\n|$)/).find(s=>/^FLZ108(?:-|>)/m.test(s)&&/South Walton/i.test(s));
+ if(section){const hs=[...section.matchAll(/^\.([A-Z][A-Z ]*)\.\.\./gm)];for(let i=0;i<hs.length;i++){const body=section.slice(hs[i].index+hs[i][0].length,hs[i+1]?.index??section.indexOf('\n&&',hs[i].index));const range=__mods['marine-data.js']?.surfHeightRange(body);const period=result.periods.find(p=>p.label===hs[i][1]);if(range&&period)period.breakers=range;}}
+ return result;
 };
 loadRipForecast=async function(){
  if(Date.now()-surfRequestedAt<15*MIN)return;surfRequestedAt=Date.now();

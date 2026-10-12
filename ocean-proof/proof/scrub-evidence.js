@@ -3,6 +3,7 @@ import {fullAppCapture} from './full-app-capture.js';
 export async function recordDayScrub(win,{duration=24,onProgress=()=>{}}={}){
  const app=win.__daybuoy,bridge=win.__daybuoyFixture;
  if(app?.state?.fixtureId!=='scrub-day')throw Error('Synthetic day-scrub fixture required.');
+ win.document.getElementById('app').dataset.recordingFull='true';
  const bounds=bridge.beginScrub(),samples=[];let request=0,active=true,last=-Infinity,capture;
  try{
   bridge.scrubTo(bounds.start);app.renderUI();capture=await fullAppCapture(win);const start=performance.now();
@@ -10,15 +11,15 @@ export async function recordDayScrub(win,{duration=24,onProgress=()=>{}}={}){
    if(!active)return;
    const fraction=Math.max(0,Math.min(1,(now-start)/(duration*1000))),time=bounds.start+fraction*(bounds.end-bounds.start-1);
    const snapshot=bridge.scrubTo(time);
-   if(now-last>=100){last=now;samples.push({...snapshot,at:now-start,weather:liveOcean(win).evidence().weather,displayed:{time:win.document.querySelector('.sky-time-label')?.textContent,stats:win.document.querySelector('#compact-values')?.textContent,orbSequence:win.document.querySelector('.sky-orb-pixels')?.dataset.sequence}});onProgress('Recording full app · day scrub · '+Math.min(duration,Math.floor((now-start)/1000))+' / '+duration+' s');}
+   if(now-last>=100){last=now;samples.push({...snapshot,at:now-start,weather:liveOcean(win).evidence().weather,displayed:{time:win.document.querySelector('.sky-time-label')?.textContent,stats:win.document.querySelector('#compact-values')?.textContent,weatherIcon:win.document.querySelector('.sky-charm')?.dataset.iconKey}});onProgress('Recording full app · day scrub · '+Math.min(duration,Math.floor((now-start)/1000))+' / '+duration+' s');}
    request=requestAnimationFrame(advance);
   };
   const validate=()=>{capture.validate();if(app.state.fixtureId!=='scrub-day'||!app.state.scrubbing)throw Error('Day-scrub fixture changed.');};
   request=requestAnimationFrame(advance);
   // First recording frame must already contain both scene and UI.
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-  const clip=await recordLiveCanvas(capture.canvas,{duration,validate}),composition=capture.state();
+  const clip=await recordLiveCanvas(capture.canvas,{duration,validate,videoBitsPerSecond:2400000}),composition=capture.state();
   if(composition.uiFrames<2||composition.sceneFrames<2)throw Error('Full-app recording did not update.');
-  return{...clip,samples,composition,range:[bounds.start,bounds.end-1],note:'Actual full app: live WebGPU scene composited with rasterized live DOM, including sky orb, light/rain/tide track and rolling values. One forecast hour per second. Synthetic clear → storm → clearing → night. Not an OS screen recording; backdrop blur can differ in DOM capture. No FPS measurement during encoding.'};
- }finally{active=false;cancelAnimationFrame(request);capture?.stop();bridge.endScrub();}
+  return{...clip,samples,composition,range:[bounds.start,bounds.end-1],note:'Actual full app: live WebGPU scene composited with rasterized live DOM, including weather glyph, light/rain/tide track and rolling values. One forecast hour per second. Synthetic clear → storm → clearing → night. Not an OS screen recording; backdrop blur can differ in DOM capture. Full UI held expanded for inspection. No FPS measurement during encoding.'};
+ }finally{active=false;cancelAnimationFrame(request);capture?.stop();delete win.document.getElementById('app').dataset.recordingFull;bridge.endScrub();}
 }

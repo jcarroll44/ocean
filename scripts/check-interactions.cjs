@@ -2,6 +2,10 @@
 // DOM and forecast fixtures are synthetic; this is not a browser/FPS test.
 const fs=require('fs'),vm=require('vm'),assert=require('assert'),crypto=require('crypto');
 const read=p=>fs.readFileSync(p,'utf8'),input=read('src/interaction.js'),cameraCode=read('src/camera.js');
+// Keep the clock inside this synthetic forecast; the regression must not expire
+// with wall-clock date. The live-return assertion and all seven gestures stay exact.
+const fixedNow=Date.parse('2026-10-08T17:00:00Z');
+class TestDate extends Date{constructor(...args){super(...(args.length?args:[fixedNow]));}static now(){return fixedNow;}}
 const listeners=new Map(),elements=new Map();let now=2000;
 class Element{
  constructor(key){this.key=key;this.dataset={};this.style={setProperty(){}};this.hidden=false;this.handlers={};this.classList={add(){},remove(){},toggle(){},contains(){return false;}};}
@@ -12,7 +16,7 @@ class Element{
 }
 const $=key=>elements.get(key)||elements.set(key,new Element(key)).get(key);
 const doc={addEventListener(type,fn,options){const capture=options===true||options?.capture===true;(listeners.get(type)||listeners.set(type,[]).get(type)).push({fn,capture});},querySelector:$};
-const c={console,URLSearchParams,TextDecoder,Math,Map,Date,document:doc,window:{},navigator:{},performance:{now:()=>now},innerWidth:390,innerHeight:844,$};vm.createContext(c);
+const c={console,URLSearchParams,TextDecoder,Math,Map,Date:TestDate,document:doc,window:{},navigator:{},performance:{now:()=>now},innerWidth:390,innerHeight:844,$};vm.createContext(c);
 const run=s=>vm.runInContext(s,c);run(read('src/scene-data.js'));
 const THREE=c.__mods['three.module.js'],astro=c.__mods['astro.js'],SITE=c.__mods['config.js'].SITE;Object.assign(SITE,{lat:30.28,lon:-86});
 const H=3600000,RAD=Math.PI/180,base=Date.parse('2026-10-05T00:00:00-05:00'),camera=new THREE.PerspectiveCamera(55,390/844,.3,20000);
@@ -68,7 +72,7 @@ pass('Pinch zooms; double-tap resets','Two pointers, 35–80° limits, lift/canc
 reset();run("openSheet('water')");tick(900);start=pose();time=c.state.time;dispatch('pointerdown','[data-ribbon]',150,700);now+=100;dispatch('pointermove','[data-ribbon]',190,700);tick(90);assert(c.state.time!==time);assert(Math.abs(pose().yaw)<.00001);assert(Math.hypot(pose().x-start.x,pose().y-start.y,pose().z-start.z)<.001);assert.equal(run('peekKind'),'water');dispatch('pointerup','[data-ribbon]',190,700);tick(500);assert.equal(run('peekKind'),'water');
 pass('Water sheet: scrub tide → camera stays on water','Water pose remains fixed; selected time changes; 170 px peek state persists after release.');
 
-reset();dispatch('pointerdown','#ocean',100,400);now+=50;dispatch('pointermove','#ocean',160,430);dispatch('pointerup','#ocean',160,430);run('backToNow()');tick(100);assert.equal(c.state.live,true);assert.equal(c.state.userLook,null);assert.equal(c.state.timeCameraHeld,false);assert(Math.abs(c.state.time-Date.now())<2000);assert(Math.abs(pose().yaw)<.0001);assert.equal(run('timeMotion'),null);
+reset();dispatch('pointerdown','#ocean',100,400);now+=50;dispatch('pointermove','#ocean',160,430);dispatch('pointerup','#ocean',160,430);run('backToNow()');tick(100);assert.equal(c.state.live,true);assert.equal(c.state.userLook,null);assert.equal(c.state.timeCameraHeld,false);assert(Math.abs(c.state.time-TestDate.now())<2000);assert(Math.abs(pose().yaw)<.0001);assert.equal(run('timeMotion'),null);
 pass('Back to now → live','Clears held look, inertia and time motion; returns default home heading and live time.');
 
 reset();dispatch('pointerdown','#ocean',80,420);now+=60;dispatch('pointermove','#ocean',140,445);dispatch('pointerup','#ocean',140,445);tick(80);const preWatch=pose(),preTime=c.state.time;

@@ -1,3 +1,4 @@
+import {applyWaveSpectrum} from './forecast-waves.js';
 // Unit conversion and coordinate mapping only; no reconstructed ocean shader.
 export const FT_TO_M=.3048, KNOT_TO_MPS=.514444;
 export function marineInput(c){
@@ -22,5 +23,9 @@ export function applyMarine(app,G,c){
  app.fft.params.set('sysB',app.fft.params.fields.sysB.value);app.fft.needsSpectrum=true;
  G.windSpeed.value=p.windMps;G.windDir.value.set(...p.windVector);G.seaLevel.value=p.tide;
  if(app.clouds&&p.cloud!==null)app.clouds.coverage.value=p.cloud;
+ if(app.forecastSurf){
+  const model=applyWaveSpectrum(app,G,c),angle=(model.direction-201)*Math.PI/180;
+  Object.assign(p,{heightM:model.height,amplitude:app.shore.amplitude.value,period:model.period,propagation:[Math.sin(angle),-Math.cos(angle)],waves:model});
+ }
  app.marine=p;return true;
 }

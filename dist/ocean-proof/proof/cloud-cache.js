@@ -20,14 +20,29 @@ export function createCloudCache(weather,prepareSnapshot=()=>{}){
  const atlas=new Texture({label:'Weather cloud cache',width:b.width,height:b.height,depth:3,dimension:'2d-array',format:'rgba16float',usage:['sample','storage']});
  const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0],currentEmpty:['f32',0],previousEmpty:['f32',0]});
  const module=new ShaderModule({name:'cachedVolumeClouds',uniforms:display,uniformName:'cloudDisplay',bindings:{cloudAtlas:{texture:atlas}},code:`
+fn cloudReconstruct(uv:vec2f,layer:i32)->vec4f {
+ // Four bilinear taps reconstruct a smooth cubic footprint from a COMPLETE
+ // atlas. No nearest-neighbour cells and no extra raymarch at display time.
+ let size=vec2f(512.0,128.0);let p=uv*size-.5;let cell=floor(p);let f=fract(p);
+ let w0=pow(1.0-f,vec2f(3.0))/6.0;
+ let w1=(3.0*f*f*f-6.0*f*f+4.0)/6.0;
+ let w2=(-3.0*f*f*f+3.0*f*f+3.0*f+1.0)/6.0;
+ let w3=f*f*f/6.0;let g0=w0+w1;let g1=w2+w3;
+ let a=(cell-1.0+w1/g0+.5)/size;let b=(cell+1.0+w3/g1+.5)/size;
+ let ay=clamp(a.y,.00390625,.99609375);let by=clamp(b.y,.00390625,.99609375);
+ return textureSampleLevel(cloudAtlas,smpLinearRepeat,vec2f(a.x,ay),layer,0.0)*g0.x*g0.y
+  +textureSampleLevel(cloudAtlas,smpLinearRepeat,vec2f(b.x,ay),layer,0.0)*g1.x*g0.y
+  +textureSampleLevel(cloudAtlas,smpLinearRepeat,vec2f(a.x,by),layer,0.0)*g0.x*g1.y
+  +textureSampleLevel(cloudAtlas,smpLinearRepeat,vec2f(b.x,by),layer,0.0)*g1.x*g1.y;
+}
 fn cachedCloud(dir:vec3f)->vec4f {
  if(cloudDisplay.valid<0.5||(cloudDisplay.currentEmpty>.5&&cloudDisplay.blend>=.999)){return vec4f(0.0);}
  let uv=vec2f(atan2(dir.x,dir.z)/6.2831853+0.5,clamp(sqrt(max(0.0,(asin(clamp(dir.y,-1.0,1.0))+.07)/1.6407963)),.00390625,.99609375));
  let bUV=clamp(uv,vec2f(.0009765625,.00390625),vec2f(.9990234375,.99609375));
- var b=vec4f(0.0);if(cloudDisplay.currentEmpty<.5){b=textureSampleLevel(cloudAtlas,smpLinearRepeat,bUV,cloudDisplay.current,0.0);}
+ var b=vec4f(0.0);if(cloudDisplay.currentEmpty<.5){b=cloudReconstruct(bUV,cloudDisplay.current);}
  if(cloudDisplay.blend>=.999){return b;}
  let aUV=bUV;
- var a=vec4f(0.0);if(cloudDisplay.previousEmpty<.5){a=textureSampleLevel(cloudAtlas,smpLinearRepeat,aUV,cloudDisplay.previous,0.0);}
+ var a=vec4f(0.0);if(cloudDisplay.previousEmpty<.5){a=cloudReconstruct(aUV,cloudDisplay.previous);}
  return mix(a,b,cloudDisplay.blend);
 }`});
  const snapshot=new UniformBlock('CloudSnapshot',Object.fromEntries(weather.order.map(k=>[k,[weather.layout[k].typeStr,clone(weather.fields[k].value)]])));
@@ -79,7 +94,10 @@ export const CLOUD_BAKE_WGSL=`
 const EARTH:f32=6371000.0;
 fn altitude(p:vec3f)->f32{return p.y+dot(p.xz,p.xz)/(2.0*EARTH);}
 fn shellDistance(rd:vec3f,h:f32)->f32 {
- let r=EARTH+3.0;return -r*rd.y+sqrt(max(0.0,r*r*rd.y*rd.y+(EARTH+h)*(EARTH+h)-r*r));
+ // Rationalized quadratic avoids float32 cancellation near the horizon.
+ let r=EARTH+3.0;let delta=(h-3.0)*(2.0*EARTH+h+3.0);
+ let root=sqrt(max(0.0,r*r*rd.y*rd.y+delta));
+ return select(root-r*rd.y,delta/max(1.0,root+r*rd.y),rd.y>=0.0);
 }
 fn sector(r:i32,s:f32)->vec4f {
  let i=i32(floor(s));let t=fract(s);return mix(weather.offshore[r*7+i],weather.offshore[r*7+i+1],t);
@@ -127,12 +145,12 @@ fn approachingShelf(rd:vec3f)->vec4f {
  // A bounded volume at the observed offshore sample's bearing and range.
  // It is baked with the cloud atlas, never marched per display pixel.
  let s=weather.squall;
- if(s.z<.001||rd.y<-.005||rd.y>.20){return vec4f(0.0);}
+ if(s.z<.001||rd.y<-.025||rd.y>.55){return vec4f(0.0);}
  let heading=vec2f(-sin(s.x),cos(s.x));let tangent=vec2f(heading.y,-heading.x);
  let forward=dot(rd.xz,heading);if(forward<.1){return vec4f(0.0);}
  let side=dot(rd.xz,tangent)/forward;
  let width=s.y*tan(min(s.w,1.04));let depth=max(2000.0,s.y*.18);
- if(abs(side*s.y)>width){return vec4f(0.0);}
+ if(abs(side*s.y)>width*1.15){return vec4f(0.0);}
  let start=max(0.0,(s.y-depth)/forward);let end=(s.y+depth)/forward;
  let step=(end-start)/8.0;var trans=1.0;var colour=vec3f(0.0);
  for(var i=0;i<8;i++){
@@ -145,12 +163,13 @@ fn approachingShelf(rd:vec3f)->vec4f {
   let detail=textureSampleLevel(cloudErosion,smpLinearRepeat,q*6.0,0.0).r;
   // Overlapping rounded rolls, with wind-advected crowns and a hanging lower
   // shelf. Density feathers all three axes; there is no rectangular slab.
-  let billow=.5+.5*sin((cross+travel.x)/1250.0+sin((along+travel.y)/2800.0)*1.1);
+  let billow=clamp((shape-.58)*3.8+.22*sin((cross+travel.x)/1650.0+sin((along+travel.y)/2600.0)),0.0,1.0);
   let h=altitude(p);let center=1450.0+billow*420.0+(shape-.78)*1600.0;
-  let lower=length(vec2f((along+depth*.32)/(depth*.82),(h-center)/(600.0+billow*480.0)));
+  let lower=length(vec2f((along+depth*.32)/(depth*.82),(h-center)/(700.0+billow*600.0)));
   let upper=length(vec2f((along-depth*.15)/depth,(h-2350.0-billow*600.0)/(1050.0+shape*400.0)));
   let erosion=(1.0-detail)*.20+(1.0-shape)*.22;
-  let profile=max(1.0-smoothstep(.66,1.14,lower+erosion),(.65+.35*shape)*(1.0-smoothstep(.72,1.10,upper+erosion)));
+  let hanging=length(vec2f((along+depth*.52)/(depth*.6),(h-850.0-billow*300.0)/(330.0+billow*220.0)));
+  let profile=max(max(1.0-smoothstep(.66,1.14,lower+erosion),.7*(1.0-smoothstep(.65,1.15,hanging+erosion))),(.65+.35*shape)*(1.0-smoothstep(.72,1.10,upper+erosion)));
   let edges=1.0-smoothstep(.55,1.0,abs(cross)/width);
   let density=profile*edges*s.z*(.65+.35*detail);
   let alpha=1.0-exp(-density*step*.0018);
@@ -162,12 +181,13 @@ fn approachingShelf(rd:vec3f)->vec4f {
  // moving billboard, duplicate local rainfall or arbitrary camera bearing.
  let p=rd*(s.y/forward);let h=altitude(p);let cross=dot(p.xz,tangent);
  let edge=1.0-smoothstep(.70,1.0,abs(cross)/width);
- let curtainHeight=(1.0-smoothstep(550.0,1250.0,h))*smoothstep(-160.0,50.0,h);
+ let curtainHeight=(1.0-smoothstep(700.0,1500.0,h))*smoothstep(-260.0,-30.0,h);
  let drift=weather.drift[0];let wind=vec2f(drift.z,drift.w)*1600.0;
  let advect=vec2f(drift.x,drift.y)*1600.0+wind*weather.weatherTime;
  let shaftCross=cross+dot(advect,tangent)+dot(wind,tangent)*h/8.0;
  let streak=textureSampleLevel(cloudErosion,smpLinearRepeat,vec3f(shaftCross/3800.0,h/18000.0,weather.weatherTime*.025),0.0).r;
- let shafts=smoothstep(.30,.77,streak)*(.25+.75*pow(.5+.5*sin(shaftCross/1700.0),2.0));
+ let broad=textureSampleLevel(cloudShape,smpLinearRepeat,vec3f(shaftCross/6200.0,.38,h/14000.0),0.0).r;
+ let shafts=smoothstep(.24,.68,streak)*smoothstep(.60,.86,broad);
  let rainAlpha=curtainHeight*edge*s.z*shafts*.84;
  let rainColour=mix(vec3f(.022,.030,.045),vec3f(.16,.17,.18),weather.daylight);
  return vec4f(colour+trans*rainAlpha*rainColour,1.0-trans*(1.0-rainAlpha));

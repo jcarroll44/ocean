@@ -1,4 +1,5 @@
-import {installSkyOrb} from '../ocean-proof/proof/sky-orb.js';
+import {installForecastSurf} from '../ocean-proof/proof/forecast-waves.js';
+import {MARINE_FIELDS} from '../src/marine-model.js';
 import {transitionLight} from '../ocean-proof/proof/transition-light.js';
 import {nightStars,moonKeyStrength} from '../ocean-proof/proof/weather-optics.js';
 import {BeachApp} from '../ocean-proof/proof/BeachApp.js';
@@ -22,7 +23,7 @@ try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();const settings=PRODUCTION_SETTINGS,adaptive=new AdaptiveResolution();
  app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};
- app.configureNativeShore=()=>installSmallSurf(app.shore);
+ app.configureNativeShore=()=>{installSmallSurf(app.shore);app.forecastSurf=installForecastSurf(app.shore);};
  const initial=parent.__daybuoy;if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
@@ -31,7 +32,7 @@ try{
   if(initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();app.nativeWeather.update(packet);beach.update(packet);}
   }
-  await app.nativeWeather.cache?.warm();await prepare();if(app.nativeWeather&&!app.nativeWeather.cheap)app.skyOrb=installSkyOrb(app,beach,{publish:data=>parent.__daybuoySkyOrb?.(data)});await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  await app.nativeWeather.cache?.warm();await prepare();await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
  };
  const originalReadback=app.applyAtmosphereReadback.bind(app);
  app.applyAtmosphereReadback=()=>{
@@ -66,10 +67,10 @@ try{
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
   app.nativeWeather.update(p);if(app.nativeWeather?.uniforms.fields.transition.value>.01)app.atmosphere._irrTimer=Math.min(app.atmosphere._irrTimer,.05);app.weatherSurfaces.update();beach.update(p);overlays.update(p.overlays);
-  const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2)]):'';
+  const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2),...MARINE_FIELDS.map(k=>Number.isFinite(f[k])?Math.round(f[k]*100)/100:null),f.waveCalibration,f.surfLowFt,f.surfHighFt]):'';
   if(f&&key!==forecastKey&&app.setForecast({...f,tide:seaLevel})){
    app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();forecastKey=key;
-   const next=[Math.round(f.direction/5),Math.round(app.marine.tide*10)].join(':');
+   const next=[Math.round((app.marine.waves?.direction??f.direction)/5),Math.round(app.marine.tide*10)].join(':');
    if(next!==shoreKey){shoreKey=next;pendingShore=app.marine;rebuildShore();}
   }
  }

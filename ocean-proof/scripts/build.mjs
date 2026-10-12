@@ -1,4 +1,5 @@
 import fs from 'node:fs';import {execFileSync} from 'node:child_process';
+execFileSync(process.execPath,['scripts/generate-forecast-fft.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/generate-grid128.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check.mjs'],{stdio:'inherit'});
 fs.rmSync('dist',{recursive:true,force:true});fs.mkdirSync('dist');

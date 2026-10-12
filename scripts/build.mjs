@@ -2,6 +2,8 @@ import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
 // User-required gate: input regressions block every build/delivery.
 execFileSync(process.execPath,['scripts/check-interactions.cjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['ocean-proof/scripts/generate-forecast-fft.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['ocean-proof/scripts/generate-forecast-breakers.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['ocean-proof/scripts/generate-grid128.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/build-capture-vendor.mjs'],{stdio:'inherit'});
 fs.mkdirSync('dist',{recursive:true});
@@ -12,15 +14,16 @@ let html=read('index.html').replace('/* DAYBUOY_CSS */',()=>read('reference-font
 html=html.replace("const {createOcean}=__mods['ocean-engine.js'];",()=>read('native-host.js')+'\nconst createOcean=createSceneHost;');
 // Missing precipitation is unavailable, not an invented dry forecast.
 html=html.replace('rain:w.precip??((w.rainOnly??0)+(w.showers??0))','rain:w.precip??(Number.isFinite(w.rainOnly)&&Number.isFinite(w.showers)?w.rainOnly+w.showers:null)');
-html=html.replace("(()=>{\n'use strict';",()=>read('weather-data.js').replace('/* WEATHER_MODEL */',read('weather-model.js').replaceAll('export ',''))+"\n(()=>{\n'use strict';");
+html=html.replace("(()=>{\n'use strict';",()=>read('weather-data.js').replace('/* WEATHER_MODEL */',read('weather-model.js').replaceAll('export ',''))+'\n'+read('marine-data.js').replace('/* MARINE_MODEL */',read('marine-model.js').replaceAll('export ',''))+"\n(()=>{\n'use strict';");
 html=html.replace('/* DAYBUOY_CELESTIAL */',()=>read('celestial.js'));
 // An alpha framebuffer lets the existing rain/path render as an overlay.
 // The scene shaders and all geometry remain byte-for-byte original.
 html=html.replace('new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:', 'new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:');
 html=html.replace('/* DAYBUOY_OVERNIGHT */',()=>read('overnight.js')+'\n'+read('weather-effects.js')+'\n'+read('interaction.js')+'\n'+read('surf.js')+'\n'+read('story.js'));
-html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('sky-scrubber.js')+'\n'+read('weather-scene.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
+html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('weather-glyphs.js')+'\n'+read('sky-scrubber.js')+'\n'+read('weather-scene.js')+'\n'+read('premium-ui.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
 html=html.replace('</style>',()=>read('release.css')+'\n</style>');
 html=html.replace('</style>',()=>read('sky-scrubber.css')+'\n</style>');
+html=html.replace('</style>',()=>read('premium-ui.css')+'\n</style>');
 html=html.replace('</style>',()=>read('ocean-layer.css')+'\n</style>');
 html=html.replace('window.__ocean=window.__daybuoy;',()=> 'window.__ocean=window.__daybuoy;\n'+read('native-layer.js')+'\nif(!engine?.nativeScene){'+read('ocean-layer.js')+'\n}');
 // Both share paths use the actual displayed ocean. No story/camera edits.
@@ -36,7 +39,7 @@ fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
 fs.copyFileSync('ocean-live.html','dist/ocean-live.html');
 fs.copyFileSync('weather-fixtures.html','dist/weather-fixtures.html');
-fs.mkdirSync('dist/src',{recursive:true});fs.copyFileSync('src/weather-model.js','dist/src/weather-model.js');
+fs.mkdirSync('dist/src',{recursive:true});fs.copyFileSync('src/weather-model.js','dist/src/weather-model.js');fs.copyFileSync('src/marine-model.js','dist/src/marine-model.js');
 fs.copyFileSync('ocean-overcast-profile.html','dist/ocean-overcast-profile.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
@@ -63,6 +66,7 @@ execFileSync(process.execPath,['scripts/check-sky-scrubber.mjs'],{stdio:'inherit
 execFileSync(process.execPath,['scripts/check-sky-orb.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-full-app-capture.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-data.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-marine-waves.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-gate.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-screenshot-visibility.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-night-storm.mjs'],{stdio:'inherit'});

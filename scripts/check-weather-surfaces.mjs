@@ -15,15 +15,21 @@ const {composeShader}=await import('../ocean-proof/vendor/tidewater/src/engine/g
 const {buildMeshShader}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshShader.js');
 const {installNativeWeather}=await import('../ocean-proof/proof/native-weather.js');const {installNativeBeach}=await import('../ocean-proof/proof/NativeBeachScene.js');
 const {installSkyOrb}=await import('../ocean-proof/proof/sky-orb.js');
+const {installForecastSurf}=await import('../ocean-proof/proof/forecast-waves.js');
+const {installSmallSurf}=await import('../ocean-proof/proof/scene-polish.js');
 const {installWeatherSurfaces}=await import('../ocean-proof/proof/weather-surfaces.js');
 const {BeachApp}=await import('../ocean-proof/proof/BeachApp.js');
 const {ComputeKernel}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Compute.js');
 ComputeKernel.prototype.dispatch=()=>{}; // no compute execution in this material-only test
 Engine.prototype.init=async function(){await GPU.init({headless:true});this.canvas=this.domElement={width:390,height:844,style:{}};this.meshRenderer=new MeshRenderer();this.camera=new PerspectiveCamera(62,390/844,.3,60000);this.scene=new Scene();FrameUniforms.fields.outputResolution.value.set(390,844);GPU.computePipeline=()=>({pipeline:null,validationOnly:true});};
 const app=new BeachApp();app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};app.frame=()=>{};
+app.configureNativeShore=()=>{installSmallSurf(app.shore);app.forecastSurf=installForecastSurf(app.shore);};
 const validated=[],bindingLimits=[];
 app.precompile=async()=>{
  GPU.device.pushErrorScope('validation');
+ assert.equal(app.fft.params.fields.sysA.value.length,4);
+ for(const key of ['initSpectrumKernel','conjugateKernel','copyH0Kernel','rowKernel','columnKernel']){const info=await GPU.device.createShaderModule({code:app.fft[key].source}).getCompilationInfo();assert.equal(info.messages.filter(m=>m.type==='error').length,0,key+': '+info.messages.map(m=>m.message).join('\n'));}
+ assert.equal(app.breakers.crest.count,app.breakers.NS*9);
  const beach=installNativeBeach(app),surfaces=installWeatherSurfaces(app,beach);
  app.post._finalPass={source:fs.readFileSync('ocean-proof/vendor/tidewater/src/post/PostFX.js','utf8')};const orb=installSkyOrb(app,beach);const orbInfo=await GPU.device.createShaderModule({code:orb.pass.source}).getCompilationInfo();assert.equal(orbInfo.messages.filter(m=>m.type==='error').length,0,orbInfo.messages.map(m=>m.message).join('\n'));assert(orb.pass.source.includes('fn beachSkyColour('));assert.equal(orb.state().size,64);
  assert.equal(surfaces.rain.geometry.instanceCount,384);assert(app.spray.module.code.includes('nativeWeather.gustExtra'));

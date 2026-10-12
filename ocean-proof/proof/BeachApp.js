@@ -14,6 +14,7 @@ import {Environment} from '../vendor/tidewater/src/sky/Environment.js';
 import {TerrainGPU} from '../vendor/tidewater/src/world/TerrainGPU.js';
 import {Terrain} from '../vendor/tidewater/src/world/Terrain.js';
 import {computeShoreField} from '../vendor/tidewater/src/world/ShoreField.js';
+import {OceanFFT as ForecastOceanFFT} from './ForecastOceanFFT.js';
 import {OceanFFT} from '../vendor/tidewater/src/ocean/OceanFFT.js';
 import {WaterSurface} from '../vendor/tidewater/src/ocean/WaterSurface.js';
 import {WaterMaterial} from '../vendor/tidewater/src/ocean/WaterMaterial.js';
@@ -25,6 +26,7 @@ import {Caustics} from '../vendor/tidewater/src/ocean/Caustics.js';
 import {SeaDetail} from '../vendor/tidewater/src/ocean/SeaDetail.js';
 import {WaterQuery} from '../vendor/tidewater/src/ocean/WaterQuery.js';
 import {Breakers} from '../vendor/tidewater/src/ocean/Breakers.js';
+import {Breakers as ForecastBreakers} from './ForecastBreakers.js';
 import {TunedSpray as Spray} from './TunedSpray.js';
 import {initialQuality,applyQuality,applyMeshLOD,PRESETS,phoneDevice} from './quality.js';
 import {installUnderwaterLighting} from '../vendor/tidewater/src/ocean/UnderwaterLighting.js';
@@ -47,7 +49,7 @@ export class BeachApp extends App{
  constructor(){super();this.profileConfig=profileConfig(location.search);}
  async init(onProgress=noop){
   // Phone quality changes sample density and budgets, never wave period or amplitude.
-  let FFTOcean=OceanFFT,Surface=WaterSurface,BreakerSystem=Breakers,underwaterLighting=installUnderwaterLighting;
+  let FFTOcean=this.configureNativeWeather?ForecastOceanFFT:OceanFFT,Surface=WaterSurface,BreakerSystem=this.configureNativeWeather?ForecastBreakers:Breakers,underwaterLighting=installUnderwaterLighting;
   if(this.profileConfig?.pass==='grid128'){
    const modules=await Promise.all([import('./grid128/OceanFFT.js'),import('./grid128/WaterSurface.js'),import('./grid128/Breakers.js'),import('./grid128/UnderwaterLighting.js')]);
    [FFTOcean,Surface,BreakerSystem,underwaterLighting]=[modules[0].OceanFFT,modules[1].WaterSurface,modules[2].Breakers,modules[3].installUnderwaterLighting];
@@ -77,7 +79,7 @@ export class BeachApp extends App{
   this.shadows.layerMask=(1<<LAYERS.OPAQUE)|(1<<LAYERS.TRANSPARENT);
   this.environment=new Environment(engine,scene,this.sky,phoneDevice()?64:128);
   await stage(.20,'Preparing white sand');
-  this.terrainData=createBeachTerrain();this.daybuoyBeach={x:0,z:3.5};
+  this.terrainData=createBeachTerrain({bars:!!this.configureNativeWeather});this.daybuoyBeach={x:0,z:3.5};
   this.shoreField=computeShoreField(this.terrainData,{res:512,swellDir:[0,-1]});
   this.terrainGPU=new TerrainGPU(this.terrainData,this.shoreField);this.terrainGPU.shoreField=this.shoreField;
   this.terrain=new Terrain({scene,terrainData:this.terrainData,terrainGPU:this.terrainGPU,gridSize:40,renderer:engine});
