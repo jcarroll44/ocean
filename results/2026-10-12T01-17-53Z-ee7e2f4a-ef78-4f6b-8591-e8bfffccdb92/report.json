@@ -1,0 +1,5140 @@
+{
+  "schema": 3,
+  "runId": "2026-10-12T01-17-53Z-ee7e2f4a-ef78-4f6b-8591-e8bfffccdb92",
+  "kind": "weather",
+  "build": {
+    "revision": "2026-10-11-volume-clouds-v1",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "source": "synthetic fixtures",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "startedAt": "2026-10-12T01:17:53.767Z",
+  "heaviest": "night-storm",
+  "viewport": [
+    390,
+    699
+  ],
+  "viewportEvents": [],
+  "wakeLockEvents": [
+    {
+      "state": "held",
+      "detail": "Screen kept awake · keep Safari visible.",
+      "at": "2026-10-12T01:17:53.784Z"
+    },
+    {
+      "state": "released",
+      "detail": "Auto-awake released. Tap here to retry; keep Safari visible.",
+      "at": "2026-10-12T01:19:36.183Z"
+    }
+  ],
+  "gallery": [],
+  "samples": [
+    {
+      "at": 14424,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 4,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 15424,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 24,
+          "generations": 4,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 16441,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 98,
+          "generations": 4,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 17453,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 5,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 18455.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 26,
+          "generations": 5,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 19455.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 98,
+          "generations": 5,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 20463,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 6,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 21487.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 28,
+          "generations": 6,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 22491,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 106,
+          "generations": 6,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 23494,
+      "dpr": 1.4,
+      "dimensions": [
+        546,
+        978,
+        546,
+        978
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 7,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 24499,
+      "dpr": 1.4,
+      "dimensions": [
+        546,
+        978,
+        546,
+        978
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 26,
+          "generations": 7,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 25505,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 96,
+          "generations": 7,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 26529,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 8,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 27547,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 34,
+          "generations": 8,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 28557.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 120,
+          "generations": 8,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 29560.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 9,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 30575,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 34,
+          "generations": 9,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 31585,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 112,
+          "generations": 9,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 32605.000000000004,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 10,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 33627,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 36,
+          "generations": 10,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 34644,
+      "dpr": 1.4,
+      "dimensions": [
+        546,
+        978,
+        546,
+        978
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 108,
+          "generations": 10,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 35644,
+      "dpr": 1.35,
+      "dimensions": [
+        526,
+        943,
+        526,
+        943
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 11,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 36651,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 38,
+          "generations": 11,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 37658,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 11,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 38683,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 12,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 39693,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 40,
+          "generations": 12,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 40703,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 116,
+          "generations": 12,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 41722,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 13,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 42726,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 38,
+          "generations": 13,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 43750,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 13,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 44761,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 14,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 45808,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 38,
+          "generations": 14,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 46834,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 106,
+          "generations": 14,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 47857,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 15,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 48876,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 50,
+          "generations": 15,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 49888,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 16,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 50890,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 16,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 51905,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 54,
+          "generations": 16,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 52906,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 126,
+          "generations": 16,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 53914,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 17,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 54931.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 52,
+          "generations": 17,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 55960,
+      "dpr": 1.3,
+      "dimensions": [
+        507,
+        908,
+        507,
+        908
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 122,
+          "generations": 17,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 56974.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 18,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 57982,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 58,
+          "generations": 18,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 59002,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 19,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 60003,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 19,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 61012,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 52,
+          "generations": 19,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 62025,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 19,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 63029,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 20,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 64049.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 56,
+          "generations": 20,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 65051,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 124,
+          "generations": 20,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 66085.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 21,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 67103,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 54,
+          "generations": 21,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 68116,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 21,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 69135,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 22,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 70152,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 60,
+          "generations": 22,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 71174,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 126,
+          "generations": 22,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 72202,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 23,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 73220,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 58,
+          "generations": 23,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 74239,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 23,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 75268,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 24,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 76280,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 62,
+          "generations": 24,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 77289,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 124,
+          "generations": 24,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 78302,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 25,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 79309,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 62,
+          "generations": 25,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 80338.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 124,
+          "generations": 25,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 81351,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 2,
+          "generations": 26,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 82352,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 62,
+          "generations": 26,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 83360,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 122,
+          "generations": 26,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 84385,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 4,
+          "generations": 27,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 85390,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 68,
+          "generations": 27,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 86412,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 28,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 87438,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 6,
+          "generations": 28,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 88469.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 68,
+          "generations": 28,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 89469.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 29,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 90501,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 10,
+          "generations": 29,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 91522,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 78,
+          "generations": 29,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 92533,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 30,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 93556,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 12,
+          "generations": 30,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 94564,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 68,
+          "generations": 30,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 95571,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 120,
+          "generations": 30,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 96599,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 12,
+          "generations": 31,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 97606.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 64,
+          "generations": 31,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 98621,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 118,
+          "generations": 31,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 99631,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 16,
+          "generations": 32,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 100661,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 76,
+          "generations": 32,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 101672,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 33,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 102691,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 18,
+          "generations": 33,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 103701.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 76,
+          "generations": 33,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 104705,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 34,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 105720,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 20,
+          "generations": 34,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 106729,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 86,
+          "generations": 34,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 107762,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 35,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 108785,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 22,
+          "generations": 35,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 109807,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 84,
+          "generations": 35,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 110821,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": false,
+          "active": false,
+          "row": 128,
+          "generations": 36,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    },
+    {
+      "at": 112231.00000000001,
+      "dpr": 1.25,
+      "dimensions": [
+        487,
+        873,
+        487,
+        873
+      ],
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": true,
+          "row": 2,
+          "generations": 36,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      }
+    }
+  ],
+  "before": {
+    "source": "fixture",
+    "fixture": "night-storm",
+    "forecastTime": 1793070000000,
+    "conditions": {
+      "time": 1793070000000,
+      "swell": 6,
+      "period": 7,
+      "direction": 201,
+      "wind": 26,
+      "windDirection": 220,
+      "gust": 42,
+      "tide": 0.35,
+      "sst": 27,
+      "temperature": 80,
+      "apparent": 83,
+      "humidity": 97,
+      "visibility": 1600,
+      "cloud": 94,
+      "cloudLow": 82,
+      "cloudMid": 76,
+      "cloudHigh": 91,
+      "rain": 12,
+      "rainProbability": 95,
+      "weatherCode": 95,
+      "uv": 0,
+      "uvClear": 0,
+      "aod": 0.08,
+      "aqi": 30,
+      "cape": 2400,
+      "lightningPotential": 12,
+      "radiation": 0,
+      "directRadiation": 0,
+      "lowWind": 12,
+      "lowDirection": 220,
+      "midWind": 22,
+      "midDirection": 250,
+      "highWind": 40,
+      "highDirection": 270,
+      "gate": {
+        "low": 0,
+        "mid": 0,
+        "high": 0,
+        "rain": 0
+      },
+      "clarity": 3,
+      "thunder": 1
+    },
+    "native": {
+      "revision": "2026-10-11-volume-clouds-v1",
+      "waveSeconds": 36.719,
+      "marine": {
+        "heightM": 1.8288000000000002,
+        "amplitude": 0.9144000000000001,
+        "period": 7,
+        "windMps": 13.375544,
+        "waveAngle": -90,
+        "windAngle": -71,
+        "propagation": [
+          0,
+          -1
+        ],
+        "windVector": [
+          0.32556815445715664,
+          -0.9455185755993168
+        ],
+        "chop": 1.1,
+        "tide": 0.35,
+        "cloud": 0.94
+      },
+      "quality": {
+        "name": "High",
+        "dpr": 1.35,
+        "lod": 2.5,
+        "spray": 32768,
+        "reflection": 0.5,
+        "reflectionSeconds": 3,
+        "cloud": 1,
+        "level": 0,
+        "fft": "4 × 256",
+        "mesh": "32-cell tiles",
+        "reflectionCube": 64
+      },
+      "post": {
+        "aa": "fxaa",
+        "flare": false
+      },
+      "pipeline": {
+        "maxFramesInFlight": 2,
+        "maxObservedInFlight": 2,
+        "submitted": 233,
+        "completed": 232,
+        "outstanding": 1,
+        "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+      },
+      "adaptiveResolution": {
+        "currentDpr": 1.35,
+        "minDpr": 1.35,
+        "maxDpr": 1.55,
+        "verifiedFrames": 233
+      },
+      "weather": {
+        "deck": 0.944606413994169,
+        "daylight": 0,
+        "weight": 0,
+        "radiance": 0.015299999999999998,
+        "exposure": 1,
+        "cover": 0.94,
+        "layers": [
+          0.82,
+          0.76,
+          0.91
+        ],
+        "layerDataAvailable": [
+          true,
+          true,
+          true
+        ],
+        "visibility": 1600,
+        "humidity": 97,
+        "rain": 12,
+        "radiation": 0,
+        "thunder": 1,
+        "offshoreSamples": 21,
+        "estimateSource": "Weather appearance est. · Open-Meteo",
+        "cloudCache": {
+          "width": 256,
+          "height": 128,
+          "rows": 2,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 3000,
+          "fadeMs": 400,
+          "ready": true,
+          "active": false,
+          "row": 128,
+          "generations": 4,
+          "targetKey": "[1793070000000,82,76,91,12,1]",
+          "completedKey": "[1793070000000,82,76,91,12,1]"
+        }
+      },
+      "shoreDisplay": {
+        "breakSpan": 0.13
+      },
+      "shoreFieldPending": false
+    },
+    "dimensions": [
+      526,
+      943,
+      526,
+      943
+    ]
+  },
+  "error": "Measurement interrupted while hidden.",
+  "finishedAt": "2026-10-12T01:19:36.207Z"
+}
