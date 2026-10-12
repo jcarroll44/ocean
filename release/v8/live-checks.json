@@ -1,0 +1,17 @@
+{
+  "revision": "2026-10-12-location-plus-v8",
+  "deployedSourceCommit": "4f0ddacedefe230abae19e272484edf0a6cb2353",
+  "githubCodeCommit": "2e8569bbdbd2c82acb80f6ead7d749f046e959a8",
+  "sourceTree": "ac6e727c9f9495c4e7be5abc63024b1129623776",
+  "method": "Authenticated read-only requests to deployed shared forecast API; public metadata only. No screenshot or FPS claim.",
+  "profiles": [
+    {"id":"inlet-beach","status":200,"schema":3,"source":"live","rows":177,"weatherSource":"NOAA NWS","retrievedAt":1791844955861,"cacheHour":497734,"cacheStatus":"ready","weatherKit":"not-configured","weather":"fulfilled","offshore":"fulfilled","marine":"fulfilled","tide":"fulfilled","tideHiLo":"fulfilled","surf":"fulfilled"},
+    {"id":"cocoa-beach","status":200,"schema":3,"source":"live","rows":177,"weatherSource":"NOAA NWS","retrievedAt":1791844963414,"cacheHour":497734,"cacheStatus":"ready","weatherKit":"not-configured","weather":"fulfilled","offshore":"fulfilled","marine":"fulfilled","tide":"fulfilled","tideHiLo":"fulfilled","surf":"fulfilled"},
+    {"id":"san-diego","status":200,"schema":3,"source":"live","rows":180,"weatherSource":"NOAA NWS","retrievedAt":1791844971618,"cacheHour":497734,"cacheStatus":"ready","weatherKit":"not-configured","weather":"fulfilled","offshore":"fulfilled","marine":"fulfilled","tide":"fulfilled","tideHiLo":"fulfilled","surf":"fulfilled"}
+  ],
+  "astronomyCheck": {"date":"2026-10-14","method":"Retained positional astronomy evaluated with each profile; bearings relative to sea-facing camera normal","cocoaSunriseDegrees":8.013126045816648,"sanDiegoSunsetDegrees":-8.907270537250497},
+  "resultsUploader": {"status":200,"ready":true,"branch":"wip/tidewater-in-app"},
+  "acceptedBaseline": {"revision":"2026-10-12-natural-surf-v7","averageFPS":40.148996275093126,"minimumFPS":32,"secondsBelow30":0},
+  "v8DeviceEvidence": null,
+  "nativeSigningAndPurchasesTested": false
+}
