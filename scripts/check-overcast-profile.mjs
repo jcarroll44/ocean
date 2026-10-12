@@ -14,7 +14,12 @@ for(const cheap of [false,true]){
  const signatures=['fn skyRadianceWithClouds( dir: vec3f, withSun: bool ) -> vec3f {','fn skyReflectionRadiance( dir: vec3f ) -> vec3f {'];
  for(const signature of signatures){const body=app.sky.module.code.split(signature)[1];assert.equal(body.trimStart().startsWith('if(nativeWeather.deck'),cheap);}
  if(cheap){assert(!weather.module.code.includes('sin('));assert(!weather.module.code.includes('pow('));assert(weather.module.code.includes('0.12*h*h'));}
- else assert.equal(app.sky.module.code,base.replaceAll('return base;','return nativeWeatherSky(dir,base);'));
+ else {
+  // Oct 12: explicit weather-driven solar occlusion also applies to the
+  // shared environment path. Every other pinned sky byte stays identical.
+  const sunHook='2500.0 * skyParams.sunDiskIntensity';assert(base.includes(sunHook));
+  assert.equal(app.sky.module.code,base.replaceAll('return base;','return nativeWeatherSky(dir,base);').replace(sunHook,sunHook+' * nativeWeather.sunDisc'));
+ }
 }
 const noExposure={sky:new Sky({module:{name:'test-atmosphere'}}),settings:{exposure:.55}};
 installNativeWeather(noExposure,{exposure:false}).update({sun:[0,.8,0],forecast:{cloud:100}});assert.equal(noExposure.settings.exposure,.55);

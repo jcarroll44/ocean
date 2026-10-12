@@ -10,20 +10,22 @@ export const WEATHER_FIXTURES=Object.freeze([
  {id:'squall-approaching',title:'Squall approaching',offshore:true,values:{cloud:50,cloudLow:38,cloudMid:45,cloudHigh:30,wind:16,gust:27,lowWind:22,lowDirection:201,radiation:350,directRadiation:160}},
  {id:'thunderstorm',title:'Thunderstorm',offshore:true,values:{cloud:94,cloudLow:82,cloudMid:76,cloudHigh:91,rain:12,rainProbability:95,weatherCode:95,visibility:1600,humidity:97,cape:2400,lightningPotential:12,wind:26,gust:42,swell:6,period:7,tide:.35,radiation:85,directRadiation:8,lowWind:32,midWind:40,highWind:60}},
  {id:'clearing',title:'Clearing',values:{cloud:46,cloudLow:18,cloudMid:28,cloudHigh:42,visibility:22000,humidity:76,wind:12,gust:18,radiation:480,directRadiation:320}},
- {id:'night-clear',title:'Night clear',night:true,values:{temperature:72,apparent:72,humidity:78,uv:0,uvClear:0,radiation:0,directRadiation:0}},
+ // Review a real first-quarter geometry over the sea using a permitted look
+ // rotation; the moon is never moved into the default camera's field of view.
+ {id:'night-clear',title:'Night clear',night:true,time:Date.parse('2026-10-18T03:30:00Z'),reviewView:'moon-facing',values:{temperature:72,apparent:72,humidity:78,uv:0,uvClear:0,radiation:0,directRadiation:0}},
  {id:'night-storm',title:'Night storm',night:true,offshore:true,values:{cloud:94,cloudLow:82,cloudMid:76,cloudHigh:91,rain:12,rainProbability:95,weatherCode:95,visibility:1600,humidity:97,cape:2400,lightningPotential:12,wind:26,gust:42,swell:6,period:7,tide:.35,uv:0,uvClear:0,radiation:0,directRadiation:0}}
 ]);
 export const HEAVIEST_FIXTURE='night-storm'; // all layers, all rain/surf, 21 storm samples; no daytime deck shortcut
 export function fixtureData(id,now=Date.now()){
  const fixture=WEATHER_FIXTURES.find(f=>f.id===id);if(!fixture)throw Error('Unknown weather fixture');
- const time=FIXTURE_DATE+(fixture.night?10:0)*3600000,start=FIXTURE_DATE-36*3600000,site={lat:30.28,lon:-86,facing:201};
+ const time=fixture.time??FIXTURE_DATE+(fixture.night?10:0)*3600000,start=(fixture.time??FIXTURE_DATE)-36*3600000,site={lat:30.28,lon:-86,facing:201};
  const rows=Array.from({length:193},(_,i)=>({time:start+i*3600000,...base,...fixture.values,gate:{low:0,mid:0,high:0,rain:0}}));
  const series=[{...site,miles:0,sector:-1,bearing:201},...offshorePoints(site)].map((point,i)=>({...point,grid:{lat:point.lat,lon:point.lon},rows:rows.map(row=>{
-  const p={...row};if(i&&fixture.offshore){const near=point.miles===5,approach=id==='squall-approaching',active=!approach||!near;
-   Object.assign(p,{cloud:active?96:35,rain:active?12:0,weatherCode:active?95:2,cape:active?2400:0,lightningPotential:active?12:0});
+  const p={...row};if(i&&fixture.offshore){const near=point.miles===5,approach=id==='squall-approaching',active=!approach||(!near&&Math.abs(point.sector-3)<=1);
+   Object.assign(p,{cloud:active?(approach?100:96):35,cloudLow:approach?(active?100:30):row.cloudLow,cloudMid:approach?(active?90:20):row.cloudMid,cloudHigh:approach?(active?80:15):row.cloudHigh,rain:active?12:0,weatherCode:active?95:2,cape:active?2400:0,lightningPotential:active?12:0});
   }return p;
  })}));
- return {id,title:fixture.title,time,source:'fixture',retrievedAt:now,rows,weatherField:{schema:1,source:'Synthetic test fixture',retrievedAt:now,series},feedStatus:{weather:'fixture',marine:'fixture',tide:'fixture',offshore:'fixture'},fixture:true};
+ return {id,title:fixture.title,time,reviewView:fixture.reviewView??'approved beach',source:'fixture',retrievedAt:now,rows,weatherField:{schema:1,source:'Synthetic test fixture',retrievedAt:now,series},feedStatus:{weather:'fixture',marine:'fixture',tide:'fixture',offshore:'fixture'},fixture:true};
 }
 
 // Private transition test, never an alternate live data source. Hourly rows are

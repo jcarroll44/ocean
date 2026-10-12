@@ -1,5 +1,5 @@
 {
-  "revision": "2026-10-12-storm-scrub-v2",
+  "revision": "2026-10-12-weather-optics-v3",
   "checks": [
     "coherent triple-buffer publication",
     "400 ms whole-cache crossfade",
@@ -7,16 +7,16 @@
     "18 primary and 3 shadow samples bounded",
     "real 3D bake WGSL/pipeline/bindings validate",
     "sun/moon and offshore layer inputs",
-    "no stencil clouds or curtain sheets in native path"
+    "volumetric cloud cache and data-located offshore rain extinction"
   ],
   "budget": {
-    "width": 256,
+    "width": 512,
     "height": 128,
-    "rows": 2,
+    "rows": 1,
     "layers": 3,
     "primarySteps": 18,
     "shadowSteps": 3,
-    "refreshMs": 3000,
+    "refreshMs": 6000,
     "fadeMs": 400
   },
   "assetHashes": {

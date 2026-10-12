@@ -1,3 +1,4 @@
+import {nightStars,moonKeyStrength} from './weather-optics.js';
 import {BeachApp} from './BeachApp.js';
 import {installNativeBeach} from './NativeBeachScene.js';
 import {NativeOverlays} from './NativeOverlays.js';
@@ -58,7 +59,7 @@ try{
   const cover=Math.max(0,Math.min(1,(packet.forecast?.cloud||0)/100));
   const moon=packet.moon,moonStrength=packet.moonlight||0;
   if(packet.sun[1]<-.07){
-   G.sunColor.value.setRGB(.6,.7,1).multiplyScalar(moon?.[1]>0?.12*moonStrength*(1-cover*.9):0);
+   G.sunColor.value.setRGB(.6,.7,1).multiplyScalar(moonKeyStrength(moon?.[1]??-1,moonStrength,cover));
   }else G.sunColor.value.multiplyScalar(1-cover*.88);
   G.skyIrradiance.value.multiplyScalar(1-cover*.40);
   const flash=packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
@@ -69,7 +70,7 @@ try{
   const s=packet.sun,m=packet.moon;app.atmosphere.sunDir.value.set(-s[0],s[1],-s[2]);
   const light=s[1]<-.07&&m?.[1]>0?m:s;
   G.sunDir.value.set(-light[0],light[1],-light[2]);G.night.value=Math.max(0,Math.min(1,-s[1]/.18));
-  app.sky.starIntensity.value=0;
+  app.sky.starIntensity.value=nightStars(s[1],packet.moonlight||0,packet.forecast);
   if(m)app.sky.moonDir.value.set(-m[0],m[1],-m[2]);
  };
  // Do not initialize the proof's fabricated fixed-time sun for app startup.
@@ -132,7 +133,7 @@ try{
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:'2026-10-12-storm-scrub-v2',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-12-weather-optics-v3',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

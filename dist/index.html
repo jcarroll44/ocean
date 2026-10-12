@@ -60442,6 +60442,12 @@ window.__daybuoyFixture={apply(data){
  state.fixture=true;state.fixtureTitle=data.title;state.fixtureId=data.id;state.live=false;state.review=false;state.forecastFailed=false;state.forecastLoaded=true;
  state.data=finalize(data);state.data.version=++state.version;state.time=data.time;state.sheet=null;state.dirty=true;weatherPacketCache.key=null;
  stopWatch(true);resetBeach();
+ // Private evidence framing only. Same approved night beach position and
+ // existing manual-look path; true astronomical phase and bearing are intact.
+ if(data.reviewView==='moon-facing'){
+  const moon=moonPosition(data.time),yaw=((moon.azimuth-SITE.facing+540)%360-180)*RAD;
+  if(moon.altitude>0&&Math.abs(yaw)<Math.PI/2)state.userLook={x:0,y:10,z:28,yaw,pitch:-11*RAD,fov:55,shear:0,anchorYaw:0};
+ }
 },beginScrub(){
  if(!state.fixture)throw Error('Private fixture required');
  cancelTimeMotion();stopWatch(true);state.scrubbing=true;setDockCompact(true);setSkyView(true);state.dirty=true;

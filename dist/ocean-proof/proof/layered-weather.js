@@ -1,7 +1,7 @@
 import {Vector3,Vector4} from '../vendor/tidewater/src/engine/index.js';
 import {cloudThreshold} from './partial-clouds.js';
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
-export const layeredFields=()=>({covers:['vec3f',new Vector3()],thresholds:['vec3f',new Vector3(1,1,1)],drift:['vec4f[3]',Array.from({length:3},()=>new Vector4())],offshore:['vec4f[21]',Array.from({length:21},()=>new Vector4())],offshoreLayers:['vec4f[21]',Array.from({length:21},()=>new Vector4())],moon:['vec3f',new Vector3(0,-1,0)],moonlight:['f32',0],rain:['f32',0],extinction:['f32',0],haze:['f32',0],heat:['f32',0],direct:['f32',1],energy:['f32',1],gustExtra:['f32',0],thunder:['f32',0],flashes:['f32',1],weatherTime:['f32',0],strike:['vec4f',new Vector4(0,.55,0,0)]});
+export const layeredFields=()=>({squall:['vec4f',new Vector4()],covers:['vec3f',new Vector3()],thresholds:['vec3f',new Vector3(1,1,1)],drift:['vec4f[3]',Array.from({length:3},()=>new Vector4())],offshore:['vec4f[21]',Array.from({length:21},()=>new Vector4())],offshoreLayers:['vec4f[21]',Array.from({length:21},()=>new Vector4())],moon:['vec3f',new Vector3(0,-1,0)],moonlight:['f32',0],rain:['f32',0],extinction:['f32',0],haze:['f32',0],heat:['f32',0],direct:['f32',1],energy:['f32',1],gustExtra:['f32',0],thunder:['f32',0],flashes:['f32',1],weatherTime:['f32',0],strike:['vec4f',new Vector4(0,.55,0,0)]});
 // Select a supported offshore bearing. Ties prefer the middle of the view;
 // isolated offshore cells retain their actual sector, never follow the camera.
 export function stormBearing(points,ordinal=0){
@@ -97,11 +97,13 @@ fn nativeCloudShadow(P:vec3f)->f32 {
  let sun=normalize(nativeWeather.sun);let sample=normalize(vec3f(P.x/1600.0+sun.x/max(sun.y,0.15),1.0,P.z/1600.0+sun.z/max(sun.y,0.15)));
  return 1.0-cachedCloud(sample).a*0.52*nativeWeather.direct*nativeWeather.covers.x;
 }
-fn nativeFogColour()->vec3f{return mix(vec3f(0.012,0.020,0.034),vec3f(0.61,0.65,0.66),nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
+fn nativeFogColour()->vec3f{return mix(vec3f(0.012,0.020,0.034),vec3f(0.63,0.635,0.63),nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
 fn nativeWeatherFog(col:vec3f,P:vec3f)->vec3f {
  let d=distance(P,frame.cameraPos);let h=max(0.0,(P.y+frame.cameraPos.y)*0.5);
  let density=nativeWeather.extinction*exp(-h/mix(1600.0,500.0,nativeWeather.haze));
- return mix(col,nativeFogColour(),1.0-exp(-d*density));
+ let ray=normalize(P-frame.cameraPos);
+ let haze=max(1.0-exp(-d*density),nativeHorizonBlend(ray)*smoothstep(2000.0,10000.0,d));
+ return mix(col,nativeFogColour(),haze);
 }
 fn nativeRainNormal(P:vec3f)->vec3f {
  if(nativeWeather.rain<0.001){return vec3f(0.0);}

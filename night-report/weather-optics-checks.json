@@ -1,0 +1,23 @@
+{
+  "revision": "2026-10-12-weather-optics-v3",
+  "checks": [
+    "weather-driven disc/glow",
+    "opaque overcast background",
+    "top-to-bottom dense fog",
+    "shared horizon extinction",
+    "warm neutral sand above wet band",
+    "offshore bearing/range and unavailable inputs",
+    "stars skip opaque weather",
+    "phase-dependent physical moon key",
+    "real lunar fixture geometry"
+  ],
+  "lunarFixture": {
+    "time": "2026-10-18T03:30:00.000Z",
+    "bearing": 233.91207165364656,
+    "elevation": 7.880839977996494,
+    "fraction": 0.45123021009308406,
+    "view": "moon-facing"
+  },
+  "renderedPixels": false,
+  "physicalIPhoneFPS": null
+}

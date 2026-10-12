@@ -6,7 +6,7 @@ import {GPU} from '../vendor/tidewater/src/engine/gpu/GPU.js';
 import {Texture} from '../vendor/tidewater/src/engine/gpu/Texture.js';
 import {ComputeKernel} from '../vendor/tidewater/src/engine/gpu/Compute.js';
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
-export const CLOUD_BUDGET=Object.freeze({width:256,height:128,rows:2,layers:3,primarySteps:18,shadowSteps:3,refreshMs:3000,fadeMs:400});
+export const CLOUD_BUDGET=Object.freeze({width:512,height:128,rows:1,layers:3,primarySteps:18,shadowSteps:3,refreshMs:6000,fadeMs:400});
 export const SCRUB_CLOUD_BUDGET=Object.freeze({width:128,height:32,rows:4}); // same 512 pixels/frame
 const clone=v=>Array.isArray(v)?v.map(clone):v?.clone?v.clone():v;
 export class CloudSchedule {
@@ -15,7 +15,7 @@ export class CloudSchedule {
  complete(now){this.previous=this.current;this.current=this.staging;this.staging=[0,1,2].find(i=>i!==this.current&&i!==this.previous)??2;this.active=false;this.valid=true;this.changedAt=now;this.bakedAt=this.startedAt;this.completedKey=this.key;this.generations++;}
  mix(now){return Math.max(0,Math.min(1,(now-this.changedAt)/CLOUD_BUDGET.fadeMs));}
 }
-export function createCloudCache(weather){
+export function createCloudCache(weather,prepareSnapshot=()=>{}){
  const b=CLOUD_BUDGET,schedule=new CloudSchedule();
  const atlas=new Texture({label:'Weather cloud cache',width:b.width,height:b.height,depth:3,dimension:'2d-array',format:'rgba16float',usage:['sample','storage']});
  const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0],currentSmall:['f32',0],previousSmall:['f32',0]});
@@ -23,23 +23,23 @@ export function createCloudCache(weather){
 fn cachedCloud(dir:vec3f)->vec4f {
  if(cloudDisplay.valid<0.5){return vec4f(0.0);}
  let uv=vec2f(atan2(dir.x,dir.z)/6.2831853+0.5,clamp(sqrt(max(0.0,(asin(clamp(dir.y,-1.0,1.0))+.07)/1.6407963)),.00390625,.99609375));
- let bScale=mix(vec2f(1.0),vec2f(.5,.25),cloudDisplay.currentSmall);
- let bUV=clamp(uv*bScale,vec2f(.001953125,.00390625),bScale-vec2f(.001953125,.00390625));
+ let bScale=mix(vec2f(1.0),vec2f(.25,.25),cloudDisplay.currentSmall);
+ let bUV=clamp(uv*bScale,vec2f(.0009765625,.00390625),bScale-vec2f(.0009765625,.00390625));
  let b=textureSampleLevel(cloudAtlas,smpLinearRepeat,bUV,cloudDisplay.current,0.0);
  if(cloudDisplay.blend>=.999){return b;}
- let aScale=mix(vec2f(1.0),vec2f(.5,.25),cloudDisplay.previousSmall);
- let aUV=clamp(uv*aScale,vec2f(.001953125,.00390625),aScale-vec2f(.001953125,.00390625));
+ let aScale=mix(vec2f(1.0),vec2f(.25,.25),cloudDisplay.previousSmall);
+ let aUV=clamp(uv*aScale,vec2f(.0009765625,.00390625),aScale-vec2f(.0009765625,.00390625));
  let a=textureSampleLevel(cloudAtlas,smpLinearRepeat,aUV,cloudDisplay.previous,0.0);
  return mix(a,b,cloudDisplay.blend);
 }`});
  const snapshot=new UniformBlock('CloudSnapshot',Object.fromEntries(weather.order.map(k=>[k,[weather.layout[k].typeStr,clone(weather.fields[k].value)]])));
- const bake=new UniformBlock('CloudBake',{row:['u32',0],layer:['i32',1],width:['u32',256],height:['u32',128]});
+ const bake=new UniformBlock('CloudBake',{row:['u32',0],layer:['i32',1],width:['u32',512],height:['u32',128]});
  let kernel,targetKey='initial',scrubbing=false,work=b;const small=[0,0,0];
- const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height]};},async initialize(){
+ const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height],snapshotLayers:snapshot.fields.covers.value.toArray()};},async initialize(){
   const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(async name=>{const r=await fetch(new URL('./'+name,import.meta.url));if(!r.ok)throw Error('Cloud noise asset unavailable: '+name);return new Uint8Array(await r.arrayBuffer());}));
   if(shape.length!==128**3||detail.length!==32**3)throw Error('Cloud noise asset length mismatch');
   const noise=(label,size,data)=>new Texture({label,width:size,height:size,depth:size,dimension:'3d',format:'r8unorm',data});
-  kernel=new ComputeKernel({label:'Amortized 3D cloud bake · 512 pixels',workgroupSize:[8,2,1],modules:[new ShaderModule({uniforms:snapshot,uniformName:'weather'}),new ShaderModule({uniforms:bake,uniformName:'bake'})],bindings:{cloudShape:{texture:noise('Takram shape',128,shape)},cloudErosion:{texture:noise('Takram erosion',32,detail)},cloudOutput:{storageTexture:atlas,viewDimension:'2d-array'}},code:CLOUD_BAKE_WGSL});
+  kernel=new ComputeKernel({label:'Amortized 3D cloud bake · 512 pixels',workgroupSize:[8,1,1],modules:[new ShaderModule({uniforms:snapshot,uniformName:'weather'}),new ShaderModule({uniforms:bake,uniformName:'bake'})],bindings:{cloudShape:{texture:noise('Takram shape',128,shape)},cloudErosion:{texture:noise('Takram erosion',32,detail)},cloudOutput:{storageTexture:atlas,viewDimension:'2d-array'}},code:CLOUD_BAKE_WGSL});
   await GPU.pipelinesReady();
  },step(now=performance.now()){
   if(!kernel)return;
@@ -51,9 +51,12 @@ fn cachedCloud(dir:vec3f)->vec4f {
    schedule.begin(targetKey,now);work=scrubbing?SCRUB_CLOUD_BUDGET:b;small[schedule.staging]=scrubbing?1:0;
    bake.fields.width.value=work.width;bake.fields.height.value=work.height;
    for(const k of weather.order)snapshot.fields[k].value=clone(weather.fields[k].value);
+   // Bake the requested hour, not the first eased frame on the way to it.
+   // Presentation transitions happen only between completed coherent atlases.
+   prepareSnapshot(snapshot);
   }
   if(schedule.active){
-   bake.fields.row.value=schedule.row;bake.fields.layer.value=schedule.staging;kernel.dispatch([work.width/8,work.rows/2]);schedule.row+=work.rows;
+   bake.fields.row.value=schedule.row;bake.fields.layer.value=schedule.staging;kernel.dispatch([work.width/8,work.rows]);schedule.row+=work.rows;
    if(schedule.row>=work.height)schedule.complete(now);
   }
   display.fields.current.value=schedule.current;display.fields.previous.value=schedule.previous;display.fields.blend.value=schedule.mix(now);display.fields.valid.value=schedule.valid?1:0;
@@ -110,11 +113,52 @@ fn density(p:vec3f,layer:i32,w:vec3f)->f32 {
  // 100% cover. The volume still closes across multiple cells along the ray.
  let baseRelief=(1.0-shape)*.38;
  let profile=smoothstep(baseRelief,baseRelief+.16,h)*(1.0-smoothstep(.55,1.0,h));
- let erosion=textureSampleLevel(cloudErosion,smpLinearRepeat,q*5.7,0.0).r;
- let body=smoothstep(threshold-.04,threshold+.10,shape-(1.0-profile)*.19-(1.0-erosion)*.045);
- return body*profile*mix(.55,1.0,smoothstep(.55,.95,shape))*mix(.55,1.35,clamp(w.y*.5+w.z*.5,0.0,1.0));
+ // Finer erosion reuses the existing sample; sharper display adds no noise
+ // lookup to the approved density/shadow loop. Rest refresh retains its duty.
+ let erosion=textureSampleLevel(cloudErosion,smpLinearRepeat,q*9.3,0.0).r;
+ let body=smoothstep(threshold-.04,threshold+.10,shape-(1.0-profile)*.19-(1.0-erosion)*.055);
+ return mix(body,max(body,.68),smoothstep(.94,1.0,w.x))*profile*mix(.55,1.0,smoothstep(.55,.95,shape))*mix(.55,1.35,clamp(w.y*.5+w.z*.5,0.0,1.0));
 }
 fn phaseHG(mu:f32,g:f32)->f32{return (1.0-g*g)/pow(max(.05,1.0+g*g-2.0*g*mu),1.5);}
+fn approachingShelf(rd:vec3f)->vec4f {
+ // A bounded volume at the observed offshore sample's bearing and range.
+ // It is baked with the cloud atlas, never marched per display pixel.
+ let s=weather.squall;
+ if(s.z<.001||rd.y<-.005||rd.y>.20){return vec4f(0.0);}
+ let heading=vec2f(-sin(s.x),cos(s.x));let tangent=vec2f(heading.y,-heading.x);
+ let forward=dot(rd.xz,heading);if(forward<.1){return vec4f(0.0);}
+ let side=dot(rd.xz,tangent)/forward;
+ let width=s.y*tan(min(s.w,1.04));let depth=max(2000.0,s.y*.18);
+ if(abs(side*s.y)>width){return vec4f(0.0);}
+ let start=max(0.0,(s.y-depth)/forward);let end=(s.y+depth)/forward;
+ let step=(end-start)/8.0;var trans=1.0;var colour=vec3f(0.0);
+ for(var i=0;i<8;i++){
+  let p=rd*(start+(f32(i)+.5)*step);
+  let cross=dot(p.xz,tangent);let along=dot(p.xz,heading)-s.y;
+  let q=vec3f(cross/4800.0,p.y/2200.0,along/3600.0);
+  let shape=textureSampleLevel(cloudShape,smpLinearRepeat,q,0.0).r;
+  let detail=textureSampleLevel(cloudErosion,smpLinearRepeat,q*6.0,0.0).r;
+  let base=480.0+(1.0-shape)*720.0;
+  let top=1250.0+shape*1050.0+along*.025;
+  let h=altitude(p);
+  let profile=smoothstep(base,base+150.0,h)*(1.0-smoothstep(top-450.0,top,h));
+  let edges=(1.0-smoothstep(.72,1.0,abs(cross)/width))*(1.0-smoothstep(.60,1.0,abs(along)/depth));
+  let density=profile*edges*s.z*max(.15,shape-(1.0-detail)*.24);
+  let alpha=1.0-exp(-density*step*.0022);
+  let relief=.52+.48*smoothstep(base,top,h);
+  let radiance=mix(vec3f(.022,.029,.042),vec3f(.15,.16,.17),weather.daylight)*relief*(.78+.22*detail);
+  colour+=trans*alpha*radiance;trans*=1.0-alpha;
+ }
+ // Rain extinction beneath that same volume: irregular fall streaks, no
+ // moving billboard, duplicate local rainfall or arbitrary camera bearing.
+ let p=rd*(s.y/forward);let h=altitude(p);let cross=dot(p.xz,tangent);
+ let edge=1.0-smoothstep(.70,1.0,abs(cross)/width);
+ let curtainHeight=(1.0-smoothstep(430.0,850.0,h))*smoothstep(-120.0,60.0,h);
+ let streak=textureSampleLevel(cloudErosion,smpLinearRepeat,vec3f(cross/2100.0,h/13000.0,weather.weatherTime*.002),0.0).r;
+ let rainAlpha=curtainHeight*edge*s.z*(.30+.32*streak);
+ let rainColour=mix(vec3f(.022,.030,.045),vec3f(.25,.27,.28),weather.daylight);
+ return vec4f(colour+trans*rainAlpha*rainColour,1.0-trans*(1.0-rainAlpha));
+}
 fn marchLayer(rd:vec3f,layer:i32)->vec4f {
  let base=array<f32,3>(850.0,4100.0,8500.0)[layer];
  let top=array<f32,3>(6850.0,6000.0,9450.0)[layer];
@@ -155,5 +199,6 @@ fn main(@builtin(global_invocation_id) gid:vec3u){
  // Front to back: opaque low overcast does not spend time baking hidden
  // mid/high layers. Density edges remain volumetric and feathered.
  for(var layer=0;layer<3;layer++){let c=marchLayer(rd,layer);result+=c*(1.0-result.a);if(result.a>.995){break;}}
+ let shelf=approachingShelf(rd);result=shelf+result*(1.0-shelf.a);
  textureStore(cloudOutput,vec2i(pixel),bake.layer,result);
 }`;

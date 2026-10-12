@@ -8,7 +8,7 @@ import {ShaderModule} from '../ocean-proof/vendor/tidewater/src/engine/gpu/Shade
 const s=new CloudSchedule();assert.equal(s.mix(0),1);assert(!s.valid);
 for(let cycle=0;cycle<12;cycle++){
  const previous=s.current;s.begin('hour'+cycle,cycle*3000);
- for(let row=0;row<128;row+=2){assert.equal(s.current,previous);s.row=row;}
+ for(let row=0;row<CLOUD_BUDGET.height;row+=CLOUD_BUDGET.rows){assert.equal(s.current,previous);s.row=row;}
  s.complete(cycle*3000+1800);assert.notEqual(s.current,s.staging);assert.notEqual(s.previous,s.staging);assert.equal(s.previous,previous);
  assert.equal(s.completedKey,'hour'+cycle);assert.equal(s.mix(cycle*3000+1800),0);assert.equal(s.mix(cycle*3000+2000),.5);assert.equal(s.mix(cycle*3000+2200),1);
 }
@@ -26,15 +26,19 @@ assert.equal(info.messages.filter(m=>m.type==='error').length,0,info.messages.ma
 assert(!weather.module.code.includes('nativeLayerMask'));assert(!weather.module.code.includes('nativeOffshoreSky'));assert(!weather.module.code.includes('marchLayer'));
 // Real bind groups/dispatch validation on null; no rendered-pixel claim.
 await weather.cache.warm();assert(weather.cache.state().ready);assert.equal(weather.cache.schedule.generations,1);
+// A newly selected weather state must bake the target, not its first eased frame.
+weather.update({sun:[0,.8,.6],forecast:{forecastTime:456,cloud:100,cloudLow:100,cloudMid:75,cloudHigh:40}});
+weather.uniforms.fields.covers.value.set(.24,.10,.18);
 weather.cache.setKey('scrub',true);const at=performance.now()+1000;
 for(let i=0;i<8;i++){weather.cache.step(at+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
 assert.equal(weather.cache.schedule.generations,2);assert.equal(weather.cache.state(at+700).ready,true);assert.deepEqual(weather.cache.state().activeResolution,[128,32]);
-weather.cache.setKey('rest');weather.cache.step(at+800);GPU.submit();assert.deepEqual(weather.cache.state().activeResolution,[256,128]);assert.equal(weather.cache.schedule.row,2);assert.equal(weather.cache.schedule.generations,2,'Unpublished refinement never replaces a complete sky');
+assert.deepEqual(weather.cache.state().snapshotLayers,[1,.75,.4],'Completed target sky cannot retain interpolated holes');
+weather.cache.setKey('rest');weather.cache.step(at+800);GPU.submit();assert.deepEqual(weather.cache.state().activeResolution,[512,128]);assert.equal(weather.cache.schedule.row,1);assert.equal(weather.cache.schedule.generations,2,'Unpublished refinement never replaces a complete sky');
 for(let i=0;i<8;i++){weather.cache.setKey('moving-hour-'+i,true);weather.cache.step(at+900+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
 assert.equal(weather.cache.schedule.generations,3,'Continuous scrubs publish instead of restarting every time the selected hour changes');
 assert.equal(weather.cache.schedule.completedKey,'moving-hour-0:scrub','One coherent weather snapshot per generation');
 assert.equal(weather.cache.schedule.mix(at+1110),0,'New generation begins a full crossfade');
 await GPU.queue.onSubmittedWorkDone();const error=await GPU.device.popErrorScope();assert.equal(error,null,error?.message);
 const hashes=Object.fromEntries(['shape','detail'].map(name=>[name,crypto.createHash('sha256').update(fs.readFileSync('ocean-proof/proof/takram-'+name+'.bin')).digest('hex')]));
-const report={revision:'2026-10-12-storm-scrub-v2',checks:['coherent triple-buffer publication','400 ms whole-cache crossfade','512 cache pixels per submitted frame','18 primary and 3 shadow samples bounded','real 3D bake WGSL/pipeline/bindings validate','sun/moon and offshore layer inputs','no stencil clouds or curtain sheets in native path'],budget:CLOUD_BUDGET,assetHashes:hashes,takramCommit:'b012ad06d858fc035d88aacfd73f092f93c994e4',backend:'Dawn null',renderedPixels:false,physicalIPhoneFPS:null};
+const report={revision:'2026-10-12-weather-optics-v3',checks:['coherent triple-buffer publication','400 ms whole-cache crossfade','512 cache pixels per submitted frame','18 primary and 3 shadow samples bounded','real 3D bake WGSL/pipeline/bindings validate','sun/moon and offshore layer inputs','volumetric cloud cache and data-located offshore rain extinction'],budget:CLOUD_BUDGET,assetHashes:hashes,takramCommit:'b012ad06d858fc035d88aacfd73f092f93c994e4',backend:'Dawn null',renderedPixels:false,physicalIPhoneFPS:null};
 fs.writeFileSync('night-report/cloud-cache-checks.json',JSON.stringify(report,null,2));console.log('PASS: cloud scheduler + actual volumetric WGSL/pipeline/bindings on Dawn null. No rendered pixels or iPhone throughput claim.');process.exit(0);

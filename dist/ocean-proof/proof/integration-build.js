@@ -1,5 +1,5 @@
 export const INTEGRATION_BUILD=Object.freeze({
- revision:'2026-10-12-storm-scrub-v2',
+ revision:'2026-10-12-weather-optics-v3',
  branch:'wip/tidewater-verdict-first',
  tidewater:'4811ba48d795197de5621985f404e765c0b7c0ef',
  ui:'Approved exact Verdict-first v1 (2026-10-06)',

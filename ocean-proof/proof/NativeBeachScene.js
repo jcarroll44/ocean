@@ -21,7 +21,7 @@ export function installNativeBeach(app){
   sunRadius:['f32',.008],moonRadius:['f32',.008],flash:['f32',0],proofDaylight:['f32',0]
  });
  const pass=new FullscreenPass({label:'DayBuoy native sky and celestial bodies',
-  modules:[app.atmosphere.module,...(app.nativeWeather?[app.nativeWeather.module]:[])],
+  modules:[app.atmosphere.module,app.sky.module,...(app.nativeWeather?[app.nativeWeather.module]:[])],
   bindings:{beachSky:{uniform:params}},colorFormats:SCENE_FORMATS,depthFormat:DEPTH_FORMAT,depthCompare:'equal',depthWrite:false,depth:0,
   code:`
 fn beachHash(p:vec2f)->f32 {return fract(sin(dot(p,vec2f(127.1,311.7)))*43758.5453);}
@@ -52,10 +52,13 @@ fn beachSkyColour(rd:vec3f)->vec3f {
  col=mix(col,mix(vec3f(0.012,0.019,0.027),vec3f(0.085,0.115,0.15),day),min(0.85,beachSky.rain*0.095));
  col=mix(col,mix(vec3f(0.018,0.025,0.036),vec3f(0.20,0.27,0.33),day),cover*0.04);
  let visible=smoothstep(-0.06,0.015,sun.y)*exp(-beachSky.rain*0.10);
+ ${app.nativeWeather&&!app.nativeWeather.cheap?'let sunGlow=nativeWeather.sunGlow; var sunDisc=nativeWeather.sunDisc;':'let sunGlow=1.0; var sunDisc=1.0;'}
  let sunColour=mix(vec3f(1.0,0.46,0.19),vec3f(1.0,0.92,0.73),smoothstep(0.0,0.4,sun.y));
- col+=sunColour*(pow(sd,24.0)*0.055+pow(sd,200.0)*0.12)*visible;
+ col+=sunColour*(pow(sd,24.0)*0.055+pow(sd,200.0)*0.12)*visible*sunGlow;
  let angle=acos(clamp(sd,-1.0,1.0));
- col+=mix(vec3f(1.0,0.84,0.60),vec3f(1.0,0.98,0.89),smoothstep(0.0,0.4,sun.y))*smoothstep(beachSky.sunRadius,beachSky.sunRadius*0.90,angle)*3.5*visible;
+ ${app.nativeWeather&&!app.nativeWeather.cheap?'if(angle<beachSky.sunRadius*1.1&&sunDisc>.001){sunDisc*=pow(1.0-cachedCloud(sun).a,3.0);}':''}
+ col+=mix(vec3f(1.0,0.84,0.60),vec3f(1.0,0.98,0.89),smoothstep(0.0,0.4,sun.y))*smoothstep(beachSky.sunRadius,beachSky.sunRadius*0.90,angle)*3.5*visible*sunDisc;
+ if(skyParams.starIntensity>.001){col+=skyStars(rd);}
  let moon=normalize(beachSky.moon);let md=dot(rd,moon);let radius=beachSky.moonRadius;
  if(md>cos(radius) && moon.y> -0.02){
   let tangent=(rd-moon*md)/max(radius,0.0001);let z=sqrt(max(0.0,1.0-dot(tangent,tangent)));

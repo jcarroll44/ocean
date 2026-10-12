@@ -18,7 +18,7 @@ export function installWeatherSurfaces(app,beach){
  const terrain=app.terrain.material;
  terrain.modules.push(module);
  terrain.surface=replace(terrain.surface,'let wet = sat( wetFoam.x )','let wet = max(sat( wetFoam.x ), min(nativeWeather.rain * 0.22, 0.95))');
- terrain.output+='\nr.color = vec4f(nativeWeatherFog(r.color.rgb,in.P),r.color.a);';terrain.needsUpdate=true;
+ terrain.output+='\nr.color = vec4f(nativeWeatherFog(nativeSandLight(r.color.rgb,in.P),in.P),r.color.a);';terrain.needsUpdate=true;
  const stand=beach.stand.material;stand.modules.push(module);stand.output+='\nr.color = vec4f(nativeWeatherFog(r.color.rgb,in.P),r.color.a);';stand.needsUpdate=true;
  const direct=app.underwaterLighting?.direct;
  if(direct){direct.deps.push(module);direct.code=replace(direct.code,'var result = vec3f( 1.0 );','var result = vec3f( nativeCloudShadow(P) );');}

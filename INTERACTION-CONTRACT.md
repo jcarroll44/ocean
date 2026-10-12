@@ -319,3 +319,30 @@ clips must be discarded/retried, never labelled continuous. Add a synthetic
 clear → storm → clearing day-scrub recording after timing, with source/revision
 and capture limitations recorded. Actual contact sheet and clip delivery await
 real rendered evidence, not mocked tests or generated artwork.
+
+## October 12 — accepted cloud baseline; forecast optics refinement
+
+Retrieved run `2026-10-12T02-13-15Z-d51c2ff3-8a93-4a95-9940-7a5d89ebb9c4`
+passed: 37.344 average, 33 minimum, zero seconds below 30, all ten captures.
+Jacob explicitly retains the approved clouds, breaking surf, thin rain and wet
+sand lightning. Refine the same system: cloud-attenuated solar disc and glow,
+no blue gaps at 100%, finer texture, continuous horizon, full-height gray-white
+dense fog, warm neutral cloudy sand, data-bearing offshore shelf/rain curtain,
+and stars, true-phase moon and physical moonlight reflection on clear nights.
+
+Keep 512 baked cloud pixels per submitted frame, 18 primary/3 shadow steps for
+the approved volume, and whole-generation crossfades. A sharper 512×128 cache
+may refine longer at rest, with a six-second refresh preserving average bake
+duty and finer erosion reusing the same noise sample. The approaching shelf adds eight bounded cache-only
+samples at supported offshore bearing/range; skip it in local heavy rain. Stars
+skip opaque storm/fog. The selected forecast supplies each immutable snapshot;
+never publish the first eased frame as a completed target-hour cloud state.
+
+Night-clear evidence may use the existing manual look from the approved beach
+position toward a real Moon over the water. Label that fixture moon-facing and
+record its timestamp, bearing and phase; never move a celestial body or change
+live/default camera behavior. The private fixture hook is stripped from public
+builds. Preserve all seven input checks, bounded DPR, High/FXAA and strict gate.
+`check-weather-optics.mjs` and the actual cloud/material WGSL checks supplement
+the existing suite. A new contact sheet and physical-device pass require fresh
+rendered evidence; the accepted run above cannot validate this revision.

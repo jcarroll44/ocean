@@ -1,6 +1,7 @@
 {
   "baseline": "0f6ff5b83dad580a9ea6c2272bb79aa67d556ce4",
   "inputs": [
+    "ocean-proof/proof/weather-optics.js",
     "ocean-proof/vendor/tidewater/src/engine/math/MathUtils.js",
     "ocean-proof/vendor/tidewater/src/engine/math/Vector2.js",
     "ocean-proof/vendor/tidewater/src/engine/math/Quaternion.js",
