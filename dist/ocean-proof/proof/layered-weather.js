@@ -53,7 +53,7 @@ export function updateLayeredWeather(U,f,now=performance.now()){
 export const LAYERED_WEATHER_WGSL=`
 fn nativeNightStorm()->f32{return nativeWeather.storm*(1.0-nativeWeather.daylight);}
 fn nativeStormFoam()->vec3f{
- return vec3f(.038,.050,.070)*(1.0-nativeWeather.daylight)+vec3f(0.105,0.125,0.15)*nativeNightStorm()+vec3f(0.30,0.34,0.40)*nativeWeather.flash;
+ return vec3f(.038,.050,.070)*(1.0-nativeWeather.daylight)*(1.0-.88*nativeWeather.storm)+vec3f(0.30,0.34,0.40)*nativeWeather.flash;
 }
 fn nativeStormGlow(dir:vec3f)->f32 {
  if(nativeWeather.flash<0.003){return 0.0;}
@@ -97,7 +97,7 @@ fn nativeCloudShadow(P:vec3f)->f32 {
  let sun=normalize(nativeWeather.sun);let sample=normalize(vec3f(P.x/1600.0+sun.x/max(sun.y,0.15),1.0,P.z/1600.0+sun.z/max(sun.y,0.15)));
  return 1.0-cachedCloud(sample).a*0.52*nativeWeather.direct*nativeWeather.covers.x;
 }
-fn nativeFogColour()->vec3f{let dayFog=mix(vec3f(0.63,0.635,0.63),vec3f(.14,.15,.16),nativeWeather.storm*(1.0-nativeWeather.fog));return mix(vec3f(0.012,0.020,0.034),dayFog,nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
+fn nativeFogColour()->vec3f{let mist=mix(vec3f(.28,.285,.29)*(.7+.3*nativeWeather.energy),vec3f(.14,.15,.16),nativeWeather.storm);let dayFog=mix(mix(vec3f(.63,.635,.63),mist,nativeWeather.closed),vec3f(.63,.635,.63),nativeWeather.fog);return mix(vec3f(0.012,0.020,0.034),dayFog,nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
 fn nativeWeatherFog(col:vec3f,P:vec3f)->vec3f {
  let d=distance(P,frame.cameraPos);let h=max(0.0,(P.y+frame.cameraPos.y)*0.5);
  let density=nativeWeather.extinction*exp(-h/mix(1600.0,500.0,nativeWeather.haze));

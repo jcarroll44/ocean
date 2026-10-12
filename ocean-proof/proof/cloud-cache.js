@@ -149,13 +149,16 @@ fn approachingShelf(rd:vec3f)->vec4f {
  let heading=vec2f(-sin(s.x),cos(s.x));let tangent=vec2f(heading.y,-heading.x);
  let forward=dot(rd.xz,heading);if(forward<.1){return vec4f(0.0);}
  let side=dot(rd.xz,tangent)/forward;
- let width=s.y*tan(min(s.w,1.04));let depth=max(2000.0,s.y*.18);
+ let drift0=weather.drift[0];
+ let displacement=vec2f(drift0.z,drift0.w)*1600.0*weather.weatherTime;
+ let range=max(6000.0,s.y-dot(displacement,heading));
+ let width=s.y*tan(min(s.w,1.04));let depth=max(2400.0,s.y*.18);
  if(abs(side*s.y)>width*1.15){return vec4f(0.0);}
- let start=max(0.0,(s.y-depth)/forward);let end=(s.y+depth)/forward;
+ let start=max(0.0,(range-depth)/forward);let end=(range+depth)/forward;
  let step=(end-start)/8.0;var trans=1.0;var colour=vec3f(0.0);
  for(var i=0;i<8;i++){
   let p=rd*(start+(f32(i)+.5)*step);
-  let cross=dot(p.xz,tangent);let along=dot(p.xz,heading)-s.y;
+  let cross=dot(p.xz,tangent);let along=dot(p.xz,heading)-range;
   let drift=weather.drift[0];let advection=vec2f(drift.x+drift.z*weather.weatherTime,drift.y+drift.w*weather.weatherTime)*1600.0;
   let travel=vec2f(dot(advection,tangent),dot(advection,heading));
   let q=vec3f((cross+travel.x)/4800.0,p.y/2200.0,(along+travel.y)/3600.0);
@@ -163,23 +166,25 @@ fn approachingShelf(rd:vec3f)->vec4f {
   let detail=textureSampleLevel(cloudErosion,smpLinearRepeat,q*6.0,0.0).r;
   // Overlapping rounded rolls, with wind-advected crowns and a hanging lower
   // shelf. Density feathers all three axes; there is no rectangular slab.
-  let billow=clamp((shape-.58)*3.8+.22*sin((cross+travel.x)/1650.0+sin((along+travel.y)/2600.0)),0.0,1.0);
-  let h=altitude(p);let center=1450.0+billow*420.0+(shape-.78)*1600.0;
-  let lower=length(vec2f((along+depth*.32)/(depth*.82),(h-center)/(700.0+billow*600.0)));
-  let upper=length(vec2f((along-depth*.15)/depth,(h-2350.0-billow*600.0)/(1050.0+shape*400.0)));
+  let rollX=(cross+travel.x)/2100.0;
+  let billow=.5+.28*sin(rollX+.8*sin(rollX*.43))+.22*cos(rollX*1.73+1.4);
+  let crown=.5+.5*sin(rollX*.61+2.1);
+  let h=altitude(p);let center=1600.0+billow*1300.0;
+  let lower=length(vec2f((along+depth*.32)/(depth*.82),(h-center)/(650.0+billow*1050.0)));
+  let upper=length(vec2f((along-depth*.15)/depth,(h-3000.0-crown*1700.0)/(1150.0+crown*1000.0)));
   let erosion=(1.0-detail)*.20+(1.0-shape)*.22;
-  let hanging=length(vec2f((along+depth*.52)/(depth*.6),(h-850.0-billow*300.0)/(330.0+billow*220.0)));
+  let hanging=length(vec2f((along+depth*.52)/(depth*.6),(h-950.0-billow*550.0)/(330.0+billow*220.0)));
   let profile=max(max(1.0-smoothstep(.66,1.14,lower+erosion),.7*(1.0-smoothstep(.65,1.15,hanging+erosion))),(.65+.35*shape)*(1.0-smoothstep(.72,1.10,upper+erosion)));
   let edges=1.0-smoothstep(.55,1.0,abs(cross)/width);
   let density=profile*edges*s.z*(.65+.35*detail);
   let alpha=1.0-exp(-density*step*.0018);
-  let relief=.22+.78*smoothstep(750.0,3600.0,h);
-  let radiance=mix(vec3f(.022,.029,.042),vec3f(.18,.19,.20),weather.daylight)*relief*(.62+.38*detail);
+  let relief=.16+.84*smoothstep(850.0,5400.0,h);
+  let radiance=mix(vec3f(.022,.029,.042),vec3f(.32,.34,.35),weather.daylight)*relief*(.62+.38*detail);
   colour+=trans*alpha*radiance;trans*=1.0-alpha;
  }
  // Rain extinction beneath that same volume: irregular fall streaks, no
  // moving billboard, duplicate local rainfall or arbitrary camera bearing.
- let p=rd*(s.y/forward);let h=altitude(p);let cross=dot(p.xz,tangent);
+ let p=rd*(range/forward);let h=altitude(p);let cross=dot(p.xz,tangent);
  let edge=1.0-smoothstep(.70,1.0,abs(cross)/width);
  let curtainHeight=(1.0-smoothstep(700.0,1500.0,h))*smoothstep(-260.0,-30.0,h);
  let drift=weather.drift[0];let wind=vec2f(drift.z,drift.w)*1600.0;
@@ -187,7 +192,7 @@ fn approachingShelf(rd:vec3f)->vec4f {
  let shaftCross=cross+dot(advect,tangent)+dot(wind,tangent)*h/8.0;
  let streak=textureSampleLevel(cloudErosion,smpLinearRepeat,vec3f(shaftCross/3800.0,h/18000.0,weather.weatherTime*.025),0.0).r;
  let broad=textureSampleLevel(cloudShape,smpLinearRepeat,vec3f(shaftCross/6200.0,.38,h/14000.0),0.0).r;
- let shafts=smoothstep(.24,.68,streak)*smoothstep(.60,.86,broad);
+ let shafts=smoothstep(.28,.70,streak)*smoothstep(.48,.76,broad);
  let rainAlpha=curtainHeight*edge*s.z*shafts*.84;
  let rainColour=mix(vec3f(.022,.030,.045),vec3f(.16,.17,.18),weather.daylight);
  return vec4f(colour+trans*rainAlpha*rainColour,1.0-trans*(1.0-rainAlpha));

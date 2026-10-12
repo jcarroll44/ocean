@@ -29,13 +29,19 @@ export function offshoreShelf(points=[],localRain=0){
  return [((chosen.bearing-201+540)%360-180)*Math.PI/180,chosen.miles*1609.344,chosen.strength,extent*Math.PI/180];
 }
 export const OPTICS_WGSL=`
+fn nativeDawnReflection(c:vec3f)->vec3f {
+ let dawn=(1.0-nativeWeather.afternoon)*smoothstep(-.04,.015,nativeWeather.sun.y)*(1.0-smoothstep(.10,.27,nativeWeather.sun.y));
+ let red=smoothstep(1.25,2.1,c.r/max(.003,c.g));
+ let l=dot(c,vec3f(.2126,.7152,.0722));
+ return mix(c,l*vec3f(1.12,1.02,.87),dawn*red);
+}
 fn nativeOvercastBackground()->vec3f {
  return mix(vec3f(.030,.036,.047),vec3f(.28,.285,.29)*(.7+.3*nativeWeather.energy),nativeWeather.daylight);
 }
 fn nativeHorizonColour(dir:vec3f)->vec3f {
  // At grazing angles kilometres of haze erase individual cloud columns.
  // A shared broad tone avoids magnifying one atlas row into comb stripes.
- let tone=mix(nativeOvercastBackground(),nativeFogColour(),.58);
+ let tone=mix(nativeOvercastBackground(),nativeFogColour(),nativeWeather.fog);
  return tone+vec3f(.035,.043,.055)*nativeStormGlow(dir);
 }
 fn nativeHorizonBlend(dir:vec3f)->f32 {

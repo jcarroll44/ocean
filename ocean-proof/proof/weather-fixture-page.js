@@ -27,7 +27,7 @@ function evidence(){
  const win=stage.contentWindow,app=win.__daybuoy,native=liveOcean(win).evidence();viewport.bindScene();
  if(app?.state?.fixture!==true||app.state.data.source!=='fixture'||app.state.fixtureId!==HEAVIEST_FIXTURE||app.state.live)throw Error('Heaviest synthetic fixture required.');
  if(native.revision!==INTEGRATION_BUILD.revision||native.pipeline?.maxFramesInFlight!==2||native.post?.aa!=='fxaa'||native.post.flare||!native.adaptiveResolution)throw Error('Production renderer settings changed.');
- const dpr=native.quality.dpr;if(dpr<1.25||dpr>1.6||Math.abs(dpr*20-Math.round(dpr*20))>1e-8)throw Error('DPR outside production policy.');
+ const dpr=native.quality.dpr;if(dpr<1.1||dpr>1.6||Math.abs(dpr*20-Math.round(dpr*20))>1e-8)throw Error('DPR outside production policy.');
  const dimensions=viewport.verify(win,dpr),c=app.conditions();
  for(const k of ['rain','wind','gust','swell','period','cloudLow','cloudMid','cloudHigh'])if(Math.abs(c[k]-selected.rows[0][k])>1e-6)throw Error('Fixture input changed: '+k);
  return {source:'fixture',fixture:HEAVIEST_FIXTURE,forecastTime:app.state.time,conditions:c,native,dimensions};

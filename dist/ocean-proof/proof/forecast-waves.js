@@ -32,22 +32,35 @@ export function applyWaveSpectrum(app,G,c){
  const speed=Number.isFinite(c.ocean_current_velocity)&&Number.isFinite(c.ocean_current_direction)?c.ocean_current_velocity:0,angle=(c.ocean_current_direction-201)*Math.PI/180;
  // Native axes are rotated 180°; current bearing describes travel TO.
  app.fft.params.fields.current.value.set(-Math.sin(angle||0)*speed,Math.cos(angle||0)*speed,0,0);
+ // Offshore faces retain clear water; onshore compression leaves scattered whitecaps.
+ if(app.fft.foamBias)app.fft.foamBias.value=.58+clamp((model.height-.31)/.24,0,1)*(.22*model.onshore-.12*model.offshore);
+ if(app.fft.foamDecay)app.fft.foamDecay.value=.35+clamp((model.height-.31)/.24,0,1)*(.2+.5*model.offshore);
  app.fft.needsSpectrum=true;const surfTarget=Number.isFinite(c.surfLowFt)&&Number.isFinite(c.surfHighFt)?(c.surfLowFt+c.surfHighFt)*.5*.3048:null;
  const surfAdjustment=surfTarget===null?1:clamp(surfTarget/Math.max(.1,model.height*1.25),.7,1.3);
  model.surfAdjustment=surfAdjustment;model.surfSource=surfTarget===null?null:'breaker height calibration est. · NWS FLZ108';
  app.shore.amplitude.value=model.height/2*surfAdjustment;app.shore.period.value=model.period;
  app.shore.curl.value=model.curl;app.shore.gamma.value=.78;
- if(app.forecastSurf){app.forecastSurf.fields.groupWaves.value=model.groupWaves;app.forecastSurf.fields.groupiness.value=model.groupiness;app.forecastSurf.fields.onshore.value=model.onshore;}
+ if(app.forecastSurf){app.forecastSurf.fields.groupWaves.value=model.groupWaves;app.forecastSurf.fields.groupiness.value=model.groupiness;app.forecastSurf.fields.onshore.value=model.onshore;app.forecastSurf.fields.offshore.value=model.offshore;app.forecastSurf.fields.height.value=model.height;}
  return model;
 }
 export function installForecastSurf(shore){
- const uniforms=new UniformBlock('ForecastSurf',{groupWaves:['f32',7],groupiness:['f32',.5],onshore:['f32',0]});
+ const uniforms=new UniformBlock('ForecastSurf',{groupWaves:['f32',7],groupiness:['f32',.5],onshore:['f32',0],offshore:['f32',0],height:['f32',.3048]});
  const module=new ShaderModule({name:'forecastSurf',uniforms,uniformName:'forecastSurf',code:''});shore.module.deps.push(module);
  const start=shore.module.code.indexOf('\tlet waveSet ='),end=shore.module.code.indexOf('\n',start);if(start<0)throw Error('Shore group hook changed');
  shore.module.code=shore.module.code.slice(0,start)+`\t// Two incommensurate group bands retain sets/lulls without a repeating seven-wave pulse.
  let group = .5+.34*sin(m*6.2831853/forecastSurf.groupWaves)+.16*sin(m*3.883222/forecastSurf.groupWaves+1.7);
- let waveSet = mix(1.0,.42+group*1.05,forecastSurf.groupiness);
+ let oldSet = mix(1.0,.42+group*1.05,forecastSurf.groupiness);
+ let grouped = .22+1.18*smoothstep(.30,.82,group);
+ let waveSet = mix(oldSet,grouped,smoothstep(.31,.55,forecastSurf.height));
  `+shore.module.code.slice(end);
+ // Preserve the 1 ft reference; larger seas leave actual water between foam patches.
+ const foamHook='mix( nativeSurf.foamFloor, 1.0, wwPatch )';
+ if(shore.module.code.split(foamHook).length-1!==3)throw Error('Expected all three native shore foam paths');
+ shore.module.code=shore.module.code.replaceAll(foamHook,'mix(mix(nativeSurf.foamFloor,1.0,wwPatch),smoothstep(.34,.82,wwPatch)*mix(.42,.78,forecastSurf.onshore),smoothstep(.31,.55,forecastSurf.height))');
+ // On outer depths only the biggest waves of big sets can reach breaking height.
+ shore.module.code=shore.module.code.replace('P.db = pow( A * 3.556 / shoreP.gamma, 0.8 );',`let rawDepth=pow(A*3.556/shoreP.gamma,.8);
+ let outerSet=smoothstep(1.52,1.85,forecastSurf.height)*smoothstep(shoreP.amplitude*1.05,shoreP.amplitude*1.24,A);
+ P.db=mix(min(rawDepth,1.85),rawDepth,outerSet);`);
  // Spilling whitewater builds at the crest before a plunging lip would land.
  shore.module.code=shore.module.code.replace('let landed = smoothstep( 0.86, 0.99, P.b );','let landed = smoothstep(mix(.22,.86,shoreP.curl),mix(.68,.99,shoreP.curl),P.b);');
  shore.module.code=shore.module.code.replaceAll('o.flow = dir * uFlow;','o.flow = dir * uFlow + frame.windDir * frame.windSpeed * .018;');

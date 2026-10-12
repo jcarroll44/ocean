@@ -101,6 +101,7 @@ export class OceanFFT {
 			// per system: [scale, angle, spreadBlend, swell] [alpha, peakOmega, gamma, shortWavesFade]
 			sysA: [ 'vec4f[4]', [ new Vector4(), new Vector4(), new Vector4(), new Vector4() ] ],
 			sysB: [ 'vec4f[4]', [ new Vector4(), new Vector4(), new Vector4(), new Vector4() ] ],
+			forecastDelta: [ 'f32', 0 ],
 			current: [ 'vec4f', new Vector4() ],
 			choppiness: [ 'f32', options.choppiness ?? 0.9 ],
 			// foam starts where a cascade compresses the surface below this Jacobian (per-cascade J
@@ -521,7 +522,7 @@ ${ stages }
 		// then slowly decays so whitecaps leave trailing foam patches.
 		let prev = foam[ idx ];
 		let gen = sat( ( ocean.foamBias - J ) * ocean.foamGain );
-		let f = prev * exp( - ocean.foamDecay * frame.dt ) + gen * ocean.foamAdd * frame.dt;
+		let f = prev * exp( - ocean.foamDecay * ocean.forecastDelta ) + gen * ocean.foamAdd * ocean.forecastDelta;
 		let fNew = clamp( max( f, gen * 0.5 ), 0.0, 1.5 );
 		foam[ idx ] = fNew;
 
@@ -620,8 +621,13 @@ ${ reduce( 's7', null, 1, 8, t ) }
 	update( dt ) {
 
 		const C = this.cascades;
+        this.time.value += dt * this.timeScale;
+        this._forecastElapsed=(this._forecastElapsed??0)+dt;
+        if(!this.needsSpectrum && this._forecastElapsed<1/40){return;}
+        this.params.fields.forecastDelta.value=this._forecastElapsed;
+        this._forecastElapsed=0;
 
-		if ( this.needsSpectrum ) {
+        if ( this.needsSpectrum ) {
 
 			this.needsSpectrum = false;
 			const d = [ N / 16, N / 16, C ];
@@ -631,7 +637,6 @@ ${ reduce( 's7', null, 1, 8, t ) }
 
 		}
 
-		this.time.value += dt * this.timeScale;
 		GPU.computePass( 'Ocean FFT', ( pass ) => {
 
 			this.rowKernel.dispatch( [ N, C, 1 ], { pass } );

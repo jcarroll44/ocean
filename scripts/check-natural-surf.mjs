@@ -1,0 +1,25 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {OceanFFT} from '../ocean-proof/proof/ForecastOceanFFT.js';
+import {GPU} from '../ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js';
+import {ShoreWaves} from '../ocean-proof/vendor/tidewater/src/ocean/ShoreWaves.js';
+import {installSmallSurf} from '../ocean-proof/proof/scene-polish.js';
+import {installForecastSurf} from '../ocean-proof/proof/forecast-waves.js';
+// Exercise the actual generated FFT clock/cadence without executing GPU work.
+const prior=GPU.computePass;let transforms=0,foamTime=0;
+GPU.computePass=(_,run)=>{transforms++;run({});};
+const fft={cascades:4,needsSpectrum:true,time:{value:0},timeScale:1,params:{fields:{forecastDelta:{value:0}}},initSpectrumKernel:{dispatch(){}},conjugateKernel:{dispatch(){}},copyH0Kernel:{dispatch(){}},rowKernel:{dispatch(){}},columnKernel:{dispatch(){foamTime+=fft.params.fields.forecastDelta.value;}},mipKernelsA:[],mipKernelsB:[]};
+for(let i=0;i<120;i++)OceanFFT.prototype.update.call(fft,1/60);
+assert(Math.abs(fft.time.value-2)<1e-9,'Reused textures never slow the physical wave clock');
+assert(transforms>=59&&transforms<=61,'60 Hz rendering reuses the existing transform results');
+assert(Math.abs(foamTime+fft._forecastElapsed-2)<1e-9,'Persistent foam receives accumulated elapsed time');
+const before=transforms;fft.needsSpectrum=true;OceanFFT.prototype.update.call(fft,.001);assert.equal(transforms,before+1,'Forecast invalidation computes immediately');GPU.computePass=prior;
+const shore={module:{code:ShoreWaves.prototype._code.call({})}};installSmallSurf(shore);installForecastSurf(shore);
+assert.equal(shore.module.code.split('smoothstep(.34,.82,wwPatch)').length-1,3,'Patch coverage reaches vertex, fragment and simulation evaluations');
+assert(shore.module.code.includes('smoothstep(.31,.55,forecastSurf.height)'),'Small reference retains its established foam/set model');
+assert(shore.module.code.includes('P.db=mix(min(rawDepth,1.85),rawDepth,outerSet)'));
+const brk=fs.readFileSync('ocean-proof/proof/ForecastBreakers.js','utf8');
+assert(brk.includes('const STEP = 4.0, K = 48;'));assert(brk.includes('const NV = 12;'));assert(brk.includes('spacing = 1.2'));assert(brk.includes('A<shoreP.amplitude*1.12'));
+const weather=fs.readFileSync('ocean-proof/proof/layered-weather.js','utf8');assert(weather.includes('(1.0-.88*nativeWeather.storm)'));assert(!weather.includes('vec3f(0.105,0.125,0.15)*nativeNightStorm()'));
+const optics=fs.readFileSync('ocean-proof/proof/weather-optics.js','utf8');assert(optics.includes('fn nativeDawnReflection'));
+console.log('PASS: real FFT reuse/elapsed time, all three foam paths, small-reference preservation, outer-set gate and reduced crest/lip budgets. No rendered/device claim.');

@@ -1,3 +1,4 @@
+import {createRequire} from 'node:module';
 import fs from 'node:fs';import path from 'node:path';import assert from 'node:assert/strict';
 import {build,transform} from 'esbuild';
 import {parse} from '../native/node_modules/acorn/dist/acorn.mjs';
@@ -68,6 +69,8 @@ write(out+'/index.html',html);
 write(out+'/scene.html',read('ocean-proof/proof/native-scene.html').replace('src="native-scene.js"','src="/assets/scene.js"').replaceAll('\n',''));
 fs.cpSync('ui-reference/fonts',out+'/fonts',{recursive:true});
 fs.copyFileSync('native/assets/icon.svg',out+'/icon.svg');
+const {Resvg}=createRequire(import.meta.url)('../native/node_modules/@resvg/resvg-js');
+fs.writeFileSync(out+'/icon-180.png',new Resvg(read('native/assets/icon.svg'),{fitTo:{mode:'width',value:180}}).render().asPng());
 const mit=read('ocean-proof/vendor/tidewater/LICENSE');
 for(const file of ['takram-shape.bin','takram-detail.bin'])fs.copyFileSync('ocean-proof/proof/'+file,out+'/assets/'+file);
 const ofl=read('src/NOTICE.txt');

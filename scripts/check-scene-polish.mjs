@@ -31,7 +31,7 @@ const shore={module:{code:ShoreWaves.prototype._code.call({})}};installSmallSurf
 assert.equal(shore.module.code.split('mix( nativeSurf.foamFloor').length-1,3);
 assert(shore.module.code.includes('o.foam = s0.z * env * mix('),'Foam still requires physical breaking and shore envelope');
 assert(shore.module.code.includes('let landed = smoothstep( 0.86, 0.99, P.b );'),'No white paint on unbroken crests');
-assert.equal(RESOLUTION_POLICY.downBelow,36);assert.deepEqual(PRODUCTION_SETTINGS,{dpr:1.5,aa:'fxaa',flare:false});
+assert.equal(RESOLUTION_POLICY.downBelow,38);assert.deepEqual(PRODUCTION_SETTINGS,{dpr:1.5,aa:'fxaa',flare:false});
 const native=read('ocean-proof/proof/native-scene.js');assert(native.includes('settings.flare===false'));assert(native.includes('smallSurfSpan(app.marine.amplitude,app.marine.period)'));
 const c={conditions:()=>c.row,isStorm:r=>r.weatherCode>=95||r.rain>=1,realForecast:()=>true,ripRiskAt:()=>({risk:c.risk}),sunPosition:()=>({altitude:c.altitude}),state:{time:0},row:{swell:1.9685,wind:8,cloud:34,rain:0,weatherCode:0},risk:'High',altitude:50};
 vm.createContext(c);vm.runInContext(read('src/presentation.js'),c);

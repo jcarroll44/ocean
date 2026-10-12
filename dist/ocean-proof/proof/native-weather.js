@@ -46,7 +46,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  let fogWeight=mix(.42,1.0,smoothstep(.003,.008,nativeWeather.extinction));
  let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*fogWeight*(1.0-smoothstep(0.0,0.5,dir.y));
  let fog=max(nativeWeather.fog,max(haze,nativeHorizonBlend(dir)));
- var result=mix(colour,nativeFogColour(),fog);
+ var result=mix(colour,nativeFogColour(),fog*(1.0-nativeWeather.squall.z*cloud.a*.85));
  if(nativeWeather.horizonWeather>.001&&nativeWeather.fog<.999&&abs(dir.y)<.075){
   result=mix(result,nativeHorizonColour(dir),nativeWeather.horizonWeather*(1.0-smoothstep(0.0,.075,abs(dir.y))));
  }
@@ -88,7 +88,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   // Only the immutable cache consumes this location; complete sky crossfades
   // carry its transitions, including a change of offshore cell or bearing.
   uniforms.fields.squall.value.set(...shelf);this.state.optics=optics;this.state.squall=shelf;
-  uniforms.fields.horizonWeather.value+=(Math.max(optics.closed,shelf[2])*(1-optics.fog)-uniforms.fields.horizonWeather.value)*k;
+  uniforms.fields.horizonWeather.value+=(optics.closed*(1-optics.fog)-uniforms.fields.horizonWeather.value)*k;
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);

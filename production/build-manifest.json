@@ -95,6 +95,7 @@
     "ocean-proof/vendor/tidewater/src/ocean/ShoreWaves.js",
     "ocean-proof/vendor/tidewater/src/ocean/SurfFoam.js",
     "ocean-proof/vendor/tidewater/src/ocean/ShoreSim.js",
+    "ocean-proof/proof/forecast-foam.js",
     "ocean-proof/vendor/tidewater/src/ocean/Caustics.js",
     "ocean-proof/vendor/tidewater/src/util/Noise.js",
     "ocean-proof/vendor/tidewater/src/ocean/SeaDetail.js",

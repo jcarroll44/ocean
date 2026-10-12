@@ -7,7 +7,7 @@ export {comboQuery,chooseCombo,chooseSustained} from './pipeline-profile.js';
 export {ADAPTIVE_PASS,validateAdaptiveResult} from './adaptive-resolution.js';
 export const NATIVE_PASSES=['native','native175','native15','native-fxaa','native-flare'];
 export const PASSES = [
- ['native-adaptive','Production adaptive · 120 s','Starts DPR 1.5, FXAA, lens flare off. Confirmed GPU completions in 1-second windows control 0.05 DPR steps: below 36 down, above 38 up, otherwise hold. Bounds 1.25–1.6. Resize only after outstanding frames finish; pauses stay in the measurement. Full High waves.'],
+ ['native-adaptive','Production adaptive · 120 s','Starts DPR 1.5, FXAA, lens flare off. Confirmed GPU completions in 1-second windows control 0.05 DPR steps: below 38 down, above 46 up with 30-second cooldown. Bounds 1.1–1.6. Resize only after outstanding frames finish; pauses stay in the measurement. Full High waves.'],
  ['native-pipe','Pipelined · DPR 2','Production loop: max 2 outstanding frames, asynchronous GPU-completed counter, water CPU readback at most every fourth submitted frame and atmosphere at most 4 Hz. Full High waves, TAA and lens flare at DPR 2.'],
  ['native-pipe175','Pipelined · DPR 1.75','Same production pipeline and readbacks; only DPR changes to 1.75.'],
  ['native-pipe15','Pipelined · DPR 1.5','Same production pipeline and readbacks; only DPR changes to 1.5.'],

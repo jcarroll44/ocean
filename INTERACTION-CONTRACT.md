@@ -444,3 +444,15 @@ New checks must cover units/nulls/circular direction, partition energy, regional
 freshness/calibration, bar-depth thresholds, period wavelength, all detail charts,
 true glyph phase and coherent cache publication. TestFlight signing remains Mac
 and Apple-account work; Linux checks do not imply a device or visual pass.
+
+## October 12 v6 review — v7 authority
+Keep headline, stat tiles, weather charm and Hour by hour; enlarge/raise charm contrast.
+User authorizes crest/lip/foam cost reductions, shared FFT reuse, adaptive DPR down
+to 1.1 and earlier thermal headroom. Preserve the strict 120 s / every second >=30
+completed GPU-frame gate. Small 1 ft is the appearance reference. Larger seas have
+strong sets/lulls, sparse irregular foam, rare outer-bar breaking, clean offshore
+faces/back spray and crumbly onshore caps. Fix dim storm foam, billowing shelf/rain,
+overcast/rain horizon light and sunrise water streak. These explicitly supersede
+prior scene/source-identity freezes only in these areas. GitHub main stays untouched;
+private Sites source main is the approved deploy channel. Authentic new captures
+and device cadence remain required for visual/performance acceptance.

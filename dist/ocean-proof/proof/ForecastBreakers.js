@@ -1,5 +1,5 @@
 // Generated adaptation of MIT Tidewater 4811ba48. Original lip shading is retained.
-// Three bar zones; same 64 samples, existing bounded spray ring.
+// Three bar zones; 48 samples, 1.2 m station spacing, 12 lip vertices.
 import { Vector3, Sphere, Mesh, BufferGeometry, BufferAttribute } from '../vendor/tidewater/src/engine/index.js';
 import { GPU, StorageBuffer, UniformBlock, ShaderModule, ComputeKernel, Material, Readback, commonModule, LAYERS } from '../vendor/tidewater/src/engine/webgpu.js';
 import { GRAVITY, G } from '../vendor/tidewater/src/engine/render/Frame.js';
@@ -36,7 +36,7 @@ import { makeLaceTexture, LACE_TILE } from '../vendor/tidewater/src/ocean/SurfFo
 // module (terrainHeightAt), fft.module (oceanDisplacement), spray.module (sprayReserve, spraySlot,
 // sprayWrite, sprayRand), sky.module (skyReflectionRadiance), clouds.module (cloudsShadow).
 
-const NV = 20; // profile vertices across the lip (2 on the back of the crest + 18 along the curtain)
+const NV = 12; // profile vertices across the lip (2 on the back of the crest + 18 along the curtain)
 
 const f = ( x ) => {
 
@@ -218,7 +218,7 @@ fn breakersSprayShadow( p: vec3f, seedTag: f32 ) -> f32 {
 
 		const S = this.surface;
 		const NS = this.NS;
-		const STEP = 3.0, K = 64; // transects: 192 m seaward from the shoreline
+		const STEP = 4.0, K = 48; // transects: 192 m seaward from the shoreline
 		const fft = S.fft;
 		const spray = this.spray;
 
@@ -256,7 +256,8 @@ fn breakersProcessCrest( i: u32, pc: vec2f, m: f32 ) {
 	let ground = terrainHeightAt( pc );
 	let depth = frame.seaLevel - ground;
 	let A = shoreWaveAmp( m, along );
-	let cr = shoreCrest( A, depth ); // ( b, H, trough, lipThrow )
+	if(distance(pc,breakersStations[i].xy)>85.0 && (shoreP.amplitude<.76 || A<shoreP.amplitude*1.12)){return;}
+ let cr = shoreCrest( A, depth ); // ( b, H, trough, lipThrow )
 	let b = cr.x;
 	let env = smoothstep( 26.0, 13.0, depth ) * sat( ph.exposure * 1.4 ) * shoreP.enabled;
 
@@ -275,7 +276,7 @@ fn breakersProcessCrest( i: u32, pc: vec2f, m: f32 ) {
 		let trough = frame.seaLevel + cr.z * env + fd.y;
 		// slot by wave parity (neighbouring stations agree on it), id = wave index mod 1024, + 1 (0 = none)
 		// One retained crest per shorebreak / inner-bar / outer-bar zone.
-        // All 64 transect samples still drive spray and surface whitewater.
+        // 48 samples share the existing FFT textures; half as many alongshore stations.
         let offshoreDistance=distance(pc,breakersStations[i].xy);
         let slot=select(select(0u,1u,offshoreDistance>22.0),2u,offshoreDistance>85.0);
 		let id = m - floor( m / 1024.0 ) * 1024.0 + 1.0;
@@ -317,7 +318,7 @@ fn main( @builtin( global_invocation_id ) gid: vec3u ) {
 			var sLo = sPrev;
 			var sHi = s;
 			var x = lo + ( m - sLo ) / max( sHi - sLo, 1e-5 ) * ${ f( STEP ) };
-			for ( var it = 0; it < 2; it++ ) {
+			for ( var it = 0; it < 1; it++ ) {
 				let sx = shorePhaseAt( o + n * x ).s;
 				if ( sx < m ) {
 					lo = x;
@@ -752,7 +753,7 @@ const BRK_NV: f32 = ${ f( NV ) };
 	// ragged white rim). Sections of the lip differ a little.
 	let flowM = v * len - t * 1.1; // metres down the curtain, moving with the jet
 	let fuv = vec2f( aw / 1.9 + 0.53, flowM / 1.8 );
-	let fl = textureSample( brkLace, smpAnisoRepeat, fuv );
+	let fl = sbv;
 	let sect = fl.z; // slowly varying along the crest
 	let vary = sect - 0.5 + sin( aw * 0.29 + b * 2.1 ) * 0.15;
 	let reach = v + vary * 0.3;
@@ -771,7 +772,7 @@ const BRK_NV: f32 = ${ f( NV ) };
 	// by the broad pattern so fingers cluster, merge and leave gaps instead of a regular row)
 	let fing = ( sv.w * 0.55 + sv.z * 0.2 ) * ( smoothstep( 0.25, 0.75, sbv.w * 0.6 + sb * 0.4 ) * 0.8 + 0.2 ) * 0.34;
 	let wh = smoothstep( ( 1.0 - v ) * 0.18 + 0.9 - fing, ( 1.0 - v ) * 0.18 + 1.0 - fing, b ); // from the tip up
-	let lc = textureSample( brkLace, smpAnisoRepeat, vec2f( aw * 0.83 + 1.9, v * len - t * 1.3 ) / ( BRK_LACE_TILE * 0.8 ) );
+	let lc = sv;
 	let blot = lc.z * 0.7 + lc.y * 0.3;
 	let gone = smoothstep( 1.0, 1.25, b );
 	let clumpW = smoothstep( gone - 0.12, gone + 0.12, blot );
@@ -811,7 +812,7 @@ const BRK_NV: f32 = ${ f( NV ) };
 
 // Shoreline stations along the main beach: evenly spaced along the (smoothed) shoreline, each with
 // the unit direction toward the sea. Returns { data: Float32Array(n * 4) (x, z, nx, nz), count, spacing }.
-export function buildStations( terrain, { x0 = - 175, x1 = 195, spacing = 0.6 } = {} ) {
+export function buildStations( terrain, { x0 = - 175, x1 = 195, spacing = 1.2 } = {} ) {
 
 	// shoreline z(x): first land found marching north from the water
 	const pts = [];

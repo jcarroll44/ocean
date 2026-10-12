@@ -21,6 +21,7 @@ import {WaterMaterial} from '../vendor/tidewater/src/ocean/WaterMaterial.js';
 import {createFoamTexture} from '../vendor/tidewater/src/ocean/FoamTexture.js';
 import {ShoreWaves} from '../vendor/tidewater/src/ocean/ShoreWaves.js';
 import {ShoreSim} from '../vendor/tidewater/src/ocean/ShoreSim.js';
+import {tuneForecastFoam} from './forecast-foam.js';
 import {SurfFoam} from '../vendor/tidewater/src/ocean/SurfFoam.js';
 import {Caustics} from '../vendor/tidewater/src/ocean/Caustics.js';
 import {SeaDetail} from '../vendor/tidewater/src/ocean/SeaDetail.js';
@@ -98,7 +99,7 @@ export class BeachApp extends App{
   this.terrain.wetness={modules:[this.shoreSim.module],code:`fn terrainWetness(xz:vec2f,h:f32)->vec2f{let s=shoreSimSample(xz);let inside=shoreSimInside(shoreSimUvOf(xz));let band=smoothstep(0.45,0.0,h);return vec2f(max(s.y,band*(1.0-inside)),shoreSimSandFoam(xz,s,h));}`};
   this.terrain.finalizeMaterial();sugarWhite(this.terrain);
   if(this.qs.get('land')==='1')this.landward=createLandward(this);
-  this.surfFoam=new SurfFoam({shoreSim:this.shoreSim});this.surface.foamShading=args=>this.surfFoam.shading(args);
+  this.surfFoam=new SurfFoam({shoreSim:this.shoreSim});if(this.configureNativeWeather)tuneForecastFoam(this.surfFoam);this.surface.foamShading=args=>this.surfFoam.shading(args);
   installShaderAblation(this,this.profileConfig,'foam');
   this.underwaterLighting=underwaterLighting({fft:this.fft,caustics:this.caustics,clouds:this.clouds,terrain:this.terrainGPU,shore:this.shore,surface:this.surface,shoreSim:this.shoreSim});
   installGroundBounce({terrain:this.terrainGPU,clouds:this.clouds});

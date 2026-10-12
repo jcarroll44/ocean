@@ -4,7 +4,7 @@
 #week-scrubber .sky-charm.is-dragging{transform:translateX(-50%) scale(1.17);box-shadow:0 5px 13px #102b414d,0 0 16px var(--orb-glow)}
 .sky-charm .sky-orb-pixels{display:block;width:100%;height:100%;border-radius:50%;opacity:0}
 .sky-charm[data-ready=true] .sky-orb-pixels{opacity:1}
-#week-scrubber .sky-charm:before{content:"";position:absolute;inset:1px;border-radius:50%;background:radial-gradient(ellipse at 30% 18%,#ffffff80 0%,#ffffff1a 24%,transparent 46%);z-index:1}
+#week-scrubber .sky-charm:before{content:"";position:absolute;inset:1px;border-radius:50%;background:radial-gradient(ellipse at 30% 18%,#ffffff40 0%,#ffffff1a 24%,transparent 46%);z-index:1}
 #week-scrubber .sky-charm:after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 -2px 4px #102c453b,inset 0 1px 1px #ffffffb3;z-index:2}
 .sky-track-extras{position:absolute;inset:0;pointer-events:none}
 .sky-rain-track{position:absolute;left:0;right:0;top:4px;height:12px;border-radius:12px;filter:blur(2px);opacity:.75}

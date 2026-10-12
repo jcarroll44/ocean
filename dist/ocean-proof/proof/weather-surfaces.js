@@ -19,6 +19,8 @@ export function installWeatherSurfaces(app,beach){
   if(max(nativeWeather.transition,dawn)>.001){edgeHorizon=mix(edgeHorizon,skyReflectionRadiance(normalize(vec3f(R.x,.65,R.z))),max(nativeWeather.transition,dawn));}
  }
  var reflCol=mix(edgeHorizon*.35,skyRefl,horizonOcc);`);
+ water.output=replace(water.output,'let sunSpec = sunLight * min( spec, 400.0 );','let sunSpec = nativeDawnReflection(sunLight * min(spec,400.0));');
+ water.output=replace(water.output,'let water = mix( transmitted, reflCol, F ) + sunSpec + skyRefl * ( 0.22 * rim );','let water = nativeDawnReflection(mix(transmitted,reflCol,F)+sunSpec+skyRefl*(.22*rim));');
  water.output=replace(water.output,'let Nup = normalize( mix( surf.normal,','let Nup = normalize( mix( normalize(surf.normal + nativeRainNormal(pos)),');
  water.output=replace(water.output,'var sunLight = frame.sunColor * sunShadowPCF','var sunLight = frame.sunColor * nativeCloudShadow(pos) * sunShadowPCF');
  water.output=replace(water.output,'let foamCol = foamLit * mat.foamIntensity;','let foamCol = (foamLit + nativeStormFoam()) * mat.foamIntensity;');
