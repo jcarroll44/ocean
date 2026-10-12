@@ -13,3 +13,4 @@ dist/.openai/
 hosting/public/
 .env*
 !.env.example
+server/wrangler.local.json

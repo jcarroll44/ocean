@@ -1,11 +1,12 @@
 import {applyWaveSpectrum} from './forecast-waves.js';
+import {profileFacing} from '../../src/beach-profiles.js';
 // Unit conversion and coordinate mapping only; no reconstructed ocean shader.
 export const FT_TO_M=.3048, KNOT_TO_MPS=.514444;
 export function marineInput(c){
  if(!c||![c.swell,c.period,c.direction,c.wind,c.windDirection].every(Number.isFinite)||c.swell<0||c.period<=0||c.wind<0)return null;
- const direction=(c.direction-201)*Math.PI/180,wind=(c.windDirection-201)*Math.PI/180;
+ const facing=profileFacing(c),direction=(c.direction-facing)*Math.PI/180,wind=(c.windDirection-facing)*Math.PI/180;
  return {heightM:c.swell*FT_TO_M,amplitude:c.swell*FT_TO_M/2,period:c.period,
-  windMps:c.wind*KNOT_TO_MPS,waveAngle:c.direction-291,windAngle:c.windDirection-291,
+  windMps:c.wind*KNOT_TO_MPS,waveAngle:c.direction-facing-90,windAngle:c.windDirection-facing-90,
   propagation:[Math.sin(direction),-Math.cos(direction)],windVector:[Math.sin(wind),-Math.cos(wind)],
   chop:Math.min(1.1,.55+c.wind*.025),tide:Number.isFinite(c.tide)?c.tide:0,
   cloud:Number.isFinite(c.cloud)?Math.max(0,Math.min(1,c.cloud/100)):null};
@@ -24,7 +25,7 @@ export function applyMarine(app,G,c){
  G.windSpeed.value=p.windMps;G.windDir.value.set(...p.windVector);G.seaLevel.value=p.tide;
  if(app.clouds&&p.cloud!==null)app.clouds.coverage.value=p.cloud;
  if(app.forecastSurf){
-  const model=applyWaveSpectrum(app,G,c),angle=(model.direction-201)*Math.PI/180;
+  const model=applyWaveSpectrum(app,G,c),angle=(model.direction-profileFacing(c))*Math.PI/180;
   Object.assign(p,{heightM:model.height,amplitude:app.shore.amplitude.value,period:model.period,propagation:[Math.sin(angle),-Math.cos(angle)],waves:model});
  }
  app.marine=p;return true;

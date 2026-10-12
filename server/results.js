@@ -30,7 +30,7 @@ export async function handleResults(request,env,fetchGit=fetch){
   const runId=form.get('runId'),kind=form.get('kind');
   if(typeof runId!=='string'||!/^\d{4}-\d{2}-\d{2}T[\d-]{8}Z-[a-f0-9-]{36}$/.test(runId))throw new UploadError('Invalid run ID.');
   if(!['overcast','live','profile','comparison','smoke','weather'].includes(kind))throw new UploadError('Invalid test kind.');
-  const files=form.getAll('files');if(!files.length||files.length>24)throw new UploadError('Expected 1–24 evidence files.');
+  const files=form.getAll('files');if(!files.length||files.length>40)throw new UploadError('Expected 1–40 evidence files.');
   const names=new Set(),prepared=[];
   for(const file of files){
    if(typeof file==='string'||!file.size||file.size>MAX_FILE)throw new UploadError('Empty file or file exceeds 12 MB.',413);

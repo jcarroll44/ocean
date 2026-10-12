@@ -1,3 +1,4 @@
+import {INLET_PROFILE} from './beach-profiles.js';
 // Forecast values retain their units and missingness. Visual morphology is an
 // estimate, never radar, a lightning observation, or a minute-accurate nowcast.
 export const WEATHER_HOUR=3600000;
@@ -85,14 +86,14 @@ export function sampledOffshore(field,time,now=Date.now()){
   return {bearing:p.bearing,miles:p.miles,sector:p.sector,grid:p.grid,conditions:c,potential};
  });
 }
-export function integrateCloudWind(rows,time,layer,origin=0){
+export function integrateCloudWind(rows,time,layer,origin=0,facing=INLET_PROFILE.facing){
  const v=weatherBracket(rows,time);if(!v)return [0,0];
  // Integrate from the forecast's fixed first timestamp, so reverse scrubbing
  // cannot change the cloud location at a given forecast time.
  const start=rows[0].time;
  let x=0,z=0;
  for(let t=start;t<time;){const end=Math.min(time,t+WEATHER_HOUR),v=weatherBracket(rows,(t+end)/2),c=v?{[layer+'Wind']:weatherValue(v.a,v.b,v.f,layer+'Wind'),[layer+'Direction']:weatherValue(v.a,v.b,v.f,layer+'Direction')}:null;if(!Number.isFinite(c?.[layer+'Wind'])||!Number.isFinite(c?.[layer+'Direction'])){t=end;continue;}
-  const a=(c[layer+'Direction']-201)*Math.PI/180,d=c[layer+'Wind']*.514444*(end-t)/1000;x+=Math.sin(a)*d;z-=Math.cos(a)*d;t=end;
+  const a=(c[layer+'Direction']-facing)*Math.PI/180,d=c[layer+'Wind']*.514444*(end-t)/1000;x+=Math.sin(a)*d;z-=Math.cos(a)*d;t=end;
  }
  return [x+origin,z+origin];
 }

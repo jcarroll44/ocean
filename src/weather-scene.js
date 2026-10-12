@@ -7,10 +7,10 @@ function weatherScenePacket(c){
  const field=state.data.weatherField,stamp=Math.floor(state.time/100),key=[state.version,stamp,field?.retrievedAt].join(':');
  if(weatherPacketCache.key!==key){
   const w=__mods['weather-data.js'];
-  weatherPacketCache={key,offshore:w.sampledOffshore(field,state.time),drift:['low','mid','high'].map(layer=>field?.series?.[0]?w.integrateCloudWind(field.series[0].rows,state.time,layer):null)};
+  weatherPacketCache={key,offshore:w.sampledOffshore(field,state.time),drift:['low','mid','high'].map(layer=>field?.series?.[0]?w.integrateCloudWind(field.series[0].rows,state.time,layer,0,SITE.facing):null)};
  }
  const surf=ripRiskAt(state.time)?.breakers;
- return {surfLowFt:surf?.low??null,surfHighFt:surf?.high??null,...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,scrubbing:!!state.scrubbing||!!state.playing,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
+ return {facing:SITE.facing,surfZone:SITE.surfZone,surfLowFt:surf?.low??null,surfHighFt:surf?.high??null,...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,scrubbing:!!state.scrubbing||!!state.playing,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
 }
 const weatherEffectsBase=updateWeatherEffects;
 // Illustrative thunder potential, not observed strikes. One bounded flash every

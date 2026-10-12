@@ -3,8 +3,7 @@ const read=p=>fs.readFileSync(p,'utf8'),config=JSON.parse(read('capacitor.config
 assert(!config.server.url&&!config.server.allowNavigation,'App must load its bundled build');
 assert.equal(config.server.errorPath,'offline.html');assert.equal(config.server.cleartext,false);
 assert.equal(config.ios.webContentsDebuggingEnabled,false);assert.equal(config.ios.limitsNavigationsToAppBoundDomains,true);
-assert.equal(config.plugins.CapacitorUpdater.statsUrl,'');assert.equal(config.plugins.CapacitorUpdater.autoDeleteFailed,true);
-assert(['off','atBackground'].includes(config.plugins.CapacitorUpdater.autoUpdate));
+assert(!config.plugins.CapacitorUpdater,'No OTA updater in v1');assert(!read('package.json').includes('@capgo/'));
 const info=read('ios/App/App/Info.plist');assert(info.includes('<string>localhost</string>'));assert(info.includes('<string>daybuoy</string>'));assert(!info.includes('NSAllowsArbitraryLoads'));assert(!info.match(/NS(Location|Camera|Microphone|PhotoLibrary).*UsageDescription/));
 const project=xcode.project('ios/App/App.xcodeproj/project.pbxproj');project.parseSync();
 const objects=project.hash.project.objects,targets=objects.PBXNativeTarget;
@@ -14,14 +13,14 @@ const widgetConfigs=objects.XCConfigurationList[widget.buildConfigurationList].b
 for(const s of widgetConfigs){assert.equal(s.PRODUCT_BUNDLE_IDENTIFIER,'com.jacobcarroll.daybuoy.widget');assert.equal(s.IPHONEOS_DEPLOYMENT_TARGET,'26.0');assert.equal(s.SKIP_INSTALL,'YES');}
 assert(Object.values(objects.PBXCopyFilesBuildPhase).some(p=>p.dstSubfolderSpec===13||p.dstSubfolderSpec==='13'),'Widget embedded as app extension');
 assert(read('ios/App/App/SceneDelegate.swift').includes('DayBuoyViewController()'));
-assert(read('ios/App/CapApp-SPM/Package.swift').includes('SentryCapacitor'));assert(read('ios/App/CapApp-SPM/Package.swift').includes('CapgoCapacitorUpdater'));
+assert(read('ios/App/CapApp-SPM/Package.swift').includes('SentryCapacitor'));assert(!read('ios/App/CapApp-SPM/Package.swift').includes('CapgoCapacitorUpdater'));assert(read('ios/App/CapApp-SPM/Package.swift').includes('PurchasesCapacitor'));assert(read('ios/App/CapApp-SPM/Package.swift').includes('CapacitorLocalNotifications'));
 for(const plugin of ['CapacitorShare','CapacitorFilesystem'])assert(read('ios/App/CapApp-SPM/Package.swift').includes(plugin),plugin);
 assert(read('ios/App/CapApp-SPM/Package.swift').includes('.iOS("26.0")'),'iOS 26 manifest must work with its declared PackageDescription 5.9');
 assert(read('ios/App/App/PrivacyInfo.xcprivacy').includes('C617.1'));
 assert(Object.values(objects.PBXFileReference).some(f=>String(f.path).includes('PrivacyInfo.xcprivacy')));
-for(const page of ['index.html','scene.html','assets/app.js','assets/scene.js','assets/shore.js','assets/native.js','offline.html','privacy.html','credits.html'])assert(fs.existsSync('ios/App/App/public/'+page),'Missing bundled '+page);
+for(const page of ['index.html','scene.html','assets/app.js','assets/scene.js','assets/shore.js','assets/native.js','offline.html','privacy.html','terms.html','credits.html'])assert(fs.existsSync('ios/App/App/public/'+page),'Missing bundled '+page);
 assert(read('www/index.html').includes('/assets/native.js'));assert(read('www/offline.html').includes('href="/index.html"'));
 assert(read('www/credits.html').includes('2026 DRG Software Solutions LLC'));
 const png=fs.readFileSync('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png');assert.equal(png.readUInt32BE(16),1024);assert.equal(png.readUInt32BE(20),1024);assert.equal(png[25],2);
 for(const file of fs.readdirSync('www',{recursive:true}).filter(p=>/\.(js|html|json|css)$/.test(p)))assert(!/sourceMappingURL|github_pat_|ghp_[A-Za-z0-9]{20}|GITHUB_RESULTS_TOKEN|ocean-live\.html|BEGIN PRIVATE KEY/.test(read('www/'+file)),file);
-console.log('PASS: bundled production assets; parsed widget target/dependency/embed/configs; haptic controller; Sentry/Capgo native linkage; offline/legal/icon and no secrets/maps/test routes. Swift compilation/device behavior still requires Xcode.');
+console.log('PASS: bundled production assets; parsed widget target/dependency/embed/configs; haptic controller; Sentry/RevenueCat/local-notification native linkage; offline/legal/icon and no secrets/maps/test routes. Swift compilation/device behavior still requires Xcode.');

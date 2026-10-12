@@ -456,3 +456,24 @@ overcast/rain horizon light and sunrise water streak. These explicitly supersede
 prior scene/source-identity freezes only in these areas. GitHub main stays untouched;
 private Sites source main is the approved deploy channel. Authentic new captures
 and device cadence remain required for visual/performance acceptance.
+
+## October 12 — accepted v7; location-ready / TestFlight pass
+
+Freeze `7bd364b100ba749ca3112cdd7349e5f4c436e1c4` on
+`baseline/v7-iphone-passed-2026-10-12`. Authentic run
+`2026-10-12T21-16-34Z-0fc6e67c-3464-48bf-83aa-30dbd421195f` measured
+40.149 average, 32 minimum and zero seconds below 30 for 120.003 seconds.
+Only storm-horizon tone, sunrise pink reflection and onshore/offshore distinction
+may change the accepted Inlet appearance. Preserve vendor, FFT reuse, budgets,
+adaptive policy, all seven gestures, UI and strict gate.
+
+The user authorizes profile-derived geography/astronomy/camera/directions/materials,
+hidden Cocoa and San Diego checks, coordinate-only profile generation, shared
+hourly server data, WeatherKit general weather with disclosed alternatives,
+Open-Meteo Marine and free NOAA/NWS/NDBC, runtime server keys, removal of Capgo,
+RevenueCat Free/today and Plus/week/widget/notification/watermark entitlements,
+on-brand paywall and native release preparation. No client provider requests,
+secret output or GitHub main commits. Private Sites main is the deploy channel.
+Unavailable accounts and Mac signing must be documented, not presented as tested.
+New 12-location captures, galleries, paywall clip and FPS require genuine rendering;
+the v7 upload is baseline evidence only, never proof of new pixels or throughput.

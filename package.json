@@ -11,5 +11,8 @@
     "linkedom": "^0.18.13",
     "vite": "^6.1.0",
     "webgpu": "^0.6.2"
+  },
+  "dependencies": {
+    "tz-lookup": "^6.1.25"
   }
 }

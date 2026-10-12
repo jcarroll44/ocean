@@ -15,7 +15,7 @@ export function installNativeWeather(app,{cheap=false,exposure=true}={}){
  let selectedForecast={};
  const cache=cheap?null:createCloudCache(uniforms,snapshot=>{
   snapshot._weatherAt=null;updateLayeredWeather(snapshot,selectedForecast);
-  snapshot.fields.squall.value.set(...offshoreShelf(selectedForecast.offshore,selectedForecast.rain||0));
+  snapshot.fields.squall.value.set(...offshoreShelf(selectedForecast.offshore,selectedForecast.rain||0,selectedForecast.facing));
  });
  const module=new ShaderModule({name:'nativeOvercast',deps:cache?[cache.module]:[],uniforms,uniformName:'nativeWeather',code:`
 ${cheap?PARTIAL_CLOUD_WGSL:PARTIAL_CLOUD_WGSL.slice(0,PARTIAL_CLOUD_WGSL.indexOf('fn nativePartialCloud'))+LAYERED_WEATHER_WGSL+OPTICS_WGSL}
@@ -84,7 +84,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover,...updateLayeredWeather(uniforms,f)};
   const optics=forecastOptics(f),now=performance.now(),k=this.opticsAt==null?1:1-Math.exp(-Math.min(.1,Math.max(0,(now-this.opticsAt)/1000))*10);this.opticsAt=now;
   for(const [key,target] of Object.entries({fog:optics.fog,closed:optics.closed,sunDisc:optics.disc,sunGlow:optics.glow}))uniforms.fields[key].value+=(target-uniforms.fields[key].value)*k;
-  const shelf=offshoreShelf(f.offshore,f.rain||0);
+  const shelf=offshoreShelf(f.offshore,f.rain||0,f.facing);
   // Only the immutable cache consumes this location; complete sky crossfades
   // carry its transitions, including a change of offshore cell or bearing.
   uniforms.fields.squall.value.set(...shelf);this.state.optics=optics;this.state.squall=shelf;

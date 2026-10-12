@@ -51,6 +51,6 @@ for(const prefix of ['ocean-proof/vendor/tidewater/','src/camera.js','src/intera
 }
 // October 12 explicitly authorizes an additive forecast spectrum adapter.
 const originalForecast=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:ocean-proof/proof/forecast.js'],{encoding:'utf8'});
-const baseForecast=read('ocean-proof/proof/forecast.js').replace("import {applyWaveSpectrum} from './forecast-waves.js';\n",'').replace(/ if\(app\.forecastSurf\)\{[\s\S]*?\n \}\n/,'');
+const baseForecast=read('ocean-proof/proof/forecast.js').replace("import {profileFacing} from '../../src/beach-profiles.js';\n",'').replace('const facing=profileFacing(c),direction=(c.direction-facing)*Math.PI/180,wind=(c.windDirection-facing)*Math.PI/180;','const direction=(c.direction-201)*Math.PI/180,wind=(c.windDirection-201)*Math.PI/180;').replace('waveAngle:c.direction-facing-90,windAngle:c.windDirection-facing-90','waveAngle:c.direction-291,windAngle:c.windDirection-291').replace("import {applyWaveSpectrum} from './forecast-waves.js';\n",'').replace(/ if\(app\.forecastSurf\)\{[\s\S]*?\n \}\n/,'');
 assert.equal(baseForecast,originalForecast,'Original physical mapping remains exact outside the authorized wave adapter');
 console.log('PASS: daytime unlit moon, historical cloud calibration, forecast percent units, shared cached-cloud reflections, bounded small shore surf, H/2 retained, flare off, DPR 36, condition-only copy and NWS disclosure. CPU/source only; no new phone FPS or pixels.');

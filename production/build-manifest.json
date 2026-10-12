@@ -2,6 +2,7 @@
   "baseline": "0f6ff5b83dad580a9ea6c2272bb79aa67d556ce4",
   "inputs": [
     "src/marine-model.js",
+    "src/beach-profiles.js",
     "ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js",
     "ocean-proof/vendor/tidewater/src/engine/gpu/Uniforms.js",
     "ocean-proof/vendor/tidewater/src/engine/gpu/Shader.js",

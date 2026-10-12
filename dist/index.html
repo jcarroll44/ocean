@@ -645,6 +645,8 @@ html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden}
 
 .db-stat:focus-visible{outline:2px solid #4b879b;outline-offset:2px}
 
+.plus-overlay[hidden]{display:none!important}.plus-overlay{position:fixed;inset:0;z-index:500;display:flex;align-items:center;justify-content:center;padding:16px;background:#15364660;backdrop-filter:blur(14px);color:#193e4c;overscroll-behavior:contain}.plus-panel{position:relative;width:min(100%,390px);max-height:calc(100dvh - 32px);overflow:auto;border-radius:28px;padding:24px;background:linear-gradient(155deg,#f2f7f5,#dbe9e8);box-shadow:0 20px 70px #08233238;font-family:Poppins,sans-serif}.plus-close{position:absolute;right:12px;top:8px;width:40px;height:40px;border:0;background:transparent;color:#466671;font-size:28px}.plus-mark svg{width:36px;height:36px}.plus-kicker{font-size:10px;letter-spacing:.22em;margin:7px 0;color:#507784}.plus-kicker span{font-size:18px;color:#368481}.plus-panel h2{font-size:27px;font-weight:400;letter-spacing:-.8px;line-height:1.15;margin:8px 0}.plus-intro{font-size:12px;color:#5a7680;margin:10px 0 16px}.plus-features{list-style:none;padding:0;margin:0 0 20px;font-size:12px;line-height:1.6}.plus-features li{padding:4px 0}.plus-features li:before{content:'✓';margin-right:10px;color:#3d8e8a}.plus-plans{display:grid;gap:8px}.plus-plan{border:1px solid #7c9eab45;background:#ffffff45;border-radius:16px;display:flex;justify-content:space-between;align-items:center;text-align:left;padding:13px;color:inherit;font:inherit;font-size:13px}.plus-plan[aria-pressed=true]{border-color:#428789;background:#faffffb8;box-shadow:0 0 0 1px #428789}.plus-plan small{display:block;font-size:9px;font-weight:400;opacity:.65}.plus-plan strong{font-size:18px;font-weight:500;text-align:right}.plus-primary{display:block;width:100%;margin:14px 0 8px;padding:14px;border:0;border-radius:18px;color:#fff;background:#225a69;font:500 13px Poppins,sans-serif}.plus-primary:disabled{opacity:.45}.plus-fine{font-size:9px;line-height:1.65;color:#627c84;margin:10px 0}.plus-status{font-size:11px;line-height:1.5;min-height:1em;color:#456b78}.plus-panel footer{display:flex;justify-content:center;gap:15px;padding-top:4px;font-size:10px}.plus-panel footer button,.plus-panel footer a,.plus-secondary{border:0;background:transparent;color:#446674;font:inherit;text-decoration:none}.plus-secondary{display:block;font-size:11px;margin:8px auto}.plus-member{padding:12px 0;color:#3b817c;font-size:14px}.plus-sheet-actions{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.plus-sheet-actions button{border:0;background:#80a4ad18;color:#436d7b;border-radius:12px;padding:10px;font:11px Poppins,sans-serif}.raw-forecast{max-height:45dvh;overflow:auto;font-size:11px}.raw-forecast table{border-collapse:collapse;width:100%}.raw-forecast td,.raw-forecast th{text-align:left;padding:7px;border-bottom:1px solid #52748218}.plus-panel button:active{transform:scale(.98)}@media(max-height:700px){.plus-panel{padding:20px}.plus-mark{display:none}.plus-features{margin-bottom:12px}.plus-features li{padding:2px 0}.plus-panel h2{font-size:25px}}
+
 #tidewater-ocean-layer{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
 #ocean-engine-status{position:absolute;left:16px;bottom:270px;max-width:calc(100% - 32px);padding:6px 10px;border-radius:14px;background:#17394dcc;color:#fff;font:500 11px/1.4 Poppins,sans-serif;pointer-events:none;z-index:6}
 
@@ -57426,16 +57428,9 @@ var __e = __mods['config.js'] = {};
 // Beach (30.274 N, 85.998 W) toward Grayton Beach (30.330 N, 86.164 W) on a
 // bearing of ~291 deg, so the beach faces 291 - 90 = 201 deg (SSW). The camera
 // looks along this bearing when centred; wind and swell are judged against it.
-const SITE={
- id:'inlet-beach',
- name:'Inlet Beach',region:'Florida',
- lat:30.274,lon:-85.998,zone:'America/Chicago',
- facing:201,shoreline:291,
- marine:{lat:30.24,lon:-86.0},             // nearest wave-model sea cell
- tideStation:'8729210',                     // NOAA Panama City Beach
- elevation:3,                               // eye height above sea level, metres
- url:'https://jcarroll44.github.io/ocean/'   // canonical address for shared links
-};
+const catalogue={"inlet-beach":{"schema":1,"id":"inlet-beach","name":"Inlet Beach","region":"Florida Gulf","visible":true,"lat":30.28,"lon":-86,"zone":"America/Chicago","facing":201,"shoreline":291,"marine":{"lat":30.24,"lon":-86},"tideStation":"8729210","surfZone":"FLZ108","surfOffice":"TAE","surfName":"South Walton","buoys":[{"id":"42012","lat":30.058,"lon":-87.555},{"id":"42039","lat":28.788,"lon":-86.008},{"id":"42036","lat":28.5,"lon":-84.508}],"elevation":3,"url":"https://daybuoy.jacobcarroll51.chatgpt.site/","water":{"absorption":[0.42,0.075,0.035],"scattering":[0.012,0.018,0.024]},"sand":[[0.91,0.894,0.863],[0.9372549019607843,0.9215686274509803,0.8862745098039215],[0.92,0.904,0.873]],"bars":{"base":0.65,"slope":0.022,"inner":45,"innerLift":0.68,"innerWidth":13,"outer":125,"outerLift":1.05,"outerWidth":25,"source":"typical Gulf two-bar profile est.; not a seabed survey"},"camera":{"yawMin":-102,"yawEase":40,"yawMax":60,"fov":55,"fovRise":25,"back":28,"backRise":42,"height":10,"heightRise":16,"restYaw":0,"restPitch":11,"restRadius":28.52,"restTarget":[0,4.56,0],"horizon":0.23,"lensScale":0.59},"provenance":{"facing":"est. · regional coastline normal; v7-approved 201° framing","colors":"est. · regional appearance","tide":"NOAA CO-OPS","buoys":"NOAA NDBC"}},"cocoa-beach":{"schema":1,"id":"cocoa-beach","name":"Cocoa Beach","region":"Florida Atlantic","visible":false,"lat":28.3201,"lon":-80.6075,"zone":"America/New_York","facing":92.1,"shoreline":182.1,"marine":{"lat":28.328,"lon":-80.565},"tideStation":"8721604","surfZone":"FLZ747","surfOffice":"MLB","surfName":"Southern Brevard Barrier Islands","buoys":[{"id":"41113","lat":28.4,"lon":-80.533},{"id":"41009","lat":28.508,"lon":-80.185}],"elevation":3,"url":"https://daybuoy.jacobcarroll51.chatgpt.site/","water":{"absorption":[0.3,0.095,0.04],"scattering":[0.018,0.035,0.029]},"sand":[[0.78,0.73,0.63],[0.87,0.82,0.72],[0.81,0.76,0.66]],"bars":{"base":0.65,"slope":0.022,"inner":40,"innerLift":0.68,"innerWidth":13,"outer":110,"outerLift":1.05,"outerWidth":25,"source":"typical Atlantic sandy beach profile est.; not a seabed survey"},"camera":{"yawMin":-102,"yawEase":40,"yawMax":60,"fov":55,"fovRise":25,"back":28,"backRise":42,"height":10,"heightRise":16,"restYaw":0,"restPitch":11,"restRadius":28.52,"restTarget":[0,4.56,0],"horizon":0.23,"lensScale":0.59},"provenance":{"facing":"est. · OpenStreetMap coastline (ODbL)","colors":"est. · regional appearance","tide":"NOAA CO-OPS","buoys":"NOAA NDBC"}},"san-diego":{"schema":1,"id":"san-diego","name":"San Diego · Mission Beach","region":"Southern California","visible":false,"lat":32.7706,"lon":-117.2529,"zone":"America/Los_Angeles","facing":268.02,"shoreline":358.02,"marine":{"lat":32.7706,"lon":-117.296},"tideStation":"9410170","surfZone":"CAZ043","surfOffice":"SGX","surfName":"San Diego County Coastal Areas","buoys":[{"id":"46254","lat":32.868,"lon":-117.267},{"id":"46258","lat":32.749,"lon":-117.502},{"id":"46232","lat":32.517,"lon":-117.425}],"elevation":3,"url":"https://daybuoy.jacobcarroll51.chatgpt.site/","water":{"absorption":[0.34,0.095,0.045],"scattering":[0.012,0.021,0.027]},"sand":[[0.71,0.65,0.55],[0.81,0.76,0.66],[0.75,0.69,0.59]],"bars":{"base":0.8,"slope":0.03,"inner":35,"innerLift":0.68,"innerWidth":13,"outer":100,"outerLift":0.65,"outerWidth":25,"source":"typical Pacific sandy beach profile est.; not a seabed survey"},"camera":{"yawMin":-70,"yawEase":40,"yawMax":102,"fov":55,"fovRise":25,"back":28,"backRise":42,"height":10,"heightRise":16,"restYaw":0,"restPitch":11,"restRadius":28.52,"restTarget":[0,4.56,0],"horizon":0.23,"lensScale":0.59},"provenance":{"facing":"est. · coastline normal","colors":"est. · regional appearance","tide":"NOAA CO-OPS","buoys":"NOAA NDBC"}}};
+const SITE=globalThis.__DAYBUOY_PROFILE__||catalogue[new URLSearchParams(globalThis.location?.search||'').get('beach')]||catalogue['inlet-beach'];
+globalThis.__daybuoyProfile=SITE;
 
 // The sunset "light gate": sunlight reaching clouds over the beach at sunset
 // passes low through the atmosphere 100-200 km toward the sun. Low cloud there
@@ -58795,7 +58790,8 @@ __e['esc'] = esc;
 
 // Enrich the existing providers without altering their pinned parser/astronomy.
 (()=>{
- // Forecast values retain their units and missingness. Visual morphology is an
+ const INLET_PROFILE=__mods['config.js'].SITE;
+// Forecast values retain their units and missingness. Visual morphology is an
 // estimate, never radar, a lightning observation, or a minute-accurate nowcast.
 const WEATHER_HOUR=3600000;
 const WEATHER_FIELDS={cloud:'cloud_cover',cloudLow:'cloud_cover_low',cloudMid:'cloud_cover_mid',cloudHigh:'cloud_cover_high',rain:'precipitation',weatherCode:'weather_code',visibility:'visibility',humidity:'relative_humidity_2m',temperature:'temperature_2m',wind:'wind_speed_10m',windDirection:'wind_direction_10m',gust:'wind_gusts_10m',cape:'cape',lightningPotential:'lightning_potential',radiation:'shortwave_radiation_instant',directRadiation:'direct_radiation_instant',lowWind:'wind_speed_850hPa',lowDirection:'wind_direction_850hPa',midWind:'wind_speed_500hPa',midDirection:'wind_direction_500hPa',highWind:'wind_speed_250hPa',highDirection:'wind_direction_250hPa'};
@@ -58882,14 +58878,14 @@ function sampledOffshore(field,time,now=Date.now()){
   return {bearing:p.bearing,miles:p.miles,sector:p.sector,grid:p.grid,conditions:c,potential};
  });
 }
-function integrateCloudWind(rows,time,layer,origin=0){
+function integrateCloudWind(rows,time,layer,origin=0,facing=INLET_PROFILE.facing){
  const v=weatherBracket(rows,time);if(!v)return [0,0];
  // Integrate from the forecast's fixed first timestamp, so reverse scrubbing
  // cannot change the cloud location at a given forecast time.
  const start=rows[0].time;
  let x=0,z=0;
  for(let t=start;t<time;){const end=Math.min(time,t+WEATHER_HOUR),v=weatherBracket(rows,(t+end)/2),c=v?{[layer+'Wind']:weatherValue(v.a,v.b,v.f,layer+'Wind'),[layer+'Direction']:weatherValue(v.a,v.b,v.f,layer+'Direction')}:null;if(!Number.isFinite(c?.[layer+'Wind'])||!Number.isFinite(c?.[layer+'Direction'])){t=end;continue;}
-  const a=(c[layer+'Direction']-201)*Math.PI/180,d=c[layer+'Wind']*.514444*(end-t)/1000;x+=Math.sin(a)*d;z-=Math.cos(a)*d;t=end;
+  const a=(c[layer+'Direction']-facing)*Math.PI/180,d=c[layer+'Wind']*.514444*(end-t)/1000;x+=Math.sin(a)*d;z-=Math.cos(a)*d;t=end;
  }
  return [x+origin,z+origin];
 }
@@ -59009,6 +59005,26 @@ function surfHeightRange(text){
  };
 })();
 
+// Runtime authority: every provider request is on the shared server, never here.
+(()=>{
+ const F=__mods['forecast.js'],C=__mods['conditions.js'],site=__mods['config.js'].SITE;
+ const key='daybuoy.shared.v3.'+site.id;let cached=null,pending=null;
+ const valid=v=>v?.schema===3&&v.profileId===site.id&&Array.isArray(v.rows)&&v.rows.length>=6&&v.rows.every(r=>Number.isFinite(r.time))&&Number.isFinite(v.retrievedAt)&&v.retrievedAt<=Date.now()+300000&&Date.now()-v.retrievedAt<86400000;
+ try{const c=JSON.parse(localStorage.getItem(key)||'null');if(valid(c))cached=c;}catch{}
+ const api=__mods['shared-forecast.js']={get data(){return cached;},endpoint:()=>new URL('/api/forecast?beach='+encodeURIComponent(site.id),globalThis.__DAYBUOY_API_ORIGIN__||location.origin).href};
+ F.saveForecast=data=>{if(valid(data))try{localStorage.setItem(key,JSON.stringify(data));}catch{}};
+ F.savedForecast=()=>valid(cached)?F.finalize({...cached,source:'saved'}):null;
+ F.loadForecast=async()=>{
+  if(pending)return pending;
+  pending=(async()=>{let last;
+   for(let i=0;i<12;i++){try{const response=await fetch(api.endpoint(),{signal:AbortSignal.timeout(55000),credentials:'same-origin'});if(!response.ok)throw Error('Shared forecast HTTP '+response.status);const data=await response.json();if(!valid(data))throw Error('Invalid shared forecast');cached=F.finalize(data);F.saveForecast(cached);return cached;}catch(e){last=e;if(i<11)await new Promise(r=>setTimeout(r,5000));}}
+   if(valid(cached))return F.finalize({...cached,source:'saved',error:'Refresh unavailable'});throw last;
+  })().finally(()=>pending=null);return pending;
+ };
+ const baseSample=C.sampleAt;
+ C.sampleAt=(rows,time)=>{const out=baseSample(rows,time);if(!out)return out;const m=__mods['marine-data.js'],cal=m.regionalAdjustment(rows[0]?.marineFixture||cached?.marineField?.waveModel!=='GFS Wave 0.25°'?[]:cached.marineField.observations,time);out.waveCalibration=cal.factor;out.waveCalibrationSource=cal.stations.length?'regional calibration est. · NOAA NDBC '+cal.stations.join(', '):null;return out;};
+})();
+
 (()=>{
 'use strict';
 const THREE=__mods['three.module.js'];
@@ -59051,7 +59067,7 @@ function createSceneHost(canvas,u,onError){
 
 const createOcean=createSceneHost;
 const {SITE,FT}=__mods['config.js'];
-SITE.lat=30.28;SITE.lon=-86.0;
+// Coordinates belong to the selected beach profile.
 const {loadForecast,finalize,savedForecast,saveForecast}=__mods['forecast.js'];
 const {sampleForecast}=__mods['sample.js'];
 const {sunPosition,sunDay,localDayStart,sceneVector,moonPosition,moonPhase,starToScene,GALACTIC,matmul3,transpose3}=__mods['astro.js'];
@@ -59105,9 +59121,9 @@ function headingVec(yawDeg,pitchDeg){const y=yawDeg*RAD,p=pitchDeg*RAD;return ne
 function beachPose(){ // the secret sauce: you never leave the beach. The sun moves; you just step back.
   const D=Math.PI/180, sm=(a,b,x)=>{x=Math.min(1,Math.max(0,(x-a)/(b-a)));return x*x*(3-2*x);};
   const k=sm(8,50,sunEl);                                   // 0 at sunrise/sunset, 1 near the top of the arc
-  const yaw=Math.max(-102+40*k,Math.min(60,sunRel))*(1-0.25*k);  // face the sun, ease back toward the water as it climbs
-  const fov=55+25*k;                                        // lens widens a little
-  const back=28+42*k, h=10+16*k;                            // step back and up the dune, never a drone
+  const yaw=Math.max(SITE.camera.yawMin+SITE.camera.yawEase*k,Math.min(SITE.camera.yawMax,sunRel))*(1-0.25*k);  // face the sun, ease back toward the water as it climbs
+  const fov=SITE.camera.fov+SITE.camera.fovRise*k;                                        // lens widens a little
+  const back=SITE.camera.back+SITE.camera.backRise*k, h=SITE.camera.height+SITE.camera.heightRise*k;                            // step back and up the dune, never a drone
   const pos=new THREE.Vector3(0,h,back).applyAxisAngle(_up,-yaw*D);
   const tf=Math.tan(fov/2*D);
   let pitch=sunEl-Math.atan(0.56*tf)/D;                     // sun about 22% from the top of the screen...
@@ -59281,9 +59297,9 @@ function advanceWatch(now){if(state.paused)return;watchAt((now-state.playStart)/
 function stopWatch(restore=true){if(state.playing){holdTimeExploration();beginBeachReturn();}const wasPlaying=state.playing;state.playing=false;state.skyView=false;state.paused=false;delete $('#app').dataset.playing;if(wasPlaying&&state.watchRestore){const saved=state.watchRestore;setTime(saved.time,{live:saved.live});freeOrbit={...saved.orbit};Object.assign(current,saved.current);uniforms.uPhase.value=saved.phase;uniforms.uTime.value=saved.sceneTime;openSheet(saved.sheet);state.watchRestore=null;}state.dirty=true;}
 
 // Default resting pose; manual look rotates in place via interaction.js.
-const orbitHome={az:0,el:11*RAD,r:28.52},orbitTarget=new THREE.Vector3(0,4.56,0);
+const orbitHome={az:SITE.camera.restYaw*RAD,el:SITE.camera.restPitch*RAD,r:SITE.camera.restRadius},orbitTarget=new THREE.Vector3(...SITE.camera.restTarget);
 // Shift the resting horizon to 23% without changing the view bearing or ocean geometry.
-const HOME_LENS_SHIFT=.59*(1-2*.23)-Math.tan(orbitHome.el);
+const HOME_LENS_SHIFT=SITE.camera.lensScale*(1-2*SITE.camera.horizon)-Math.tan(orbitHome.el);
 let freeOrbit={...orbitHome},cloudPuffs=[],cloudRoot=null,uvVersion=null,uvArcTube=null,uvArcDay=null,uvArcGlow=[];
 function resetBeach(){clearUserView();freeOrbit={...orbitHome};state.dirty=true;}
 function applyFreeCamera(){
@@ -59454,7 +59470,7 @@ function applyScene(dt){
  if(!engine)return;const c=conditions(),k=1-Math.exp(-dt*5);for(const key of Object.keys(current)){const v=c[key];if(Number.isFinite(v))current[key]=mix(current[key],v,k);}
  uniforms.uSwell.value=clamp(current.swell/FT,.01,3);uniforms.uPeriod.value=current.period;uniforms.uWind.value=current.wind;uniforms.uCloud.value=current.cloud/100;uniforms.uRain.value=current.rain;uniforms.uVisibility.value=current.visibility;uniforms.uTide.value=current.tide||0;uniforms.uClarity.value=current.clarity/100;
  const fog=[45,48].includes(c.weatherCode),humidityHaze=Number.isFinite(c.humidity)?smooth(85,98,c.humidity):0;uniforms.uHazeStrength.value=mix(uniforms.uHazeStrength.value,fog?1:humidityHaze,k);
- uniforms.uDirection.value=((c.direction??201)-SITE.facing)*RAD;uniforms.uWindDirection.value=((c.windDirection??201)-SITE.facing)*RAD;uniforms.uCloudLayers.value.set((c.cloudLow??current.cloud*.5)/100,(c.cloudMid??current.cloud*.3)/100,(c.cloudHigh??current.cloud*.2)/100);
+ uniforms.uDirection.value=((c.direction??SITE.facing)-SITE.facing)*RAD;uniforms.uWindDirection.value=((c.windDirection??SITE.facing)-SITE.facing)*RAD;uniforms.uCloudLayers.value.set((c.cloudLow??current.cloud*.5)/100,(c.cloudMid??current.cloud*.3)/100,(c.cloudHigh??current.cloud*.2)/100);
  const s=sunPosition(state.time),m=moonPosition(state.time),ph=moonPhase(state.time),M=starToScene(state.time);uniforms.uSun.value.set(...sceneVector(s.azimuth,s.altitude));uniforms.uMoon.value.set(...sceneVector(m.azimuth,m.altitude));uniforms.uMoonInfo.value.set(ph.fraction,m.radius*RAD,m.altitude>0?ph.fraction*Math.min(1,Math.sin(m.altitude*RAD)/.3):0,Math.pow(1-ph.fraction,2));uniforms.uDark.value=clamp((-s.altitude-4)/14,0,1);uniforms.uExposure.value=1+uniforms.uDark.value*.25;uniforms.uGalactic.value.set(...matmul3(GALACTIC,transpose3(M)));uniforms.uGlow.value=.8;uniforms.uAfternoon.value=state.time>sunDay(state.time).solarNoon?1:0;engine.sky.update({matrix:M,limit:6.2-(1-uniforms.uDark.value)*3,planets:[],figures:false});
  updateSunCamera(dt);
  updateCelestialPresentation();
@@ -59542,7 +59558,7 @@ function renderHome(){
 }
 
 async function shareHome(){
- try{await document.fonts.ready;engine.render(0);const canvas=document.createElement('canvas');canvas.width=canvas.height=1080;const ctx=canvas.getContext('2d'),src=await displayedSceneCopy(),scale=1080/src.width;ctx.fillStyle='#4987A4';ctx.fillRect(0,0,1080,1080);ctx.drawImage(src,0,-Math.max(0,src.height*scale-1080)*.45,1080,src.height*scale);const scrim=ctx.createLinearGradient(0,0,0,470);scrim.addColorStop(0,'#1a435ad9');scrim.addColorStop(1,'#1a435a00');ctx.fillStyle=scrim;ctx.fillRect(0,0,1080,470);ctx.fillStyle='white';ctx.font='500 42px Poppins';const mark=new Image();mark.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(homeBrandMark.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" style="color:white" '));await mark.decode();ctx.drawImage(mark,58,47,52,52);ctx.fillText('DayBuoy',126,90);ctx.font='400 25px Poppins';ctx.fillText('Inlet Beach',64,133);ctx.font='200 144px Poppins';ctx.fillText(Number.isFinite(src.daybuoyCapture.conditions.temperature)?Math.round(src.daybuoyCapture.conditions.temperature)+'°':'—',56,260);ctx.font='400 38px Poppins';ctx.fillText(src.daybuoyCapture.headline,62,330);ctx.font='400 24px Poppins';ctx.fillText(`${weekday(src.daybuoyCapture.time)} · ${clock(src.daybuoyCapture.time)}${review?' · Demo forecast':''}`,62,390);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Image unavailable');const file=new File([blob],'DayBuoy-Inlet-Beach.png',{type:'image/png'});if(navigator.canShare?.({files:[file]}))await navigator.share({files:[file],title:'DayBuoy · Inlet Beach'});else{const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);notice('Beach forecast image downloaded.');}}catch(e){if(e.name!=='AbortError')notice('Could not share this scene. Please try again.');}
+ try{await document.fonts.ready;engine.render(0);const canvas=document.createElement('canvas');canvas.width=canvas.height=1080;const ctx=canvas.getContext('2d'),src=await displayedSceneCopy(),scale=1080/src.width;ctx.fillStyle='#4987A4';ctx.fillRect(0,0,1080,1080);ctx.drawImage(src,0,-Math.max(0,src.height*scale-1080)*.45,1080,src.height*scale);const scrim=ctx.createLinearGradient(0,0,0,470);scrim.addColorStop(0,'#1a435ad9');scrim.addColorStop(1,'#1a435a00');ctx.fillStyle=scrim;ctx.fillRect(0,0,1080,470);ctx.fillStyle='white';ctx.font='500 42px Poppins';const mark=new Image();mark.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(homeBrandMark.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" style="color:white" '));await mark.decode();ctx.drawImage(mark,58,47,52,52);ctx.fillText('DayBuoy',126,90);ctx.font='400 25px Poppins';ctx.fillText(SITE.name,64,133);ctx.font='200 144px Poppins';ctx.fillText(Number.isFinite(src.daybuoyCapture.conditions.temperature)?Math.round(src.daybuoyCapture.conditions.temperature)+'°':'—',56,260);ctx.font='400 38px Poppins';ctx.fillText(src.daybuoyCapture.headline,62,330);ctx.font='400 24px Poppins';ctx.fillText(`${weekday(src.daybuoyCapture.time)} · ${clock(src.daybuoyCapture.time)}${review?' · Demo forecast':''}`,62,390);const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));if(!blob)throw Error('Image unavailable');const file=new File([blob],'DayBuoy-Inlet-Beach.png',{type:'image/png'});if(navigator.canShare?.({files:[file]}))await navigator.share({files:[file],title:'DayBuoy · '+SITE.name});else{const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);notice('Beach forecast image downloaded.');}}catch(e){if(e.name!=='AbortError')notice('Could not share this scene. Please try again.');}
 }
 
 // Presentation and copy only. No scene uniforms, camera targets or gestures.
@@ -59818,7 +59834,7 @@ function renderTimeReadout(){
  const c=conditions(),active=!!state.scrubbing||exploreGesture?.kind==='arc'||drag?.type==='sun'||drag?.type==='ribbon';
  $('#app').dataset.scrubbing=String(active);
  $('#app').dataset.timeHeld=String(!!state.timeCameraHeld);
- $('#source-label').textContent=state.live?'Inlet Beach':`${weekday(state.time)} · ${clock(state.time)}`;
+ $('#source-label').textContent=state.live?SITE.name:`${weekday(state.time)} · ${clock(state.time)}`;
  $('#source-label').dataset.live=String(state.live&&realForecast());
  const air=$('[data-sheet="air"] .meaning');if(air)air.textContent=Number.isFinite(c.rainProbability)?`${Math.round(c.rainProbability)}% rain`:'—';
  const uv=forecastUV(state.time),label=$('[data-sheet="sun"] small');if(label){const dot=document.createElement('i');dot.className='uv-dot';dot.style.background=uvColour(uv);dot.setAttribute('aria-hidden','true');label.prepend(dot);}
@@ -60121,12 +60137,12 @@ window.__interaction.quality=()=>({low:!!state.dragQuality,pixelRatio:Math.min(d
 
 // Official NWS Tallahassee Surf Zone Forecast. South Walton is FLZ108.
 // The parser only imports rip-risk periods; solar/tide math remains app-owned.
-const SURF_ZONE='FLZ108',SURF_URL='https://forecast.weather.gov/product.php?site=TAE&issuedby=TAE&product=SRF&format=CI&version=1&glossary=0';
+const SURF_ZONE=SITE.surfZone,SURF_URL='https://forecast.weather.gov/product.php?site='+SITE.surfOffice+'&issuedby='+SITE.surfOffice+'&product=SRF&format=CI&version=1&glossary=0';
 let surfForecast=null,surfRequestedAt=0;
 function parseSurfProduct(product,now=Date.now()){
  const issued=Date.parse(product.issuanceTime),text=product.productText;
  if(product.productCode!=='SRF'||!Number.isFinite(issued)||typeof text!=='string'||issued>now+5*MIN||now-issued>30*HOUR)throw Error('Invalid or expired surf forecast');
- const section=text.replace(/\r/g,'').split(/\n\$\$\s*(?:\n|$)/).find(s=>/^FLZ108(?:-|>)/m.test(s)&&/South Walton/i.test(s));
+ const section=text.replace(/\r/g,'').split(/\n\$\$\s*(?:\n|$)/).find(s=>surfSectionHasZone(s,SURF_ZONE));
  if(!section)throw Error('South Walton not found');
  const base=localDayStart(issued),days=['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'],baseDay=days.indexOf(new Intl.DateTimeFormat('en-US',{timeZone:SITE.zone,weekday:'long'}).format(issued).toUpperCase());
  const headers=[...section.matchAll(/^\.([A-Z][A-Z ]*)\.\.\./gm)],periods=[];
@@ -60286,7 +60302,7 @@ async function storyShareCanvas(){
  fit(storySummary(),28,22,940);ctx.fillText(storySummary(),70,772);
  ctx.strokeStyle='#1a435a22';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(70,793);ctx.lineTo(1010,793);ctx.stroke();
  shareMoments().forEach((m,i)=>{const baseline=831+i*55;ctx.fillStyle='#1a435a';ctx.font='500 23px Poppins';ctx.fillText(rangeClock(m.time),70,baseline);fit(m.title,28,22,730);ctx.fillText(m.title,275,baseline);ctx.fillStyle='#365d70';fit(m.detail,20,16,730,'400');ctx.fillText(m.detail,275,baseline+23);});
- ctx.fillStyle='#1a435aaa';ctx.font='500 19px Poppins';ctx.fillText('DayBuoy · Inlet Beach',70,1019);return canvas;
+ ctx.fillStyle='#1a435aaa';ctx.font='500 19px Poppins';ctx.fillText('DayBuoy · '+SITE.name,70,1019);return canvas;
 }
 async function shareStory(){
  try{const canvas=await storyShareCanvas(),blob=await new Promise(r=>canvas.toBlob(r,'image/png'));if(!blob)throw Error('Image unavailable');const file=new File([blob],'DayBuoy-Your-Day.png',{type:'image/png'});if(navigator.canShare?.({files:[file]}))await navigator.share({files:[file]});else{const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);notice('Your day image downloaded.');}}catch(e){if(e.name!=='AbortError')notice('Could not export the day card.');}
@@ -60326,7 +60342,7 @@ parseSurfProduct=function(product,now=Date.now()){
   if(before!==null&&after===before+2){const name=weekdays[(base+before+1)%7];text=text.slice(0,h.index)+'.'+name+'...'+text.slice(h.index+h[0].length);}
  }
  const result=releaseBase.parseSurfProduct({...product,productText:text},now);
- const section=text.split(/\n\$\$\s*(?:\n|$)/).find(s=>/^FLZ108(?:-|>)/m.test(s)&&/South Walton/i.test(s));
+ const section=text.split(/\n\$\$\s*(?:\n|$)/).find(s=>surfSectionHasZone(s,SURF_ZONE));
  if(section){const hs=[...section.matchAll(/^\.([A-Z][A-Z ]*)\.\.\./gm)];for(let i=0;i<hs.length;i++){const body=section.slice(hs[i].index+hs[i][0].length,hs[i+1]?.index??section.indexOf('\n&&',hs[i].index));const range=__mods['marine-data.js']?.surfHeightRange(body);const period=result.periods.find(p=>p.label===hs[i][1]);if(range&&period)period.breakers=range;}}
  return result;
 };
@@ -60499,10 +60515,10 @@ function weatherScenePacket(c){
  const field=state.data.weatherField,stamp=Math.floor(state.time/100),key=[state.version,stamp,field?.retrievedAt].join(':');
  if(weatherPacketCache.key!==key){
   const w=__mods['weather-data.js'];
-  weatherPacketCache={key,offshore:w.sampledOffshore(field,state.time),drift:['low','mid','high'].map(layer=>field?.series?.[0]?w.integrateCloudWind(field.series[0].rows,state.time,layer):null)};
+  weatherPacketCache={key,offshore:w.sampledOffshore(field,state.time),drift:['low','mid','high'].map(layer=>field?.series?.[0]?w.integrateCloudWind(field.series[0].rows,state.time,layer,0,SITE.facing):null)};
  }
  const surf=ripRiskAt(state.time)?.breakers;
- return {surfLowFt:surf?.low??null,surfHighFt:surf?.high??null,...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,scrubbing:!!state.scrubbing||!!state.playing,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
+ return {facing:SITE.facing,surfZone:SITE.surfZone,surfLowFt:surf?.low??null,surfHighFt:surf?.high??null,...Object.fromEntries(WEATHER_PACKET_KEYS.map(k=>[k,c[k]??null])),offshore:weatherPacketCache.offshore,cloudDrift:weatherPacketCache.drift,reducedMotion:reduced,scrubbing:!!state.scrubbing||!!state.playing,forecastTime:state.time,weatherRetrievedAt:field?.retrievedAt??null,weatherSource:field?.source??null};
 }
 const weatherEffectsBase=updateWeatherEffects;
 // Illustrative thunder potential, not observed strikes. One bounded flash every
@@ -60551,12 +60567,12 @@ renderPresentation=function(){
  const value=(n,suffix)=>Number.isFinite(n)?Math.round(n)+suffix:'—';
  if(available){
   // Separate elements guarantee a single meta line and a quiet timestamp below.
-  detail.innerHTML=`<span class="premium-meta">${value(c.wind,' kt wind')} <i>·</i> ${value(c.period,' s period')}</span><small class="premium-updated">Updated ${Number.isFinite(state.data.retrievedAt)?textHTML(clock(state.data.retrievedAt)):'—'}</small>`;
+  detail.innerHTML=`<span class="premium-meta">${value(c.wind,' kt wind')} <i>·</i> ${value(c.period,' s period')}</span><small class="premium-updated">Updated ${Number.isFinite(state.data.retrievedAt)?textHTML(clock(state.data.retrievedAt)):'—'}${state.data.attribution?' · <a aria-label="Apple Weather data sources" href="https://weatherkit.apple.com/legal-attribution.html" target="_blank" rel="noopener"> Weather</a>':''}</small>`;
   detail.style.whiteSpace='normal';temp.textContent=value(c.temperature,'°');
  }
  const label=$('#source-label');
- if($('#app').dataset.connectedLive==='true')label.textContent='LIVE · INLET BEACH';
- else if(available&&state.data.source!=='saved'&&navigator.onLine!==false)label.textContent=weekday(state.time)+' '+clock(state.time)+' · INLET BEACH';
+ if($('#app').dataset.connectedLive==='true')label.textContent='LIVE · '+SITE.name.toUpperCase();
+ else if(available&&state.data.source!=='saved'&&navigator.onLine!==false)label.textContent=weekday(state.time)+' '+clock(state.time)+' · '+SITE.name.toUpperCase();
  const chip=$('#release-rip-chip');if(chip)chip.textContent='High rip current · NWS';
 };
 function hourlyStatChart(kind,series,title){
@@ -60575,14 +60591,14 @@ function wavePartitionRows(c){
  }).join('');
 }
 renderSheet=function(){
- const c=conditions(),kind=state.sheet,active=document.activeElement?.dataset.ribbon,source='<p class="sheet-source">est. · Open-Meteo'+(kind==='water'||kind==='waves'?' Marine':'')+'</p>';
+ const c=conditions(),kind=state.sheet,active=document.activeElement?.dataset.ribbon,source='<p class="sheet-source">est. · '+(kind==='water'||kind==='waves'?'Open-Meteo Marine':textHTML(state.data.weatherSource||'Weather forecast'))+'</p>';
  let title={air:'Air',water:'Water',waves:'Waves',wind:'Wind',sun:'UV & sun'}[kind],body='';
  const series=(key,label,convert=v=>v)=>({label,value:r=>Number.isFinite(r?.[key])?convert(r[key]):null});
  if(kind==='air')body=`<div class="sheet-readings"><div class="reading"><small>Air</small><strong>${statNumber(c.temperature)}<em>°</em></strong></div><div class="reading"><small>Feels like</small><strong>${statNumber(c.apparent)}<em>°</em></strong></div></div>${hourlyStatChart(kind,[series('temperature','Air'),series('apparent','Feels like')],'Temperature')}`;
  if(kind==='water')body=`${ripRiskRow()}<div class="sheet-readings"><div class="reading"><small>Water temperature</small><strong>${Number.isFinite(c.sst)?statNumber(cToF(c.sst)):'—'}<em>°</em></strong></div><button class="reading" data-water-detail="waves"><small>Waves ›</small><strong>${statNumber(c.swell,1)}<em>ft</em></strong></button><button class="reading" data-water-detail="wind"><small>Wind ›</small><strong>${statNumber(c.wind)}<em>kt</em></strong></button></div>${hourlyStatChart(kind,[series('sst','Water',cToF)],'Water temperature')}${chart('water')}<p class="sheet-source">Tide est. · ${c.marineTide?'Open-Meteo Marine sea level, MSL':'NOAA predictions, MSL'}${Number.isFinite(c.ocean_current_velocity)?`<br>Current est. ${c.ocean_current_velocity.toFixed(2)} m/s toward ${Number.isFinite(c.ocean_current_direction)?compass(c.ocean_current_direction):'direction unavailable'} · Open-Meteo Marine`:''}</p>`;
  if(kind==='waves'){
   const surf=ripRiskAt(state.time)?.breakers,peak=c.wave_peak_period,cal=c.waveCalibrationSource;
-  body=`<div class="sheet-readings"><div class="reading"><small>Combined sea</small><strong>${statNumber(c.swell,1)}<em>ft</em></strong></div><div class="reading"><small>Period</small><strong>${statNumber(c.period,1)}<em>s</em></strong></div><div class="reading"><small>From</small><strong>${directionArrow(c.direction)}${Number.isFinite(c.direction)?compass(c.direction):'—'}</strong></div></div><div class="wave-partitions">${wavePartitionRows(c)}</div>${hourlyStatChart(kind,[series('swell','Combined'),series('swell_wave_height','Primary',v=>v*FT),series('secondary_swell_wave_height','Secondary',v=>v*FT),series('wind_wave_height','Wind waves',v=>v*FT)],'Wave height')}<p class="sheet-source">est. · Open-Meteo Marine${state.data.marineField?.waveModel?' · '+textHTML(state.data.marineField.waveModel):''}<br>Peak period ${Number.isFinite(peak)?peak.toFixed(1)+' s':'unavailable'} · directions from${surf?'<br>Surf forecast '+surf.low+'–'+surf.high+' ft · NWS FLZ108':''}${cal?'<br>'+textHTML(cal):''}</p>`;
+  body=`<div class="sheet-readings"><div class="reading"><small>Combined sea</small><strong>${statNumber(c.swell,1)}<em>ft</em></strong></div><div class="reading"><small>Period</small><strong>${statNumber(c.period,1)}<em>s</em></strong></div><div class="reading"><small>From</small><strong>${directionArrow(c.direction)}${Number.isFinite(c.direction)?compass(c.direction):'—'}</strong></div></div><div class="wave-partitions">${wavePartitionRows(c)}</div>${hourlyStatChart(kind,[series('swell','Combined'),series('swell_wave_height','Primary',v=>v*FT),series('secondary_swell_wave_height','Secondary',v=>v*FT),series('wind_wave_height','Wind waves',v=>v*FT)],'Wave height')}<p class="sheet-source">est. · Open-Meteo Marine${state.data.marineField?.waveModel?' · '+textHTML(state.data.marineField.waveModel):''}<br>Peak period ${Number.isFinite(peak)?peak.toFixed(1)+' s':'unavailable'} · directions from${surf?'<br>Surf forecast '+surf.low+'–'+surf.high+' ft · NWS '+textHTML(SITE.surfZone||'unavailable')+'':''}${cal?'<br>'+textHTML(cal):''}</p>`;
  }
  if(kind==='wind')body=`<div class="sheet-readings"><div class="reading"><small>Wind</small><strong>${statNumber(c.wind)}<em>kt</em></strong></div><div class="reading"><small>Gusts</small><strong>${statNumber(c.gust)}<em>kt</em></strong></div><div class="reading"><small>From</small><strong>${directionArrow(c.windDirection)}${Number.isFinite(c.windDirection)?compass(c.windDirection):'—'}</strong></div></div>${hourlyStatChart(kind,[series('wind','Wind'),series('gust','Gusts')],'Wind & gusts')}<div class="hourly-directions">${[0,6,12,18].map(h=>{const r=sampleAt(state.data.rows,selectedDayBounds().start+h*HOUR);return `<span>${directionArrow(r?.windDirection)}<small>${h===0?'12a':h===12?'12p':h<12?h+'a':h-12+'p'}</small></span>`;}).join('')}</div>`;
  if(kind==='sun')body=`<div class="sheet-readings"><div class="reading"><small>UV index</small><strong>${statNumber(forecastUV(state.time),1)}</strong></div><div class="reading"><small>Moon illuminated</small><strong>${Math.round(moonPhase(state.time).fraction*100)}<em>%</em></strong></div></div>${hourlyStatChart(kind,[{label:'UV',value:(r,t)=>forecastUV(t)}],'UV index')}${sunOutlook()}`;
@@ -60593,6 +60609,26 @@ forecastMethod=function(kind){
  if(kind!=='waves')return premiumMethod(kind);
  const observations=state.data.marineField?.observations||[],now=Date.now();
  return `<details class="forecast-method" data-method="waves"><summary>Sources & wave model</summary><p>Waves est. · Open-Meteo Marine. Separate forecast partitions share Tidewater’s spectrum. Wavelength est. uses gT² / 2π; mean period is used where peak period is unavailable. Bar geometry is a typical Gulf two-bar profile, not a current seabed survey. Breaking positions and set timing are illustrative estimates.</p><p>NOAA tide predictions set local water level when available. Open-Meteo sea level is a fallback; it is never added to the NOAA tide.</p><p>Regional calibration est. · NOAA NDBC. Fresh buoy/model height residuals adjust the near-now visual amplitude by at most 15%; no adjustment beyond two hours. This method is unvalidated for local breaker height. Directions and periods remain local forecasts.</p>${observations.filter(o=>now-o.time<3*HOUR).map(o=>`<p>Buoy ${textHTML(o.id)} · ${Math.round(o.distanceKm)} km offshore · observed ${(o.height*FT).toFixed(1)} ft${Number.isFinite(o.dominantPeriod)?' / '+o.dominantPeriod.toFixed(1)+' s dominant':''} · ${textHTML(clock(o.time))}</p>`).join('')||'<p>Recent regional buoy observations unavailable.</p>'}<p><a href="https://open-meteo.com/en/docs/marine-weather-api" target="_blank" rel="noopener">Open-Meteo</a> · <a href="https://www.ndbc.noaa.gov/" target="_blank" rel="noopener">NOAA NDBC</a> · <a href="${SURF_URL}" target="_blank" rel="noopener">NWS FLZ108</a> · <a href="/credits.html" target="_blank" rel="noopener">MIT credits: Tidewater & Takram</a></p></details>`;
+};
+
+function surfSectionHasZone(section,zone){
+ if(!/^[A-Z]{2}Z\d{3}$/.test(zone||''))return false;
+ const prefix=zone.slice(0,3),wanted=Number(zone.slice(3));
+ const lines=section.split('\n').filter(l=>/^[A-Z]{2}Z\d|^\d{3}(?:[- >])/.test(l)).join('');let current=null;
+ for(const token of lines.split('-')){if(/^[A-Z]{2}Z/.test(token))current=token.slice(0,3);const value=token.replace(/^[A-Z]{2}Z/,'');const [lo,hi]=value.split('>').map(Number);if(current===prefix&&value.length<8&&wanted>=lo&&wanted<=(hi||lo))return true;}return false;
+}
+loadRipForecast=async function(){
+ const data=__mods['shared-forecast.js'].data;
+ try{if(!data?.surfProduct)throw Error('Surf unavailable');surfForecast=parseSurfProduct(data.surfProduct);ripFeedFailed=data.cache?.stale===true;}catch{ripFeedFailed=true;releaseReport('nws-surf','refresh-failed');}
+ state.dirty=true;
+};
+const sharedRefresh=refresh;
+refresh=async function(){await sharedRefresh();await loadRipForecast();if(state.data.schema===3)window.dispatchEvent(new CustomEvent('daybuoy:forecast',{detail:state.data}));};
+const sharedMethod=forecastMethod;
+forecastMethod=function(kind){
+ const source=state.data.weatherSource||'unavailable',stamp=releaseStamp(state.data.retrievedAt);
+ if(['air','sun','wind','temperature','uv'].includes(kind))return `<details class="forecast-method"><summary>Sources & estimates</summary><p>Weather · ${textHTML(source)}. Retrieved ${textHTML(stamp)}. Times in ${textHTML(SITE.zone)}.</p><p>Cloud layers and cloud movement est. from total cloud and surface wind. Scene appearance modifies the source weather data. Offshore sampling is hourly forecast data, not radar. Missing UV, radiation or visibility remain unavailable.</p><p>Sun and Moon: positional astronomy at ${SITE.lat.toFixed(4)}°, ${SITE.lon.toFixed(4)}°. Sea-facing bearing ${SITE.facing}°.</p>${state.data.attribution?'<p><span aria-label="Apple Weather"> Weather</span> · <a href="https://weatherkit.apple.com/legal-attribution.html" target="_blank" rel="noopener">Other data sources</a></p>':''}</details>`;
+ return sharedMethod(kind).replaceAll('typical Gulf two-bar profile',textHTML(SITE.bars.source)).replaceAll('NWS FLZ108','NWS '+textHTML(SITE.surfZone||'unavailable')).replaceAll('NOAA predictions at station 8729210','NOAA predictions at station '+textHTML(SITE.tideStation||'unavailable')).replaceAll('South Walton',textHTML(SITE.surfName||SITE.name));
 };
 
 // Wait for an actual submitted drawable before exporting. WebGPU canvases may
@@ -60621,13 +60657,84 @@ renderPresentation=function(){
 // Prevent disabled/loading share from exporting placeholder conditions.
 document.addEventListener('click',event=>{const share=event.target.closest?.('#share-scene');if(share?.getAttribute('aria-disabled')==='true'){event.preventDefault();event.stopImmediatePropagation();}},{capture:true});
 
+// Additive product boundary; the accepted gesture handlers remain unchanged.
+let plusState={active:false,expires:0},plusPlans=null,plusChoice='annual',plusBusy=false,paywallFocus=null;
+const plusActive=()=>plusState.active&&plusState.expires>Date.now();
+const plusNative=()=>window.daybuoyPurchases;
+const plusToday=t=>{const d=localDayStart(Date.now());return t>=d&&t<localDayStart(d+36*HOUR);};
+const plusTime=setTime,plusDay=selectForecastDay,plusSheet=renderSheet;
+setTime=function(t,options){if(!state.fixture&&!plusActive()&&!plusToday(t)){openPaywall('The whole week, in motion.');return;}return plusTime(t,options);};
+selectForecastDay=function(day){if(!state.fixture&&!plusActive()&&!plusToday(day)){openPaywall('The whole week, in motion.');return;}return plusDay(day);};
+renderSheet=function(){plusSheet();const area=$('#sheet-content');if(!area.querySelector('[data-plus]'))area.insertAdjacentHTML('beforeend',`<div class="plus-sheet-actions"><button data-plus>${plusActive()?'DayBuoy+ settings':'Explore DayBuoy+'}</button><button data-forecast-data>Forecast data</button><button data-share-clip>Share a clip</button></div>`);};
+function plusEntitlement(value){plusState=value||{active:false,expires:0};if(!plusActive()&&!plusToday(state.time)&&!state.fixture)backToNow();state.dirty=true;if($('#plus-modal')&&!$('#plus-modal').hidden)drawPaywall();}
+window.addEventListener('daybuoy:entitlement',e=>plusEntitlement(e.detail));
+function paywallStatus(message){const el=$('#plus-status');if(el)el.textContent=message;}
+function closePaywall(){const el=$('#plus-modal');if(el)el.hidden=true;paywallFocus?.focus?.({preventScroll:true});}
+function drawPaywall(){
+ let modal=$('#plus-modal');if(!modal){modal=document.createElement('section');modal.id='plus-modal';modal.className='plus-overlay';modal.hidden=true;modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','plus-title');$('#app').append(modal);}
+ const plan=plusPlans?.find(p=>p.id===plusChoice),active=plusActive();
+ modal.innerHTML=`<div class="plus-panel"><button class="plus-close" aria-label="Close DayBuoy+">×</button><div class="plus-mark">${homeIcon('water')}</div><p class="plus-kicker">DAYBUOY<span>+</span></p><h2 id="plus-title">${active?'Your beach, all week.':'Stay a little longer.'}</h2><p class="plus-intro">The whole week, in motion.</p><ul class="plus-features"><li>Seven days of ocean, sky & tide</li><li>Conditions on your Home Screen</li><li>A morning conditions notification</li><li>Share clips without the watermark</li></ul>${active?`<div class="plus-member">DayBuoy+ is active</div><button class="plus-primary" data-morning>Turn on morning forecast</button><button class="plus-secondary" data-morning-off>Turn off morning forecast</button><p class="plus-fine">Add DayBuoy from your iPhone’s widget gallery. Morning forecasts are prepared from the latest download; opening the app refreshes them.</p><a class="plus-secondary" href="https://apps.apple.com/account/subscriptions" target="_blank" rel="noopener">Manage subscription</a>`:`<div class="plus-plans">${['annual','monthly'].map(id=>{const p=plusPlans?.find(p=>p.id===id),price=p?.price||(id==='annual'?'$19.99':'$2.99');return `<button class="plus-plan" data-plan="${id}" aria-pressed="${plusChoice===id}"><span>${id==='annual'?'Yearly':'Monthly'}<small>${p?.trial?'7 days free':p?.available?'Auto-renewing':'US pricing · App Store confirmation'}</small></span><strong>${textHTML(price)}<small>/${id==='annual'?'year':'month'}</small></strong></button>`;}).join('')}</div><button class="plus-primary" data-purchase ${plusBusy||!plan?.available?'disabled':''}>${plusBusy?'Connecting…':plan?.trial?'Start 7-day free trial':'Continue with '+(plusChoice==='annual'?'yearly':'monthly')}</button><p class="plus-fine">${plan?.trial?'7 days free, then ':''}${textHTML(plan?.price||(plusChoice==='annual'?'$19.99':'$2.99'))} per ${plusChoice==='annual'?'year':'month'}. Automatically renews unless cancelled in App Store settings. Trial available to eligible new subscribers only. Today is always free.</p>`}<p id="plus-status" class="plus-status" role="status">${!plusNative()?'Purchases open in the iPhone app. This preview does not charge you.':''}</p><footer><button data-restore ${plusBusy?'disabled':''}>Restore purchases</button><a href="/terms.html" target="_blank" rel="noopener">Terms</a><a href="/privacy.html" target="_blank" rel="noopener">Privacy</a></footer></div>`;
+}
+async function openPaywall(){paywallFocus=document.activeElement;cancelTimeMotion();drawPaywall();$('#plus-modal').hidden=false;$('#plus-modal .plus-close').focus({preventScroll:true});
+ if(plusNative())try{plusPlans=await plusNative().plans();plusEntitlement(await plusNative().status());drawPaywall();}catch{paywallStatus('Subscriptions are temporarily unavailable. Today remains free.');}
+}
+async function runPurchase(restore=false){
+ if(plusBusy)return;if(!plusNative()){paywallStatus('Restore and purchases are available in the iPhone app.');return;}
+ plusBusy=true;drawPaywall();try{plusEntitlement(await (restore?plusNative().restore():plusNative().purchase(plusChoice)));paywallStatus(plusActive()?'DayBuoy+ is ready.':restore?'No active DayBuoy+ subscription was found.':'Purchase is awaiting App Store confirmation.');}catch(e){paywallStatus(e?.userCancelled?'Purchase cancelled.':e?.pending?'Purchase is awaiting approval.':'The App Store could not finish. Please try again.');}finally{plusBusy=false;$('#plus-modal')?.querySelectorAll('[disabled]').forEach(b=>b.disabled=false);}
+}
+function showForecastData(){
+ openSheet('air');const rows=state.data.rows.filter(r=>r.time>=localDayStart(Date.now()));
+ $('#sheet-content').innerHTML=`<h2 class="sheet-title">Forecast data</h2><p class="sheet-source">${textHTML(state.data.weatherSource||'Forecast')} · Updated ${textHTML(clock(state.data.retrievedAt))}. Weather readings remain free. DayBuoy+ adds the week’s animated scene and native features.</p><div class="raw-forecast"><table><thead><tr><th>Local time</th><th>Air</th><th>Wind</th><th>UV</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${textHTML(weekday(r.time)+' '+clock(r.time))}</td><td>${statNumber(r.temperature)}°</td><td>${statNumber(r.wind)} kt</td><td>${statNumber(r.uv,1)}</td></tr>`).join('')}</tbody></table></div>${forecastMethod('air')}`;
+}
+document.addEventListener('click',e=>{
+ if(e.target.closest('[data-plus]'))openPaywall();if(e.target.closest('.plus-close'))closePaywall();
+ const plan=e.target.closest('[data-plan]');if(plan&&!plusBusy){plusChoice=plan.dataset.plan;drawPaywall();}
+ if(e.target.closest('[data-purchase]'))runPurchase();if(e.target.closest('[data-restore]'))runPurchase(true);
+ if(e.target.closest('[data-forecast-data]'))showForecastData();
+ if(e.target.closest('[data-morning]')&&plusActive())plusNative()?.morning(state.data).then(()=>paywallStatus('Morning forecast enabled for 7:00 AM, beach local time.')).catch(()=>paywallStatus('Notification permission is off. Change it in iPhone Settings.'));
+ if(e.target.closest('[data-morning-off]'))plusNative()?.disableMorning().then(()=>paywallStatus('Morning forecast is off.'));
+ if(e.target.closest('[data-share-clip]'))shareBeachClip();
+});
+document.addEventListener('keydown',e=>{const m=$('#plus-modal');if(!m||m.hidden)return;if(e.key==='Escape'){e.preventDefault();closePaywall();}if(e.key==='Tab'){const a=[...m.querySelectorAll('button:not([disabled]),a[href]')],i=a.indexOf(document.activeElement);if(e.shiftKey&&i<=0){e.preventDefault();a.at(-1)?.focus();}else if(!e.shiftKey&&i===a.length-1){e.preventDefault();a[0]?.focus();}}});
+plusNative()?.status().then(plusEntitlement).catch(()=>{});
+// Shared time links cannot bypass today's boundary before this layer loads.
+if(!plusToday(state.time)&&!state.fixture&&state.data.source!=='review')backToNow();
+
+// User-initiated, bounded 8-second capture. Never runs inside a performance gate.
+let sharingClip=false;
+async function shareBeachClip(){
+ if(sharingClip)return;const source=engine?.getSceneCanvas?.();
+ if(!source||typeof MediaRecorder==='undefined'){notice('Clip recording is unavailable on this device. The share image is still available.');return;}
+ sharingClip=true;const canvas=document.createElement('canvas'),width=720,height=Math.round(width*source.height/source.width);canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');let raf,stream,recorder,hidden=false;
+ const onVisibility=()=>{if(document.hidden){hidden=true;if(recorder?.state==='recording')recorder.stop();}};
+ try{
+  if(!canvas.captureStream)throw Error('Capture unavailable');const mime=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp8','video/webm'].find(v=>MediaRecorder.isTypeSupported(v));if(!mime)throw Error('Encoder unavailable');
+  const mark=!plusActive(),stamp=weekday(state.time)+' · '+clock(state.time),chunks=[];
+  const draw=()=>{ctx.drawImage(source,0,0,width,height);if(mark){ctx.fillStyle='#153c4dcc';ctx.fillRect(0,height-64,width,64);ctx.fillStyle='#fff';ctx.font='500 21px Poppins, sans-serif';ctx.fillText('DayBuoy · '+SITE.name,24,height-34);ctx.font='15px Poppins, sans-serif';ctx.fillText(stamp+' · visual est.',24,height-13);}raf=requestAnimationFrame(draw);};
+  draw();stream=canvas.captureStream(30);recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2000000});recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data);};const done=new Promise((resolve,reject)=>{recorder.onstop=resolve;recorder.onerror=reject;});
+  document.addEventListener('visibilitychange',onVisibility);recorder.start();notice('Recording 8 seconds…');const timer=setTimeout(()=>{if(recorder.state==='recording')recorder.stop();},8000);await done;clearTimeout(timer);if(hidden)throw Error('Interrupted');
+  const blob=new Blob(chunks,{type:mime}),file=new File([blob],'DayBuoy-'+SITE.id+(mime.startsWith('video/mp4')?'.mp4':'.webm'),{type:mime});if(!file.size||file.size>12*1024*1024)throw Error('Clip unavailable');
+  if(navigator.canShare?.({files:[file]}))await navigator.share({files:[file],title:'DayBuoy · '+SITE.name});else{const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=file.name;a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);}
+ }catch(e){if(e?.name!=='AbortError')notice(hidden?'Recording interrupted. Keep the app open and try again.':'Clip recording is unavailable here. The share image is still available.');}
+ finally{cancelAnimationFrame(raf);stream?.getTracks().forEach(t=>t.stop());document.removeEventListener('visibilitychange',onVisibility);sharingClip=false;}
+}
+
 // Private test build only. Removed in its entirety by build-production.mjs.
 const fixtureRealForecast=realForecast,fixtureAdopt=adopt,fixtureRefresh=refresh,fixturePresentation=renderPresentation;
 realForecast=function(){return state.data?.source==='fixture'&&state.fixture===true||fixtureRealForecast();};
 adopt=function(data){if(state.fixture)return;fixtureAdopt(data);};
 refresh=async function(){if(state.fixture)return;return fixtureRefresh();};
 renderPresentation=function(){fixturePresentation();if(state.fixture&&new URLSearchParams(location.search).get('ocean-debug')==='1'){$('#app').dataset.developer='true';$('#source-label').textContent='FIXTURE · '+state.fixtureTitle;const b=$('#reference-banner');b.hidden=false;b.textContent='Synthetic weather fixture · not a live forecast';}};
-window.__daybuoyFixture={apply(data){
+window.__daybuoyFixture={
+ openPaywall,closePaywall,
+ liveReview(){
+  if(state.fixture||state.data.schema!==3||state.data.source!=='live'||state.data.profileId!==SITE.id)throw Error('Fresh live profile forecast required');
+  const day=localDayStart(Date.now()+36*HOUR),sun=sunDay(day+12*HOUR);
+  const times=[['sunrise',sun.sunrise+10*MIN],['noon',sun.solarNoon],['sunset',sun.sunset-10*MIN],['night',day+22*HOUR]];
+  if(times.some(([,t])=>!Number.isFinite(t)||t<state.data.first||t>state.data.last))throw Error('Full forecast review day unavailable');
+  return {profile:SITE,source:state.data.source,weatherSource:state.data.weatherSource,retrievedAt:state.data.retrievedAt,times};
+ },reviewAt(t){stopWatch(true);plusTime(t);resetBeach();state.dirty=true;return {time:state.time,conditions:conditions(),sun:sunPosition(t),moon:moonPosition(t)};},
+ apply(data){
  if(data?.source!=='fixture'||data.fixture!==true||!Array.isArray(data.rows)||data.rows.length!==193||!Number.isFinite(data.time))throw Error('Invalid private fixture');
  state.fixture=true;state.fixtureTitle=data.title;state.fixtureId=data.id;state.live=false;state.review=false;state.forecastFailed=false;state.forecastLoaded=true;
  state.data=finalize(data);state.data.version=++state.version;state.time=data.time;state.sheet=null;state.dirty=true;weatherPacketCache.key=null;

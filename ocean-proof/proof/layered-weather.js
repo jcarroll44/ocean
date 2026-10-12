@@ -1,5 +1,6 @@
 import {Vector3,Vector4} from '../vendor/tidewater/src/engine/index.js';
 import {cloudThreshold} from './partial-clouds.js';
+import {profileFacing} from '../../src/beach-profiles.js';
 const clamp=(v,a=0,b=1)=>Math.max(a,Math.min(b,v));
 export const layeredFields=()=>({squall:['vec4f',new Vector4()],covers:['vec3f',new Vector3()],thresholds:['vec3f',new Vector3(1,1,1)],drift:['vec4f[3]',Array.from({length:3},()=>new Vector4())],offshore:['vec4f[21]',Array.from({length:21},()=>new Vector4())],offshoreLayers:['vec4f[21]',Array.from({length:21},()=>new Vector4())],moon:['vec3f',new Vector3(0,-1,0)],moonlight:['f32',0],rain:['f32',0],extinction:['f32',0],haze:['f32',0],heat:['f32',0],direct:['f32',1],energy:['f32',1],gustExtra:['f32',0],thunder:['f32',0],flashes:['f32',1],weatherTime:['f32',0],strike:['vec4f',new Vector4(0,.55,0,0)]});
 // Select a supported offshore bearing. Ties prefer the middle of the view;
@@ -20,7 +21,7 @@ export function updateLayeredWeather(U,f,now=performance.now()){
  const covers=['cloudLow','cloudMid','cloudHigh'].map(key=>Number.isFinite(f[key])?clamp(f[key]/100):0);
  for(let i=0;i<3;i++){
   const axis=['x','y','z'][i],v=fields.covers.value[axis]+(covers[i]-fields.covers.value[axis])*k;fields.covers.value[axis]=v;fields.thresholds.value[axis]=cloudThreshold(v);
-  const wind=f[['lowWind','midWind','highWind'][i]],direction=f[['lowDirection','midDirection','highDirection'][i]],angle=(direction-201)*Math.PI/180;
+  const wind=f[['lowWind','midWind','highWind'][i]],direction=f[['lowDirection','midDirection','highDirection'][i]],angle=(direction-profileFacing(f))*Math.PI/180;
   const d=f.cloudDrift?.[i]||[0,0],height=[1600,4500,9000][i];
   // Forecast-integrated offsets are deterministic across reverse scrubs. The
   // tiny real-clock term animates a paused selected hour with the same wind.

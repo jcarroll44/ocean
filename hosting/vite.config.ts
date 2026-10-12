@@ -17,7 +17,7 @@ const managedLinux = readExecutionProfile() === "managed-linux";
 const localBindingConfig = {
   main: "./build/sites-worker.ts",
   compatibility_flags: ["nodejs_compat"],
-  assets: { binding: "ASSETS", run_worker_first: ["/api/results", "/api/marine-observations"] },
+  assets: { binding: "ASSETS", run_worker_first: ["/api/*", "/", "/index.html"] },
   d1_databases: d1
     ? [
         {

@@ -1,6 +1,6 @@
 {
   "sentryDsn": "",
-  "capgoEnabled": false,
-  "capgoPublicKeyFile": "",
+  "revenueCatPublicKey": "",
+  "apiBaseURL": "",
   "channel": "beta"
 }

@@ -39,6 +39,7 @@ import {Underwater} from '../vendor/tidewater/src/post/Underwater.js';
 import {PostFX} from '../vendor/tidewater/src/post/PostFX.js';
 import {G} from '../vendor/tidewater/src/core/Globals.js';
 import {createBeachTerrain} from './beach-land.js';
+import {sceneProfile} from '../../src/beach-profiles.js';
 import {createLandward} from './landward.js';
 import {sugarWhite} from './white-sand.js';
 import {applyMarine} from './forecast.js';
@@ -61,6 +62,7 @@ export class BeachApp extends App{
   this.engine=new Engine(document.getElementById('app'));await this.engine.init();
   GPU.device.pushErrorScope('validation');
   const engine=this.engine,scene=this.scene=engine.scene,camera=this.camera=engine.camera;this.renderer=engine;
+  this.beachProfile=sceneProfile();G.waterAbsorption.value.set(...this.beachProfile.water.absorption);G.waterScattering.value.set(...this.beachProfile.water.scattering);
   camera.near=.3;camera.fov=CAMERA.fov;camera.position.set(-CAMERA.x,CAMERA.y,-CAMERA.z);camera.lookAt(-CAMERA.x,CAMERA.y+Math.sin(CAMERA.pitch),-CAMERA.z+Math.cos(CAMERA.pitch));
   const project=camera.updateProjectionMatrix.bind(camera);camera.updateProjectionMatrix=()=>{project();camera.projectionMatrix.elements[9]=-CAMERA.shear/.59;camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();};camera.updateProjectionMatrix();
   const view=this.qs.get('view');if(view){const angle=({left:90,right:-90,back:180})[view]*Math.PI/180;if(Number.isFinite(angle))camera.lookAt(camera.position.x+Math.sin(angle)*10,camera.position.y-2,camera.position.z+Math.cos(angle)*10);}
@@ -123,7 +125,7 @@ export class BeachApp extends App{
   applyQuality(this,this.initialQuality.level);
   this.updateSun();this.gpu=GPU;window.__app=this;
   if(this.profileConfig){
-   this.setForecast({swell:3,period:8,direction:201,wind:8,windDirection:201,tide:0,cloud:0});
+   this.setForecast({swell:3,period:8,direction:sceneProfile().facing,wind:8,windDirection:sceneProfile().facing,facing:sceneProfile().facing,tide:0,cloud:0});
    this.engine.setRenderScale(this.profileConfig.dpr);
    this.activeQuality={...this.activeQuality,dpr:this.profileConfig.dpr};
    if(this.profileConfig.pass==='grid128')this.activeQuality.fft='3 × 128';

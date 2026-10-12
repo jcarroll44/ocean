@@ -17,7 +17,7 @@ const symbol=svg.replace(/<svg[^>]*>/,'').replace('</svg>','');
 const splash=`<svg xmlns="http://www.w3.org/2000/svg" width="2732" height="2732" viewBox="0 0 2732 2732"><rect width="2732" height="2732" fill="#edf4f5"/><g transform="translate(1141 1080) scale(.44)">${symbol}</g><text x="1366" y="1680" text-anchor="middle" fill="#17394d" font-family="sans-serif" font-size="100" font-weight="600">DayBuoy</text></svg>`;
 for(const file of ['splash-2732x2732.png','splash-2732x2732-1.png','splash-2732x2732-2.png'])fs.writeFileSync(assets+'/Splash.imageset/'+file,png(splash,2732));
 if(fs.existsSync('../production/dist'))fs.writeFileSync('../production/dist/icon-180.png',png(svg,180));
-for(const file of ['privacy.html','credits.html'])if(!fs.existsSync('www/'+file))throw Error('Missing bundled legal page: '+file);
+for(const file of ['privacy.html','terms.html','credits.html'])if(!fs.existsSync('www/'+file))throw Error('Missing bundled legal page: '+file);
 execFileSync(process.execPath,['scripts/bundle.mjs',...process.argv.slice(2)],{stdio:'inherit'});
 execFileSync(process.execPath,['node_modules/@capacitor/cli/bin/capacitor','sync','ios'],{stdio:'inherit'});
 // Capacitor emits tools-version 5.9 plus .v26, an enum introduced only in

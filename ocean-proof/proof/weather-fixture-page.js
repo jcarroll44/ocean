@@ -5,6 +5,7 @@ import {isIPhone,screenAwake} from './diagnostic-device.js';
 import {pinTestViewport} from './test-viewport.js';
 import {INTEGRATION_BUILD} from './integration-build.js';
 import {fixtureContactSheet} from './fixture-contact-sheet.js';
+import {collectLocationGallery} from './location-gallery.js';
 import {recordDayScrub} from './scrub-evidence.js';
 const $=id=>document.getElementById(id),stage=$('stage'),query=new URLSearchParams(location.search),gateRequested=query.get('gate')==='1',allowed=isIPhone(navigator),events=[],wakeEvents=[];
 const viewport=pinTestViewport(stage,window,e=>events.push(e)),awake=screenAwake(navigator,document,text=>$('awake').textContent=text,e=>wakeEvents.push(e));
@@ -66,7 +67,8 @@ async function run(){
   try{const clip=await visibleCapture(()=>recordLiveCanvas(stage.contentWindow.__daybuoy.engine.getSceneCanvas(),{validate:evidence}));files.push({name:'clip.'+clip.extension,blob:clip.blob});report.clip={...clip,blob:undefined};download(clip.blob,'night-storm.'+clip.extension,'Phone clip');}catch(e){(report.captureErrors??=[]).push({file:'clip',error:e.message});}
   await collectGallery(files,report);
   await collectWaveGallery(files,report);
-  try{const clip=await visibleCapture(async()=>{await select('scrub-day');return recordDayScrub(stage.contentWindow,{onProgress:text=>$('status').textContent=text});});files.push({name:'scrub-day.'+clip.extension,blob:clip.blob});report.scrubClip={...clip,blob:undefined};download(clip.blob,'scrub-day.'+clip.extension,'Full app · 24-second day scrub');}catch(e){(report.captureErrors??=[]).push({file:'scrub-day',error:e.message});}
+  try{const clip=await visibleCapture(async()=>{await select('scrub-day');return recordDayScrub(stage.contentWindow,{onProgress:text=>$('status').textContent=text});});files.push({name:'scrub-day.'+clip.extension,blob:clip.blob});report.scrubClip={...clip,blob:undefined};download(clip.blob,'scrub-day.'+clip.extension,'Full app · day scrub + paywall');}catch(e){(report.captureErrors??=[]).push({file:'scrub-day',error:e.message});}
+  try{await collectLocationGallery({stage,files,report,untilReady,wait,waitVisible,visibleCapture,onStatus:text=>$('status').textContent=text,download});}catch(e){(report.captureErrors??=[]).push({file:'locations',error:e.message});}
   const c=report.cadence;$('status').textContent=`${c.meetsCadenceTarget?'PASS':'FAIL'} · ${c.fps.toFixed(1)} avg · ${c.minOneSecondFPS} minimum · ${c.oneSecondFPS.filter(n=>n<30).length} seconds below 30.`;
  }catch(e){report.error=e.message;$('status').textContent=e.message;}
  finally{report.finishedAt=new Date().toISOString();const file=jsonFile(report);download(file.blob,'weather-gate.json','Conditions + FPS JSON');stage.src='about:blank';stage.hidden=true;try{await uploadEvidence({runId,kind:'weather',files:[file,...files]},text=>$('upload').textContent=text);}catch{}await awake.stop();busy=false;$('start').textContent='Reload to run again';$('start').disabled=false;$('start').onclick=()=>location.reload();}

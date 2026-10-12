@@ -1,5 +1,6 @@
 // The approved DayBuoy beach profile, not Tidewater's island generator.
 import {TerrainData} from '../vendor/tidewater/src/world/TerrainData.js';
+import {INLET_PROFILE,sceneProfile} from '../../src/beach-profiles.js';
 export const beachHeight=(x,z)=>.105*(z-(-3.5+.45*Math.sin(x*.10)+.15*Math.sin(x*.29)));
 export function coastalHeight(x,z){
  const shore=beachHeight(x,z);if(z<=18)return shore;
@@ -9,15 +10,15 @@ export function coastalHeight(x,z){
 }
 // Typical Gulf two-sandbar profile, NOT a surveyed Inlet Beach seabed.
 // Keep the approved dry beach/swash slope; only submerged terrain changes.
-export function barredHeight(x,z){
+export function barredHeight(x,z,bars=INLET_PROFILE.bars){
  const distance=-z-3.5;if(distance<=7)return coastalHeight(x,z);
  const ramp=Math.min(1,(distance-7)/8),blend=ramp*ramp*(3-2*ramp);
  const along=.8*Math.sin(x*.017)+.35*Math.sin(x*.063);
- const inner=45+along*3,outer=125+along*6;
- const depth=.65+distance*.022- .68*Math.exp(-(((distance-inner)/13)**2))-1.05*Math.exp(-(((distance-outer)/25)**2));
+ const inner=bars.inner+along*3,outer=bars.outer+along*6;
+ const depth=bars.base+distance*bars.slope-bars.innerLift*Math.exp(-(((distance-inner)/bars.innerWidth)**2))-bars.outerLift*Math.exp(-(((distance-outer)/bars.outerWidth)**2));
  return coastalHeight(x,z)*(1-blend)-depth*blend;
 }
-export function createBeachTerrain({bars=false}={}){
+export function createBeachTerrain({bars=false,profile=sceneProfile()}={}){
  const t=Object.create(TerrainData.prototype);
  Object.assign(t,{size:2048,res:512,texel:4,origin:-1024,pads:[],rockSites:[]});
  const n=t.res*t.res;t.heights=new Float32Array(n);t.rock=new Float32Array(n);
@@ -27,7 +28,7 @@ export function createBeachTerrain({bars=false}={}){
   const x=t.origin+(i+.5)*t.texel,z=t.origin+(j+.5)*t.texel;
   // Native coordinates are DayBuoy rotated 180 degrees. Cap distant inland
   // ground at a low dune; the entire visible foreshore keeps the old slope.
-  t.heights[j*t.res+i]=Math.max(-90,Math.min(4,(bars?barredHeight(-x,-z):coastalHeight(-x,-z))));
+  t.heights[j*t.res+i]=Math.max(-90,Math.min(4,(bars?barredHeight(-x,-z,profile.bars):coastalHeight(-x,-z))));
  }
  t.buildMinMax();return t;
 }

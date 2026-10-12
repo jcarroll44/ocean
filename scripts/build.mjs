@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
+import {profileScene,profileApp} from './profile-adapter.mjs';
 // User-required gate: input regressions block every build/delivery.
 execFileSync(process.execPath,['scripts/check-interactions.cjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['ocean-proof/scripts/generate-forecast-fft.mjs'],{stdio:'inherit'});
@@ -12,18 +13,21 @@ const read=p=>fs.readFileSync('src/'+p,'utf8');
 // fallback and old diagnostic routes. Successful native rendering never opens it.
 let html=read('index.html').replace('/* DAYBUOY_CSS */',()=>read('reference-fonts.css')+'\n'+read('reference-host.css')+'\n@layer legacy{'+read('style.css')+'\n'+read('home.css')+'\n'+read('presentation.css')+'}\n'+read('reference.css')).replace('/* DAYBUOY_JS */',()=>read('scene-data.js')+'\n'+read('daybuoy.js').replace('/* DAYBUOY_SHEETS */',()=>read('sheets.js')).replace('/* DAYBUOY_SCENE_UI */',()=>read('scene-ui.js')+'\n'+read('reference-icons.js')+'\n'+read('home.js')+'\n'+read('presentation.js')).replace('/* DAYBUOY_CAMERA */',()=>read('camera.js')).replace('/* DAYBUOY_EXPLORE */',()=>read('explore.js')).replace('/* DAYBUOY_LIGHTING */',()=>read('lighting.js').replace('/* DAYBUOY_DAILY_HIGHS */',()=>fs.readFileSync('assets/forecast/daily-highs.json','utf8'))));
 html=html.replace("const {createOcean}=__mods['ocean-engine.js'];",()=>read('native-host.js')+'\nconst createOcean=createSceneHost;');
+html=html.replace(read('scene-data.js'),()=>profileScene(read('scene-data.js')));
 // Missing precipitation is unavailable, not an invented dry forecast.
 html=html.replace('rain:w.precip??((w.rainOnly??0)+(w.showers??0))','rain:w.precip??(Number.isFinite(w.rainOnly)&&Number.isFinite(w.showers)?w.rainOnly+w.showers:null)');
-html=html.replace("(()=>{\n'use strict';",()=>read('weather-data.js').replace('/* WEATHER_MODEL */',read('weather-model.js').replaceAll('export ',''))+'\n'+read('marine-data.js').replace('/* MARINE_MODEL */',read('marine-model.js').replaceAll('export ',''))+"\n(()=>{\n'use strict';");
+html=html.replace("(()=>{\n'use strict';",()=>read('weather-data.js').replace('/* WEATHER_MODEL */',read('weather-model.js').replace("import {INLET_PROFILE} from './beach-profiles.js';","const INLET_PROFILE=__mods['config.js'].SITE;").replaceAll('export ',''))+'\n'+read('marine-data.js').replace('/* MARINE_MODEL */',read('marine-model.js').replaceAll('export ',''))+'\n'+read('shared-forecast.js')+"\n(()=>{\n'use strict';");
 html=html.replace('/* DAYBUOY_CELESTIAL */',()=>read('celestial.js'));
 // An alpha framebuffer lets the existing rain/path render as an overlay.
 // The scene shaders and all geometry remain byte-for-byte original.
 html=html.replace('new THREE.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:', 'new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,powerPreference:');
 html=html.replace('/* DAYBUOY_OVERNIGHT */',()=>read('overnight.js')+'\n'+read('weather-effects.js')+'\n'+read('interaction.js')+'\n'+read('surf.js')+'\n'+read('story.js'));
-html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('weather-glyphs.js')+'\n'+read('sky-scrubber.js')+'\n'+read('weather-scene.js')+'\n'+read('premium-ui.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
+html=html.replace('refresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);',()=>read('release.js')+'\n'+read('weather-glyphs.js')+'\n'+read('sky-scrubber.js')+'\n'+read('weather-scene.js')+'\n'+read('premium-ui.js')+'\n'+read('shared-release.js')+'\n'+read('product-audit.js')+'\n'+read('fixture-bridge.js')+'\nrefresh();setInterval(refresh,15*MIN);requestAnimationFrame(frame);');
 html=html.replace('</style>',()=>read('release.css')+'\n</style>');
 html=html.replace('</style>',()=>read('sky-scrubber.css')+'\n</style>');
 html=html.replace('</style>',()=>read('premium-ui.css')+'\n</style>');
+html=html.replace('</style>',()=>read('subscriptions.css')+'\n</style>');
+html=html.replace(read('fixture-bridge.js'),()=>read('subscriptions.js')+'\n'+read('share-clip.js')+'\n'+read('fixture-bridge.js'));
 html=html.replace('</style>',()=>read('ocean-layer.css')+'\n</style>');
 html=html.replace('window.__ocean=window.__daybuoy;',()=> 'window.__ocean=window.__daybuoy;\n'+read('native-layer.js')+'\nif(!engine?.nativeScene){'+read('ocean-layer.js')+'\n}');
 // Both share paths use the actual displayed ocean. No story/camera edits.
@@ -35,11 +39,14 @@ html=html.replace("try{uniforms.uResolution.value.set(1080,1080);engine.resize(1
 fs.cpSync('assets','dist/assets',{recursive:true});
 fs.cpSync('ui-reference','dist/ui-reference',{recursive:true});
 fs.cpSync('ui-review','dist/ui-review',{recursive:true});
+fs.cpSync('release','dist/release',{recursive:true});
+html=profileApp(html);
 fs.writeFileSync('dist/index.html',html);
 fs.copyFileSync('ocean-profile.html','dist/ocean-profile.html');
 fs.copyFileSync('ocean-live.html','dist/ocean-live.html');
 fs.copyFileSync('weather-fixtures.html','dist/weather-fixtures.html');
 fs.mkdirSync('dist/src',{recursive:true});fs.copyFileSync('src/weather-model.js','dist/src/weather-model.js');fs.copyFileSync('src/marine-model.js','dist/src/marine-model.js');
+fs.copyFileSync('src/beach-profiles.js','dist/src/beach-profiles.js');
 fs.copyFileSync('ocean-overcast-profile.html','dist/ocean-overcast-profile.html');
 execFileSync(process.execPath,['scripts/check-ocean-profile.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-ocean-round2.mjs'],{stdio:'inherit'});
@@ -61,6 +68,7 @@ execFileSync(process.execPath,['scripts/check-diagnostic-device.mjs'],{stdio:'in
 execFileSync(process.execPath,['scripts/check-integration.mjs'],{stdio:'inherit'});
 // The new exact reference supersedes the former header's visual assertions.
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-location-plus.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-release.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-sky-scrubber.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-sky-orb.mjs'],{stdio:'inherit'});

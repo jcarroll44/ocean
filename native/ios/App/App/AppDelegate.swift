@@ -1,6 +1,7 @@
 import UIKit
 import Capacitor
 import WebKit
+import WidgetKit
 
 // Existing sun/hour detents now produce real iPhone feedback. No haptics in
 // the rendering loop. The weak proxy avoids retaining the view controller.
@@ -9,6 +10,11 @@ private final class WeakHapticHandler: NSObject, WKScriptMessageHandler {
     init(_ owner: DayBuoyViewController) { self.owner = owner }
     func userContentController(_ controller: WKUserContentController, didReceive message: WKScriptMessage) { owner?.receiveHaptic(message) }
 }
+private final class WeakMembershipHandler: NSObject, WKScriptMessageHandler {
+    weak var owner: DayBuoyViewController?
+    init(_ owner: DayBuoyViewController) { self.owner = owner }
+    func userContentController(_ controller: WKUserContentController, didReceive message: WKScriptMessage) { owner?.receiveMembership(message) }
+}
 class DayBuoyViewController: CAPBridgeViewController {
     private let selection = UISelectionFeedbackGenerator()
     private let impact = UIImpactFeedbackGenerator(style: .soft)
@@ -16,7 +22,18 @@ class DayBuoyViewController: CAPBridgeViewController {
     override func capacitorDidLoad() {
         super.capacitorDidLoad()
         webView?.configuration.userContentController.add(WeakHapticHandler(self), name: "daybuoyHaptic")
+        webView?.configuration.userContentController.add(WeakMembershipHandler(self), name: "daybuoyMembership")
         selection.prepare(); impact.prepare()
+    }
+    fileprivate func receiveMembership(_ message: WKScriptMessage) {
+        guard message.frameInfo.isMainFrame, message.frameInfo.request.url?.host == "localhost",
+              let body = message.body as? [String: Any], let expires = body["expires"] as? Double,
+              let base = body["apiBaseURL"] as? String, let url = URL(string: base),
+              url.scheme == "https", url.user == nil, url.password == nil, url.query == nil,
+              let store = UserDefaults(suiteName: "group.com.jacobcarroll.daybuoy") else { return }
+        store.set(expires / 1000, forKey: "plusExpires")
+        store.set(base, forKey: "apiBaseURL")
+        WidgetCenter.shared.reloadTimelines(ofKind: "DayBuoyConditions")
     }
     fileprivate func receiveHaptic(_ message: WKScriptMessage) {
         guard message.frameInfo.isMainFrame,
