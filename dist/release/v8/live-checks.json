@@ -13,5 +13,6 @@
   "resultsUploader": {"status":200,"ready":true,"branch":"wip/tidewater-in-app"},
   "acceptedBaseline": {"revision":"2026-10-12-natural-surf-v7","averageFPS":40.148996275093126,"minimumFPS":32,"secondsBelow30":0},
   "v8DeviceEvidence": null,
+  "unsignedXcodeBuild": {"status":"success","app":true,"widget":true,"commit":"2e8569bbdbd2c82acb80f6ead7d749f046e959a8","url":"https://github.com/jcarroll44/ocean/actions/runs/38319781107"},
   "nativeSigningAndPurchasesTested": false
 }
