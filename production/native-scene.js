@@ -1,3 +1,5 @@
+import {installSkyOrb} from '../ocean-proof/proof/sky-orb.js';
+import {transitionLight} from '../ocean-proof/proof/transition-light.js';
 import {nightStars,moonKeyStrength} from '../ocean-proof/proof/weather-optics.js';
 import {BeachApp} from '../ocean-proof/proof/BeachApp.js';
 import {installNativeBeach} from '../ocean-proof/proof/NativeBeachScene.js';
@@ -11,6 +13,7 @@ import {installNativeWeather,guardNativeBreakerLip} from '../ocean-proof/proof/n
 import {installSmallSurf,smallSurfSpan} from '../ocean-proof/proof/scene-polish.js';
 import {ShoreUpload} from '../ocean-proof/proof/shore-upload.js';
 import {installWeatherSurfaces} from '../ocean-proof/proof/weather-surfaces.js';
+const smoothLight=transitionLight();
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,failed=false,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,shoreUpload;
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});}
@@ -28,7 +31,7 @@ try{
   if(initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();app.nativeWeather.update(packet);beach.update(packet);}
   }
-  await app.nativeWeather.cache?.warm();await prepare();await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  await app.nativeWeather.cache?.warm();await prepare();if(app.nativeWeather&&!app.nativeWeather.cheap)app.skyOrb=installSkyOrb(app,beach,{publish:data=>parent.__daybuoySkyOrb?.(data)});await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
  };
  const originalReadback=app.applyAtmosphereReadback.bind(app);
  app.applyAtmosphereReadback=()=>{
@@ -39,7 +42,7 @@ try{
   else G.sunColor.value.multiplyScalar(1-cover*.88);
   G.skyIrradiance.value.multiplyScalar(1-cover*.40);
   const flash=packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
-  app.nativeWeather.light(G);
+  app.nativeWeather.light(G);smoothLight(G,app.nativeWeather?.uniforms.fields.transition.value>.01);
  };
  app.updateSun=()=>{
   if(!packet)return;const s=packet.sun,m=packet.moon;app.atmosphere.sunDir.value.set(-s[0],s[1],-s[2]);
@@ -62,7 +65,7 @@ try{
   packet=p;const c=p.camera,a=app.camera;
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
-  app.nativeWeather.update(p);app.weatherSurfaces.update();beach.update(p);overlays.update(p.overlays);
+  app.nativeWeather.update(p);if(app.nativeWeather?.uniforms.fields.transition.value>.01)app.atmosphere._irrTimer=Math.min(app.atmosphere._irrTimer,.05);app.weatherSurfaces.update();beach.update(p);overlays.update(p.overlays);
   const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2)]):'';
   if(f&&key!==forecastKey&&app.setForecast({...f,tide:seaLevel})){
    app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();forecastKey=key;

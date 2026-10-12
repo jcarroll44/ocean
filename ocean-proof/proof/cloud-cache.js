@@ -7,7 +7,7 @@ import {Texture} from '../vendor/tidewater/src/engine/gpu/Texture.js';
 import {ComputeKernel} from '../vendor/tidewater/src/engine/gpu/Compute.js';
 import {UniformBlock,ShaderModule} from '../vendor/tidewater/src/engine/gpu/Shader.js';
 export const CLOUD_BUDGET=Object.freeze({width:512,height:128,columns:256,rows:1,layers:3,primarySteps:18,shadowSteps:3,refreshMs:20000,fadeMs:400,refreshFadeMs:1600});
-export const SCRUB_CLOUD_BUDGET=Object.freeze({width:128,height:32,columns:128,rows:2}); // same 256 pixels/frame
+export const SCRUB_CLOUD_BUDGET=Object.freeze({width:512,height:128,columns:512,rows:4}); // full detail; only while changing forecast
 const clone=v=>Array.isArray(v)?v.map(clone):v?.clone?v.clone():v;
 export class CloudSchedule {
  constructor(){this.current=0;this.previous=0;this.staging=1;this.row=0;this.column=0;this.fadeMs=CLOUD_BUDGET.fadeMs;this.valid=false;this.active=false;this.completedKey=null;this.bakedAt=-Infinity;this.changedAt=-Infinity;this.generations=0;}
@@ -18,24 +18,22 @@ export class CloudSchedule {
 export function createCloudCache(weather,prepareSnapshot=()=>{}){
  const b=CLOUD_BUDGET,schedule=new CloudSchedule();
  const atlas=new Texture({label:'Weather cloud cache',width:b.width,height:b.height,depth:3,dimension:'2d-array',format:'rgba16float',usage:['sample','storage']});
- const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0],currentSmall:['f32',0],previousSmall:['f32',0],currentEmpty:['f32',0],previousEmpty:['f32',0]});
+ const display=new UniformBlock('CloudDisplay',{current:['i32',0],previous:['i32',0],blend:['f32',1],valid:['f32',0],currentEmpty:['f32',0],previousEmpty:['f32',0]});
  const module=new ShaderModule({name:'cachedVolumeClouds',uniforms:display,uniformName:'cloudDisplay',bindings:{cloudAtlas:{texture:atlas}},code:`
 fn cachedCloud(dir:vec3f)->vec4f {
  if(cloudDisplay.valid<0.5||(cloudDisplay.currentEmpty>.5&&cloudDisplay.blend>=.999)){return vec4f(0.0);}
  let uv=vec2f(atan2(dir.x,dir.z)/6.2831853+0.5,clamp(sqrt(max(0.0,(asin(clamp(dir.y,-1.0,1.0))+.07)/1.6407963)),.00390625,.99609375));
- let bScale=mix(vec2f(1.0),vec2f(.25,.25),cloudDisplay.currentSmall);
- let bUV=clamp(uv*bScale,vec2f(.0009765625,.00390625),bScale-vec2f(.0009765625,.00390625));
+ let bUV=clamp(uv,vec2f(.0009765625,.00390625),vec2f(.9990234375,.99609375));
  var b=vec4f(0.0);if(cloudDisplay.currentEmpty<.5){b=textureSampleLevel(cloudAtlas,smpLinearRepeat,bUV,cloudDisplay.current,0.0);}
  if(cloudDisplay.blend>=.999){return b;}
- let aScale=mix(vec2f(1.0),vec2f(.25,.25),cloudDisplay.previousSmall);
- let aUV=clamp(uv*aScale,vec2f(.0009765625,.00390625),aScale-vec2f(.0009765625,.00390625));
+ let aUV=bUV;
  var a=vec4f(0.0);if(cloudDisplay.previousEmpty<.5){a=textureSampleLevel(cloudAtlas,smpLinearRepeat,aUV,cloudDisplay.previous,0.0);}
  return mix(a,b,cloudDisplay.blend);
 }`});
  const snapshot=new UniformBlock('CloudSnapshot',Object.fromEntries(weather.order.map(k=>[k,[weather.layout[k].typeStr,clone(weather.fields[k].value)]])));
  const bake=new UniformBlock('CloudBake',{row:['u32',0],column:['u32',0],layer:['i32',1],width:['u32',512],height:['u32',128]});
- let kernel,targetKey='initial',scrubbing=false,work=b;const small=[0,0,0],empty=[1,1,1];
- const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1&&(scrubbing||!small[schedule.current]||!!empty[schedule.current]),active:schedule.active,row:schedule.row,column:schedule.column,empty:!!empty[schedule.current],generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height],snapshotLayers:snapshot.fields.covers.value.toArray()};},async initialize(){
+ let kernel,targetKey='initial',scrubbing=false,work=b;const empty=[1,1,1];
+ const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,column:schedule.column,empty:!!empty[schedule.current],generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height],snapshotLayers:snapshot.fields.covers.value.toArray()};},async initialize(){
   const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(async name=>{const r=await fetch(new URL('./'+name,import.meta.url));if(!r.ok)throw Error('Cloud noise asset unavailable: '+name);return new Uint8Array(await r.arrayBuffer());}));
   if(shape.length!==128**3||detail.length!==32**3)throw Error('Cloud noise asset length mismatch');
   const noise=(label,size,data)=>new Texture({label,width:size,height:size,depth:size,dimension:'3d',format:'r8unorm',data});
@@ -47,8 +45,8 @@ fn cachedCloud(dir:vec3f)->vec4f {
   // Subsequent changing keys never restart work, so continuous drags cannot
   // starve publication. Current/previous complete textures remain untouched.
   if(schedule.active&&work===b&&(scrubbing||schedule.key!==targetKey))schedule.active=false;
-  if(!schedule.active&&schedule.mix(now)===1&&(!schedule.valid||schedule.completedKey!==targetKey||(!scrubbing&&small[schedule.current]&&!empty[schedule.current])||(!empty[schedule.current]&&now-schedule.bakedAt>=b.refreshMs))){
-   schedule.begin(targetKey,now);work=scrubbing||(schedule.valid&&schedule.completedKey!==targetKey)?SCRUB_CLOUD_BUDGET:b;small[schedule.staging]=work===SCRUB_CLOUD_BUDGET?1:0;
+  if(!schedule.active&&schedule.mix(now)===1&&(!schedule.valid||schedule.completedKey!==targetKey||(!empty[schedule.current]&&now-schedule.bakedAt>=b.refreshMs))){
+   schedule.begin(targetKey,now);work=scrubbing||(schedule.valid&&schedule.completedKey!==targetKey)?SCRUB_CLOUD_BUDGET:b;
    bake.fields.width.value=work.width;bake.fields.height.value=work.height;
    for(const k of weather.order)snapshot.fields[k].value=clone(weather.fields[k].value);
    // Bake the requested hour, not the first eased frame on the way to it.
@@ -65,7 +63,7 @@ fn cachedCloud(dir:vec3f)->vec4f {
    if(schedule.row>=work.height)schedule.complete(now);
   }
   display.fields.current.value=schedule.current;display.fields.previous.value=schedule.previous;display.fields.blend.value=schedule.mix(now);display.fields.valid.value=schedule.valid?1:0;
-  display.fields.currentSmall.value=small[schedule.current];display.fields.previousSmall.value=small[schedule.previous];display.fields.currentEmpty.value=empty[schedule.current];display.fields.previousEmpty.value=empty[schedule.previous];
+  display.fields.currentEmpty.value=empty[schedule.current];display.fields.previousEmpty.value=empty[schedule.previous];
  },async warm(){
   // Loading only: each stripe has its own submission, so snapshot/row writes
   // cannot alias a later stripe in the same command buffer. Never used in gate.
@@ -140,28 +138,38 @@ fn approachingShelf(rd:vec3f)->vec4f {
  for(var i=0;i<8;i++){
   let p=rd*(start+(f32(i)+.5)*step);
   let cross=dot(p.xz,tangent);let along=dot(p.xz,heading)-s.y;
-  let q=vec3f(cross/4800.0,p.y/2200.0,along/3600.0);
+  let drift=weather.drift[0];let advection=vec2f(drift.x+drift.z*weather.weatherTime,drift.y+drift.w*weather.weatherTime)*1600.0;
+  let travel=vec2f(dot(advection,tangent),dot(advection,heading));
+  let q=vec3f((cross+travel.x)/4800.0,p.y/2200.0,(along+travel.y)/3600.0);
   let shape=textureSampleLevel(cloudShape,smpLinearRepeat,q,0.0).r;
   let detail=textureSampleLevel(cloudErosion,smpLinearRepeat,q*6.0,0.0).r;
-  let base=480.0+(1.0-shape)*720.0;
-  let top=1750.0+shape*1550.0+along*.025;
-  let h=altitude(p);
-  let profile=smoothstep(base,base+150.0,h)*(1.0-smoothstep(top-450.0,top,h));
-  let edges=(1.0-smoothstep(.72,1.0,abs(cross)/width))*(1.0-smoothstep(.60,1.0,abs(along)/depth));
-  let density=profile*edges*s.z*max(.15,shape-(1.0-detail)*.24);
-  let alpha=1.0-exp(-density*step*.0022);
-  let relief=.52+.48*smoothstep(base,top,h);
-  let radiance=mix(vec3f(.022,.029,.042),vec3f(.080,.090,.100),weather.daylight)*relief*(.78+.22*detail);
+  // Overlapping rounded rolls, with wind-advected crowns and a hanging lower
+  // shelf. Density feathers all three axes; there is no rectangular slab.
+  let billow=.5+.5*sin((cross+travel.x)/1250.0+sin((along+travel.y)/2800.0)*1.1);
+  let h=altitude(p);let center=1450.0+billow*420.0+(shape-.78)*1600.0;
+  let lower=length(vec2f((along+depth*.32)/(depth*.82),(h-center)/(600.0+billow*480.0)));
+  let upper=length(vec2f((along-depth*.15)/depth,(h-2350.0-billow*600.0)/(1050.0+shape*400.0)));
+  let erosion=(1.0-detail)*.20+(1.0-shape)*.22;
+  let profile=max(1.0-smoothstep(.66,1.14,lower+erosion),(.65+.35*shape)*(1.0-smoothstep(.72,1.10,upper+erosion)));
+  let edges=1.0-smoothstep(.55,1.0,abs(cross)/width);
+  let density=profile*edges*s.z*(.65+.35*detail);
+  let alpha=1.0-exp(-density*step*.0018);
+  let relief=.22+.78*smoothstep(750.0,3600.0,h);
+  let radiance=mix(vec3f(.022,.029,.042),vec3f(.18,.19,.20),weather.daylight)*relief*(.62+.38*detail);
   colour+=trans*alpha*radiance;trans*=1.0-alpha;
  }
  // Rain extinction beneath that same volume: irregular fall streaks, no
  // moving billboard, duplicate local rainfall or arbitrary camera bearing.
  let p=rd*(s.y/forward);let h=altitude(p);let cross=dot(p.xz,tangent);
  let edge=1.0-smoothstep(.70,1.0,abs(cross)/width);
- let curtainHeight=(1.0-smoothstep(430.0,850.0,h))*smoothstep(-120.0,60.0,h);
- let streak=textureSampleLevel(cloudErosion,smpLinearRepeat,vec3f(cross/2100.0,h/13000.0,weather.weatherTime*.002),0.0).r;
- let rainAlpha=curtainHeight*edge*s.z*(.60+.20*streak);
- let rainColour=mix(vec3f(.022,.030,.045),vec3f(.12,.14,.15),weather.daylight);
+ let curtainHeight=(1.0-smoothstep(550.0,1250.0,h))*smoothstep(-160.0,50.0,h);
+ let drift=weather.drift[0];let wind=vec2f(drift.z,drift.w)*1600.0;
+ let advect=vec2f(drift.x,drift.y)*1600.0+wind*weather.weatherTime;
+ let shaftCross=cross+dot(advect,tangent)+dot(wind,tangent)*h/8.0;
+ let streak=textureSampleLevel(cloudErosion,smpLinearRepeat,vec3f(shaftCross/3800.0,h/18000.0,weather.weatherTime*.025),0.0).r;
+ let shafts=smoothstep(.30,.77,streak)*(.25+.75*pow(.5+.5*sin(shaftCross/1700.0),2.0));
+ let rainAlpha=curtainHeight*edge*s.z*shafts*.84;
+ let rainColour=mix(vec3f(.022,.030,.045),vec3f(.16,.17,.18),weather.daylight);
  return vec4f(colour+trans*rainAlpha*rainColour,1.0-trans*(1.0-rainAlpha));
 }
 fn marchLayer(rd:vec3f,layer:i32)->vec4f {

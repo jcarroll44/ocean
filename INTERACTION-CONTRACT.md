@@ -374,3 +374,39 @@ where supported, asynchronous sampled GPU timings. Capture work remains after
 the strict 120-second gate, with pause/resume only during gallery capture.
 Fresh pixels and physical-device throughput must be identified as pending until
 an authentic new upload exists; CPU/WGSL checks cannot substitute for either.
+
+
+## October 11, 10:39 PM — accepted v4, shelf and glass-orb pass
+
+The authentic `2026-10-12-weather-cadence-v4` phone run passed: 37.3 average,
+31 minimum, zero whole seconds below 30. Preserve its ocean, breakers, clear
+night stars/phase/moon path, solid overcast, fog, storm surf, lightning reflections
+and thin rain. Main and public access stay unchanged.
+
+Explicit exceptions to the prior appearance/source freeze for this pass:
+- At the offshore sample's bearing/range, replace the flat shelf density with
+  overlapping rounded rolls, soft boundaries, dark underside and irregular rain
+  shafts. Advection uses the same integrated forecast wind as the cloud field.
+- Blend storm water haze into the sampled dark horizon within the actual 2500 m
+  camera range. Dense fog and clear-night resting light retain their prior values.
+- No coarse cloud previews. Both cache states are complete 512×128 skies; retain
+  the last complete sky until all 32 full-detail transition stripes complete,
+  then crossfade. Rest work remains 256 pixels/frame and 20-second refresh.
+- During forecast traversal, keep atmospheric readbacks current and smooth their
+  contribution. Replace stale nearshore horizon colour with the current shared
+  sky only during traversal/settling; at rest retain the exact original water.
+- Add a 64×64 glass sky orb using the actual shared sky shader, cloud cache,
+  lunar phase and tone map. One asynchronous readback at a time, ≤12/sec while
+  dragging and ≤6/sec at rest. White rim/highlight, light-tinted glow, drag growth.
+  No icon artwork or second rendering device. Respect reduced motion.
+- Show weekday and time above the knob while dragging. Retain light-coloured
+  track, sourced high/low tide and rain marks, hourly haptic requests with stronger
+  solar/high-tide moments, rolling actual values and all gesture ownership.
+- Record full app UI plus native scene for a full forecast day after the unchanged
+  120-second phone gate; label DOM/scene composition accurately. Pause/resume
+  gallery work when hidden. Ten real captures form the contact sheet. No encoding
+  or screenshot work during the gate. New pixels/FPS require an authentic upload.
+
+Validate cache publication/real WGSL, sky-orb WGSL/shared-source identity, bounded
+readback, real-app DOM state, full-app capture orchestration, and all seven input
+checks. Keep genuine native TestFlight signing steps separate from browser evidence.

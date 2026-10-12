@@ -14,6 +14,7 @@ const {FrameUniforms}=await import('../ocean-proof/vendor/tidewater/src/engine/r
 const {composeShader}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Shader.js');
 const {buildMeshShader}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshShader.js');
 const {installNativeWeather}=await import('../ocean-proof/proof/native-weather.js');const {installNativeBeach}=await import('../ocean-proof/proof/NativeBeachScene.js');
+const {installSkyOrb}=await import('../ocean-proof/proof/sky-orb.js');
 const {installWeatherSurfaces}=await import('../ocean-proof/proof/weather-surfaces.js');
 const {BeachApp}=await import('../ocean-proof/proof/BeachApp.js');
 const {ComputeKernel}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Compute.js');
@@ -24,6 +25,7 @@ const validated=[],bindingLimits=[];
 app.precompile=async()=>{
  GPU.device.pushErrorScope('validation');
  const beach=installNativeBeach(app),surfaces=installWeatherSurfaces(app,beach);
+ app.post._finalPass={source:fs.readFileSync('ocean-proof/vendor/tidewater/src/post/PostFX.js','utf8')};const orb=installSkyOrb(app,beach);const orbInfo=await GPU.device.createShaderModule({code:orb.pass.source}).getCompilationInfo();assert.equal(orbInfo.messages.filter(m=>m.type==='error').length,0,orbInfo.messages.map(m=>m.message).join('\n'));assert(orb.pass.source.includes('fn beachSkyColour('));assert.equal(orb.state().size,64);
  assert.equal(surfaces.rain.geometry.instanceCount,384);assert(app.spray.module.code.includes('nativeWeather.gustExtra'));
  assert(app.breakers.kernel.source.includes('nativeWeather.gustExtra'),'Gust must reach the compiled emitter, not just its module');
  const computeInfo=await GPU.device.createShaderModule({code:app.breakers.kernel.source}).getCompilationInfo();

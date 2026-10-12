@@ -16,7 +16,7 @@ assert.equal(fake.sky.module.deps[0],weather.module);
 const color=(r,g,b)=>({r,g,b,multiplyScalar(k){this.r*=k;this.g*=k;this.b*=k;}});
 const G={sunColor:{value:color(1,.7,.6)},skyIrradiance:{value:color(.2,.3,.9)},horizonColor:{value:color(.2,.2,.8)}};
 weather.light(G);assert.equal(G.sunColor.value.r,0);assert(Math.abs(G.skyIrradiance.value.b/G.skyIrradiance.value.r-1)<.011);
-weather.update({sun:[0,.8,0],forecast:{cloud:0}});assert.equal(fake.settings.exposure,.55);
+const overcastExposure=fake.settings.exposure;weather.opticsAt=performance.now()-16;weather.update({sun:[0,.8,0],forecast:{cloud:0}});assert(fake.settings.exposure>.55&&fake.settings.exposure<overcastExposure,'Exposure must ease between forecast states');for(let i=0;i<110;i++){weather.opticsAt=performance.now()-16;weather.update({sun:[0,.8,0],forecast:{cloud:0}});}assert.equal(fake.settings.exposure,.55,'Clear exposure returns to the exact approved value');
 const source=fs.readFileSync('ocean-proof/vendor/tidewater/src/ocean/Breakers.js','utf8');
 const material={vertex:source.slice(source.indexOf('let id = v.sheetId;'),source.indexOf('output: /* wgsl */'))};
 guardNativeBreakerLip({mesh:{material}});assert(material.vertex.includes('rootsBounded && connected'));assert(!material.vertex.includes('v.worldPos = select( vec3f( 0.0, -1e5'));assert(material.vertex.includes('mOther > 0.5'));

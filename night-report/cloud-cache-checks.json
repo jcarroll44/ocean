@@ -1,11 +1,11 @@
 {
-  "revision": "2026-10-12-weather-cadence-v4",
+  "revision": "2026-10-12-sky-orb-v5",
   "checks": [
     "coherent triple-buffer publication",
     "400 ms forecast / 1600 ms rest whole-cache crossfade",
-    "256 cache pixels per submitted frame",
+    "256 rest / 2048 transition cache pixels per submitted frame",
     "20-second rest cadence",
-    "fast coherent forecast preview then full-detail refinement",
+    "full-detail-only coherent forecast publication",
     "exact zero-work clear-sky cache",
     "18 primary and 3 shadow samples bounded",
     "real 3D bake WGSL/pipeline/bindings validate",

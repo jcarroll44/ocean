@@ -11,7 +11,7 @@ export function overcastState(sunY,cloud,rain=0){
  return {deck,daylight,weight:deck*daylight,radiance:(.018+daylight*.722)*wet,exposure:1+.12*deck*daylight};
 }
 export function installNativeWeather(app,{cheap=false,exposure=true}={}){
- const uniforms=new UniformBlock('NativeWeather',{horizonWeather:['f32',0],fog:['f32',0],closed:['f32',0],sunDisc:['f32',1],sunGlow:['f32',1],deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
+ const uniforms=new UniformBlock('NativeWeather',{transition:['f32',0],horizonWeather:['f32',0],fog:['f32',0],closed:['f32',0],sunDisc:['f32',1],sunGlow:['f32',1],deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
  let selectedForecast={};
  const cache=cheap?null:createCloudCache(uniforms,snapshot=>{
   snapshot._weatherAt=null;updateLayeredWeather(snapshot,selectedForecast);
@@ -76,6 +76,10 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  const baseExposure=app.settings.exposure;
  return {module,uniforms,cheap,cache,initialize:()=>cache?.initialize(),state:overcastState(0,0),update(packet){
   const f=packet.forecast||{},cover=Math.max(0,Math.min(1,(Number.isFinite(f.cloud)?f.cloud:Math.max(f.cloudLow||0,f.cloudMid||0,f.cloudHigh||0))/100));
+  const changing=this.lastForecastTime!=null&&Number.isFinite(f.forecastTime)&&Math.abs(f.forecastTime-this.lastForecastTime)>60000;
+  this.lastForecastTime=f.forecastTime;const nowAt=performance.now();if(changing||f.scrubbing)this.transitionUntil=nowAt+500;
+  const transition=nowAt<(this.transitionUntil||0)?1:0;
+  uniforms.fields.transition.value+=(transition-uniforms.fields.transition.value)*(transition?1:.08);
   selectedForecast=f;
   this.state={...overcastState(packet.sun[1],cover,f.rain||0),cover,...updateLayeredWeather(uniforms,f)};
   const optics=forecastOptics(f),now=performance.now(),k=this.opticsAt==null?1:1-Math.exp(-Math.min(.1,Math.max(0,(now-this.opticsAt)/1000))*10);this.opticsAt=now;
@@ -96,7 +100,8 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
    uniforms.fields.strike.value.set(stormBearing(f.offshore,this.strikeNumber),.48+.10*Math.abs(Math.sin(this.strikeNumber)),this.strikeNumber,0);
   }
   uniforms.fields.flash.value=flash;
-  app.settings.exposure=baseExposure*(exposure?this.state.exposure:1);
+  const targetExposure=baseExposure*(exposure?this.state.exposure:1);
+  app.settings.exposure+=(targetExposure-app.settings.exposure)*k;if(Math.abs(targetExposure-app.settings.exposure)<1e-7)app.settings.exposure=targetExposure;
  },light(G){
   const {weight,radiance}=this.state;
   G.sunColor.value.multiplyScalar(1-weight);

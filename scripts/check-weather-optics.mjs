@@ -38,11 +38,21 @@ assert(f.time>=f.rows[0].time&&f.time<=f.rows.at(-1).time);
 assert.equal(WEATHER_FIXTURES.length,10);assert(WEATHER_FIXTURES.filter(f=>f.reviewView).length===1);
 // Freeze the approved clear-night sky, lunar key, stars, water and lighting.
 const frozen=p=>execFileSync('git',['show','b28526883c84d2ab388e6ac0776dd1200a0675ad:'+p],{encoding:'utf8'});
-for(const path of ['ocean-proof/proof/weather-surfaces.js','production/native-scene.js','ocean-proof/proof/weather-fixtures.js'])assert.equal(read(path),frozen(path),path+' approved appearance changed');
+const accepted=p=>execFileSync('git',['show','831258709f7ca9b781e3e9e9c41133b87279e42e:'+p],{encoding:'utf8'});
+// Explicit Oct 11 exception: scrub-only horizon correction; the original
+// water, sand, moon path, thin rain and lightning code remain byte-identical.
+const surfaceStart=surfaces.indexOf(' // The atmosphere CPU readback');
+const surfaceEnd=surfaces.indexOf(" water.output=replace(water.output,'let Nup",surfaceStart);
+assert(surfaceStart>0&&surfaceEnd>surfaceStart);
+assert.equal(surfaces.slice(0,surfaceStart)+surfaces.slice(surfaceEnd),accepted('ocean-proof/proof/weather-surfaces.js'),'Only the explicitly requested scrub horizon hook changes water adapter');
+assert(surfaces.includes('if(nativeWeather.transition>.001&&horizonOcc<.999)'));
+const production=read('production/native-scene.js').replace(/^import \{(?:installSkyOrb|transitionLight)\}[^\n]*\n/gm,'').replace('const smoothLight=transitionLight();\n','').replace('if(app.nativeWeather&&!app.nativeWeather.cheap)app.skyOrb=installSkyOrb(app,beach,{publish:data=>parent.__daybuoySkyOrb?.(data)});','').replace('smoothLight(G,app.nativeWeather?.uniforms.fields.transition.value>.01);','').replace('if(app.nativeWeather?.uniforms.fields.transition.value>.01)app.atmosphere._irrTimer=Math.min(app.atmosphere._irrTimer,.05);','');
+assert.equal(production,accepted('production/native-scene.js'),'Only orb and transient-light integration changes the production adapter');
+assert.equal(read('ocean-proof/proof/weather-fixtures.js'),accepted('ocean-proof/proof/weather-fixtures.js'),'Approved fixture inputs and moon geometry unchanged');
 const early="${app.nativeWeather&&!app.nativeWeather.cheap?'if(nativeWeather.closed>=.999||nativeWeather.fog>=.999){return nativeWeatherSky(rd,vec3f(0.0));}':''}";
 assert.equal(beach.replace(' '+early+'\n',''),frozen('ocean-proof/proof/NativeBeachScene.js'),'Only the opaque-weather early exit may alter the approved sky code');
 for(const fn of ['nightStars','moonKeyStrength'])assert.equal(read('ocean-proof/proof/weather-optics.js').split('export function '+fn)[1].split('\nexport ')[0],frozen('ocean-proof/proof/weather-optics.js').split('export function '+fn)[1].split('\nexport ')[0]);
 assert(OPTICS_WGSL.includes('let cloud=cachedCloud(ray)'));assert(weather.includes('nativeHorizonColour(dir)'));assert(read('ocean-proof/proof/layered-weather.js').includes('horizonColour=mix(horizonColour,nativeHorizonColour(ray)'));
-const report={revision:'2026-10-12-weather-cadence-v4',checks:['weather-driven disc/glow','85%+ opaque background','top-to-bottom dense fog','shared horizon cloud/rain colour','warm neutral sand above wet band','offshore bearing/range and unavailable inputs','stars skip opaque weather','phase-dependent physical moon key','real lunar fixture geometry','approved clear-night code identity'],lunarFixture:{time:new Date(f.time).toISOString(),bearing:moon.azimuth,elevation:moon.altitude,fraction:phase.fraction,view:f.reviewView},renderedPixels:false,physicalIPhoneFPS:null};
+const report={revision:'2026-10-12-sky-orb-v5',checks:['weather-driven disc/glow','85%+ opaque background','top-to-bottom dense fog','shared horizon cloud/rain colour','warm neutral sand above wet band','offshore bearing/range and unavailable inputs','stars skip opaque weather','phase-dependent physical moon key','real lunar fixture geometry','approved clear-night code identity'],lunarFixture:{time:new Date(f.time).toISOString(),bearing:moon.azimuth,elevation:moon.altitude,fraction:phase.fraction,view:f.reviewView},renderedPixels:false,physicalIPhoneFPS:null};
 fs.writeFileSync('night-report/weather-optics-checks.json',JSON.stringify(report,null,2));
 console.log('PASS: weather optics, offshore bearing/range, real lunar geometry and bounded night work. CPU/source checks; pixels and iPhone FPS pending.');

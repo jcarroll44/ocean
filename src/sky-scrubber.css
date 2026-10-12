@@ -1,14 +1,17 @@
 /* Explicitly approved additive scrubber layer; reference CSS remains verbatim. */
 #week-scrubber .db-line{height:4px;top:9px;border-radius:8px}
-#week-scrubber .sky-charm{left:var(--selected)!important;width:28px;height:28px;top:-3px;border:1px solid #ffffffd9;border-radius:50%;background:#edf4f1;box-shadow:0 2px 9px #15385233;z-index:4;pointer-events:none}
-.sky-charm svg{display:block;width:24px;height:24px;margin:1px;overflow:visible}
-#week-scrubber .sky-charm.moon{background:#273e57}
+#week-scrubber .sky-charm{left:var(--selected)!important;width:30px;height:30px;top:-4px;border:1px solid #ffffffdf;border-radius:50%;background:var(--orb-base,#7e9eaf);box-shadow:0 2px 7px #102b4133,0 0 10px var(--orb-glow,#b0d6e766);z-index:4;pointer-events:none;overflow:hidden;transform:translateX(-50%) scale(1);transition:transform 220ms cubic-bezier(.2,.8,.25,1),box-shadow 220ms ease}
+#week-scrubber .sky-charm.is-dragging{transform:translateX(-50%) scale(1.17);box-shadow:0 5px 13px #102b414d,0 0 16px var(--orb-glow)}
+.sky-charm .sky-orb-pixels{display:block;width:100%;height:100%;border-radius:50%;opacity:0}
+.sky-charm[data-ready=true] .sky-orb-pixels{opacity:1}
+#week-scrubber .sky-charm:before{content:"";position:absolute;inset:1px;border-radius:50%;background:radial-gradient(ellipse at 30% 18%,#ffffff80 0%,#ffffff1a 24%,transparent 46%);z-index:1}
+#week-scrubber .sky-charm:after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 -2px 4px #102c453b,inset 0 1px 1px #ffffffb3;z-index:2}
 .sky-track-extras{position:absolute;inset:0;pointer-events:none}
 .sky-rain-track{position:absolute;left:0;right:0;top:4px;height:12px;border-radius:12px;filter:blur(2px);opacity:.75}
 .sky-tide-mark{position:absolute;top:12px;transform:translateX(-50%);font:500 7px/8px Poppins,sans-serif;color:#315978}
 .sky-tide-mark i{display:block;width:1px;height:3px;background:#528aab;margin:0 auto 1px}
 .sky-tide-mark.low{color:#597587}
-.sky-time-label{position:absolute;left:clamp(9%,var(--selected),91%)!important;top:-32px;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#edf5f3;color:#17394d;font:500 11px/17px Poppins,sans-serif;box-shadow:0 2px 9px #17394d1c;pointer-events:none;z-index:5}
+.sky-time-label{position:absolute;left:clamp(9%,var(--selected),91%)!important;top:-39px;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#edf5f3;color:#17394d;font:500 11px/17px Poppins,sans-serif;box-shadow:0 2px 9px #17394d1c;pointer-events:none;z-index:5}
 .sky-track-extras[hidden],.sky-time-label[hidden]{display:none!important}
 #metrics .db-stat b{display:block;font-variant-numeric:tabular-nums}
 @media(prefers-reduced-motion:reduce){.sky-charm,.sky-time-label{transition:none!important}}

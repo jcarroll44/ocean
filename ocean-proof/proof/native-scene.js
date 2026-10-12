@@ -1,3 +1,5 @@
+import {installSkyOrb} from './sky-orb.js';
+import {transitionLight} from './transition-light.js';
 import {nightStars,moonKeyStrength} from './weather-optics.js';
 import {BeachApp} from './BeachApp.js';
 import {installNativeBeach} from './NativeBeachScene.js';
@@ -22,6 +24,7 @@ import {installHitchTrace} from './hitch-trace.js';
 function diagnosticHost(){let host=window;for(let depth=0;depth<5;depth++){try{if(['/ocean-live.html','/weather-fixtures.html'].some(p=>host.location.pathname.endsWith(p))||new URLSearchParams(host.location.search).get('ocean-debug')==='1')return true;if(host===host.parent)break;host=host.parent;}catch{break;}}return false;}
 import {installWeatherSurfaces} from './weather-surfaces.js';
 
+const smoothLight=transitionLight();
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
@@ -50,7 +53,7 @@ try{
   if(!app.profileConfig&&initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();app.nativeWeather?.update(packet);beach.update(packet);}
   }
-  await app.nativeWeather?.cache?.warm();trace?.track(app);await prepare();
+  await app.nativeWeather?.cache?.warm();trace?.track(app);await prepare();if(app.nativeWeather&&!app.nativeWeather.cheap)app.skyOrb=installSkyOrb(app,beach,{publish:data=>parent.__daybuoySkyOrb?.(data)});
   await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
   trace?.event('precompile-complete',{syncCompiles:GPU.syncCompiles.slice()});
  };
@@ -66,7 +69,7 @@ try{
   }else G.sunColor.value.multiplyScalar(1-cover*.88);
   G.skyIrradiance.value.multiplyScalar(1-cover*.40);
   const flash=packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
-  app.nativeWeather?.light(G);
+  app.nativeWeather?.light(G);smoothLight(G,app.nativeWeather?.uniforms.fields.transition.value>.01);
  };
  app.updateSun=()=>{
   if(!packet)return;
@@ -104,7 +107,7 @@ try{
   packet=p;const c=p.camera,a=app.camera;
   a.position.set(-c.position[0],c.position[1],-c.position[2]);a.up.set(0,1,0);a.lookAt(-c.position[0]-c.direction[0],c.position[1]+c.direction[1],-c.position[2]-c.direction[2]);
   a.fov=c.fov;a.aspect=c.aspect;a.near=c.near;a.far=c.far;a.updateProjectionMatrix();a.projectionMatrix.elements[8]=c.shearX;a.projectionMatrix.elements[9]=c.shearY;a.projectionMatrixInverse.copy(a.projectionMatrix).invert();
-  app.nativeWeather?.update(p);app.weatherSurfaces?.update();beach.update(p);overlays.update(p.overlays);
+  app.nativeWeather?.update(p);if(app.nativeWeather?.uniforms.fields.transition.value>.01)app.atmosphere._irrTimer=Math.min(app.atmosphere._irrTimer,.05);app.weatherSurfaces?.update();beach.update(p);overlays.update(p.overlays);
   const f=p.forecast,seaLevel=Number.isFinite(f?.tide)?f.tide:(app.marine?.tide??0),key=f?JSON.stringify([f.swell.toFixed(2),f.period.toFixed(2),Math.round(f.direction),f.wind.toFixed(1),Math.round(f.windDirection),seaLevel.toFixed(2)]):'';
   if(f&&key!==forecastKey&&app.setForecast({...f,tide:seaLevel})){
    if(!app.profileConfig){app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();}
@@ -136,7 +139,7 @@ try{
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:'2026-10-12-weather-cadence-v4',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-12-sky-orb-v5',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,skyOrb:app.skyOrb?.state(),weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

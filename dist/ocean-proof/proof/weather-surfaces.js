@@ -9,6 +9,11 @@ export function installWeatherSurfaces(app,beach){
  // Build lazily composed materials now, before the production precompile round.
  const water=app.waterMaterial;if(!water._built)water._build();
  water.modules.push(module);
+ // The atmosphere CPU readback trails fast scrubs. Sample the current sky for
+ // the swash's occluded reflection instead of retaining an orange old horizon.
+ water.output=replace(water.output,'var reflCol = mix( frame.horizonColor * 0.35, skyRefl, horizonOcc );',`var edgeHorizon=frame.horizonColor;
+ if(nativeWeather.transition>.001&&horizonOcc<.999){edgeHorizon=mix(edgeHorizon,skyReflectionRadiance(normalize(vec3f(R.x,.04,R.z))),nativeWeather.transition);}
+ var reflCol=mix(edgeHorizon*.35,skyRefl,horizonOcc);`);
  water.output=replace(water.output,'let Nup = normalize( mix( surf.normal,','let Nup = normalize( mix( normalize(surf.normal + nativeRainNormal(pos)),');
  water.output=replace(water.output,'var sunLight = frame.sunColor * sunShadowPCF','var sunLight = frame.sunColor * nativeCloudShadow(pos) * sunShadowPCF');
  water.output=replace(water.output,'let foamCol = foamLit * mat.foamIntensity;','let foamCol = (foamLit + nativeStormFoam()) * mat.foamIntensity;');

@@ -1,5 +1,5 @@
 {
-  "revision": "2026-10-12-weather-cadence-v4",
+  "revision": "2026-10-12-sky-orb-v5",
   "checks": [
     "weather-driven disc/glow",
     "85%+ opaque background",

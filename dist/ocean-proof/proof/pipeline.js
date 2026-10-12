@@ -28,15 +28,15 @@ export class FramePipeline{
  stats(){return {maxFramesInFlight:this.limit,maxObservedInFlight:this.maxInFlight,submitted:this.submitted,completed:this.completed,outstanding:this.inFlight,completionObserver:'one asynchronous queue-fence observer; counts only its captured submission watermark'};}
 }
 export function throttleReadbacks(app,GPU,now=()=>performance.now()){
- let nextWaterFrame=-Infinity,nextAtmosphereMs=-Infinity;
+ let nextWaterFrame=-Infinity,lastAtmosphereMs=-Infinity;
  const water=app.query.readback.request.bind(app.query.readback),atmosphere=app.atmosphere.readback.request.bind(app.atmosphere.readback);
  app.query.readback.request=(...args)=>{
   if(GPU.frame<nextWaterFrame)return false;
   const accepted=water(...args);if(accepted)nextWaterFrame=GPU.frame+4;return accepted;
  };
  app.atmosphere.readback.request=(...args)=>{
-  const t=now();if(t<nextAtmosphereMs)return false;
-  const accepted=atmosphere(...args);if(accepted)nextAtmosphereMs=t+250;return accepted;
+  const t=now();const interval=app.nativeWeather?.uniforms.fields.transition.value>.01?60:250;if(t-lastAtmosphereMs<interval)return false;
+  const accepted=atmosphere(...args);if(accepted)lastAtmosphereMs=t;return accepted;
  };
  return {waterMinFrameInterval:4,atmosphereMinMilliseconds:250,async:true,gpuQueriesRetained:true};
 }

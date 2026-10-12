@@ -13,7 +13,7 @@ for(let cycle=0;cycle<12;cycle++){
  assert.equal(s.completedKey,'hour'+cycle);assert.equal(s.mix(cycle*3000+1800),0);assert.equal(s.mix(cycle*3000+2000),.5);assert.equal(s.mix(cycle*3000+2200),1);
 }
 assert.equal(CLOUD_BUDGET.columns*CLOUD_BUDGET.rows,256);assert.equal(CLOUD_BUDGET.primarySteps,18);assert.equal(CLOUD_BUDGET.shadowSteps,3);
-assert.equal(SCRUB_CLOUD_BUDGET.columns*SCRUB_CLOUD_BUDGET.rows,256);assert.equal(SCRUB_CLOUD_BUDGET.height/SCRUB_CLOUD_BUDGET.rows,16);
+assert.equal(SCRUB_CLOUD_BUDGET.columns*SCRUB_CLOUD_BUDGET.rows,2048);assert.equal(SCRUB_CLOUD_BUDGET.height/SCRUB_CLOUD_BUDGET.rows,32);
 assert.deepEqual([CLOUD_BUDGET.width,CLOUD_BUDGET.height],[512,128],'Keep approved detail');
 assert.equal(CLOUD_BUDGET.refreshMs,20000);
 const covered=new Set();for(let y=0;y<128;y++)for(let x=0;x<512;x+=256)for(let i=0;i<256;i++)covered.add(y*512+x+i);
@@ -38,28 +38,29 @@ weather.cache.step(started+20000);GPU.submit();assert(weather.cache.schedule.act
 weather.update({sun:[0,.8,.6],forecast:{forecastTime:456,cloud:100,cloudLow:100,cloudMid:75,cloudHigh:40}});
 weather.uniforms.fields.covers.value.set(.24,.10,.18);
 weather.cache.setKey('scrub',true);const at=performance.now()+30000;
-for(let i=0;i<16;i++){weather.cache.step(at+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
-assert.equal(weather.cache.schedule.generations,2);assert.equal(weather.cache.state(at+900).ready,true);assert.deepEqual(weather.cache.state().activeResolution,[128,32]);
+const oldLayer=weather.cache.schedule.current;
+for(let i=0;i<32;i++){weather.cache.step(at+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();if(i<31)assert.equal(weather.cache.schedule.current,oldLayer,'Incomplete sky must remain unpublished');}
+assert.equal(weather.cache.schedule.generations,2);assert.equal(weather.cache.state(at+1400).ready,true);assert.deepEqual(weather.cache.state().activeResolution,[512,128]);
 assert.deepEqual(weather.cache.state().snapshotLayers,[1,.75,.4],'Completed target sky cannot retain interpolated holes');
 weather.cache.setKey('rest');
-for(let i=0;i<16;i++){weather.cache.step(at+1000+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
-assert.equal(weather.cache.state(at+1900).ready,false,'Gallery waits for full detail after a quick forecast transition');
-weather.cache.step(at+2000);GPU.submit();assert.deepEqual(weather.cache.state().activeResolution,[512,128]);assert.equal(weather.cache.schedule.row,0);assert.equal(weather.cache.schedule.column,256);assert.equal(weather.cache.schedule.generations,3,'Unpublished refinement never replaces a complete sky');
-for(let i=0;i<16;i++){weather.cache.setKey('moving-hour-'+i,true);weather.cache.step(at+2100+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
+for(let i=0;i<32;i++){weather.cache.step(at+1500+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
+assert.equal(weather.cache.state(at+2900).ready,true,'Gallery waits only for complete full detail and crossfade');
+assert.equal(weather.cache.schedule.generations,3);
+for(let i=0;i<32;i++){weather.cache.setKey('moving-hour-'+i,true);weather.cache.step(at+3000+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
 assert.equal(weather.cache.schedule.generations,4,'Continuous scrubs publish instead of restarting every time the selected hour changes');
 assert.equal(weather.cache.schedule.completedKey,'moving-hour-0:scrub','One coherent weather snapshot per generation');
-assert.equal(weather.cache.schedule.mix(at+2550),0,'New generation begins a full crossfade');
+assert.equal(weather.cache.schedule.mix(at+3930),0,'New generation begins a full crossfade');
 // Empty clear/night fields publish the mathematically identical zero cloud,
 // crossfade coherently and never schedule periodic work until weather changes.
 weather.update({sun:[0,-.4,.9],forecast:{forecastTime:789,cloud:0,cloudLow:0,cloudMid:0,cloudHigh:0,rain:0,offshore:[]}});
-weather.cache.step(at+3100);GPU.submit();assert.equal(weather.cache.state(at+3600).empty,true);assert.equal(weather.cache.state(at+3600).ready,true);
+weather.cache.step(at+4500);GPU.submit();assert.equal(weather.cache.state(at+5000).empty,true);assert.equal(weather.cache.state(at+5000).ready,true);
 const clearGeneration=weather.cache.schedule.generations;
 weather.cache.step(at+90000);assert.equal(weather.cache.schedule.generations,clearGeneration);assert(!weather.cache.schedule.active);
 weather.update({sun:[0,.8,.6],forecast:{forecastTime:456,cloud:100,cloudLow:100,cloudMid:75,cloudHigh:40}});
 weather.cache.setKey('return-clouds',true);
-for(let i=0;i<16;i++){weather.cache.step(at+91000+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
-assert.equal(weather.cache.state(at+92000).empty,false);assert.equal(weather.cache.schedule.generations,clearGeneration+1,'Clouds return after zero-work clear sky');
+for(let i=0;i<32;i++){weather.cache.step(at+91000+i*30);GPU.submit();await GPU.queue.onSubmittedWorkDone();}
+assert.equal(weather.cache.state(at+92500).empty,false);assert.equal(weather.cache.schedule.generations,clearGeneration+1,'Clouds return after zero-work clear sky');
 await GPU.queue.onSubmittedWorkDone();const error=await GPU.device.popErrorScope();assert.equal(error,null,error?.message);
 const hashes=Object.fromEntries(['shape','detail'].map(name=>[name,crypto.createHash('sha256').update(fs.readFileSync('ocean-proof/proof/takram-'+name+'.bin')).digest('hex')]));
-const report={revision:'2026-10-12-weather-cadence-v4',checks:['coherent triple-buffer publication','400 ms forecast / 1600 ms rest whole-cache crossfade','256 cache pixels per submitted frame','20-second rest cadence','fast coherent forecast preview then full-detail refinement','exact zero-work clear-sky cache','18 primary and 3 shadow samples bounded','real 3D bake WGSL/pipeline/bindings validate','sun/moon and offshore layer inputs','volumetric cloud cache and data-located offshore rain extinction'],budget:CLOUD_BUDGET,assetHashes:hashes,takramCommit:'b012ad06d858fc035d88aacfd73f092f93c994e4',backend:'Dawn null',renderedPixels:false,physicalIPhoneFPS:null};
+const report={revision:'2026-10-12-sky-orb-v5',checks:['coherent triple-buffer publication','400 ms forecast / 1600 ms rest whole-cache crossfade','256 rest / 2048 transition cache pixels per submitted frame','20-second rest cadence','full-detail-only coherent forecast publication','exact zero-work clear-sky cache','18 primary and 3 shadow samples bounded','real 3D bake WGSL/pipeline/bindings validate','sun/moon and offshore layer inputs','volumetric cloud cache and data-located offshore rain extinction'],budget:CLOUD_BUDGET,assetHashes:hashes,takramCommit:'b012ad06d858fc035d88aacfd73f092f93c994e4',backend:'Dawn null',renderedPixels:false,physicalIPhoneFPS:null};
 fs.writeFileSync('night-report/cloud-cache-checks.json',JSON.stringify(report,null,2));console.log('PASS: cloud scheduler + actual volumetric WGSL/pipeline/bindings on Dawn null. No rendered pixels or iPhone throughput claim.');process.exit(0);

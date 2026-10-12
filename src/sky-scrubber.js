@@ -15,16 +15,7 @@ function scrubDayModel(){
 function skyCharm(c,t){
  const night=sunPosition(t).altitude<0,phase=moonPhase(t),rain=Number.isFinite(c.rain)&&c.rain>.05,storm=Number.isFinite(c.thunder)&&c.thunder>.12||c.weatherCode>=95;
  const kind=storm?'lightning':rain?'rain':!Number.isFinite(c.cloud)?'unknown':c.cloud>=85?'overcast':c.cloud>=10?'partly-cloudy':night?'moon':'sun';
- const sun='<circle cx="12" cy="12" r="5.2" fill="#f7cf7f"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M5 19l1.4-1.4M17.6 6.4L19 5" stroke="#dcad63" stroke-width="1.3" stroke-linecap="round"/>';
- // Lit limb is an astronomical phase mask, not a generic crescent icon.
- const radius=8,terminator=(1-2*phase.fraction)*radius,side=phase.waxing?1:-1;
- const points=[];for(let i=0;i<=24;i++){const a=-Math.PI/2+i*Math.PI/24;points.push([12+side*radius*Math.cos(a),12+radius*Math.sin(a)]);}for(let i=24;i>=0;i--){const a=-Math.PI/2+i*Math.PI/24;points.push([12+side*terminator*Math.cos(a),12+radius*Math.sin(a)]);}
- const moon='<circle cx="12" cy="12" r="8" fill="#354d68"/><path d="M'+points.map(p=>p.map(n=>n.toFixed(2)).join(',')).join('L')+'Z" fill="#edf3eb"/>';
- const cloud='<path d="M5 17c-4 0-4-6 0-6 .6-5 8-6 10-1 5-1 7 7 1 7Z" fill="#e6edf1" stroke="#8ba5b8" stroke-width=".8"/>';
- let drawing=kind==='unknown'?'<path d="M6 12h12" stroke="#688093" stroke-width="2"/>':kind==='sun'?sun:kind==='moon'?moon:kind==='partly-cloudy'?'<g transform="translate(-3 -3) scale(.9)">'+(night?moon:sun)+'</g>'+cloud:cloud;
- if(kind==='rain')drawing+='<path d="m7 19-1 3m6-3-1 3m6-3-1 3" stroke="#599fc6" stroke-width="1.6" stroke-linecap="round"/>';
- if(kind==='lightning')drawing+='<path d="m13 14-4 6h4l-2 4 7-7h-5l2-3Z" fill="#eec878"/>';
- return{kind,fraction:phase.fraction,waxing:phase.waxing,svg:'<svg viewBox="0 0 24 24" aria-hidden="true">'+drawing+'</svg>',label:(kind==='unknown'?'Weather unavailable':kind.replaceAll('-',' '))+(night?' · Moon '+Math.round(phase.fraction*100)+'% illuminated':'')};
+ return{kind,fraction:phase.fraction,waxing:phase.waxing,label:(kind==='unknown'?'Weather unavailable':kind.replaceAll('-',' '))+(night?' · Moon '+Math.round(phase.fraction*100)+'% illuminated':'')};
 }
 // Exact current values roll into their existing boxes. There are no fabricated
 // intermediate readings, duplicate text layers or per-digit animation loops.
@@ -32,7 +23,7 @@ renderHome=function(){
  const old=scrubLastValues;scrubRenderHome();scrubLastValues=new Map();
  for(const el of document.querySelectorAll('#metrics .db-stat b')){
   const key=el.closest('[data-sheet]').dataset.sheet,value=el.textContent;scrubLastValues.set(key,value);
-  if(state.scrubbing&&!reduced&&old.has(key)&&old.get(key)!==value){el.animate?.([{transform:'translateY(5px)',opacity:.6},{transform:'translateY(0)',opacity:1}],{duration:95,easing:'ease-out'});}
+  if(state.scrubbing&&!reduced&&old.has(key)&&old.get(key)!==value){el.getAnimations?.().forEach(a=>a.cancel());el.animate?.([{transform:'translateY(5px)',opacity:.6},{transform:'translateY(0)',opacity:1}],{duration:95,easing:'ease-out'});}
  }
 };
 hapticTime=function(t){
@@ -53,7 +44,11 @@ renderPresentation=function(){
  if(!available){thumb.innerHTML='';thumb.classList.remove('sky-charm');track.removeAttribute('aria-description');track.querySelector('.db-line').style.background='';return;}
  const model=scrubDayModel(),c=conditions(),charm=skyCharm(c,state.time);
  thumb.classList.add('sky-charm');thumb.dataset.sky=charm.kind;thumb.dataset.moonFraction=String(charm.fraction);
- if(thumb.innerHTML!==charm.svg)thumb.innerHTML=charm.svg;
+ thumb.classList.toggle('is-dragging',state.scrubbing);
+ const altitude=sunPosition(state.time).altitude;
+ thumb.style.setProperty('--orb-glow',altitude< -6?'#c4d9ee70':altitude<8?'#f4c78299':'#a4dafa66');
+ thumb.style.setProperty('--orb-base',altitude< -6?'#172b48':c.cloud>=85?'#737e86':altitude<8?'#cba775':'#729fba');
+ if(!thumb.querySelector('canvas')){thumb.innerHTML='<canvas class="sky-orb-pixels" width="64" height="64" aria-hidden="true"></canvas>';if(scrubOrbPixels)paintSkyOrb(scrubOrbPixels);}
  track.setAttribute('aria-valuetext',weekday(state.time)+' '+clock(state.time)+' · '+charm.label);
  track.setAttribute('aria-description',state.fixture?'Synthetic fixture. Rain and tide marks are test data.':'Light track: solar position. Rain forecast: Open-Meteo. H and L: tide times est. · NOAA predictions.');
  track.querySelector('.db-line').style.background=model.gradient;
@@ -63,5 +58,16 @@ renderPresentation=function(){
   const rainGradient='linear-gradient(90deg,'+model.rain.map(p=>'rgba(55,138,197,'+(p.value===null?0:Math.min(.65,Math.sqrt(p.value/12)*.65)).toFixed(3)+') '+p.position+'%').join(',')+')';
   extras.innerHTML='<span class="sky-rain-track" title="Rain forecast · '+(state.fixture?'synthetic fixture':'Open-Meteo')+'" style="background:'+rainGradient+'"></span>'+model.tides.map(e=>'<span class="sky-tide-mark '+(e.type==='H'?'high':'low')+'" style="left:'+model.pct(e.time)+'%" title="'+(e.type==='H'?'High':'Low')+' tide '+clock(e.time)+' · '+source+'"><i></i>'+e.type+'</span>').join('');
  }
- tooltip.textContent=clock(state.time);tooltip.style.left=clamp(model.pct(state.time),9,91)+'%';
+ tooltip.textContent=weekday(state.time)+' '+clock(state.time);tooltip.style.left=clamp(model.pct(state.time),9,91)+'%';
 };
+
+// A 64px readback from the existing WebGPU device, at most one in flight.
+// Cache it across UI state changes; never substitute an icon or weather picture.
+let scrubOrbPixels=null;
+function paintSkyOrb(data){
+ const canvas=document.querySelector('.sky-orb-pixels');if(!canvas||typeof ImageData==='undefined')return;
+ const ctx=canvas.getContext('2d');if(!ctx)return;
+ ctx.putImageData(new ImageData(new Uint8ClampedArray(data.bytes),data.width,data.height),0,0);
+ canvas.dataset.sequence=String(data.sequence);canvas.parentElement.dataset.ready='true';
+}
+window.__daybuoySkyOrb=data=>{scrubOrbPixels=data;paintSkyOrb(data);};

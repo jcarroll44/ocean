@@ -13,7 +13,7 @@ for(let h=0;h<=23;h+=.1){bridge.scrubTo(b.start+h*H);tick+=100;app.renderUI();co
 assert(seen.has('sun')&&seen.has('moon')&&seen.has('rain')&&seen.has('lightning')&&seen.has('partly-cloudy'));
 assert.equal($('.sky-tide-mark.high')!==null,true);assert.equal($('.sky-tide-mark.low')!==null,true);assert.match($('.db-line').style.background,/#243b59/);assert.match($('.db-line').style.background,/#e5b979/);assert.match($('.sky-rain-track').getAttribute('style'),/rgba\(55,138,197/);
 assert(animations.some(n=>n.stat),'Actual current stat nodes roll, not phantom values');
-const moon=test.skyCharm({...app.conditions(),rain:0,cloud:0,weatherCode:0,thunder:0},b.start);assert.equal(moon.fraction,test.moonPhase(b.start).fraction);assert(moon.svg.includes('<path'));
+const moon=test.skyCharm({...app.conditions(),rain:0,cloud:0,weatherCode:0,thunder:0},b.start);assert.equal(moon.fraction,test.moonPhase(b.start).fraction);assert.equal(moon.svg,undefined,'Orb must use native sky pixels, not icons');assert($('.sky-charm canvas'),'Live sky canvas exists');assert($('.sky-charm').classList.contains('is-dragging'));assert.match($('.sky-time-label').textContent,/^[A-Z][a-z]{2} /);assert.equal(typeof c.window.__daybuoySkyOrb,'function');
 const model=test.scrubDayModel();
 for(const moment of model.moments){test.clearHaptics();haptics.length=0;test.hapticTime(moment.time-1000);tick+=200;test.hapticTime(moment.time+1000);assert.equal(haptics.at(-1)?.kind,'moment',moment.kind);}
 test.clearHaptics();haptics.length=0;test.hapticTime(b.start+H-1000);tick+=200;test.hapticTime(b.start+H+1000);assert.equal(haptics.at(-1).kind,'hour');

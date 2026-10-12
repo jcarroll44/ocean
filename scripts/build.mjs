@@ -3,6 +3,7 @@ import {execFileSync} from 'node:child_process';
 // User-required gate: input regressions block every build/delivery.
 execFileSync(process.execPath,['scripts/check-interactions.cjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['ocean-proof/scripts/generate-grid128.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/build-capture-vendor.mjs'],{stdio:'inherit'});
 fs.mkdirSync('dist',{recursive:true});
 const read=p=>fs.readFileSync('src/'+p,'utf8');
 // Original scene source is retained for explicit unsupported/device failure
@@ -59,6 +60,8 @@ execFileSync(process.execPath,['scripts/check-integration.mjs'],{stdio:'inherit'
 execFileSync(process.execPath,['scripts/check-reference.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-release.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-sky-scrubber.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-sky-orb.mjs'],{stdio:'inherit'});
+execFileSync(process.execPath,['scripts/check-full-app-capture.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-data.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-weather-gate.mjs'],{stdio:'inherit'});
 execFileSync(process.execPath,['scripts/check-screenshot-visibility.mjs'],{stdio:'inherit'});

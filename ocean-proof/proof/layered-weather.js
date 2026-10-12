@@ -97,15 +97,15 @@ fn nativeCloudShadow(P:vec3f)->f32 {
  let sun=normalize(nativeWeather.sun);let sample=normalize(vec3f(P.x/1600.0+sun.x/max(sun.y,0.15),1.0,P.z/1600.0+sun.z/max(sun.y,0.15)));
  return 1.0-cachedCloud(sample).a*0.52*nativeWeather.direct*nativeWeather.covers.x;
 }
-fn nativeFogColour()->vec3f{return mix(vec3f(0.012,0.020,0.034),vec3f(0.63,0.635,0.63),nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
+fn nativeFogColour()->vec3f{let dayFog=mix(vec3f(0.63,0.635,0.63),vec3f(.14,.15,.16),nativeWeather.storm*(1.0-nativeWeather.fog));return mix(vec3f(0.012,0.020,0.034),dayFog,nativeWeather.daylight)+vec3f(.022,.025,.029)*nativeNightStorm()+vec3f(.18,.21,.26)*nativeWeather.flash;}
 fn nativeWeatherFog(col:vec3f,P:vec3f)->vec3f {
  let d=distance(P,frame.cameraPos);let h=max(0.0,(P.y+frame.cameraPos.y)*0.5);
  let density=nativeWeather.extinction*exp(-h/mix(1600.0,500.0,nativeWeather.haze));
  let ray=normalize(P-frame.cameraPos);
  let haze=max(1.0-exp(-d*density),nativeHorizonBlend(ray)*smoothstep(2000.0,10000.0,d));
  var horizonColour=nativeFogColour();
- if(nativeWeather.horizonWeather>.001&&d>800.0&&nativeWeather.fog<.999){
-  horizonColour=mix(horizonColour,nativeHorizonColour(ray),nativeWeather.horizonWeather*smoothstep(800.0,8000.0,d));
+ if(nativeWeather.horizonWeather>.001&&d>100.0&&nativeWeather.fog<.999){
+  horizonColour=mix(horizonColour,nativeHorizonColour(ray),nativeWeather.horizonWeather*smoothstep(100.0,800.0,d));
  }
  return mix(col,horizonColour,haze);
 }
