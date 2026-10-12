@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "runId": "2026-10-12T02-53-35Z-17bbe948-ee0c-472d-9ad4-1129544e249d",
+  "kind": "weather",
+  "fingerprint": "de7fa4314523a502f8d985b81fbfe38ebcb80046f11e5c8a3090d67811c8821b",
+  "receivedAt": "2026-10-12T02:57:04.954Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 541452,
+      "type": "application/json",
+      "sha256": "3aa7d3620b8f0e29fa65c6c019d0f3024ba01a5b277c7d1a2c4b71815cf4b72d"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 3329935,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "4dddeb84f88a290f1aac3310248569ca77b0f8dc4453e8ffa09d93cbbfe8ff2b"
+    },
+    {
+      "name": "clear.png",
+      "size": 539002,
+      "type": "image/png",
+      "sha256": "327215ef48472bdd289de49387a34f1bfcac99d938c31e7d0ef278a47b4370da"
+    },
+    {
+      "name": "partly-cloudy.png",
+      "size": 591483,
+      "type": "image/png",
+      "sha256": "332a01ab50e3c29f49bf2b59595df5e369ba3ad29c99692742bb80a1d981d364"
+    },
+    {
+      "name": "overcast.png",
+      "size": 522077,
+      "type": "image/png",
+      "sha256": "b69648ce0006fd7b85b33bace60fea9fc62a05ee5fe271af2341635342e6eabe"
+    },
+    {
+      "name": "fog.png",
+      "size": 469022,
+      "type": "image/png",
+      "sha256": "ebbd33cf2fbd75ed0900fc9a03a42d499dc9b80bf72c5e81f69929d795d69303"
+    },
+    {
+      "name": "light-rain.png",
+      "size": 571380,
+      "type": "image/png",
+      "sha256": "a672cb80ad16a67612ce48585756b6e44ccdb5e5501adec6b0b92a9fa42afbd5"
+    },
+    {
+      "name": "squall-approaching.png",
+      "size": 675671,
+      "type": "image/png",
+      "sha256": "4e330b51705f73859b907ea48b6c85af4b082dddec2c1f484034a837af4ea3f8"
+    },
+    {
+      "name": "thunderstorm.png",
+      "size": 517582,
+      "type": "image/png",
+      "sha256": "0e4f5389b92afccb1861e5a1ed8a172905bc8042090a1b00ed408b6418d23079"
+    },
+    {
+      "name": "clearing.png",
+      "size": 589794,
+      "type": "image/png",
+      "sha256": "a904902a92c8cde914224a189341f523f6d80b1291b643138b58ed6d8aa94366"
+    },
+    {
+      "name": "night-clear.png",
+      "size": 533059,
+      "type": "image/png",
+      "sha256": "f0f5d61e90fe56e452617d9c683a6dd9c4776ad261277294d93ee05e97c406b7"
+    },
+    {
+      "name": "night-storm.png",
+      "size": 549750,
+      "type": "image/png",
+      "sha256": "ecf7bb713f8468b9522e501093cc3ae385c96f7dfd778c25d114995f1c9058f6"
+    },
+    {
+      "name": "fixtures-contact-sheet.jpg",
+      "size": 349507,
+      "type": "image/jpeg",
+      "sha256": "0c57c6de992638312e55a2a04fa1dd468ffd35a9f249f179119b45bcfb0c9694"
+    },
+    {
+      "name": "scrub-day.mp4",
+      "size": 1758290,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "460b444a1dbc23fb786aa9e0b17b3e0ee436ee74e59e252027c82eb5d7fedd4c"
+    }
+  ]
+}
