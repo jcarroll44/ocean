@@ -43,7 +43,7 @@ export function installHitchTrace(GPU){
  };
  return {
   event,
-  track(app){for(const [name,key] of [['atmosphere','update'],['fft','update'],['shoreSim','update'],['breakers','update'],['spray','update'],['environment','update'],['terrainGPU','update'],['shadows','render'],['sceneRenderer','render'],['post','beginFrame'],['post','render']])wrap(app[name],key,name+'.'+key);},
+  track(app){wrap(app.nativeWeather?.cache,'step','cloud-cache.step');for(const [name,key] of [['atmosphere','update'],['fft','update'],['shoreSim','update'],['breakers','update'],['spray','update'],['environment','update'],['terrainGPU','update'],['shadows','render'],['sceneRenderer','render'],['post','beginFrame'],['post','render']])wrap(app[name],key,name+'.'+key);},
   begin(){frameStart=performance.now();},
   end(app){
    maxFrameMs=Math.max(maxFrameMs,performance.now()-frameStart);frames++;

@@ -1,9 +1,12 @@
 {
-  "revision": "2026-10-12-weather-optics-v3",
+  "revision": "2026-10-12-weather-cadence-v4",
   "checks": [
     "coherent triple-buffer publication",
-    "400 ms whole-cache crossfade",
-    "512 cache pixels per submitted frame",
+    "400 ms forecast / 1600 ms rest whole-cache crossfade",
+    "256 cache pixels per submitted frame",
+    "20-second rest cadence",
+    "fast coherent forecast preview then full-detail refinement",
+    "exact zero-work clear-sky cache",
     "18 primary and 3 shadow samples bounded",
     "real 3D bake WGSL/pipeline/bindings validate",
     "sun/moon and offshore layer inputs",
@@ -12,12 +15,14 @@
   "budget": {
     "width": 512,
     "height": 128,
+    "columns": 256,
     "rows": 1,
     "layers": 3,
     "primarySteps": 18,
     "shadowSteps": 3,
-    "refreshMs": 6000,
-    "fadeMs": 400
+    "refreshMs": 20000,
+    "fadeMs": 400,
+    "refreshFadeMs": 1600
   },
   "assetHashes": {
     "shape": "ef65cf6156894720c00bf572c49e3e254f8899c4b5158246e5a35a1922e2519c",

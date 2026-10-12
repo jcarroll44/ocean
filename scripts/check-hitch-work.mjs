@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import vm from 'node:vm';
 import {ShoreWaves} from '../ocean-proof/vendor/tidewater/src/ocean/ShoreWaves.js';
 import {Texture} from '../ocean-proof/vendor/tidewater/src/engine/gpu/Texture.js';
 import {shoreDirection} from '../ocean-proof/proof/shore-direction.js';
@@ -50,3 +51,16 @@ hooks[0].before(enc);hooks[0].after();assert.equal(resolved[0][2],4);
 gpu2.encoder=null;gpu2.getEncoder().beginRenderPass({label:'unmeasured'});assert.equal(descriptors.at(-1).timestampWrites,undefined);
 mapping();await new Promise(r=>setTimeout(r,0));assert(unmapped);assert.deepEqual(trace2.result().gpuSamples[0].passes,{shore:.002,water:.003});
 console.log('PASS: supported timestamp sampling resolves only written pairs, keeps readback asynchronous and does not reuse in-flight query data. Mock GPU timing mechanics only.');
+
+// Exercise the actual host-recognition function at varying Sites iframe depths.
+const nativeSource=fs.readFileSync('ocean-proof/proof/native-scene.js','utf8');
+const diagnosticSource=nativeSource.match(/function diagnosticHost\(\)\{[^\n]+/)[0];
+for(const [path,search,expected] of [['/weather-fixtures.html','',true],['/','?ocean-debug=1',true],['/','',false]]){
+ const host={location:{pathname:path,search}};host.parent=host;
+ for(let depth=0;depth<4;depth++){let leaf=host;for(let i=0;i<depth;i++)leaf={location:{pathname:'/ocean-proof/proof/native-scene.html',search:''},parent:leaf};
+  assert.equal(vm.runInNewContext(diagnosticSource+';diagnosticHost()',{window:leaf,URLSearchParams}),expected,'Diagnostic recognition at depth '+depth);
+ }
+}
+assert(nativeSource.includes("if(diagnosticHost())trace=installHitchTrace(GPU)"));
+assert(fs.readFileSync('ocean-proof/proof/hitch-trace.js','utf8').includes("wrap(app.nativeWeather?.cache,'step','cloud-cache.step')"));
+console.log('PASS: diagnostic host recognition through Sites wrappers; ordinary production hosts do not opt in.');

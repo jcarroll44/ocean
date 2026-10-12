@@ -17,6 +17,9 @@ import {overcastConfig} from './overcast-profile-config.js';
 import {installSmallSurf,smallSurfSpan} from './scene-polish.js';
 import {ShoreUpload} from './shore-upload.js';
 import {installHitchTrace} from './hitch-trace.js';
+// Sites can add a same-origin wrapper; find the diagnostic host without
+// assuming one particular iframe depth. Production pages never enable it.
+function diagnosticHost(){let host=window;for(let depth=0;depth<5;depth++){try{if(['/ocean-live.html','/weather-fixtures.html'].some(p=>host.location.pathname.endsWith(p))||new URLSearchParams(host.location.search).get('ocean-debug')==='1')return true;if(host===host.parent)break;host=host.parent;}catch{break;}}return false;}
 import {installWeatherSurfaces} from './weather-surfaces.js';
 
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
@@ -32,7 +35,7 @@ try{
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
  const adaptive=(!app.profileConfig||app.profileConfig.adaptive)&&!app.qs.has('native-capture')?new AdaptiveResolution():null;
- app.configureNativeWeather=()=>{if(['/ocean-live.html','/weather-fixtures.html'].some(p=>parent.parent?.location?.pathname?.endsWith(p)))trace=installHitchTrace(GPU);if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
+ app.configureNativeWeather=()=>{if(diagnosticHost())trace=installHitchTrace(GPU);if(regression.deck)app.nativeWeather=installNativeWeather(app,regression);};
  app.configureNativeShore=()=>{if(!app.profileConfig)installSmallSurf(app.shore);};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
@@ -133,7 +136,7 @@ try{
  const api=window.__daybuoyOcean={
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:'2026-10-12-weather-optics-v3',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  evidence(){return {revision:'2026-10-12-weather-cadence-v4',waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{

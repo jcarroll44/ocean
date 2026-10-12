@@ -1,15 +1,16 @@
 {
-  "revision": "2026-10-12-weather-optics-v3",
+  "revision": "2026-10-12-weather-cadence-v4",
   "checks": [
     "weather-driven disc/glow",
-    "opaque overcast background",
+    "85%+ opaque background",
     "top-to-bottom dense fog",
-    "shared horizon extinction",
+    "shared horizon cloud/rain colour",
     "warm neutral sand above wet band",
     "offshore bearing/range and unavailable inputs",
     "stars skip opaque weather",
     "phase-dependent physical moon key",
-    "real lunar fixture geometry"
+    "real lunar fixture geometry",
+    "approved clear-night code identity"
   ],
   "lunarFixture": {
     "time": "2026-10-18T03:30:00.000Z",

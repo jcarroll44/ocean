@@ -18,7 +18,9 @@ for(const cheap of [false,true]){
   // Oct 12: explicit weather-driven solar occlusion also applies to the
   // shared environment path. Every other pinned sky byte stays identical.
   const sunHook='2500.0 * skyParams.sunDiskIntensity';assert(base.includes(sunHook));
-  assert.equal(app.sky.module.code,base.replaceAll('return base;','return nativeWeatherSky(dir,base);').replace(sunHook,sunHook+' * nativeWeather.sunDisc'));
+  let expected=base.replaceAll('return base;','return nativeWeatherSky(dir,base);').replace(sunHook,sunHook+' * nativeWeather.sunDisc');
+  for(const signature of signatures)expected=expected.replace(signature,signature+'\n if(nativeWeather.closed>=.999||nativeWeather.fog>=.999){return nativeWeatherSky(dir,vec3f(0.0));}');
+  assert.equal(app.sky.module.code,expected);
  }
 }
 const noExposure={sky:new Sky({module:{name:'test-atmosphere'}}),settings:{exposure:.55}};

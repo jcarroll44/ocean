@@ -346,3 +346,31 @@ builds. Preserve all seven input checks, bounded DPR, High/FXAA and strict gate.
 `check-weather-optics.mjs` and the actual cloud/material WGSL checks supplement
 the existing suite. A new contact sheet and physical-device pass require fresh
 rendered evidence; the accepted run above cannot validate this revision.
+
+
+## October 12 — approved optics; sustained throughput correction
+
+Jacob accepts the v3 night clear, overcast, fog and solar behavior. Uploaded run
+`2026-10-12T02-53-35Z-17bbe948-ee0c-472d-9ad4-1129544e249d` failed:
+32.5096 average, 27 minimum, 28 seconds below 30. Its detailed trace is null;
+there is no measured GPU-pass attribution. Retain the clear-night shader,
+physical moon path, phase, stars, cloudy sand, fog and sun response. Close blue
+backgrounds at 85% cover, replace the bright weather horizon stripe with the
+actual horizon cloud/rain column, and strengthen the data-bearing shelf/curtain.
+
+The user explicitly permits less frequent, more distributed cache work. Keep
+512×128 and 18 primary/3 shadow steps; reduce each submission to 256 pixels
+(two half-rows per full row), refresh at rest every 20 seconds, fade rest updates
+for 1600 ms and forecast changes for 400 ms. A 128×32 scrub cache completes in
+16 submissions without restarting as the hour changes. New target hours also
+publish a coherent coarse preview before full-detail refinement; gallery
+captures wait for full detail. Exactly empty cloud
+fields publish zero without GPU bake or recurring work. Skip discarded clear
+sky/celestial calculations only under fully opaque weather; keep the approved
+clear-night rendering. No water/surf/rain budget, DPR floor, High/FXAA or gate
+threshold reductions. Preserve all seven input tests. Repair diagnostic-host
+recognition across Sites iframe depth so the next upload contains CPU and,
+where supported, asynchronous sampled GPU timings. Capture work remains after
+the strict 120-second gate, with pause/resume only during gallery capture.
+Fresh pixels and physical-device throughput must be identified as pending until
+an authentic new upload exists; CPU/WGSL checks cannot substitute for either.

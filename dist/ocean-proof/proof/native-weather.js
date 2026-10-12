@@ -11,7 +11,7 @@ export function overcastState(sunY,cloud,rain=0){
  return {deck,daylight,weight:deck*daylight,radiance:(.018+daylight*.722)*wet,exposure:1+.12*deck*daylight};
 }
 export function installNativeWeather(app,{cheap=false,exposure=true}={}){
- const uniforms=new UniformBlock('NativeWeather',{fog:['f32',0],closed:['f32',0],sunDisc:['f32',1],sunGlow:['f32',1],deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
+ const uniforms=new UniformBlock('NativeWeather',{horizonWeather:['f32',0],fog:['f32',0],closed:['f32',0],sunDisc:['f32',1],sunGlow:['f32',1],deck:['f32',0],radiance:['f32',.74],cover:['f32',0],threshold:['f32',1],daylight:['f32',1],sun:['vec3f',new Vector3(0,1,0)],afternoon:['f32',0],storm:['f32',0],flash:['f32',0],...layeredFields()});
  let selectedForecast={};
  const cache=cheap?null:createCloudCache(uniforms,snapshot=>{
   snapshot._weatherAt=null;updateLayeredWeather(snapshot,selectedForecast);
@@ -31,8 +31,8 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  let moon=nativeWeather.moonlight*smoothstep(-.02,.18,nativeWeather.moon.y);
  let glow=vec3f(.019,.032,.058)*(1.0+moon*.75)*(1.0+.35*pow(1.0-clamp(dir.y,0.0,1.0),3.0));
  let clearBackground=mix(clear,max(clear,glow),night);
- // At 100% cover, even a low-density cloud fold sees a neutral overcast sky.
- let overcastBackground=mix(vec3f(.030,.036,.047),vec3f(.28,.285,.29)*(.7+.3*nativeWeather.energy),nativeWeather.daylight);
+ // At 85%+ cover, even a low-density cloud fold sees a neutral overcast sky.
+ let overcastBackground=nativeOvercastBackground();
  let background=mix(clearBackground,overcastBackground,nativeWeather.closed);
  let cloud=cachedCloud(dir);
  // Illuminate the cached volume's folds from within. This reuses its density
@@ -46,7 +46,11 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  let fogWeight=mix(.42,1.0,smoothstep(.003,.008,nativeWeather.extinction));
  let haze=(1.0-exp(-nativeWeather.extinction*hazeDistance))*fogWeight*(1.0-smoothstep(0.0,0.5,dir.y));
  let fog=max(nativeWeather.fog,max(haze,nativeHorizonBlend(dir)));
- return mix(colour,nativeFogColour(),fog)+nativeStormBolt(dir)*(1.0-nativeWeather.fog);`}
+ var result=mix(colour,nativeFogColour(),fog);
+ if(nativeWeather.horizonWeather>.001&&nativeWeather.fog<.999&&abs(dir.y)<.035){
+  result=mix(result,nativeHorizonColour(dir),nativeWeather.horizonWeather*(1.0-smoothstep(0.0,.035,abs(dir.y))));
+ }
+ return result+nativeStormBolt(dir)*(1.0-nativeWeather.fog);`}
 }`});
  // The same deck must light the sand, stand and reflected ocean, not just the backdrop.
  const sky=app.sky.module;
@@ -55,6 +59,12 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
  if(count!==2)throw Error('Native weather expects the noClouds proof sky');
  sky.code=sky.code.replaceAll('return base;','return nativeWeatherSky(dir,base);');
  if(!cheap)sky.code=sky.code.replace('2500.0 * skyParams.sunDiskIntensity','2500.0 * skyParams.sunDiskIntensity * nativeWeather.sunDisc');
+ if(!cheap){
+  for(const signature of ['fn skyRadianceWithClouds( dir: vec3f, withSun: bool ) -> vec3f {','fn skyReflectionRadiance( dir: vec3f ) -> vec3f {']){
+   if(!sky.code.includes(signature))continue; // minimal CPU test doubles
+   sky.code=sky.code.replace(signature,signature+'\n if(nativeWeather.closed>=.999||nativeWeather.fog>=.999){return nativeWeatherSky(dir,vec3f(0.0));}');
+  }
+ }
  if(cheap){
   // At full overcast, do not compute the discarded clear-sky radiance first.
   // Uniform branches preserve dawn/night/partial clouds without a second renderer.
@@ -74,11 +84,12 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   // Only the immutable cache consumes this location; complete sky crossfades
   // carry its transitions, including a change of offshore cell or bearing.
   uniforms.fields.squall.value.set(...shelf);this.state.optics=optics;this.state.squall=shelf;
+  uniforms.fields.horizonWeather.value+=(Math.max(optics.closed,shelf[2])*(1-optics.fog)-uniforms.fields.horizonWeather.value)*k;
   uniforms.fields.deck.value=this.state.weight;uniforms.fields.radiance.value=this.state.radiance;
   uniforms.fields.cover.value=cover;uniforms.fields.threshold.value=cloudThreshold(cover);uniforms.fields.daylight.value=smooth(-.16,.13,packet.sun[1]);
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);
   const moon=packet.moon||[0,-1,0];uniforms.fields.moon.value.set(-moon[0],moon[1],-moon[2]);uniforms.fields.moonlight.value=packet.moonlight||0;
-  cache?.setKey(JSON.stringify([f.forecastTime,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]),f.scrubbing);
+  cache?.setKey(JSON.stringify([Number.isFinite(f.forecastTime)?Math.floor(f.forecastTime/30000):null,f.weatherRetrievedAt??null,...shelf,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]),f.scrubbing);
   const flash=f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
   if(flash>.01&&uniforms.fields.flash.value<=.01){
    this.strikeNumber=(this.strikeNumber||0)+1;

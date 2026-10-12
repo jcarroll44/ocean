@@ -103,7 +103,11 @@ fn nativeWeatherFog(col:vec3f,P:vec3f)->vec3f {
  let density=nativeWeather.extinction*exp(-h/mix(1600.0,500.0,nativeWeather.haze));
  let ray=normalize(P-frame.cameraPos);
  let haze=max(1.0-exp(-d*density),nativeHorizonBlend(ray)*smoothstep(2000.0,10000.0,d));
- return mix(col,nativeFogColour(),haze);
+ var horizonColour=nativeFogColour();
+ if(nativeWeather.horizonWeather>.001&&d>800.0&&nativeWeather.fog<.999){
+  horizonColour=mix(horizonColour,nativeHorizonColour(ray),nativeWeather.horizonWeather*smoothstep(800.0,8000.0,d));
+ }
+ return mix(col,horizonColour,haze);
 }
 fn nativeRainNormal(P:vec3f)->vec3f {
  if(nativeWeather.rain<0.001){return vec3f(0.0);}
