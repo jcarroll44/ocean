@@ -10,19 +10,20 @@ export async function fullAppCapture(win){
  await win.document.fonts?.ready;
  const fontEmbedCSS=await getFontEmbedCSS(root),skip=new Set(['ocean','tidewater-ocean-layer','ocean-engine-status']);
  const options={width,height,pixelRatio:1,fontEmbedCSS,preferredFontFormat:'woff2',backgroundColor:'transparent',style:{background:'transparent',width:width+'px',height:height+'px'},filter:node=>!skip.has(node.id)};
- let overlay=null,busy=false,active=true,error=null,last=-Infinity,uiFrames=0,sceneFrames=0,maxUiMs=0;
+ let overlay=null,overlayPaywall=false,busy=false,active=true,error=null,last=-Infinity,uiFrames=0,sceneFrames=0,maxUiMs=0,paywallFrames=0,paywallFirst=null,paywallLast=null;
  async function refresh(){
   if(busy||!active)return;busy=true;const start=performance.now();
-  try{const image=await toCanvas(root,options);if(active){overlay=image;uiFrames++;maxUiMs=Math.max(maxUiMs,performance.now()-start);}}
+  const modal=win.document.querySelector?.('#plus-modal'),hasPaywall=!!modal&&!modal.hidden;
+  try{const image=await toCanvas(root,options);if(active){overlay=image;overlayPaywall=hasPaywall&&!modal.hidden;uiFrames++;maxUiMs=Math.max(maxUiMs,performance.now()-start);}}
   catch(e){error=e;}finally{busy=false;last=performance.now();}
  }
  await refresh();if(error)throw Error('Full-app UI capture failed: '+error.message);
  const original=api.draw;
  function wrapped(...args){
   const result=original.apply(this,args);if(result!==false&&active){
-   try{ctx.clearRect(0,0,width,height);ctx.drawImage(scene,0,0,width,height);if(overlay)ctx.drawImage(overlay,0,0,width,height);sceneFrames++;if(performance.now()-last>=125)void refresh();}catch(e){error=e;}
+   try{ctx.clearRect(0,0,width,height);ctx.drawImage(scene,0,0,width,height);if(overlay)ctx.drawImage(overlay,0,0,width,height);sceneFrames++;if(overlayPaywall){paywallFrames++;paywallFirst??=performance.now();paywallLast=performance.now();}if(performance.now()-last>=125)void refresh();}catch(e){error=e;}
   }return result;
  }
  api.draw=wrapped;
- return {canvas,validate(){if(error)throw Error('Full-app capture failed: '+error.message);if(document.hidden)throw Error('Full-app capture interrupted while hidden.');},state:()=>({source:'actual DOM raster + live WebGPU scene',uiFrames,sceneFrames,maxUiMs,uiRateLimit:8,resolution:[width,height],osScreenRecording:false}),stop(){active=false;if(api.draw===wrapped)api.draw=original;}};
+ return {canvas,validate(){if(error)throw Error('Full-app capture failed: '+error.message);if(document.hidden)throw Error('Full-app capture interrupted while hidden.');},state:()=>({source:'actual DOM raster + live WebGPU scene',uiFrames,sceneFrames,maxUiMs,paywallFrames,paywallVisibleMs:paywallFirst===null?0:paywallLast-paywallFirst,uiRateLimit:8,resolution:[width,height],osScreenRecording:false}),stop(){active=false;if(api.draw===wrapped)api.draw=original;}};
 }

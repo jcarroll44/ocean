@@ -10,7 +10,9 @@ export function profileScene(source){
 export function profileApp(html){
  html=html.replace('SITE.lat=30.28;SITE.lon=-86.0;','// Coordinates belong to the selected beach profile.');
  html=html.replaceAll('(c.direction??201)','(c.direction??SITE.facing)').replaceAll('(c.windDirection??201)','(c.windDirection??SITE.facing)');
- html=html.replace('Math.max(-102+40*k,Math.min(60,sunRel))','Math.max(SITE.camera.yawMin+SITE.camera.yawEase*k,Math.min(SITE.camera.yawMax,sunRel))').replace('const fov=55+25*k','const fov=SITE.camera.fov+SITE.camera.fovRise*k').replace('const back=28+42*k, h=10+16*k','const back=SITE.camera.back+SITE.camera.backRise*k, h=SITE.camera.height+SITE.camera.heightRise*k');
+ // Automatic sun following stays in the seaward hemisphere, including the
+ // horizontal field of view. Leave the actual astronomical bearing untouched.
+ html=html.replace('Math.max(-102+40*k,Math.min(60,sunRel))','Math.max(Math.max(-60,SITE.camera.yawMin+SITE.camera.yawEase*k),Math.min(Math.min(60,SITE.camera.yawMax),sunRel))').replace('const fov=55+25*k','const fov=SITE.camera.fov+SITE.camera.fovRise*k').replace('const back=28+42*k, h=10+16*k','const back=SITE.camera.back+SITE.camera.backRise*k, h=SITE.camera.height+SITE.camera.heightRise*k');
  html=html.replace('const orbitHome={az:0,el:11*RAD,r:28.52},orbitTarget=new THREE.Vector3(0,4.56,0);','const orbitHome={az:SITE.camera.restYaw*RAD,el:SITE.camera.restPitch*RAD,r:SITE.camera.restRadius},orbitTarget=new THREE.Vector3(...SITE.camera.restTarget);').replace('.59*(1-2*.23)-Math.tan(orbitHome.el)','SITE.camera.lensScale*(1-2*SITE.camera.horizon)-Math.tan(orbitHome.el)');
  html=html.replace("const SURF_ZONE='FLZ108',SURF_URL='https://forecast.weather.gov/product.php?site=TAE&issuedby=TAE&product=SRF&format=CI&version=1&glossary=0';",`const SURF_ZONE=SITE.surfZone,SURF_URL='https://forecast.weather.gov/product.php?site='+SITE.surfOffice+'&issuedby='+SITE.surfOffice+'&product=SRF&format=CI&version=1&glossary=0';`);
  html=html.replaceAll("/^FLZ108(?:-|>)/m.test(s)&&/South Walton/i.test(s)","surfSectionHasZone(s,SURF_ZONE)");

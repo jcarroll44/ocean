@@ -33,6 +33,8 @@ const started=performance.now();
 const completionListeners=new Set();let trace,shoreUpload;
 function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
+// Release even when navigation interrupts initialization before the API exists.
+window.addEventListener('pagehide',()=>{failed=true;GPU.device?.destroy();});
 try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();
@@ -97,6 +99,7 @@ try{
  GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);
  const worker=new Worker(new URL('./shore-worker.js',import.meta.url),{type:'module'});let first=true;
+ window.addEventListener('pagehide',()=>worker.terminate());
  function rebuildShore(){
   if(shoreBusy||!pendingShore)return;shoreBusy=true;const p=pendingShore;pendingShore=null;
   const data=first?{size:app.terrainData.size,res:app.terrainData.res,texel:app.terrainData.texel,origin:app.terrainData.origin,heights:app.terrainData.heights}:null;first=false;
@@ -139,6 +142,7 @@ try{
   if(now-lastReport>1000){const fps=completed.reduce((n,e)=>n+e.count,0)/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:pipelined?'gpu-completed-pipelined':mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{})});}
  }
  const api=window.__daybuoyOcean={
+  dispose(){failed=true;completionListeners.clear();worker.terminate();GPU.device.destroy();},
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
   evidence(){return {revision:INTEGRATION_BUILD.revision,waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,skyOrb:app.skyOrb?.state(),weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},

@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import vm from 'node:vm';
+import {profileScene,profileApp} from './profile-adapter.mjs';
 import {DatabaseSync} from 'node:sqlite';
 import {INLET_PROFILE,BEACH_PROFILES,validateProfile} from '../src/beach-profiles.js';
 import {coastlineNormal,nearestStations} from '../server/profile-generator.js';
@@ -7,6 +9,19 @@ import {parseWeatherKit,parseNWS,weatherKitToken} from '../server/weather-provid
 import {sharedForecast,packCache,unpackCache,surfHasZone,commercialMarineURL,handleForecast} from '../server/forecast.js';
 import {entitlementState,offeringPlans,PLUS_PRODUCTS} from '../src/plus-model.js';
 const H=3600000,now=Date.UTC(2026,9,12,12),p=INLET_PROFILE;
+// Exercise the shipped profile-adapted camera, including an inland solar bearing.
+for(const profile of Object.values(BEACH_PROFILES)){
+ const c={console,TextDecoder,URLSearchParams,location:{search:'?beach='+profile.id}};vm.createContext(c);
+ vm.runInContext(profileScene(fs.readFileSync('src/scene-data.js','utf8')),c);
+ assert.equal(c.__daybuoyProfile.id,profile.id);
+ Object.assign(c,{THREE:c.__mods['three.module.js'],SITE:c.__mods['config.js'].SITE,RAD:Math.PI/180});
+ const camera=profileApp(fs.readFileSync('src/camera.js','utf8')).split('function approvedBeachTarget')[0];vm.runInContext(camera,c);
+ for(const elevation of [-15,0,10,30,60])for(const bearing of [-180,-110,-90,-60,0,60,90,110,180]){
+  const pose=vm.runInContext(`sunEl=${elevation};sunRel=${bearing};beachPose()`,c),d=pose.tgt.clone().sub(pose.pos),yaw=Math.atan2(d.x,-d.z)*180/Math.PI;
+  assert(pose.pos.z>0&&d.z<0,'Automatic camera must stay on land and face water');
+  assert(Math.abs(yaw)+pose.fov/2<90,'Entire horizon must remain in the seaward hemisphere');
+ }
+}
 for(const profile of Object.values(BEACH_PROFILES))assert.equal(validateProfile(profile),profile);
 assert.equal(Object.values(BEACH_PROFILES).filter(p=>p.visible).length,1);
 assert.deepEqual(p.water,{absorption:[.42,.075,.035],scattering:[.012,.018,.024]});assert.equal(p.facing,201);assert.equal(p.camera.restRadius,28.52);assert.equal(p.camera.horizon,.23);

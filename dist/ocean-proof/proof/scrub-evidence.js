@@ -1,10 +1,10 @@
 import {recordLiveCanvas,liveOcean} from './live-evidence.js';
 import {fullAppCapture} from './full-app-capture.js';
-export async function recordDayScrub(win,{duration=28,onProgress=()=>{}}={}){
+export async function recordDayScrub(win,{duration=32,onProgress=()=>{}}={}){
  const app=win.__daybuoy,bridge=win.__daybuoyFixture;
  if(app?.state?.fixtureId!=='scrub-day')throw Error('Synthetic day-scrub fixture required.');
  win.document.getElementById('app').dataset.recordingFull='true';
- const bounds=bridge.beginScrub(),samples=[];let request=0,active=true,last=-Infinity,capture,paywall=false,lastSnapshot;const scrubDuration=duration-4;
+ const bounds=bridge.beginScrub(),samples=[];let request=0,active=true,last=-Infinity,capture,paywall=false,lastSnapshot;const scrubDuration=duration-8;
  try{
   bridge.scrubTo(bounds.start);app.renderUI();capture=await fullAppCapture(win);const start=performance.now();
   const advance=now=>{
@@ -20,6 +20,7 @@ export async function recordDayScrub(win,{duration=28,onProgress=()=>{}}={}){
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   const clip=await recordLiveCanvas(capture.canvas,{duration,validate,videoBitsPerSecond:2400000}),composition=capture.state();
   if(composition.uiFrames<2||composition.sceneFrames<2)throw Error('Full-app recording did not update.');
-  return{...clip,samples,composition,range:[bounds.start,bounds.end-1],paywallIncluded:paywall,note:'Actual full app: live WebGPU scene composited with rasterized live DOM, including weather glyph, light/rain/tide track and rolling values. One forecast hour per second, followed by four seconds of the real paywall. Synthetic clear → storm → clearing → night. Not an OS screen recording; backdrop blur can differ in DOM capture. Full UI held expanded for inspection. No FPS measurement during encoding.'};
+  if(!paywall||composition.paywallFrames<2||!(composition.paywallVisibleMs>=4000))throw Error('Paywall did not reach at least four seconds of composed recording frames.');
+  return{...clip,samples,composition,range:[bounds.start,bounds.end-1],paywallIncluded:true,note:'Actual full app: live WebGPU scene composited with rasterized live DOM, including weather glyph, light/rain/tide track and rolling values. One forecast hour per second, followed by eight seconds holding the real paywall; at least four seconds verified in composed frames. Synthetic clear → storm → clearing → night. Not an OS screen recording; backdrop blur can differ in DOM capture. Full UI held expanded for inspection. No FPS measurement during encoding.'};
  }finally{active=false;cancelAnimationFrame(request);capture?.stop();delete win.document.getElementById('app').dataset.recordingFull;bridge.closePaywall();bridge.endScrub();}
 }

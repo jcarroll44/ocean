@@ -484,3 +484,12 @@ Keep the strict production-settings, fixture, DPR and 120-second completed-frame
 checks. Record exact expected/actual settings on rejection. Verify the entire
 gate/capture/upload orchestration with the actual renderer evidence implementation;
 automated device mocks are not physical iPhone performance or rendered imagery.
+
+## October 13 — v8.1 capture review
+Ignore this run for performance tuning: the user reports Low Power Mode was on.
+Release each old native renderer before loading another beach; isolate and retry
+location failures so all three profiles are attempted. Record profile/load/cache
+diagnostics on errors. Automatic sunrise/sunset framing must remain water-facing
+within profile yaw limits; do not turn inland to chase the sun. Preserve gestures,
+astronomical direction, waves and performance policy. The scrub video must hold
+the real paywall and verify it reached the composed recording frames.
