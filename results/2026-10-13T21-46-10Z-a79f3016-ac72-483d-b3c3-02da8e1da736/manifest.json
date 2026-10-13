@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T21-46-10Z-a79f3016-ac72-483d-b3c3-02da8e1da736",
+  "kind": "weather",
+  "fingerprint": "9af00e1ce79d9695fc40b559f3610cab5bbb520bab407305825c81c999a20cad",
+  "receivedAt": "2026-10-13T21:46:10.993Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 883039,
+      "type": "application/json",
+      "sha256": "13267c478b3e58d56a9064f1ab6718e7f68aab5f8e7548e3283b5b05bda30828"
+    },
+    {
+      "name": "phase-inlet-beach-overcastdawn.jpg",
+      "size": 49706,
+      "type": "image/jpeg",
+      "sha256": "0c49bd1d1098fd76097689af33885277391756ecd9597eacfef6f8f8c7afd0c8"
+    }
+  ]
+}
