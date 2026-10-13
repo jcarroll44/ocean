@@ -1,0 +1,515 @@
+{
+  "schema": 4,
+  "runId": "2026-10-13T17-23-29Z-454aafbf-64dc-45ad-955f-3eac6abe088f",
+  "kind": "startup-partial",
+  "build": {
+    "revision": "2026-10-13-startup-spray-rc3",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "startedAt": "2026-10-13T17:23:29.444Z",
+  "error": "initialization-failed",
+  "atStage": "first-live-frame-submitted",
+  "attempt": 1,
+  "partial": true,
+  "trace": [
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "night-storm",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:20:34.487Z",
+      "elapsedMs": 2993
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "night-storm",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:20:34.487Z",
+      "elapsedMs": 2994
+    },
+    {
+      "stage": "native-document-loaded",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:34.635Z",
+        "elapsedMs": 155
+      },
+      "at": "2026-10-13T17:20:34.636Z",
+      "elapsedMs": 3142
+    },
+    {
+      "stage": "fixture-document-loaded",
+      "detail": {
+        "url": "/"
+      },
+      "at": "2026-10-13T17:20:34.733Z",
+      "elapsedMs": 3240
+    },
+    {
+      "stage": "native-module-evaluated",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.248Z",
+        "elapsedMs": 768
+      },
+      "at": "2026-10-13T17:20:35.249Z",
+      "elapsedMs": 3756
+    },
+    {
+      "stage": "native-app-init-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.248Z",
+        "elapsedMs": 768
+      },
+      "at": "2026-10-13T17:20:35.249Z",
+      "elapsedMs": 3756
+    },
+    {
+      "stage": "init-stage:Opening the beach",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.249Z",
+        "elapsedMs": 769,
+        "fraction": 0.02
+      },
+      "at": "2026-10-13T17:20:35.249Z",
+      "elapsedMs": 3756
+    },
+    {
+      "stage": "webgpu-device-request-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.249Z",
+        "elapsedMs": 769
+      },
+      "at": "2026-10-13T17:20:35.271Z",
+      "elapsedMs": 3777
+    },
+    {
+      "stage": "webgpu-device-ready",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.256Z",
+        "elapsedMs": 775
+      },
+      "at": "2026-10-13T17:20:35.271Z",
+      "elapsedMs": 3777
+    },
+    {
+      "stage": "init-stage:Preparing the sky",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.258Z",
+        "elapsedMs": 778,
+        "fraction": 0.1
+      },
+      "at": "2026-10-13T17:20:35.271Z",
+      "elapsedMs": 3777
+    },
+    {
+      "stage": "cloud-asset-fetch-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.275Z",
+        "elapsedMs": 795,
+        "name": "takram-shape.bin"
+      },
+      "at": "2026-10-13T17:20:35.276Z",
+      "elapsedMs": 3782
+    },
+    {
+      "stage": "cloud-asset-fetch-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.275Z",
+        "elapsedMs": 795,
+        "name": "takram-detail.bin"
+      },
+      "at": "2026-10-13T17:20:35.276Z",
+      "elapsedMs": 3782
+    },
+    {
+      "stage": "cloud-asset-fetch-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.279Z",
+        "elapsedMs": 799,
+        "name": "takram-shape.bin",
+        "bytes": 2097152
+      },
+      "at": "2026-10-13T17:20:35.279Z",
+      "elapsedMs": 3786
+    },
+    {
+      "stage": "cloud-asset-fetch-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.279Z",
+        "elapsedMs": 799,
+        "name": "takram-detail.bin",
+        "bytes": 32768
+      },
+      "at": "2026-10-13T17:20:35.279Z",
+      "elapsedMs": 3786
+    },
+    {
+      "stage": "init-stage:Preparing white sand",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.296Z",
+        "elapsedMs": 816,
+        "fraction": 0.2
+      },
+      "at": "2026-10-13T17:20:35.298Z",
+      "elapsedMs": 3805
+    },
+    {
+      "stage": "init-stage:Preparing the waves",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:35.977Z",
+        "elapsedMs": 1497,
+        "fraction": 0.34
+      },
+      "at": "2026-10-13T17:20:35.982Z",
+      "elapsedMs": 4489
+    },
+    {
+      "stage": "init-stage:Preparing light and reflections",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.507Z",
+        "elapsedMs": 2027,
+        "fraction": 0.5
+      },
+      "at": "2026-10-13T17:20:36.521Z",
+      "elapsedMs": 5028
+    },
+    {
+      "stage": "init-stage:Finishing the waves",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.528Z",
+        "elapsedMs": 2048,
+        "fraction": 0.65
+      },
+      "at": "2026-10-13T17:20:36.529Z",
+      "elapsedMs": 5036
+    },
+    {
+      "stage": "precompile-preparing",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.563Z",
+        "elapsedMs": 2083
+      },
+      "at": "2026-10-13T17:20:36.564Z",
+      "elapsedMs": 5071
+    },
+    {
+      "stage": "cloud-texture-bake-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.576Z",
+        "elapsedMs": 2096
+      },
+      "at": "2026-10-13T17:20:36.585Z",
+      "elapsedMs": 5092
+    },
+    {
+      "stage": "cloud-texture-bake-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.577Z",
+        "elapsedMs": 2097
+      },
+      "at": "2026-10-13T17:20:36.585Z",
+      "elapsedMs": 5092
+    },
+    {
+      "stage": "shader-compile-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.577Z",
+        "elapsedMs": 2097
+      },
+      "at": "2026-10-13T17:20:36.585Z",
+      "elapsedMs": 5092
+    },
+    {
+      "stage": "shader-compile-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.749Z",
+        "elapsedMs": 2269
+      },
+      "at": "2026-10-13T17:20:36.752Z",
+      "elapsedMs": 5259
+    },
+    {
+      "stage": "first-frame-warmup-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:36.749Z",
+        "elapsedMs": 2269
+      },
+      "at": "2026-10-13T17:20:36.752Z",
+      "elapsedMs": 5259
+    },
+    {
+      "stage": "first-frame-warmup-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.003Z",
+        "elapsedMs": 3523
+      },
+      "at": "2026-10-13T17:20:38.003Z",
+      "elapsedMs": 6510
+    },
+    {
+      "stage": "init-stage:Opening your view",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.003Z",
+        "elapsedMs": 3523,
+        "fraction": 0.95
+      },
+      "at": "2026-10-13T17:20:38.003Z",
+      "elapsedMs": 6510
+    },
+    {
+      "stage": "first-app-frame-start",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.003Z",
+        "elapsedMs": 3523
+      },
+      "at": "2026-10-13T17:20:38.040Z",
+      "elapsedMs": 6547
+    },
+    {
+      "stage": "first-app-frame-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.040Z",
+        "elapsedMs": 3560
+      },
+      "at": "2026-10-13T17:20:38.040Z",
+      "elapsedMs": 6547
+    },
+    {
+      "stage": "native-app-init-complete",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.041Z",
+        "elapsedMs": 3561
+      },
+      "at": "2026-10-13T17:20:38.042Z",
+      "elapsedMs": 6549
+    },
+    {
+      "stage": "first-live-frame-submitted",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:20:38.131Z",
+        "elapsedMs": 3651
+      },
+      "at": "2026-10-13T17:20:38.132Z",
+      "elapsedMs": 6639
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "clear",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:06.795Z",
+      "elapsedMs": 155305
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "clear",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:06.795Z",
+      "elapsedMs": 155306
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "partly-cloudy",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:10.449Z",
+      "elapsedMs": 158959
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "partly-cloudy",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:10.450Z",
+      "elapsedMs": 158960
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "overcast",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:13.118Z",
+      "elapsedMs": 161629
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "overcast",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:13.119Z",
+      "elapsedMs": 161629
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "fog",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:16.034Z",
+      "elapsedMs": 164544
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "fog",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:16.034Z",
+      "elapsedMs": 164545
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "light-rain",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:18.645Z",
+      "elapsedMs": 167156
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "light-rain",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:18.646Z",
+      "elapsedMs": 167156
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "squall-approaching",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:21.276Z",
+      "elapsedMs": 169787
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "squall-approaching",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:21.277Z",
+      "elapsedMs": 169787
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "thunderstorm",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:23.900Z",
+      "elapsedMs": 172411
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "thunderstorm",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:23.900Z",
+      "elapsedMs": 172411
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "clearing",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:26.526Z",
+      "elapsedMs": 175037
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "clearing",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:26.526Z",
+      "elapsedMs": 175037
+    },
+    {
+      "stage": "fixture-bundled-data-apply-start",
+      "detail": {
+        "id": "night-clear",
+        "profile": "inlet-beach"
+      },
+      "at": "2026-10-13T17:23:29.152Z",
+      "elapsedMs": 177663
+    },
+    {
+      "stage": "fixture-bundled-data-applied",
+      "detail": {
+        "id": "night-clear",
+        "rows": 193
+      },
+      "at": "2026-10-13T17:23:29.152Z",
+      "elapsedMs": 177663
+    },
+    {
+      "stage": "initialization-failed",
+      "detail": {
+        "attempt": 1,
+        "sourceAt": "2026-10-13T17:23:29.437Z",
+        "elapsedMs": 174961,
+        "atStage": "first-live-frame-submitted",
+        "reason": ""
+      },
+      "at": "2026-10-13T17:23:29.442Z",
+      "elapsedMs": 177953
+    }
+  ],
+  "snapshot": {
+    "profile": "inlet-beach",
+    "fixture": "night-clear",
+    "fixtureLoaded": true,
+    "backend": "WebGPU native scene",
+    "error": null,
+    "stage": "first-live-frame",
+    "attempts": [],
+    "nativeReady": true,
+    "dataFetchesBeforeFirstFrame": []
+  },
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1"
+}
