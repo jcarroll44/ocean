@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T02-33-22Z-3d73b658-e4a7-4ed1-b0b5-93c5319b99b0",
+  "kind": "weather",
+  "fingerprint": "7e56cc3c30f3dc7c73faf492821b156e3e0da6ebd7c2c6565af876eb1b4f5363",
+  "receivedAt": "2026-10-13T02:40:32.715Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1493797,
+      "type": "application/json",
+      "sha256": "be55464ca67ebb55886ac9f6040c32f1a3aa8a3d36969062131d0c1f96d621a1"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 1748744,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "479d0e0af69963457bc847e0b72c6b0228af05dcbb5b1df87eeaab8e1a7c5b05"
+    },
+    {
+      "name": "clear.jpg",
+      "size": 45230,
+      "type": "image/jpeg",
+      "sha256": "623e0e9e31abb7f2f6375a4e14e4326dc17a063b33d95873a8815c2841678a1f"
+    },
+    {
+      "name": "partly-cloudy.jpg",
+      "size": 57126,
+      "type": "image/jpeg",
+      "sha256": "c5e4b170d3b34dafb453eedb50942ed17f21bb189cc4d63ed5db81337ef87d7b"
+    },
+    {
+      "name": "overcast.jpg",
+      "size": 42994,
+      "type": "image/jpeg",
+      "sha256": "06b8deab2620743c67f36e88b0dbf29973c48bb32d26f1ba252611ca380489b7"
+    },
+    {
+      "name": "fog.jpg",
+      "size": 24758,
+      "type": "image/jpeg",
+      "sha256": "f8ff7102183983a35b959bba51dcac5a38a01329cf9f83abd4b3074ea6495186"
+    },
+    {
+      "name": "light-rain.jpg",
+      "size": 41195,
+      "type": "image/jpeg",
+      "sha256": "0277de051a8a6cf8ca1114a134231d8e5c620763f3d3bfc55d02818d31acfb07"
+    },
+    {
+      "name": "squall-approaching.jpg",
+      "size": 55622,
+      "type": "image/jpeg",
+      "sha256": "481a2b652d0b1af8359745dbb3b1f3fc996e034d88b9a220e3a5a8043adc94b4"
+    },
+    {
+      "name": "thunderstorm.jpg",
+      "size": 49077,
+      "type": "image/jpeg",
+      "sha256": "d83455347657e6247d34825af7d1c5e8e6510dd306964a3ee98311bc9b4716f3"
+    },
+    {
+      "name": "clearing.jpg",
+      "size": 58253,
+      "type": "image/jpeg",
+      "sha256": "22249f624ac5c66f36ccd168105359f413bc36542340ff46dd7cea1d87e978e0"
+    },
+    {
+      "name": "night-clear.jpg",
+      "size": 44788,
+      "type": "image/jpeg",
+      "sha256": "ebe1bf1a9dee881e5152400eee7e6892c76d493f8b12f5f5db14d07c49575ae5"
+    },
+    {
+      "name": "night-storm.jpg",
+      "size": 42349,
+      "type": "image/jpeg",
+      "sha256": "7e23528c5eb9b9241cfd86e0eea9adc4fe231e643eefd606cf60da5ec8a70b89"
+    },
+    {
+      "name": "fixtures-contact-sheet.jpg",
+      "size": 319360,
+      "type": "image/jpeg",
+      "sha256": "8354d9af0d4d1e8dd31cf8481ba63d73ad01a30bf139f7884d402d3cd583b23a"
+    },
+    {
+      "name": "wave-small.jpg",
+      "size": 47490,
+      "type": "image/jpeg",
+      "sha256": "1f719334c61cb303e002ac61160e7ed50ca120b6888adf72bf4514587c219454"
+    },
+    {
+      "name": "wave-medium.jpg",
+      "size": 47316,
+      "type": "image/jpeg",
+      "sha256": "48ddfd6e2acf742e21a5d0acc9aec9cb041ade29c5ef9f678779b883bff78206"
+    },
+    {
+      "name": "wave-groundswell.jpg",
+      "size": 48617,
+      "type": "image/jpeg",
+      "sha256": "3e5378b9dc3f9f2450f2f339a3c87d22202e053d35ac0b5dac7c0140b66d0359"
+    },
+    {
+      "name": "wave-onshore.jpg",
+      "size": 52027,
+      "type": "image/jpeg",
+      "sha256": "9f3fac732fb76612885d97d98bd86b0ec8b1ea6c029dea6416e4eba85fea9ef7"
+    },
+    {
+      "name": "wave-offshore.jpg",
+      "size": 47735,
+      "type": "image/jpeg",
+      "sha256": "21a9a3dcc9f2c17a02c07408a66bb34e9fb7de60f985d332bc8e9266c36831d9"
+    },
+    {
+      "name": "waves-contact-sheet.jpg",
+      "size": 187726,
+      "type": "image/jpeg",
+      "sha256": "b573ffd1c25fb720cdcd304a5c70e89eb19284dcdae1c56f6e0cbfa629150fae"
+    },
+    {
+      "name": "scrub-day.mp4",
+      "size": 1711966,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "837ca16cba2d98f8fe2063e5569cf03c38be446b9e2911439b462764722dc456"
+    },
+    {
+      "name": "location-inlet-beach-sunrise.jpg",
+      "size": 61525,
+      "type": "image/jpeg",
+      "sha256": "97abac15a47b756bb17f70e58eb11166744ca430c5518b4e34d170247f444cd1"
+    },
+    {
+      "name": "location-inlet-beach-noon.jpg",
+      "size": 46894,
+      "type": "image/jpeg",
+      "sha256": "f1316f35acef3442e8305a57dfe48d63ed16a9bc6c1fc04a01dc237ecc972319"
+    },
+    {
+      "name": "location-inlet-beach-sunset.jpg",
+      "size": 69433,
+      "type": "image/jpeg",
+      "sha256": "0de693e10abdf4ef31606d9f1bdfc0775e38b0caaaff2f9d53c4765d88d0a4a6"
+    },
+    {
+      "name": "location-inlet-beach-night.jpg",
+      "size": 30620,
+      "type": "image/jpeg",
+      "sha256": "0a6079bd70e45638c8f63abdcecbbc7f90e1ec0f9d44f855feee2715207cae6d"
+    }
+  ]
+}
