@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T22-05-09Z-88dd4c4c-b25c-48d8-8331-b68f11e650a2",
+  "kind": "weather",
+  "fingerprint": "f799b9785ccd1980cf89de3bda399ceb37d074640ebaf9c62384e3608e98e034",
+  "receivedAt": "2026-10-13T22:05:09.660Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 950701,
+      "type": "application/json",
+      "sha256": "12471628d737b79b190a9b8d34ea6875c0e4738f9aba44777ab723cbd105ca0c"
+    },
+    {
+      "name": "phase-san-diego-sunrise.jpg",
+      "size": 63482,
+      "type": "image/jpeg",
+      "sha256": "3cb87b1d4ad81f2310c52d34e953627dd236989f929875a07611fa3e8eb177a8"
+    }
+  ]
+}
