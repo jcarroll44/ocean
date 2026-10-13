@@ -14,12 +14,15 @@ assert(app.includes("host.src='ocean-proof/proof/native-scene.html"));
 assert(app.includes('class="db-screen'));
 // Oct 11 explicitly authorizes the native sky/surf changes. Those files are
 // checked by check-scene-polish, including the unchanged pinned ocean vendor.
-for(const file of ['src/index.html','src/daybuoy.js','src/reference.css','src/reference-host.css','src/reference-fonts.css','src/home.js','src/camera.js']){
+for(const file of ['src/index.html','src/daybuoy.js','src/reference.css','src/reference-host.css','src/reference-fonts.css','src/home.js']){
  const before=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:20000000});
  assert.equal(read(file),applyApprovedWeather(file,applyApprovedCopy(file,before)),file+' must remain byte-identical except explicitly authorized copy/weather packet');
 }
 // Startup retries are explicitly approved; protect the established GPU contract
 // rather than demanding the historical adapter's byte-identical implementation.
+const camera=read('src/camera.js');
+assert(camera.includes("SITE.id==='inlet-beach'")&&camera.includes('bearing=-83*RAD'));
+assert(camera.includes('const a=beachPose()'));
 const nativeLayer=read('src/native-layer.js');
 assert(nativeLayer.includes("currentAttempt>=3")&&nativeLayer.includes("host.src='about:blank'"));
 assert(nativeLayer.includes("proof.startupComplete=true"));

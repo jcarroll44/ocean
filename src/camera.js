@@ -18,7 +18,16 @@ function beachPose(){ // the secret sauce: you never leave the beach. The sun mo
   return {pos,tgt:pos.clone().add(headingVec(yaw,pitch).multiplyScalar(60)),fov};}
 function approvedBeachTarget(){
  const a=beachPose(),dir=a.tgt.clone().sub(a.pos).normalize();
- return{x:a.pos.x,y:a.pos.y,z:a.pos.z,yaw:Math.atan2(dir.x,-dir.z),pitch:Math.asin(dir.y),fov:a.fov,shear:0};
+ const target={x:a.pos.x,y:a.pos.y,z:a.pos.z,yaw:Math.atan2(dir.x,-dir.z),pitch:Math.asin(dir.y),fov:a.fov,shear:0};
+ // Inlet sunrise is just east of the Gulf's water sector. Face water while
+ // retaining the real solar bearing; the horizon remains about a third down.
+ if(SITE.id==='inlet-beach'&&sunEl>=-1&&sunEl<12&&sunRel< -65){
+  const weight=clamp((12-sunEl)/8,0,1),bearing=-83*RAD;
+  const radius=Math.hypot(a.pos.x,a.pos.z),coast=new THREE.Vector3(0,a.pos.y,radius).applyAxisAngle(_up,-bearing);
+  target.x=mix(target.x,coast.x,weight);target.z=mix(target.z,coast.z,weight);
+  target.yaw=mix(target.yaw,bearing,weight);target.pitch=mix(target.pitch,-11*RAD,weight);target.fov=mix(target.fov,70,weight);
+ }
+ return target;
 }
 let cameraVelocity={},sunGlance=null,storyGlancePose=null,glanceReturning=false;
 function criticalStep(value,target,velocity,dt,omega,limit=Infinity){

@@ -53,7 +53,8 @@ export async function collectPhaseGallery({stage,report,files,untilReady,waitVis
       if(!pose||next.some((v,i)=>Math.abs(v-pose[i])>.0001)){pose=next;stableSince=now;return false;}
       return now-stableSince>=900&&a.ready&&!e.shoreFieldPending&&e.weather?.cloudCache?.ready;
      });
-     await wait(250);
+     // Resolve temporal history after the camera settles; do not change DPR.
+     await wait(2800);
      const blob=await visibleCapture(()=>captureScreenshot(win,{type:'image/jpeg',quality:.96}));
      const color=await auditImage(blob,{phase:id+'-'+key});
      const meta={profile:id,title,phase:key,forecastTime:times[key],source:'bundled synthetic fixture',colors:color,
