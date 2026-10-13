@@ -8,7 +8,9 @@ permissions:
   contents: read
 jobs:
   safari-wgsl:
-    runs-on: macos-26-intel
+    # Standard Intel runners have no WebGPU adapter. Actual pipeline creation
+    # requires the GPU-enabled Apple Silicon runner and enabled Actions billing.
+    runs-on: macos-26-xlarge
     timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
