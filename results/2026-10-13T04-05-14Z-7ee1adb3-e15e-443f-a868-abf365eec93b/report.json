@@ -1,0 +1,66 @@
+{
+  "schema": 3,
+  "runId": "2026-10-13T04-05-14Z-7ee1adb3-e15e-443f-a868-abf365eec93b",
+  "kind": "weather",
+  "build": {
+    "revision": "2026-10-13-natural-light-rc1",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "source": "synthetic fixtures",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "startedAt": "2026-10-13T04:05:14.011Z",
+  "heaviest": "night-storm",
+  "viewport": [
+    390,
+    699
+  ],
+  "viewportEvents": [
+    {
+      "at": "2026-10-13T04:05:22.624Z",
+      "outer": [
+        750,
+        280
+      ],
+      "visual": [
+        750,
+        280
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-13T04:05:22.624Z",
+      "outer": [
+        750,
+        280
+      ],
+      "visual": [
+        750,
+        280
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    }
+  ],
+  "wakeLockEvents": [
+    {
+      "state": "held",
+      "detail": "Screen kept awake · keep Safari visible.",
+      "at": "2026-10-13T04:05:14.015Z"
+    }
+  ],
+  "gallery": [],
+  "samples": [],
+  "error": "Native fixture initialization timed out.",
+  "finishedAt": "2026-10-13T04:08:14.068Z"
+}
