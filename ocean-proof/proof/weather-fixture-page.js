@@ -7,6 +7,9 @@ import {INTEGRATION_BUILD} from './integration-build.js';
 import {fixtureContactSheet} from './fixture-contact-sheet.js';
 import {collectLocationGallery} from './location-gallery.js';
 import {recordDayScrub} from './scrub-evidence.js';
+import {collectPhaseGallery} from './location-phase-gallery.js';
+import {recordSunsetScrub} from './sunset-scrub.js';
+import {auditImage} from './pixel-audit.js';
 const $=id=>document.getElementById(id),stage=$('stage'),query=new URLSearchParams(location.search),gateRequested=query.get('gate')==='1',allowed=isIPhone(navigator),events=[],wakeEvents=[];
 const viewport=pinTestViewport(stage,window,e=>events.push(e)),awake=screenAwake(navigator,document,text=>$('awake').textContent=text,e=>wakeEvents.push(e));
 const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));let busy=false,selected=null;
@@ -85,7 +88,7 @@ function evidence(){
 async function collectGallery(files,report){
  const captures=[];
  for(const f of WEATHER_FIXTURES){
-  try{const blob=await visibleCapture(async()=>{await select(f.id);$('status').textContent='Capturing '+f.title+'…';return captureScreenshot(stage.contentWindow,{type:'image/jpeg',quality:.9});}),name=f.id+'.jpg';files.push({name,blob});captures.push({id:f.id,title:f.title+(selected.reviewView==='moon-facing'?' · moon-facing':''),blob});const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption');img.src=URL.createObjectURL(blob);img.alt=f.title+' · actual rendered synthetic fixture';caption.textContent=f.title;figure.append(img,caption);$('gallery').append(figure);report.gallery.push({id:f.id,forecastTime:selected.time,reviewView:selected.reviewView,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});}
+  try{const blob=await visibleCapture(async()=>{await select(f.id);$('status').textContent='Capturing '+f.title+'…';return captureScreenshot(stage.contentWindow,{type:'image/jpeg',quality:.9});}),name=f.id+'.jpg';files.push({name,blob});captures.push({id:f.id,title:f.title+(selected.reviewView==='moon-facing'?' · moon-facing':''),blob});const figure=document.createElement('figure'),img=document.createElement('img'),caption=document.createElement('figcaption');img.src=URL.createObjectURL(blob);img.alt=f.title+' · actual rendered synthetic fixture';caption.textContent=f.title;figure.append(img,caption);$('gallery').append(figure);report.gallery.push({pixelAudit:await auditImage(blob,{phase:f.id}),id:f.id,forecastTime:selected.time,reviewView:selected.reviewView,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});}
   catch(e){(report.captureErrors??=[]).push({fixture:f.id,error:e.message});}
  }
  if(captures.length===10){try{const sheet=await fixtureContactSheet(captures,{revision:INTEGRATION_BUILD.revision,runId:report.runId});files.push(sheet);report.contactSheet={name:sheet.name,revision:INTEGRATION_BUILD.revision,source:'ten actual rendered captures, unretouched'};download(sheet.blob,sheet.name,'All ten fixtures · contact sheet');}catch(e){(report.captureErrors??=[]).push({file:'contact-sheet',error:e.message});}}
@@ -95,7 +98,7 @@ async function collectWaveGallery(files,report){
  for(const fixture of WAVE_FIXTURES){
   try{const blob=await visibleCapture(async()=>{await select(fixture.id);$('status').textContent='Capturing '+fixture.title+'…';return captureScreenshot(stage.contentWindow,{type:'image/jpeg',quality:.9});});
    files.push({name:fixture.id+'.jpg',blob});captures.push({id:fixture.id,title:fixture.title,blob});
-   report.waveGallery.push({id:fixture.id,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});
+   report.waveGallery.push({pixelAudit:await auditImage(blob,{phase:fixture.id}),id:fixture.id,inputs:selected.rows[0],native:liveOcean(stage.contentWindow).evidence()});
   }catch(e){(report.captureErrors??=[]).push({fixture:fixture.id,error:e.message});}
  }
  if(captures.length===5){const sheet=await fixtureContactSheet(captures,{revision:INTEGRATION_BUILD.revision,runId:report.runId,waves:true});files.push(sheet);report.waveContactSheet={name:sheet.name,source:'five authentic rendered wave cases'};download(sheet.blob,sheet.name,'Five wave conditions · contact sheet');}
@@ -118,8 +121,24 @@ async function run(){
   await collectWaveGallery(files,report);
   try{const clip=await visibleCapture(async()=>{await select('scrub-day');return recordDayScrub(stage.contentWindow,{onProgress:text=>$('status').textContent=text});});files.push({name:'scrub-day.'+clip.extension,blob:clip.blob});report.scrubClip={...clip,blob:undefined};download(clip.blob,'scrub-day.'+clip.extension,'Full app · day scrub + paywall');}catch(e){(report.captureErrors??=[]).push({file:'scrub-day',error:e.message});}
   try{await collectLocationGallery({stage,files,report,untilReady,wait,waitVisible,visibleCapture,onStatus:text=>$('status').textContent=text,download});}catch(e){(report.captureErrors??=[]).push({file:'locations',error:e.message});}
+  try{await collectPhaseGallery({stage,files,report,untilReady,waitVisible,visibleCapture,onStatus:text=>$('status').textContent=text,download});}catch(e){(report.captureErrors??=[]).push({file:'phase-gallery',error:e.message});}
+  try{
+   await waitVisible();try{liveOcean(stage.contentWindow).dispose?.();}catch{}
+   stage.src='about:blank';await untilReady(()=>stage.contentWindow.location?.href==='about:blank');
+   stage.src='/?ocean-debug=1&gate-fixture=1&beach=inlet-beach';
+   await untilReady(()=>stage.contentWindow.__daybuoyFixture&&stage.contentWindow.__daybuoyProfile?.id==='inlet-beach');
+   const win=stage.contentWindow,fixture=fixtureData('partly-cloudy',Date.now(),win.__daybuoyProfile);
+   win.__daybuoyFixture.apply(fixture);
+   await untilReady(()=>{const api=liveOcean(win),e=api.evidence();return api.ready&&!e.shoreFieldPending&&e.weather?.cloudCache?.ready;});
+   const clip=await visibleCapture(()=>recordSunsetScrub(win,{onProgress:text=>$('status').textContent=text}));
+   files.push({name:'sunset-scrub.'+clip.extension,blob:clip.blob});
+   report.sunsetClip={...clip,blob:undefined};download(clip.blob,'sunset-scrub.'+clip.extension,'10-second Inlet sunset scrub');
+  }catch(e){(report.captureErrors??=[]).push({file:'sunset-scrub',error:e.message});}
+  const checks=[...(report.gallery||[]).map(x=>x.pixelAudit),...(report.waveGallery||[]).map(x=>x.pixelAudit),...(report.phaseGallery||[]).map(x=>x.colors),report.sunsetClip?.pixelAudit].filter(Boolean);
+  report.pixelAudit={count:checks.length,pass:checks.length>=37&&checks.every(x=>x.pass),violations:checks.filter(x=>!x.pass).map(x=>({phase:x.phase,examples:x.violations?.slice(0,4)||x.first?.slice(0,2)}))};
+  if(!report.pixelAudit.pass)(report.captureErrors??=[]).push({file:'pixel-audit',error:'Banned magenta or lime pixels detected, or required frames not captured. See pixelAudit.'});
   report.startup={events:[...startupEvents],network:sceneSnapshot(),firstFixtureFrameAt};
-  const c=report.cadence;$('status').textContent=`${c.meetsCadenceTarget?'PASS':'FAIL'} · ${c.fps.toFixed(1)} avg · ${c.minOneSecondFPS} minimum · ${c.oneSecondFPS.filter(n=>n<30).length} seconds below 30.`;
+  const c=report.cadence;$('status').textContent=`${c.meetsCadenceTarget&&report.pixelAudit?.pass?'PASS':'REVIEW'} · ${c.fps.toFixed(1)} avg · ${c.minOneSecondFPS} minimum · ${c.oneSecondFPS.filter(n=>n<30).length} seconds below 30 · pixels ${report.pixelAudit?.pass?'PASS':'FAIL'}.`;
  }catch(e){report.error=e.message;report.startup={events:[...startupEvents],network:sceneSnapshot(),firstFixtureFrameAt};if(e.rendererMismatch)report.rendererMismatch=e.rendererMismatch;$('status').textContent=e.message;partialFailure(e.message,{atStage:startupEvents.at(-1)?.stage});}
  finally{await partialUploads;report.finishedAt=new Date().toISOString();const file=jsonFile(report);download(file.blob,'weather-gate.json','Conditions + FPS JSON');stage.src='about:blank';stage.hidden=true;try{await uploadEvidence({runId,kind:'weather',files:[file,...files]},text=>$('upload').textContent=text);}catch{}await awake.stop();busy=false;$('start').textContent='Reload to run again';$('start').disabled=false;$('start').onclick=()=>location.reload();}
 }
