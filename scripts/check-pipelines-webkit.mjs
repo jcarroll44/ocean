@@ -16,8 +16,9 @@ try{
  const bin=path.join(folder,'PipelineCompiler'),reportPath=path.join(folder,'webkit-report.json');
  execFileSync('swiftc',['scripts/PipelineCompiler.swift','-framework','AppKit','-framework','WebKit','-o',bin],{stdio:'inherit'});
  const status=await new Promise((resolve,reject)=>{const child=spawn(bin,[`http://127.0.0.1:${server.address().port}/pipeline-compiler.html`,reportPath],{stdio:'inherit'});child.on('error',reject);child.on('exit',resolve);});
- assert.equal(status,0,'Apple WebKit rejected a pipeline or could not compile');
  const result=JSON.parse(fs.readFileSync(reportPath));
+ console.log(JSON.stringify({passed:result.passed,errors:result.errors,modules:result.modules?.length,pipelines:result.pipelines?.length,failures:[...(result.modules||[]),...(result.pipelines||[])].filter(p=>p.errors?.length)},null,2));
+ assert.equal(status,0,'Apple WebKit rejected a pipeline or could not compile');
  assert.equal(result.manifestHash,createHash('sha256').update(bytes).digest('hex'),'Compiler result must match this exact manifest');
  assert.equal(result.passed,true);assert.equal(result.pipelines.length,JSON.parse(bytes).pipelines.length);
 }finally{server.close();}
