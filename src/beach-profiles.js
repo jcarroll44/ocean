@@ -7,7 +7,7 @@ export const INLET_PROFILE={
  buoys:[{id:'42012',lat:30.058,lon:-87.555},{id:'42039',lat:28.788,lon:-86.008},{id:'42036',lat:28.5,lon:-84.508}],
  elevation:3,url:'https://daybuoy.jacobcarroll51.chatgpt.site/',
  water:{absorption:[.42,.075,.035],scattering:[.012,.018,.024]},
- sand:[[.91,.894,.863],[239/255,235/255,226/255],[.92,.904,.873]],
+ sand:[[.93,.907,.854],[237/255,230/255,214/255],[.922,.895,.843]],
  bars:{base:.65,slope:.022,inner:45,innerLift:.68,innerWidth:13,outer:125,outerLift:1.05,outerWidth:25,source:'typical Gulf two-bar profile est.; not a seabed survey'},
  camera:{yawMin:-102,yawEase:40,yawMax:60,fov:55,fovRise:25,back:28,backRise:42,height:10,heightRise:16,restYaw:0,restPitch:11,restRadius:28.52,restTarget:[0,4.56,0],horizon:.23,lensScale:.59},
  provenance:{facing:'est. · regional coastline normal; v7-approved 201° framing',colors:'est. · regional appearance',tide:'NOAA CO-OPS',buoys:'NOAA NDBC'}
