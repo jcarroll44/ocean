@@ -41,10 +41,9 @@ export function installWeatherSurfaces(app,beach){
  if(direct){direct.deps.push(module);direct.code=replace(direct.code,'var result = vec3f( 1.0 );','var result = vec3f( nativeCloudShadow(P) );');}
  // Gusts affect existing breaker spray, not additional emitters or allocations.
  app.spray.module.deps.push(module);
- // Aerated crest spray shares the foam's broad illumination, not a red stripe.
- app.spray.material.pipelineKey();app.spray.material.modules.push(module);
- app.spray.material.vertex=replace(app.spray.material.vertex,'let sun = frame.sunColor * sunVis;','let sun = nativeFoamIncident(frame.sunColor,frame.skyIrradiance) * sunVis;');
- app.spray.material.needsUpdate=true;
+ // Keep the v8.2 Spray render material byte-for-byte: adding the full
+ // weather/cloud module to its VERTEX stage triggers the Safari "Spray main"
+ // GPU compilation failure. Storm gusts remain in its separate compute module.
  app.spray.module.code=replace(app.spray.module.code,'sprayVel[ slot ] = vec4f( v, size );','sprayVel[ slot ] = vec4f(v + vec3f(frame.windDir.x,0.18,frame.windDir.y) * nativeWeather.gustExtra * 0.35, size);');
  // Breakers compose their emitter in the constructor. Recompose once during
  // loading so the gust hook is in the real compute kernel before prewarming.
