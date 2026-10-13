@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T21-52-39Z-59567a6b-eee2-46d4-acc7-4e3e4a478047",
+  "kind": "weather",
+  "fingerprint": "9b25bc392cda119891c7b7887f4d5abf5d547ff3733cede3ea08fc2025b6ac79",
+  "receivedAt": "2026-10-13T21:52:40.305Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1136548,
+      "type": "application/json",
+      "sha256": "69519cdba1e914626d6adc15777c8b771cb3093465ed8b439f842e948b8b47d5"
+    },
+    {
+      "name": "waves-contact-sheet.jpg",
+      "size": 191095,
+      "type": "image/jpeg",
+      "sha256": "763d90fad4f0c0d94d89837c7184ed03a80f01e0a298f99cd0ad10ef0a1add8b"
+    }
+  ]
+}
