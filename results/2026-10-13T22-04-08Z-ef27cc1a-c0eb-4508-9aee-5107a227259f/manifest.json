@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T22-04-08Z-ef27cc1a-c0eb-4508-9aee-5107a227259f",
+  "kind": "weather",
+  "fingerprint": "70e613851f644d1d131d0073da061ee91b664cb8273a39b05f46e6d2128ee49e",
+  "receivedAt": "2026-10-13T22:04:09.424Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 912733,
+      "type": "application/json",
+      "sha256": "ca1fcee03a77721291242704aea6695d10725015726b02b38636061ec45c90e1"
+    },
+    {
+      "name": "phase-cocoa-beach-goldenhour.jpg",
+      "size": 67963,
+      "type": "image/jpeg",
+      "sha256": "2efc68a4c841682198e78f78f2a10b820bb7225304410d8f907d7e9a15807803"
+    }
+  ]
+}
