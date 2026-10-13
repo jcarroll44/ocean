@@ -12,6 +12,10 @@ window.__daybuoyFixture={
   const times=[['sunrise',sun.sunrise+10*MIN],['noon',sun.solarNoon],['sunset',sun.sunset-10*MIN],['night',day+22*HOUR]];
   if(times.some(([,t])=>!Number.isFinite(t)||t<state.data.first||t>state.data.last))throw Error('Full forecast review day unavailable');
   return {profile:SITE,source:state.data.source,weatherSource:state.data.weatherSource,retrievedAt:state.data.retrievedAt,times};
+ },syntheticTimes(t=state.time){
+  const sun=sunDay(t);
+  if(!Number.isFinite(sun.sunrise)||!Number.isFinite(sun.sunset)||!Number.isFinite(sun.solarNoon))throw Error('No synthetic solar times at this location');
+  return {sunrise:sun.sunrise+10*MIN,midday:sun.solarNoon,goldenHour:sun.sunset-60*MIN,sunset:sun.sunset-10*MIN,dusk:sun.sunset+25*MIN,overcastDawn:sun.sunrise+15*MIN,night:sun.sunset+3*HOUR};
  },reviewAt(t){stopWatch(true);plusTime(t);resetBeach();state.dirty=true;return {time:state.time,conditions:conditions(),sun:sunPosition(t),moon:moonPosition(t)};},
  apply(data){
  if(data?.source!=='fixture'||data.fixture!==true||!Array.isArray(data.rows)||data.rows.length!==193||!Number.isFinite(data.time))throw Error('Invalid private fixture');

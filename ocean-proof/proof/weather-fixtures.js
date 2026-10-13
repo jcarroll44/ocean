@@ -33,10 +33,15 @@ export function fixturePartitions(row){
   ...component('tertiary_swell_wave',tertiary,row.period*1.22,row.direction-28),
   ocean_current_velocity:.12,ocean_current_direction:105,sea_level_height_msl:row.tide,marineFixture:true};
 }
-export function fixtureData(id,now=Date.now()){
+export function fixtureData(id,now=Date.now(),siteOverride=null){
  const fixture=[...WEATHER_FIXTURES,...WAVE_FIXTURES].find(f=>f.id===id);if(!fixture)throw Error('Unknown weather fixture');
- const time=fixture.time??FIXTURE_DATE+(fixture.night?10:0)*3600000,start=(fixture.time??FIXTURE_DATE)-36*3600000,site={lat:30.28,lon:-86,facing:201};
- const rows=Array.from({length:193},(_,i)=>fixturePartitions({time:start+i*3600000,...base,...fixture.values,marineFixture:true,gate:{low:0,mid:0,high:0,rain:0}}));
+ const time=fixture.time??FIXTURE_DATE+(fixture.night?10:0)*3600000,start=(fixture.time??FIXTURE_DATE)-36*3600000,site={lat:siteOverride?.lat??30.28,lon:siteOverride?.lon??-86,facing:siteOverride?.facing??201};
+ const offset=site.facing-201;
+ const rows=Array.from({length:193},(_,i)=>{
+  const row={time:start+i*3600000,...base,...fixture.values,marineFixture:true,gate:{low:0,mid:0,high:0,rain:0}};
+  if(siteOverride){for(const key of ['direction','windDirection','lowDirection','midDirection','highDirection'])if(Number.isFinite(row[key]))row[key]=(row[key]+offset+360)%360;}
+  return fixturePartitions(row);
+ });
  const series=[{...site,miles:0,sector:-1,bearing:201},...offshorePoints(site)].map((point,i)=>({...point,grid:{lat:point.lat,lon:point.lon},rows:rows.map(row=>{
   const p={...row};if(i&&fixture.offshore){const near=point.miles===5,approach=id==='squall-approaching',active=!approach||(!near&&Math.abs(point.sector-3)<=1);
    Object.assign(p,{cloud:active?(approach?100:96):35,cloudLow:approach?(active?100:30):row.cloudLow,cloudMid:approach?(active?90:20):row.cloudMid,cloudHigh:approach?(active?80:15):row.cloudHigh,rain:active?12:0,weatherCode:active?95:2,cape:active?2400:0,lightningPotential:active?12:0});

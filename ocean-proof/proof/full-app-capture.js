@@ -2,7 +2,7 @@ import {toCanvas,getFontEmbedCSS} from './dom-capture-vendor.js';
 import {liveOcean} from './live-evidence.js';
 // Record the actual UI, including its live canvas orb, over the actual native
 // drawable. This is a DOM + scene composite, not an OS screen recording.
-export async function fullAppCapture(win){
+export async function fullAppCapture(win,{onSceneFrame=null}={}){
  const root=win.document.getElementById('app'),api=liveOcean(win),scene=win.__daybuoy.engine.getSceneCanvas();
  const width=Math.round(win.innerWidth),height=Math.round(win.innerHeight),canvas=document.createElement('canvas');
  canvas.width=width;canvas.height=height;const ctx=canvas.getContext('2d');
@@ -21,7 +21,7 @@ export async function fullAppCapture(win){
  const original=api.draw;
  function wrapped(...args){
   const result=original.apply(this,args);if(result!==false&&active){
-   try{ctx.clearRect(0,0,width,height);ctx.drawImage(scene,0,0,width,height);if(overlay)ctx.drawImage(overlay,0,0,width,height);sceneFrames++;if(overlayPaywall){paywallFrames++;paywallFirst??=performance.now();paywallLast=performance.now();}if(performance.now()-last>=125)void refresh();}catch(e){error=e;}
+   try{ctx.clearRect(0,0,width,height);ctx.drawImage(scene,0,0,width,height);onSceneFrame?.(ctx,width,height);if(overlay)ctx.drawImage(overlay,0,0,width,height);sceneFrames++;if(overlayPaywall){paywallFrames++;paywallFirst??=performance.now();paywallLast=performance.now();}if(performance.now()-last>=125)void refresh();}catch(e){error=e;}
   }return result;
  }
  api.draw=wrapped;
