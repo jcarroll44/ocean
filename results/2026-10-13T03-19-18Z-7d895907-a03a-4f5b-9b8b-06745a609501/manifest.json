@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T03-19-18Z-7d895907-a03a-4f5b-9b8b-06745a609501",
+  "kind": "weather",
+  "fingerprint": "b3fc21074aba576c02ba38540e73cfa7eff4a3d7c71e21dab19f2ebbf6a61ffe",
+  "receivedAt": "2026-10-13T03:27:09.463Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1752244,
+      "type": "application/json",
+      "sha256": "3534d827c2e3b190fb64b7356a5ef0bb54ced532711f8feace96bf97a25ee70d"
+    },
+    {
+      "name": "clip.mp4",
+      "size": 1658584,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "9f6d7d722b5e105ae43e19f986cd3ef6687036065ac5f7d283eaa3df8890685e"
+    },
+    {
+      "name": "clear.jpg",
+      "size": 43413,
+      "type": "image/jpeg",
+      "sha256": "7b9e9db338debfd74dd5a4ee92a7d9b2a17950b2e3c132795450897b6b34d980"
+    },
+    {
+      "name": "partly-cloudy.jpg",
+      "size": 52635,
+      "type": "image/jpeg",
+      "sha256": "a37c0eec99a6fe43f7581b8dd97d609837a1aa85f4cffbdbba5943077d573c45"
+    },
+    {
+      "name": "overcast.jpg",
+      "size": 38164,
+      "type": "image/jpeg",
+      "sha256": "9623f94ae1ae64ae05dbadcc73ed9e1f3adb17e8518f887ae57135602c0b60c4"
+    },
+    {
+      "name": "fog.jpg",
+      "size": 22955,
+      "type": "image/jpeg",
+      "sha256": "0a33c21ce5f94011f6963a0539dd57417879e19d51507e7e78b4a6708be895f2"
+    },
+    {
+      "name": "light-rain.jpg",
+      "size": 39783,
+      "type": "image/jpeg",
+      "sha256": "5b3a767f6f940264d3489f8433730873bed3cb2ecef33648bf77bd2e43d029f6"
+    },
+    {
+      "name": "squall-approaching.jpg",
+      "size": 51502,
+      "type": "image/jpeg",
+      "sha256": "ef37229c954097b091a15a60202423a3b6401c83410d0f4a1c9e08be60f84d78"
+    },
+    {
+      "name": "thunderstorm.jpg",
+      "size": 45216,
+      "type": "image/jpeg",
+      "sha256": "2982e65aea0fa1cb61bf02a30bb4bb35bc6b7d97190e62c69c81af20a2951fc6"
+    },
+    {
+      "name": "clearing.jpg",
+      "size": 54340,
+      "type": "image/jpeg",
+      "sha256": "8744e69deaaa50a66d500bf14ec4b01ddd5861357e242ac6e919593238240de8"
+    },
+    {
+      "name": "night-clear.jpg",
+      "size": 39970,
+      "type": "image/jpeg",
+      "sha256": "4c5204b8e294b1919116cc8df4735f06d660d93417db7a8166c2ca2b53c10e58"
+    },
+    {
+      "name": "night-storm.jpg",
+      "size": 37549,
+      "type": "image/jpeg",
+      "sha256": "036e98e8561a2355e49dea473489008e1f13c11ccdcdd4d9fe66acfbf2ecc430"
+    },
+    {
+      "name": "fixtures-contact-sheet.jpg",
+      "size": 316400,
+      "type": "image/jpeg",
+      "sha256": "bb1232def5aa10740482a1468ba619a136421174de32a433fac07b949a960aab"
+    },
+    {
+      "name": "wave-small.jpg",
+      "size": 42175,
+      "type": "image/jpeg",
+      "sha256": "2471d123c24f78e2dd2d648f7dbb9991e17ac92abb6a65daff1bd7e6bd421e39"
+    },
+    {
+      "name": "wave-medium.jpg",
+      "size": 43114,
+      "type": "image/jpeg",
+      "sha256": "2e3d700ed25210964af94e134ab3618b7c6670a27933bbc9c3980fd7ea75aec0"
+    },
+    {
+      "name": "wave-groundswell.jpg",
+      "size": 42112,
+      "type": "image/jpeg",
+      "sha256": "78b2f348acd26b289ed8bf1ed8921e8d05a12507c2e0766d9e8d353b2384d648"
+    },
+    {
+      "name": "wave-onshore.jpg",
+      "size": 45908,
+      "type": "image/jpeg",
+      "sha256": "661285e737f47d91415bdf065a78c484e414658d1256d3d730a0ddd988d82ee4"
+    },
+    {
+      "name": "wave-offshore.jpg",
+      "size": 46334,
+      "type": "image/jpeg",
+      "sha256": "38c9c359f5ab0c5adb64e95e0338139d23039623003ef6cc6010bdfe89207aa1"
+    },
+    {
+      "name": "waves-contact-sheet.jpg",
+      "size": 184215,
+      "type": "image/jpeg",
+      "sha256": "f1a61bb1b60a65611392bed20fa9be3b6e75a48ecf1b628da599707b75525659"
+    },
+    {
+      "name": "scrub-day.mp4",
+      "size": 2490323,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "cbd2b61a2b3d16baae9eb25c9c3c301a73c67df29241077bd643a11e508d7791"
+    },
+    {
+      "name": "location-inlet-beach-sunrise.jpg",
+      "size": 53669,
+      "type": "image/jpeg",
+      "sha256": "92145bcb70f03fb31153d6e289d93a2370fbc9ee60c9c6ab1e5f6303db0037a5"
+    },
+    {
+      "name": "location-inlet-beach-noon.jpg",
+      "size": 60526,
+      "type": "image/jpeg",
+      "sha256": "13a6899859966213bdf44b2ae34f1be1750ddfe092f95046fc9baffa8204c18b"
+    },
+    {
+      "name": "location-inlet-beach-sunset.jpg",
+      "size": 73163,
+      "type": "image/jpeg",
+      "sha256": "6c9c1c77982834e282fa1715b83253da87c8d8e46f3caa3a400bcddee51c91dd"
+    },
+    {
+      "name": "location-inlet-beach-night.jpg",
+      "size": 28025,
+      "type": "image/jpeg",
+      "sha256": "9e55684358004d31c9aab3c51b9761310690d7befb294afb8fdb0a92d973b837"
+    },
+    {
+      "name": "location-cocoa-beach-sunrise.jpg",
+      "size": 128563,
+      "type": "image/jpeg",
+      "sha256": "fafd1611e7d4b5c24582a9a48a4e4710c4c6c74e608d9674ec8aadf0f7de7ba2"
+    },
+    {
+      "name": "location-cocoa-beach-noon.jpg",
+      "size": 98563,
+      "type": "image/jpeg",
+      "sha256": "1c6d07868b849fad1f62b1e04ce809b81baf88a32e0882ff8bd5083bb140b84b"
+    },
+    {
+      "name": "location-cocoa-beach-sunset.jpg",
+      "size": 90669,
+      "type": "image/jpeg",
+      "sha256": "e4d04ca73cdcb0ae7866943c3acf0825c447ce373595d23bd313feb61ed6442d"
+    },
+    {
+      "name": "location-cocoa-beach-night.jpg",
+      "size": 51778,
+      "type": "image/jpeg",
+      "sha256": "e12e22930e1bc1d066c03e86fdbc7608d87b317be51e062d0526ddaf84197b9e"
+    },
+    {
+      "name": "location-san-diego-sunrise.jpg",
+      "size": 79871,
+      "type": "image/jpeg",
+      "sha256": "3a6764fd601b4b92f08034c9c3cf433979a69ac437d47737dc2c0b8ad694c0a7"
+    },
+    {
+      "name": "location-san-diego-noon.jpg",
+      "size": 86340,
+      "type": "image/jpeg",
+      "sha256": "039f7ddcac01148b6e964d47a93cb4708e336b61d09ac68173099dbccda95c13"
+    },
+    {
+      "name": "location-san-diego-sunset.jpg",
+      "size": 121229,
+      "type": "image/jpeg",
+      "sha256": "44419da15417cdf095c05fe14e6507fde8192cc7b9bd4fc199f9bc048ebbc194"
+    },
+    {
+      "name": "location-san-diego-night.jpg",
+      "size": 50857,
+      "type": "image/jpeg",
+      "sha256": "389e6239311fae7c4bcd3325560c6a352b8d8e31deaae2ea8faa4968718361fe"
+    }
+  ]
+}
