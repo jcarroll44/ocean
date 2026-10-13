@@ -477,3 +477,10 @@ secret output or GitHub main commits. Private Sites main is the deploy channel.
 Unavailable accounts and Mac signing must be documented, not presented as tested.
 New 12-location captures, galleries, paywall clip and FPS require genuine rendering;
 the v7 upload is baseline evidence only, never proof of new pixels or throughput.
+
+## October 13 — v8 gate repair
+The renderer and gate must share the build identity after the location migration.
+Keep the strict production-settings, fixture, DPR and 120-second completed-frame
+checks. Record exact expected/actual settings on rejection. Verify the entire
+gate/capture/upload orchestration with the actual renderer evidence implementation;
+automated device mocks are not physical iPhone performance or rendered imagery.

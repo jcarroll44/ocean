@@ -27,7 +27,9 @@ async function select(id){
 function evidence(){
  const win=stage.contentWindow,app=win.__daybuoy,native=liveOcean(win).evidence();viewport.bindScene();
  if(app?.state?.fixture!==true||app.state.data.source!=='fixture'||app.state.fixtureId!==HEAVIEST_FIXTURE||app.state.live)throw Error('Heaviest synthetic fixture required.');
- if(native.revision!==INTEGRATION_BUILD.revision||native.pipeline?.maxFramesInFlight!==2||native.post?.aa!=='fxaa'||native.post.flare||!native.adaptiveResolution)throw Error('Production renderer settings changed.');
+ const mismatches=[];
+ for(const [field,expected,actual] of [['revision',INTEGRATION_BUILD.revision,native.revision],['pipeline.maxFramesInFlight',2,native.pipeline?.maxFramesInFlight],['post.aa','fxaa',native.post?.aa],['post.flare',false,native.post?.flare],['adaptiveResolution.enabled',true,!!native.adaptiveResolution]])if(actual!==expected)mismatches.push({field,expected,actual:actual??null});
+ if(mismatches.length){const error=Error('Production renderer settings changed: '+mismatches.map(m=>`${m.field} expected ${JSON.stringify(m.expected)}, got ${JSON.stringify(m.actual)}`).join('; '));error.rendererMismatch={mismatches,native};throw error;}
  const dpr=native.quality.dpr;if(dpr<1.1||dpr>1.6||Math.abs(dpr*20-Math.round(dpr*20))>1e-8)throw Error('DPR outside production policy.');
  const dimensions=viewport.verify(win,dpr),c=app.conditions();
  for(const k of ['rain','wind','gust','swell','period','cloudLow','cloudMid','cloudHigh'])if(Math.abs(c[k]-selected.rows[0][k])>1e-6)throw Error('Fixture input changed: '+k);
@@ -70,7 +72,7 @@ async function run(){
   try{const clip=await visibleCapture(async()=>{await select('scrub-day');return recordDayScrub(stage.contentWindow,{onProgress:text=>$('status').textContent=text});});files.push({name:'scrub-day.'+clip.extension,blob:clip.blob});report.scrubClip={...clip,blob:undefined};download(clip.blob,'scrub-day.'+clip.extension,'Full app · day scrub + paywall');}catch(e){(report.captureErrors??=[]).push({file:'scrub-day',error:e.message});}
   try{await collectLocationGallery({stage,files,report,untilReady,wait,waitVisible,visibleCapture,onStatus:text=>$('status').textContent=text,download});}catch(e){(report.captureErrors??=[]).push({file:'locations',error:e.message});}
   const c=report.cadence;$('status').textContent=`${c.meetsCadenceTarget?'PASS':'FAIL'} · ${c.fps.toFixed(1)} avg · ${c.minOneSecondFPS} minimum · ${c.oneSecondFPS.filter(n=>n<30).length} seconds below 30.`;
- }catch(e){report.error=e.message;$('status').textContent=e.message;}
+ }catch(e){report.error=e.message;if(e.rendererMismatch)report.rendererMismatch=e.rendererMismatch;$('status').textContent=e.message;}
  finally{report.finishedAt=new Date().toISOString();const file=jsonFile(report);download(file.blob,'weather-gate.json','Conditions + FPS JSON');stage.src='about:blank';stage.hidden=true;try{await uploadEvidence({runId,kind:'weather',files:[file,...files]},text=>$('upload').textContent=text);}catch{}await awake.stop();busy=false;$('start').textContent='Reload to run again';$('start').disabled=false;$('start').onclick=()=>location.reload();}
 }
 $('start').onclick=run;$('awake').onclick=()=>awake.start();$('fixture').onchange=()=>{if(!busy)void select($('fixture').value);};
