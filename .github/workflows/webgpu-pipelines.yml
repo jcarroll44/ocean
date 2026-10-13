@@ -1,0 +1,30 @@
+name: Apple WebKit all-pipeline gate
+on:
+  push:
+    branches: [wip/tidewater-verdict-first]
+    paths: ['ci/pipeline-manifest.json.br.b64', 'scripts/pipeline-compiler.*', 'scripts/PipelineCompiler.swift', 'scripts/check-pipelines-webkit.mjs', '.github/workflows/webgpu-pipelines.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  safari-wgsl:
+    runs-on: macos-26
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Unpack exact candidate pipeline descriptors
+        run: |
+          node --input-type=module -e "import fs from 'node:fs'; import zlib from 'node:zlib'; fs.mkdirSync('.pipeline-check',{recursive:true});fs.writeFileSync('.pipeline-check/manifest.json',zlib.brotliDecompressSync(Buffer.from(fs.readFileSync('ci/pipeline-manifest.json.br.b64','utf8'),'base64')));"
+      - name: Compile every WGSL module and pipeline with Apple WebKit
+        run: node scripts/check-pipelines-webkit.mjs
+      - name: Preserve exact compiler evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webkit-pipeline-evidence
+          path: .pipeline-check/*.json
+          retention-days: 30
+          if-no-files-found: error

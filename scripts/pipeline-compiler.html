@@ -1,0 +1,11 @@
+<!doctype html><meta charset="utf-8"><title>DayBuoy pipeline compilation</title>
+<script type="module">
+import {compilePipelines} from './pipeline-compiler.js';
+try{
+ const bytes=await (await fetch('/manifest.json')).arrayBuffer();
+ const manifest=JSON.parse(new TextDecoder().decode(bytes));
+ manifest.manifestHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
+ const result=await compilePipelines(manifest);
+ window.webkit.messageHandlers.pipelineResult.postMessage(JSON.stringify(result));
+}catch(error){window.webkit.messageHandlers.pipelineResult.postMessage(JSON.stringify({passed:false,errors:[String(error)]}));}
+</script>
