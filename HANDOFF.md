@@ -1,3 +1,140 @@
+# DayBuoy — current handoff
+
+Updated: 2026-10-13 · saved-results sharing / RC5 capture continuation.
+Start a new thread with **“Read HANDOFF.md and continue.”** This current section
+supersedes the archived notes below. Also read AGENTS.md and INTERACTION-CONTRACT.md.
+
+## Current revision and source
+
+- Renderer / resumable-session revision: `2026-10-13-pipeline-rc5` — DO NOT bump
+  for capture-only fixes; doing so would disconnect the phone's saved gate.
+- Capture tools: `2026-10-13-share-resume-1` (separate from renderer identity).
+- Canonical deployed source is private Sites commit `2f678e567de4bb483d2a8a3e64024ef66bf152d6`.
+  This GitHub file is a handoff mirror, NOT a claim that the GitHub app source
+  matches that build. Open the private Sites source before continuing implementation.
+  Deployment succeeded 2026-10-13T23:30:33Z.
+- Canonical deploy source: the private Sites repo, branch `main` (approved).
+  Project: `appgprj_6ac49343ea048191b93c8d1135390e39`, owner-private.
+- GitHub integration: `github.com/jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** Do not overwrite GitHub WIP from this repo:
+  GitHub contains an older source checkpoint and separate evidence history.
+- Results upload destination: `results/` on GitHub `wip/tidewater-in-app`.
+  Runtime credentials remain server-only; never print or commit secret values.
+- Same gate / resume URL:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-13-pipeline-rc5
+- Use fresh Sites get_site + credential + source helper before edits. Preserve
+  the returned audience and source. Do not deploy to the separate public Site.
+  Confirm the latest deployment's exact commit/status through Sites when resuming.
+
+## What passed
+
+- User-reported physical RC5 iPhone gate: **39.0 avg, 31 min, 0 seconds under 30**.
+  The connector returned an older 17:23 UTC latest-results pointer during the
+  previous pass; don't pretend that older JSON is this RC5 run.
+- Previous accepted v8.2 device baseline: 40.3 avg, 35 min, 0 under 30; all
+  12 location captures. It is baseline evidence, not proof of newer colors.
+- BreakerLip restored to the exact RC3 vertex guard and dependency path;
+  reserved WGSL `coherent` removed. Spray's proven vertex path is retained.
+- Local strict WGSL: 78 modules from 79 runtime pipeline descriptors. The
+  RC4 invalid-keyword negative case is rejected. User explicitly authorized
+  local validation and forbids using the GPU runner. No Apple GPU CI required.
+- Previous null hotfix reproduced `evidenceUpload` assignment to null, then
+  normalized errors, retried one aborted storage write and stored media bytes
+  instead of native Blob handles. Original v2 queues remain readable.
+- This pass targeted tests: original full-size sheets and JSON/text survive
+  reload; old sheets rebuild only from saved image thumbnails; the share call
+  happens synchronously on tap; cancel/fallback works; finished reloads do not
+  start a gate; null abort/resume preserves original FPS and completed media.
+- Full-build / seven-interaction verification for this pass: **PASS**. All 78
+  strict WGSL modules passed; all 11 renderer assets are unchanged from RC5.
+  All automated tests use mocked storage/OS/browser where applicable, not new
+  physical iPhone imagery, share-sheet behavior or FPS.
+
+## What changed in this pass
+
+- Gate page has **Share results**: summary (revision, avg/min FPS, seconds under
+  30, errors), `summary.txt`, `weather-gate.json`, and available phase/weather/
+  wave contact sheets via `navigator.share({files,...})`. Downloads are the
+  disclosed fallback if file sharing is unavailable. Files are ready before tap.
+- Full-size contact sheets are kept in the existing IndexedDB session. Earlier
+  RC5 sessions rebuild sheets from their saved per-image thumbnails, without
+  recapturing, changing pixels or running the renderer. Missing sheets are listed.
+- Stored error history survives reload independently of immutable upload payloads.
+- A finished session reopens read-only for sharing. Only **Run a new gate**
+  explicitly replaces a finished session. Unfinished runs resume automatically.
+- AGENTS.md now requires updating this handoff at the end of every pass;
+  the build checks its current revision, sections and continuation rules.
+- No scene, ocean, shader, product UI, camera or performance-budget change.
+
+## Open issues
+
+- Physical iPhone Share results behavior and post-hotfix capture completion
+  still require Jacob's run. Do not claim the OS share sheet was device-tested.
+- Sunrise/golden-hour/sunset/dusk color corrections remain visually unverified
+  until the actual RC5 contact sheets arrive. Review all three coastlines, plus
+  weather and wave galleries. Do not recolor previous evidence or invent images.
+- The original storage-abort cause on the phone is not proven. If it recurs,
+  inspect the normalized error and durable session state; never restart a passed
+  gate or replace an acknowledged upload as a workaround.
+- Native signing/TestFlight and WeatherKit/RevenueCat account configuration
+  remain separate owner/Mac tasks; existing release docs do not prove activation.
+
+## Next steps
+
+1. Use the SAME resume URL above in the same iPhone browser. Tap **Share results**
+   to send saved JSON/contact sheets; an unfinished run resumes missing captures.
+   Verify the latest Sites deployment if resuming code work. Keep the
+   renderer/session revision unchanged for capture-only changes.
+2. On Jacob's next results message, first inspect shared `weather-gate.json`,
+   summary and contact sheets, or read GitHub `results/latest.json` and its folder.
+   Verify revision, parentRunId, timestamps and evidenceIndex; do not confuse an
+   older cached pointer, one media part or baseline run with current evidence.
+3. Continue only missing captures. FPS must not rerun if `session.completed.fps`
+   exists. A pending immutable part is retried before any new capture.
+4. Review genuine pixels for outstanding colors/artifacts. Make bounded changes
+   only if needed, preserve the passed budgets, and update this handoff again.
+
+## Rules and invariants
+
+- User wants concise updates and one link. Work autonomously within this scope.
+- Never GitHub main, never secret output/commits. Private Sites main is approved.
+- Freeze Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef` and approved ocean,
+  waves, sky, weather, moon, camera and UI. MIT credits: Tidewater and Takram.
+- No advice / “safe” wording; estimates labeled est. with source; no crowd reports.
+- DPR starts 1.5, floor 1.1, max 1.6, 0.05 steps, down/up 38/46. FXAA, no flare,
+  two frames in flight; FFT reuse at 40 Hz; crest 48×4, 12 lip vertices; bounded
+  512×128 cloud cache (256 idle/2048 transition pixels), 384 rain particles.
+- Keep 15 s warmup + uninterrupted 120 measured seconds, EVERY second >=30 GPU
+  completions. No uploads, encoding, screenshots or share preparation during FPS.
+- Compile failures are not retryable. Disable only an optional failed effect;
+  preserve ocean/simulation. A degraded scene cannot pass the full-effects gate.
+- IndexedDB `daybuoy-evidence-v1`, schema 2, `pending` and `sessions`; same RC5
+  revision key. Never clear it or change it to hide a capture/storage failure.
+- Evidence: FPS uploads first, then each immutable image/clip part with receipt.
+  Four separate 8-second day/paywall clips: max 288×640, 12 fps, 600 kb/s.
+- Required: `node scripts/check-interactions.cjs`, `node scripts/build.mjs`;
+  then production build/check and hosting build before helper packaging/deploy.
+  All seven checks: look, sun drag, timeline, pinch/reset, water sheet, Back to
+  now, Watch pause. Local tests are not a real-browser/device/visual pass.
+
+## Useful implementation paths
+
+- `ocean-proof/proof/weather-fixture-page.js`: strict gate + resumable capture flow.
+- `results-upload.js`: IndexedDB journal, immutable parts, saved sheets/errors.
+- `share-results.js`: prepared native share payload and saved-sheet reconstruction.
+- `evidence-error.js`: non-mutating null/primitive/DOMException normalization.
+- `location-phase-gallery.js`, `location-gallery.js`, `scrub-evidence.js`: media.
+- `scripts/check-share-results.mjs`, `check-evidence-checkpoints.mjs`,
+  `check-weather-gate.mjs`: share/storage/resume regression tests.
+- `scripts/check-pipeline-release.mjs`: matching local WGSL report release guard.
+- `night-report/rc5-release.md`, `rc5-capture-resume.md`: compile/capture repair notes.
+- `server/results.js`: fixed-branch authenticated upload endpoint.
+
+---
+
+
+## Archived GitHub handoff — historical; current section above takes precedence
+
 # DayBuoy — Tidewater handoff
 
 ## Current: combined live gate — October 8, 11:35 PM Chicago
