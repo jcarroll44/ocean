@@ -31,6 +31,10 @@ app.precompile=async()=>{
  for(const key of ['initSpectrumKernel','conjugateKernel','copyH0Kernel','rowKernel','columnKernel']){const info=await GPU.device.createShaderModule({code:app.fft[key].source}).getCompilationInfo();assert.equal(info.messages.filter(m=>m.type==='error').length,0,key+': '+info.messages.map(m=>m.message).join('\n'));}
  assert.equal(app.breakers.crest.count,app.breakers.NS*9);
  const beach=installNativeBeach(app),surfaces=installWeatherSurfaces(app,beach);
+ assert(!app.spray.material.modules.includes(app.nativeWeather.module),'Spray material must not bind entire weather/cloud shader in vertex stage');
+ assert(app.spray.material.vertex.includes('let sun = frame.sunColor * sunVis;'),'Spray vertex shader must match the last passing v8.2');
+ assert.equal(app.spray.material.vertex.includes('nativeFoamIncident('),false,'No indirect weather function in Spray vertex');
+
  app.post._finalPass={source:fs.readFileSync('ocean-proof/vendor/tidewater/src/post/PostFX.js','utf8')};const orb=installSkyOrb(app,beach);const orbInfo=await GPU.device.createShaderModule({code:orb.pass.source}).getCompilationInfo();assert.equal(orbInfo.messages.filter(m=>m.type==='error').length,0,orbInfo.messages.map(m=>m.message).join('\n'));assert(orb.pass.source.includes('fn beachSkyColour('));assert.equal(orb.state().size,64);
  assert.equal(surfaces.rain.geometry.instanceCount,384);assert(app.spray.module.code.includes('nativeWeather.gustExtra'));
  assert(app.breakers.kernel.source.includes('nativeWeather.gustExtra'),'Gust must reach the compiled emitter, not just its module');
