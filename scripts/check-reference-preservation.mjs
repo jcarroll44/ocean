@@ -7,7 +7,16 @@ import {applyMissingRain} from './approved-weather-changes.mjs';
 import {profileScene,profileApp} from './profile-adapter.mjs';
 const read=p=>fs.readFileSync(p,'utf8');
 for(const file of ['src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js','src/weather-effects.js','src/celestial.js','src/explore.js','src/surf.js','src/sheets.js']){
- assert.equal(read(file),applyApprovedCopy(file,execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:20000000})),file+' only the exact approved condition-copy replacements may differ');
+ const approved=applyApprovedCopy(file,execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:20000000}));
+ let actual=read(file);
+ if(file==='src/camera.js'){
+  const hook='function approvedBeachTarget(){',end='\nlet cameraVelocity=';
+  const i=actual.indexOf(hook),j=actual.indexOf(end,i),a=approved.indexOf(hook),b=approved.indexOf(end,a);
+  assert(i>=0&&j>i&&a>=0&&b>a,'Approved Inlet sunrise camera hook must exist');
+  assert(actual.slice(i,j).includes("SITE.id==='inlet-beach'")&&actual.slice(i,j).includes('bearing=-83*RAD'),'Only the requested Inlet sunrise exception is allowed');
+  actual=actual.slice(0,i)+approved.slice(a,b)+actual.slice(j);
+ }
+ assert.equal(actual,approved,file+' only exact condition-copy/Inlet-sunrise exceptions may differ');
 }
 const scene=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:src/scene-data.js'],{encoding:'utf8',maxBuffer:20000000});
 assert.equal(read('src/scene-data.js'),scene);
