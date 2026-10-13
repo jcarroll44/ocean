@@ -21,7 +21,14 @@ export function createOptionalEffects(app,notify=()=>{}){
   }
   notify({status:'effect-disabled',effect,...event});
  }
+ function handleError(error){
+  const message=String(error?.message||error);
+  if(/\\bSpray (?:main|depth|color|Update)\\b/i.test(message)){disable('spray',message,'Spray');return true;}
+  if(/\\bForecast thin rain particles\\b/i.test(message)){disable('rain',message,'Forecast thin rain particles');return true;}
+  return false;
+ }
  function checkPipelines(){
+  if(app.spray?.updateKernel?.handle?.failed)disable('spray','GPU compute pipeline rejected','Spray Update');
   const pipelines=app.engine?.meshRenderer?.pipelines;
   if(!pipelines)return describe();
   for(const p of pipelines.values()){
@@ -33,7 +40,7 @@ export function createOptionalEffects(app,notify=()=>{}){
   }
   return describe();
  }
- return{disable,checkPipelines,describe,get lightningDisabled(){return disabled.has('lightning');}};
+ return{disable,handleError,checkPipelines,describe,get lightningDisabled(){return disabled.has('lightning');}};
 }
 // Lightning bolts are an optional section of the shared native sky shader.
 // A failed sky compile gets one source-level retry with the bolt function
