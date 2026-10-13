@@ -1,0 +1,38 @@
+{
+  "schema": 3,
+  "runId": "2026-10-13T04-00-41Z-c55fe12e-84e3-45a0-a3d7-ca27cdc27973",
+  "kind": "weather",
+  "build": {
+    "revision": "2026-10-13-natural-light-rc1",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "source": "synthetic fixtures",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "startedAt": "2026-10-13T04:00:41.545Z",
+  "heaviest": "night-storm",
+  "viewport": [
+    390,
+    699
+  ],
+  "viewportEvents": [],
+  "wakeLockEvents": [
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-13T04:00:33.793Z"
+    },
+    {
+      "state": "held",
+      "detail": "Screen kept awake · keep Safari visible.",
+      "at": "2026-10-13T04:00:41.546Z"
+    }
+  ],
+  "gallery": [],
+  "samples": [],
+  "error": "Native fixture initialization timed out.",
+  "finishedAt": "2026-10-13T04:03:41.601Z"
+}
