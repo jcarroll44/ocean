@@ -44,11 +44,17 @@ for(const altitude of [-20,0,50])for(const cloud of [0,.34,34,90])for(const risk
 }
 assert(read('src/presentation.js').includes("'Forecast updated '+updated"));
 // Pinned implementation, physical input mapping, material and camera stay exact.
-for(const prefix of ['ocean-proof/vendor/tidewater/','src/camera.js','src/interaction.js']){
- // The old local-only commit was never published. Use its published pre-polish
- // predecessor: all four frozen paths are byte-identical (vendor tree f0d73bdc).
+for(const prefix of ['ocean-proof/vendor/tidewater/','src/interaction.js']){
+ // Preserve pinned vendor and gesture source byte-for-byte.
  const changes=execFileSync('git',['diff','532dfcfccf30e65f9cca41b7bcefa2abb9537618','--',prefix],{encoding:'utf8'});assert.equal(changes,'',prefix);
 }
+// User-authorized Inlet sunrise exception only; all other camera bytes must
+// match the pre-polish baseline, and beachPose itself stays unchanged.
+const cameraOld=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:src/camera.js'],{encoding:'utf8'});
+const cameraNew=read('src/camera.js'),hook='function approvedBeachTarget(){',after='\nlet cameraVelocity=';
+function restoreCameraHook(now,ref){const i=now.indexOf(hook),j=now.indexOf(after,i),a=ref.indexOf(hook),b=ref.indexOf(after,a);assert(i>=0&&j>i&&a>=0&&b>a);return now.slice(0,i)+ref.slice(a,b)+now.slice(j);}
+assert(cameraNew.includes("SITE.id==='inlet-beach'")&&cameraNew.includes('bearing=-83*RAD'));
+assert.equal(restoreCameraHook(cameraNew,cameraOld),cameraOld,'Camera changed outside approved sunrise framing');
 // October 12 explicitly authorizes an additive forecast spectrum adapter.
 const originalForecast=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:ocean-proof/proof/forecast.js'],{encoding:'utf8'});
 const baseForecast=read('ocean-proof/proof/forecast.js').replace("import {profileFacing} from '../../src/beach-profiles.js';\n",'').replace('const facing=profileFacing(c),direction=(c.direction-facing)*Math.PI/180,wind=(c.windDirection-facing)*Math.PI/180;','const direction=(c.direction-201)*Math.PI/180,wind=(c.windDirection-201)*Math.PI/180;').replace('waveAngle:c.direction-facing-90,windAngle:c.windDirection-facing-90','waveAngle:c.direction-291,windAngle:c.windDirection-291').replace("import {applyWaveSpectrum} from './forecast-waves.js';\n",'').replace(/ if\(app\.forecastSurf\)\{[\s\S]*?\n \}\n/,'');
