@@ -1,0 +1,850 @@
+diff --git a/.github/workflows/webgpu-pipelines.yml b/.github/workflows/webgpu-pipelines.yml
+new file mode 100644
+index 0000000..4327ef3
+--- /dev/null
++++ b/.github/workflows/webgpu-pipelines.yml
+@@ -0,0 +1,30 @@
++name: Apple WebKit all-pipeline gate
++on:
++  push:
++    branches: [wip/tidewater-verdict-first]
++    paths: ['ci/pipeline-manifest.json.br.b64', 'scripts/pipeline-compiler.*', 'scripts/PipelineCompiler.swift', 'scripts/check-pipelines-webkit.mjs', '.github/workflows/webgpu-pipelines.yml']
++  workflow_dispatch:
++permissions:
++  contents: read
++jobs:
++  safari-wgsl:
++    runs-on: macos-26
++    timeout-minutes: 12
++    steps:
++      - uses: actions/checkout@v4
++      - uses: actions/setup-node@v4
++        with:
++          node-version: '24'
++      - name: Unpack exact candidate pipeline descriptors
++        run: |
++          node --input-type=module -e "import fs from 'node:fs'; import zlib from 'node:zlib'; fs.mkdirSync('.pipeline-check',{recursive:true});fs.writeFileSync('.pipeline-check/manifest.json',zlib.brotliDecompressSync(Buffer.from(fs.readFileSync('ci/pipeline-manifest.json.br.b64','utf8'),'base64')));"
++      - name: Compile every WGSL module and pipeline with Apple WebKit
++        run: node scripts/check-pipelines-webkit.mjs
++      - name: Preserve exact compiler evidence
++        if: always()
++        uses: actions/upload-artifact@v4
++        with:
++          name: webkit-pipeline-evidence
++          path: .pipeline-check/*.json
++          retention-days: 30
++          if-no-files-found: error
+diff --git a/.gitignore b/.gitignore
+index 5ac74bf..3346544 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -14,3 +14,4 @@ hosting/public/
+ .env*
+ !.env.example
+ server/wrangler.local.json
++.pipeline-check/
+diff --git a/INTERACTION-CONTRACT.md b/INTERACTION-CONTRACT.md
+index d5ff000..44916be 100644
+--- a/INTERACTION-CONTRACT.md
++++ b/INTERACTION-CONTRACT.md
+@@ -547,3 +547,18 @@ incoherent onshore lip spans, unfogged cyan lips and black squall underside.
+ Preserve RC3 caching/retries and restored Spray material, plus all v8.2 renderer,
+ DPR, FFT, crest, cloud, rain and camera budgets. No new physical-device or visual
+ pass without actual phone evidence. Same seven interaction checks remain binding.
++
++## October 13 — RC4 BreakerLip compile failure / RC5
++Restore BreakerLip's proven vertex path: remove RC4's weather/cloud dependency
++from that stage, retaining RC3 startup caching and the restored Spray material.
++Compile every shipping render and compute pipeline in CI through Apple WebKit
++WGSL and real pipeline creation. Module-only Dawn checks and ignored resource
++errors are insufficient. A missing Apple compiler result blocks release just as
++a failed one does. No new gate link until the matching source passes.
++Pipeline compilation failures are deterministic and must not restart the beach.
++Disable only the optional failed lip/spray/rain effect and report diagnostics;
++keep the core ocean running. Preserve crest/roller simulation when removing the
++lip draw. Mandatory shader failures terminate startup once; transport/device-loss
++retries remain. A degraded scene is not a passing full-effects performance gate.
++Keep all v8.2 budgets and the seven interaction checks; automated validation is
++not new iPhone pixels or FPS evidence.
+diff --git a/night-report/rc5-release.md b/night-report/rc5-release.md
+new file mode 100644
+index 0000000..63c6601
+--- /dev/null
++++ b/night-report/rc5-release.md
+@@ -0,0 +1,35 @@
++# RC5 pipeline repair
++
++RC4 introduced a reserved WGSL identifier (`coherent`) in the BreakerLip
++validity guard, in addition to adding weather calls to its vertex stage. The
++previous material test never installed this guard. The full runtime inventory
++reproduced the reserved-keyword compiler error. RC5 restores the exact RC3
++guard and removes the RC4 vertex-stage weather calls. Spray's restored path,
++asset caching, incremental evidence uploads and other RC4 fixes are retained.
++
++Optional BreakerLip failure removes only its transparent mesh. Crest detection,
++surface rollers and the core ocean continue. The real invalid-WGSL regression
++test verifies its error cannot poison the enclosing startup validation scope.
++Compile errors are non-retryable; core failures stop after one attempt. Network
++and device-loss recovery retain the cellular retry policy. Detailed compiler
++messages are recorded. Degraded optional effects invalidate the full-effects
++FPS gate rather than silently producing an easier performance pass.
++
++The old six-material module-only check has been replaced with a runtime graph
++inventory: 79 render/compute descriptors and 78 unique shader modules, including
++the native guard, forecast FFT, weather cache, sky, lips, spray, rain and post.
++Dawn's strict WGSL validation passes all modules and rejects the exact RC4 bug.
++Inventory generation is explicitly not compilation or GPU execution.
++
++Apple WebKit CI replays every module, binding layout, entry point and pipeline.
++It fails for compilation errors, missing adapters, timeouts or incomplete results.
++Packaging requires the matching manifest SHA-256 and successful full compiler
++report. No report means no release. The CI result is separate from physical
++iPhone screenshots and the unchanged 120-second cadence test.
++
++Automated checks: seven interaction checks (scene look, sun drag, timeline,
++pinch/reset, water sheet, Back to now, Watch pause); startup retry classification;
++optional-effect isolation using a real invalid WebGPU shader; strict WGSL;
++existing build, production and visual/source budget checks. No new phone FPS or
++rendered-pixel claim is made. Current Apple CI result must be attached before
++this candidate can be deployed.
+diff --git a/night-report/weather-material-checks.json b/night-report/weather-material-checks.json
+index 0d3d59e..ff358f7 100644
+--- a/night-report/weather-material-checks.json
++++ b/night-report/weather-material-checks.json
+@@ -1,17 +1,8 @@
+ {
+-  "backend": "Dawn null: shader semantics, no pixels",
+-  "validated": [
+-    "water",
+-    "Terrain",
+-    "material5",
+-    "Forecast thin rain particles",
+-    "BreakerLip",
+-    "Spray"
+-  ],
+-  "bindingLimits": [
+-    "Water material needs 23 sampled textures including the single cloud atlas; Dawn null supports 16. Binding/pipeline execution is not verified."
+-  ],
+-  "computeDispatch": "Not tested",
+-  "environmentLimit": "Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).",
+-  "physicalDevice": false
++  "backend": "Dawn strict WGSL (not Safari pipeline validation)",
++  "manifestHash": "f435bb650fbf6ec3dffaacf75f56891aa4be1fed4a24c02f75a0780190314745",
++  "modules": 78,
++  "pipelines": 79,
++  "errors": [],
++  "passed": true
+ }
+\ No newline at end of file
+diff --git a/ocean-proof/proof/integration-build.js b/ocean-proof/proof/integration-build.js
+index cb6190d..3b03fad 100644
+--- a/ocean-proof/proof/integration-build.js
++++ b/ocean-proof/proof/integration-build.js
+@@ -1,5 +1,5 @@
+ export const INTEGRATION_BUILD=Object.freeze({
+- revision:'2026-10-13-evidence-light-rc4',
++ revision:'2026-10-13-pipeline-rc5',
+  branch:'wip/tidewater-verdict-first',
+  tidewater:'4811ba48d795197de5621985f404e765c0b7c0ef',
+  ui:'Approved exact Verdict-first v1 (2026-10-06)',
+diff --git a/ocean-proof/proof/location-gallery.js b/ocean-proof/proof/location-gallery.js
+index becf246..651bcc7 100644
+--- a/ocean-proof/proof/location-gallery.js
++++ b/ocean-proof/proof/location-gallery.js
+@@ -35,7 +35,7 @@ export async function collectLocationGallery({stage,files=[],report,untilReady,w
+     }
+     for(const item of pending){files.push({name:item.name,blob:item.blob});download(item.blob,item.name,review.profile.name+' · '+item.evidence.phase);report.locations.push(item.evidence);}
+     audit.phase='complete';complete=true;
+-   }catch(e){if(e.evidenceUpload)throw e;audit.error=e.message;audit.state=snapshot();onStatus(id+' · retrying capture');}
++   }catch(e){if(e.evidenceUpload||e.retryable===false)throw e;audit.error=e.message;audit.state=snapshot();onStatus(id+' · retrying capture');}
+   }
+   if(!complete)(report.captureErrors??=[]).push({file:'locations-'+id,error:'Profile capture failed after two attempts; see locationAttempts.'});
+  }
+diff --git a/ocean-proof/proof/location-phase-gallery.js b/ocean-proof/proof/location-phase-gallery.js
+index eb3933e..9fe7e68 100644
+--- a/ocean-proof/proof/location-phase-gallery.js
++++ b/ocean-proof/proof/location-phase-gallery.js
+@@ -70,7 +70,7 @@ export async function collectPhaseGallery({stage,report,files=[],untilReady,wait
+     }
+     audit.status='complete';break;
+    }catch(error){
+-    if(error.evidenceUpload)throw error;
++    if(error.evidenceUpload||error.retryable===false)throw error;
+     audit.error=String(error.message||error);audit.status='failed';
+     onStatus(label+' · phase retry '+attempt);
+     if(attempt===2)(report.captureErrors??=[]).push({file:'phase-gallery-'+id,error:audit.error});
+diff --git a/ocean-proof/proof/native-scene.js b/ocean-proof/proof/native-scene.js
+index da294dc..c15f6b7 100644
+--- a/ocean-proof/proof/native-scene.js
++++ b/ocean-proof/proof/native-scene.js
+@@ -42,7 +42,7 @@ markStartup('native-module-evaluated');
+ let optionalEffects;let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
+ const started=performance.now();
+ const completionListeners=new Set();let trace,shoreUpload;
+-function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;const reason=String(error?.message||error),atStage=lastStartupStage;markStartup('initialization-failed',{atStage,reason:reason.slice(0,500)});send({status:'failed',reason,atStage});console.error('Tidewater ocean:',error);}
++function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;const reason=String(error?.message||error),atStage=lastStartupStage;markStartup('initialization-failed',{atStage,reason:reason.slice(0,500)});send({status:'failed',reason,atStage,retryable:error?.retryable,code:error?.code});console.error('Tidewater ocean:',error);}
+ window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
+ // Release even when navigation interrupts initialization before the API exists.
+ window.addEventListener('pagehide',()=>{failed=true;GPU.device?.destroy();});
+diff --git a/ocean-proof/proof/native-weather.js b/ocean-proof/proof/native-weather.js
+index ed9a41f..dc239b7 100644
+--- a/ocean-proof/proof/native-weather.js
++++ b/ocean-proof/proof/native-weather.js
+@@ -136,10 +136,8 @@ export function guardNativeBreakerLip(breakers){
+  if(!mat.vertex.includes(needle))throw Error('Pinned breaker validity hook changed');
+  mat.vertex=mat.vertex.replace(needle,`let otherRoot = breakersCrest[ eo ].xyz;
+  let rootsBounded = all(abs(c0.xyz) < vec3f(10000.0,64.0,10000.0)) && all(abs(otherRoot) < vec3f(10000.0,64.0,10000.0));
+- let otherH=breakersCrest[eo+1u].w;
+- let connected = distance(c0.xz,otherRoot.xz)<3.2 && abs(c0.y-otherRoot.y)<max(.3,.45*(c1.w+otherH));
+- let coherent = c1.w>.025 && otherH>.025 && abs(c0.w-bOther)<.24 && min(c1.w,otherH)>max(c1.w,otherH)*.3;
+- let valid = c2.w > 0.5 && mOther > 0.5 && abs(mOther-c2.w) < 0.5 && c0.w < 1.25 && bOther < 1.25 && rootsBounded && connected && coherent;`);
++ let connected = distance(c0.xyz,otherRoot) < max(4.0,2.0*(abs(c1.w)+abs(breakersCrest[eo+1u].w)));
++ let valid = c2.w > 0.5 && mOther > 0.5 && abs(mOther-c2.w) < 0.5 && c0.w < 1.25 && bOther < 1.25 && rootsBounded && connected;`);
+  mat.vertex=mat.vertex.replace('v.worldPos = select( vec3f( 0.0, -1e5, 0.0 ), P, valid );','v.worldPos = select( vec3f( 0.0, -100.0, 0.0 ), P, valid );');
+  mat.needsUpdate=true;
+ }
+diff --git a/ocean-proof/proof/optional-effects.js b/ocean-proof/proof/optional-effects.js
+index 7ab642a..4594deb 100644
+--- a/ocean-proof/proof/optional-effects.js
++++ b/ocean-proof/proof/optional-effects.js
+@@ -12,6 +12,11 @@ export function createOptionalEffects(app,notify=()=>{}){
+    const spray=app.spray;
+    if(spray?.mesh){spray.mesh.visible=false;app.scene?.remove?.(spray.mesh);}
+    if(spray)spray.update=()=>{}; // Skip the optional particle simulation.
++  }else if(effect==='breaker-lip'){
++   // Only the decorative transparent sheet is optional. Crest detection,
++   // surface rollers, wave simulation and spray emitters continue unchanged.
++   const lip=app.breakers?.mesh;
++   if(lip){lip.visible=false;app.scene?.remove?.(lip);}
+   }else if(effect==='rain'){
+    const rain=app.weatherSurfaces?.rain;
+    if(rain){rain.visible=false;app.scene?.remove?.(rain);}
+@@ -24,6 +29,7 @@ export function createOptionalEffects(app,notify=()=>{}){
+  function handleError(error){
+   const message=String(error?.message||error);
+   if(/\bSpray (?:main|depth|color|Update)\b/i.test(message)){disable('spray',message,'Spray');return true;}
++  if(/\bBreakerLip (?:main|depth|color)\b/i.test(message)){disable('breaker-lip',message,'BreakerLip');return true;}
+   if(/\bForecast thin rain particles\b/i.test(message)){disable('rain',message,'Forecast thin rain particles');return true;}
+   return false;
+  }
+@@ -35,6 +41,7 @@ export function createOptionalEffects(app,notify=()=>{}){
+    if(!p?.handle?.failed)continue;
+    const label=p.label||p.handle.label||'unknown';
+    if(/^Spray(?: |$)/i.test(label))disable('spray','GPU render pipeline failed',label);
++   else if(/^BreakerLip(?: |$)/i.test(label))disable('breaker-lip',p.handle.compileError||'GPU render pipeline failed',label);
+    else if(/^Forecast thin rain particles(?: |$)/i.test(label))disable('rain','GPU render pipeline failed',label);
+    else if(!reported.has(label)){reported.add(label);notify({status:'mandatory-pipeline-failed',pipeline:label});throw Error('Mandatory GPU pipeline could not initialize: '+label);}
+   }
+diff --git a/ocean-proof/proof/startup-gpu.js b/ocean-proof/proof/startup-gpu.js
+index 5aef9df..f89eead 100644
+--- a/ocean-proof/proof/startup-gpu.js
++++ b/ocean-proof/proof/startup-gpu.js
+@@ -2,6 +2,7 @@
+ // for a ready message. Temporary hooks are removed before the steady render loop.
+ export function watchStartupGPU(GPU,onFailure,effects){
+  const handles=[],original={renderPipeline:GPU.renderPipeline,computePipeline:GPU.computePipeline,pipelinesReady:GPU.pipelinesReady};
++ const diagnostics=new Map(),moduleChecks=[];let deviceMethods;
+  const isolatedSky=new WeakSet();
+  for(const key of ['renderPipeline','computePipeline'])GPU[key]=function(desc){const h=original[key].call(this,desc);handles.push({label:desc.label,handle:h});return h;};
+  GPU.pipelinesReady=async function(options){
+@@ -9,12 +10,36 @@ export function watchStartupGPU(GPU,onFailure,effects){
+   // retry. The discarded first sky must not poison later mandatory checks.
+   if(options?.isolatedSky)isolatedSky.add(options.isolatedSky);
+   await original.pipelinesReady.call(this);
++  await Promise.all(moduleChecks);
+   for(const h of handles){if(!h.handle.failed||isolatedSky.has(h.handle))continue;
+-   const error=Error('GPU pipeline could not initialize: '+h.label);
++   h.handle.compileError=diagnostics.get(h.label)||'';
++   const error=Object.assign(Error('GPU pipeline could not initialize: '+h.label+(h.handle.compileError?' · '+h.handle.compileError:'')),{code:'GPU_PIPELINE_COMPILE',retryable:false,pipeline:h.label});
+    if(effects?.handleError(error))continue;
+    throw error;
+   }
+  };
+  let active=true;
+- return{deviceReady(){GPU.device.lost.then(info=>{if(active)onFailure(Error('GPU device lost during startup: '+(info.message||info.reason)));});},stop(){active=false;Object.assign(GPU,original);handles.length=0;}};
++ return{deviceReady(){
++  const device=GPU.device;deviceMethods={};
++  // A rejected optional shader module must not leak into BeachApp's outer
++  // validation scope and kill the ocean after its failed draw was removed.
++  deviceMethods.createShaderModule=device.createShaderModule;
++  device.createShaderModule=function(desc){
++   const optional=/^(?:BreakerLip|Spray|Forecast thin rain particles|DayBuoy native sky)(?: |$)/.test(desc.label||'');
++   if(optional)this.pushErrorScope('validation');
++   const module=deviceMethods.createShaderModule.call(this,desc);
++   if(optional){const scope=this.popErrorScope();moduleChecks.push(scope.then(error=>{if(error)diagnostics.set(desc.label,error.message);}));}
++   return module;
++  };
++  for(const name of ['createRenderPipelineAsync','createComputePipelineAsync']){
++   deviceMethods[name]=device[name];device[name]=async function(desc){
++    try{return await deviceMethods[name].call(this,desc);}catch(error){
++     const modules=[desc.vertex?.module,desc.fragment?.module,desc.compute?.module].filter(Boolean),details=[];
++     for(const module of new Set(modules)){try{const info=await module.getCompilationInfo();for(const m of info.messages)if(m.type==='error')details.push(`${m.lineNum}:${m.linePos} ${m.message}`);}catch{}}
++     diagnostics.set(desc.label,[error.message,...details].join(' | ').slice(0,3000));throw error;
++    }
++   };
++  }
++  device.lost.then(info=>{if(active)onFailure(Error('GPU device lost during startup: '+(info.message||info.reason)));});
++ },stop(){active=false;Object.assign(GPU,original);if(deviceMethods)Object.assign(GPU.device,deviceMethods);handles.length=0;}};
+ }
+diff --git a/ocean-proof/proof/weather-fixture-page.js b/ocean-proof/proof/weather-fixture-page.js
+index 33a0db9..1905655 100644
+--- a/ocean-proof/proof/weather-fixture-page.js
++++ b/ocean-proof/proof/weather-fixture-page.js
+@@ -50,7 +50,7 @@ async function untilReady(test,timeout=1200000){
+   if(document.hidden){await waitVisible();last=performance.now();}
+   try{if(test())return;}catch{}
+   const s=startupSnapshot(),now=performance.now();elapsed+=Math.max(0,now-last);last=now;
+-  if(s.phase==='failed'||s.backend==='WebGL fallback')throw Object.assign(Error('Beach startup failed after retries: '+(s.error||s.lastError||s.label)),{startup:s});
++  if(s.phase==='failed'||s.backend==='WebGL fallback')throw Object.assign(Error('Beach startup failed: '+(s.error||s.lastError||s.label)),{startup:s,retryable:!s.history?.some(h=>h.event==='compile-failed')});
+   if(now-shown>500){shown=now;$('status').textContent=(s.phase==='ready'?'Preparing the selected sky and waves':s.label||'Preparing the beach')+(s.attempt?' · attempt '+s.attempt+'/3':'')+' · '+Math.floor(elapsed/1000)+'s';const bar=$('load-progress');if(bar){bar.hidden=false;bar.value=s.fraction||0;}}
+   if(elapsed>timeout)throw Object.assign(Error('Beach preparation limit reached at '+(s.label||s.phase)+'. Please retry when the connection is available.'),{startup:s});
+   await wait(100);
+@@ -76,6 +76,7 @@ function evidence(){
+  const win=stage.contentWindow,app=win.__daybuoy,native=liveOcean(win).evidence();viewport.bindScene();
+  if(app?.state?.fixture!==true||app.state.data.source!=='fixture'||app.state.fixtureId!==HEAVIEST_FIXTURE||app.state.live)throw Error('Heaviest synthetic fixture required.');
+  const mismatches=[];
++ if(native.optionalEffects?.degraded){const error=Error('Full-effects gate unavailable: '+native.optionalEffects.disabled.map(e=>e.effect).join(', '));error.optionalEffects=native.optionalEffects;error.retryable=false;throw error;}
+  for(const [field,expected,actual] of [['revision',INTEGRATION_BUILD.revision,native.revision],['pipeline.maxFramesInFlight',2,native.pipeline?.maxFramesInFlight],['post.aa','fxaa',native.post?.aa],['post.flare',false,native.post?.flare],['adaptiveResolution.enabled',true,!!native.adaptiveResolution]])if(actual!==expected)mismatches.push({field,expected,actual:actual??null});
+  if(mismatches.length){const error=Error('Production renderer settings changed: '+mismatches.map(m=>`${m.field} expected ${JSON.stringify(m.expected)}, got ${JSON.stringify(m.actual)}`).join('; '));error.rendererMismatch={mismatches,native};throw error;}
+  const dpr=native.quality.dpr;if(dpr<1.1||dpr>1.6||Math.abs(dpr*20-Math.round(dpr*20))>1e-8)throw Error('DPR outside production policy.');
+diff --git a/ocean-proof/proof/weather-surfaces.js b/ocean-proof/proof/weather-surfaces.js
+index 284a396..6cdb7e3 100644
+--- a/ocean-proof/proof/weather-surfaces.js
++++ b/ocean-proof/proof/weather-surfaces.js
+@@ -33,11 +33,9 @@ export function installWeatherSurfaces(app,beach){
+  water.output=replace(water.output,'r.color = vec4f( res, 1.0 );','r.color = vec4f( nativeWeatherFog(res,pos), 1.0 );');water.needsUpdate=true;
+  const lip=app.breakers.mesh.material;
+  lip.modules.push(module);
+- lip.vertex=replace(lip.vertex,'let Xi = max( H * 0.8, 0.05 );','let Xi = max(H*.8*mix(1.0,.45,nativeWeather.onshore),.05);');
+- lip.vertex=replace(lip.vertex,'v.useWorld = true;',`o.vLipFade*=1.0-max(nativeNightStorm(),nativeWeather.onshore)*smoothstep(.78,1.03,b);
+- v.useWorld = true;`);
+- // Once the curtain lands, its foam belongs to the simulated roller below,
+- // not the detached, blotchy remainder of the transparent lip mesh.
++ // Preserve the RC3 / v8.2 vertex path. Weather stays fragment-only: RC4's
++ // nativeNightStorm/onshore vertex hooks pulled the cloud dependency graph
++ // into BreakerLip main on Safari, just as the earlier Spray change did.
+  lip.output=replace(lip.output,'let tint = vec3f( 0.16, 0.62, 0.56 );','let tint = mix(vec3f(.16,.62,.56),vec3f(.36,.39,.39),nativeWeather.fog);');
+  lip.output=replace(lip.output,'let foamLit = ( sun * (','let foamLit = ( nativeFoamIncident(sun,frame.skyIrradiance) * (');
+  lip.output=replace(lip.output,'let glow = ( sun * tint *','let glow = ( nativeSheetTransmission(sun,frame.skyIrradiance) * tint *');
+diff --git a/production/native-scene.js b/production/native-scene.js
+index 35797db..d461f4b 100644
+--- a/production/native-scene.js
++++ b/production/native-scene.js
+@@ -19,7 +19,7 @@ import {createOptionalEffects,installOptionalSky} from '../ocean-proof/proof/opt
+ const smoothLight=transitionLight();
+ const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
+ let optionalEffects;let app,beach,overlays,packet,failed=false,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,shoreUpload;
+-function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});}
++function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error),retryable:error?.retryable,code:error?.code});}
+ addEventListener('error',e=>fail(e.error||e.message));addEventListener('unhandledrejection',e=>fail(e.reason));
+ addEventListener('pagehide',()=>{failed=true;GPU.device?.destroy();});
+ try{
+diff --git a/scripts/PipelineCompiler.swift b/scripts/PipelineCompiler.swift
+new file mode 100644
+index 0000000..e1436b4
+--- /dev/null
++++ b/scripts/PipelineCompiler.swift
+@@ -0,0 +1,44 @@
++// Compile-only WebKit host. No simulated browser, Metal substitute or retries.
++import AppKit
++import WebKit
++
++final class Compiler: NSObject, WKScriptMessageHandler, WKNavigationDelegate {
++    var webView: WKWebView!
++    var window: NSWindow!
++    var finished = false
++    func finish(_ text: String, _ success: Bool) {
++        guard !finished else { return }; finished = true
++        try? text.write(toFile: CommandLine.arguments[2], atomically: true, encoding: .utf8)
++        print(success ? "PASS: all Apple WebKit WGSL modules and pipelines" : "FAIL: Apple WebKit pipeline check; see report")
++        exit(success ? 0 : 1)
++    }
++    func userContentController(_ controller: WKUserContentController, didReceive message: WKScriptMessage) {
++        guard let text = message.body as? String,
++              let data = text.data(using: .utf8),
++              let report = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
++            finish("{\"passed\":false,\"errors\":[\"Invalid compiler result\"]}", false); return
++        }
++        finish(text, report["passed"] as? Bool == true)
++    }
++    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
++        finish("{\"passed\":false,\"errors\":[\"Compiler page failed to load\"]}", false)
++    }
++    func start() {
++        let config = WKWebViewConfiguration()
++        config.userContentController.add(self, name: "pipelineResult")
++        webView = WKWebView(frame: NSRect(x: 0, y: 0, width: 400, height: 400), configuration: config)
++        webView.navigationDelegate = self
++        window = NSWindow(contentRect: webView.frame, styleMask: [.titled], backing: .buffered, defer: false)
++        window.contentView = webView; window.makeKeyAndOrderFront(nil)
++        webView.load(URLRequest(url: URL(string: CommandLine.arguments[1])!))
++        DispatchQueue.main.asyncAfter(deadline: .now() + 300) {
++            self.finish("{\"passed\":false,\"errors\":[\"Apple compiler timed out\"]}", false)
++        }
++    }
++}
++guard CommandLine.arguments.count == 3 else { fatalError("Usage: PipelineCompiler URL report.json") }
++let application = NSApplication.shared
++application.setActivationPolicy(.accessory)
++let compiler = Compiler()
++compiler.start()
++application.run()
+diff --git a/scripts/build-hosting.mjs b/scripts/build-hosting.mjs
+index 667f32d..71a4f22 100644
+--- a/scripts/build-hosting.mjs
++++ b/scripts/build-hosting.mjs
+@@ -1,5 +1,6 @@
+ import fs from 'node:fs';
+ import {execFileSync} from 'node:child_process';
++execFileSync(process.execPath,['scripts/check-pipeline-release.mjs'],{stdio:'inherit'});
+ // Keep the approved scene's original build intact; serve its exact outputs as
+ // static assets beside the Sites server endpoint. No client framework migration.
+ fs.rmSync('hosting/public',{recursive:true,force:true});fs.mkdirSync('hosting/public',{recursive:true});
+diff --git a/scripts/build.mjs b/scripts/build.mjs
+index cd5ff80..2d93adf 100644
+--- a/scripts/build.mjs
++++ b/scripts/build.mjs
+@@ -86,6 +86,8 @@ execFileSync(process.execPath,['scripts/check-night-storm.mjs'],{stdio:'inherit'
+ execFileSync(process.execPath,['scripts/check-cloud-cache.mjs'],{stdio:'inherit'});
+ execFileSync(process.execPath,['scripts/check-weather-optics.mjs'],{stdio:'inherit'});
+ execFileSync(process.execPath,['scripts/check-optional-effects.mjs'],{stdio:'inherit'});
++execFileSync(process.execPath,['scripts/export-pipelines.mjs'],{stdio:'inherit'});
++execFileSync(process.execPath,['scripts/check-pipeline-modules.mjs'],{stdio:'inherit'});
+ execFileSync(process.execPath,['scripts/check-product-audit.mjs'],{stdio:'inherit'});
+ execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
+ execFileSync(process.execPath,['scripts/check-celestial.cjs'],{stdio:'inherit'});
+diff --git a/scripts/check-optional-effects.mjs b/scripts/check-optional-effects.mjs
+index cf54352..24b3733 100644
+--- a/scripts/check-optional-effects.mjs
++++ b/scripts/check-optional-effects.mjs
+@@ -14,6 +14,12 @@ assert.equal(spray.mesh.visible,false);assert.equal(spray.update(),undefined);
+ assert.equal(rain.visible,false);assert.equal(removed.length,2);
+ assert.equal(messages.filter(e=>e.status==='effect-disabled').length,2);
+ fx.checkPipelines();assert.equal(messages.length,2,'Disable events are emitted exactly once');
++const update=()=>42;app.breakers={mesh:{visible:true},update};
++assert(fx.handleError(Error('GPU pipeline could not initialize: BreakerLip main')));
++assert.equal(app.breakers.mesh.visible,false);assert.equal(app.breakers.update,update,'Keep crest simulation and attached surface foam');
++assert.equal(fx.describe().disabled.filter(e=>e.effect==='breaker-lip').length,1);
++fx.handleError(Error('GPU pipeline could not initialize: BreakerLip main'));
++assert.equal(fx.describe().disabled.filter(e=>e.effect==='breaker-lip').length,1);
+ app.engine.meshRenderer.pipelines.set('core',{label:'Water main',handle:{failed:true}});
+ assert.throws(()=>fx.checkPipelines(),/Mandatory GPU pipeline/,'Never hide a failed water pipeline');
+ app.engine.meshRenderer.pipelines.delete('core');
+@@ -24,7 +30,7 @@ assert.equal(creates,2);assert.equal(sky.pass.handle.failed,false);
+ assert.equal(app.nativeWeather.lightningDisabled,true);
+ assert.equal(app.nativeWeather.uniforms.fields.flash.value,0);
+ assert(app.nativeWeather.module.code.includes('return vec3f(0.0)'));
+-assert.equal(fx.describe().disabled.length,3);
++assert.equal(fx.describe().disabled.length,4);
+ const skyOk=await installOptionalSky(app,()=>({pass:{handle:{failed:false}}}),{pipelinesReady:async()=>{}},fx);
+ assert(skyOk.pass);
+ // RC2's mandatory-pipeline watcher and RC3's isolation must compose, not
+@@ -42,4 +48,20 @@ gpu.computePipeline({label:'FFT evolve',failed:true});await assert.rejects(gpu.p
+ const fatal=createOptionalEffects(recoverApp);
+ await assert.rejects(installOptionalSky(recoverApp,()=>({pass:{handle:{failed:true}}}),{pipelinesReady:async()=>{}},fatal),/Mandatory sky failed after/);
+ assert.equal(fatal.handleError(Error('Water main')),false);
+-console.log('PASS: optional spray/rain/bolt pipeline failures disable only those effects, once; core-water errors still throw. Mock handles, not iPhone WGSL evidence.');
++// Actual WebGPU validation scopes: reproduce RC4's invalid WGSL, then prove
++// its failed optional pipeline cannot poison the enclosing beach startup.
++const {create:makeGPU,globals}=await import('webgpu');Object.assign(globalThis,globals);
++Object.defineProperty(globalThis,'navigator',{value:{gpu:makeGPU(['backend=null'])},configurable:true});
++const {GPU}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js');
++await GPU.init({headless:true});
++const isolatedApp={scene:{remove(){}},breakers:{mesh:{visible:true},update}};
++const isolated=createOptionalEffects(isolatedApp),tracker=watchStartupGPU(GPU,()=>{},isolated);tracker.deviceReady();
++GPU.device.pushErrorScope('validation');
++console.log('Regression probe: the following reserved-keyword pipeline rejection is intentional.');
++const module=GPU.device.createShaderModule({label:'BreakerLip',code:'@vertex fn vs()->@builtin(position) vec4f{let coherent=true;return vec4f(0.0);}'});
++GPU.renderPipeline({label:'BreakerLip main',layout:'auto',vertex:{module,entryPoint:'vs'}});
++await GPU.pipelinesReady();assert.equal(isolatedApp.breakers.mesh.visible,false);
++assert.equal(await GPU.device.popErrorScope(),null,'Optional shader error must not reach BeachApp outer scope');
++assert.equal(isolated.describe().disabled.length,1);assert(isolated.describe().disabled[0].reason.includes('reserved'));
++tracker.stop();GPU.device.destroy();
++console.log('PASS: real invalid BreakerLip WGSL/pipeline isolated once; outer startup scope remains clean. Optional effects disabled independently, core errors fail, wave simulation retained. Dawn null, not iPhone evidence.');process.exit(0);
+diff --git a/scripts/check-pipeline-modules.mjs b/scripts/check-pipeline-modules.mjs
+new file mode 100644
+index 0000000..3a108e2
+--- /dev/null
++++ b/scripts/check-pipeline-modules.mjs
+@@ -0,0 +1,23 @@
++// Fast, strict WGSL precheck of EVERY module from the complete runtime graph.
++// Apple WebKit pipeline CI is a separate required release check.
++import fs from 'node:fs';import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {create,globals} from 'webgpu';Object.assign(globalThis,globals);
++const bytes=fs.readFileSync('.pipeline-check/manifest.json'),manifest=JSON.parse(bytes);
++const gpu=create(['backend=null']),adapter=await gpu.requestAdapter(),device=await adapter.requestDevice({requiredFeatures:manifest.features});
++const errors=[];
++for(const [id,descriptor] of Object.entries(manifest.shaders)){
++ device.pushErrorScope('validation');const info=await device.createShaderModule(descriptor).getCompilationInfo();
++ const scoped=await device.popErrorScope();
++ const messages=info.messages.filter(m=>m.type==='error').map(m=>m.message);if(scoped)messages.push(scoped.message);
++ if(messages.length)errors.push({id,label:descriptor.label,messages});
++}
++// The exact RC4 bug must be rejected by this validator, not just regex-checked.
++device.pushErrorScope('validation');
++const rejected=await device.createShaderModule({code:'@compute @workgroup_size(1) fn main(){ let coherent = true; }'}).getCompilationInfo();await device.popErrorScope();
++assert(rejected.messages.some(m=>m.type==='error'&&m.message.includes('reserved')),'Validator missed the RC4 reserved identifier');
++const result={backend:'Dawn strict WGSL (not Safari pipeline validation)',manifestHash:createHash('sha256').update(bytes).digest('hex'),modules:Object.keys(manifest.shaders).length,pipelines:manifest.pipelines.length,errors,passed:!errors.length};
++fs.writeFileSync('.pipeline-check/wgsl-report.json',JSON.stringify(result,null,2));
++fs.writeFileSync('night-report/weather-material-checks.json',JSON.stringify(result,null,2));
++device.destroy();assert.equal(errors.length,0,JSON.stringify(errors));
++console.log(`PASS: ${result.modules} actual shader modules; RC4 negative case rejected. Apple WebKit pipeline check still required.`);process.exit(0);
+diff --git a/scripts/check-pipeline-release.mjs b/scripts/check-pipeline-release.mjs
+new file mode 100644
+index 0000000..6b4eedc
+--- /dev/null
++++ b/scripts/check-pipeline-release.mjs
+@@ -0,0 +1,15 @@
++// Run after build.mjs has freshly assembled the real pipeline inventory.
++// Never accept the older module-only checks, a stale report, or disabled effects.
++import fs from 'node:fs';import assert from 'node:assert/strict';import {createHash} from 'node:crypto';
++const bytes=fs.readFileSync('.pipeline-check/manifest.json'),manifest=JSON.parse(bytes);
++const file='night-report/webkit-pipeline-checks.json';
++assert(fs.existsSync(file),'Release blocked: Apple WebKit all-pipeline CI evidence is missing');
++const report=JSON.parse(fs.readFileSync(file));
++assert.equal(report.backend,'Apple WebKit WebGPU');
++assert.equal(report.manifestHash,createHash('sha256').update(bytes).digest('hex'),'Release blocked: Apple compiler evidence is stale');
++assert.equal(report.revision,manifest.revision);assert.equal(report.passed,true);
++assert.equal(report.errors.length,0);assert.equal(report.modules.length,Object.keys(manifest.shaders).length);
++assert.equal(report.pipelines.length,manifest.pipelines.length);
++assert(report.modules.every(m=>m.errors.length===0));assert(report.pipelines.every(p=>p.errors.length===0));
++assert.deepEqual(report.pipelines.map(p=>[p.kind,p.label]),manifest.pipelines.map(p=>[p.kind,p.descriptor.label]));
++console.log(`PASS: exact ${report.revision} Apple WebKit evidence matches all ${report.pipelines.length} pipelines. Not an iPhone FPS test.`);
+diff --git a/scripts/check-pipelines-webkit.mjs b/scripts/check-pipelines-webkit.mjs
+new file mode 100644
+index 0000000..c4656a6
+--- /dev/null
++++ b/scripts/check-pipelines-webkit.mjs
+@@ -0,0 +1,23 @@
++import fs from 'node:fs';
++import http from 'node:http';
++import path from 'node:path';
++import {spawn,execFileSync} from 'node:child_process';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++if(process.platform!=='darwin')throw Error('Apple WebKit compiler required. This host cannot issue a Safari pass.');
++const folder=path.resolve('.pipeline-check');fs.mkdirSync(folder,{recursive:true});
++const bytes=fs.readFileSync(path.join(folder,'manifest.json'));
++const server=http.createServer((req,res)=>{
++ const files={'/manifest.json':[bytes,'application/json'],'/pipeline-compiler.html':[fs.readFileSync('scripts/pipeline-compiler.html'),'text/html'],'/pipeline-compiler.js':[fs.readFileSync('scripts/pipeline-compiler.js'),'application/javascript']};
++ const found=files[req.url];if(!found){res.writeHead(404);res.end();return;}res.writeHead(200,{'Content-Type':found[1],'Cache-Control':'no-store'});res.end(found[0]);
++});
++await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
++try{
++ const bin=path.join(folder,'PipelineCompiler'),reportPath=path.join(folder,'webkit-report.json');
++ execFileSync('swiftc',['scripts/PipelineCompiler.swift','-framework','AppKit','-framework','WebKit','-o',bin],{stdio:'inherit'});
++ const status=await new Promise((resolve,reject)=>{const child=spawn(bin,[`http://127.0.0.1:${server.address().port}/pipeline-compiler.html`,reportPath],{stdio:'inherit'});child.on('error',reject);child.on('exit',resolve);});
++ assert.equal(status,0,'Apple WebKit rejected a pipeline or could not compile');
++ const result=JSON.parse(fs.readFileSync(reportPath));
++ assert.equal(result.manifestHash,createHash('sha256').update(bytes).digest('hex'),'Compiler result must match this exact manifest');
++ assert.equal(result.passed,true);assert.equal(result.pipelines.length,JSON.parse(bytes).pipelines.length);
++}finally{server.close();}
+diff --git a/scripts/check-startup-reliability.mjs b/scripts/check-startup-reliability.mjs
+index 2f3d755..db95cf1 100644
+--- a/scripts/check-startup-reliability.mjs
++++ b/scripts/check-startup-reliability.mjs
+@@ -21,6 +21,10 @@ const terminal=harness();terminal.advance(700000);assert.equal(terminal.loads.le
+ const hidden=harness();hidden.hidden(true);hidden.advance(700000);assert.equal(hidden.loads.length,1);hidden.hidden(false);hidden.startup.message({status:'ready'});hidden.startup.dispose();
+ // Ready stops the startup timer, but actual device-loss still retries native.
+ const loss=harness();loss.startup.message({status:'ready'});loss.startup.message({status:'failed',reason:'Device lost'});loss.advance(7000);assert.equal(loss.loads.length,2);loss.startup.dispose();
++for(const details of [{reason:'GPU pipeline could not initialize: BreakerLip main'},{reason:'invalid binding',retryable:false},{reason:'WGSL validation error'}]){
++ const compile=harness();compile.startup.message({status:'failed',...details});compile.advance(20000);
++ assert.deepEqual(compile.loads,[1],'A deterministic compile failure must never recreate the beach');assert.equal(compile.failures.length,1);assert.equal(compile.pending.size,0);
++}
+ const manifest=JSON.parse(fs.readFileSync('dist/native-assets.json'));
+ const memory=new Map(),storage={open:async()=>({match:async url=>memory.get(typeof url==='string'?url:url.url)?.clone(),put:async(url,r)=>memory.set(url,r.clone())})};
+ let calls=0,progress=0,failOnce=true;
+diff --git a/scripts/check-weather-gate.mjs b/scripts/check-weather-gate.mjs
+index 5bd45ff..09f417f 100644
+--- a/scripts/check-weather-gate.mjs
++++ b/scripts/check-weather-gate.mjs
+@@ -9,7 +9,7 @@ const evidenceMethod=nativeSource.match(/  evidence\(\)\{return .*?\};\},/)[0].t
+ const locationCode=fs.readFileSync('ocean-proof/proof/location-gallery.js','utf8').replace(/^import .*;\n/gm,'').replace('export async function','async function');
+ const cadenceCode=fs.readFileSync('ocean-proof/proof/live-evidence.js','utf8').split('export function measureLiveCadence')[1].split('export function recordLiveCanvas')[0];
+ const code=fs.readFileSync('ocean-proof/proof/weather-fixture-page.js','utf8').replace(/^import .*;\n/gm,'');
+-for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture','old-revision','wrong-aa','flare-on','pipeline-changed','adaptive-off','hidden-gallery','hidden-screenshot','hidden-scrub','location-retry','location-failure','resume','upload-failure','clip-failure']){
++for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture','old-revision','wrong-aa','flare-on','pipeline-changed','adaptive-off','effect-disabled','hidden-gallery','hidden-screenshot','hidden-scrub','location-retry','location-failure','resume','upload-failure','clip-failure']){
+  const elements=new Map(),events=[];let tick=0,measured=scenario==='resume',submitted,interruptions=0,journal;const uploads=[];
+  const interrupt=()=>{interruptions++;c.document.hidden=true;queueMicrotask(()=>{c.document.hidden=false;events.push('foreground');});throw Error('Capture interrupted while hidden.');};
+  const node=()=>({style:{},append(){},hidden:false,textContent:'',disabled:false,value:'',src:''});const get=id=>elements.get(id)||elements.set(id,node()).get(id);
+@@ -17,7 +17,7 @@ for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture','old-re
+  let dpr=1.5,cacheReads=0;
+  const renderer={marine:{profileId:'inlet-beach'},get activeQuality(){return{dpr};},post:{aaMode:scenario==='wrong-aa'?'taa':'fxaa',flare:scenario==='flare-on'},nativeWeather:{state:{offshoreSamples:21},cache:{state:()=>({ready:++cacheReads>3})}},shore:{breakSpan:{value:1}}};
+  // Execute the real renderer evidence method so stale embedded revisions fail this test.
+- const native={ready:true,evidence:vm.runInNewContext('({'+evidenceMethod+'}).evidence',{INTEGRATION_BUILD:scenario==='old-revision'?{revision:'2026-10-12-natural-surf-v7'}:INTEGRATION_BUILD,G:{time:{value:1}},app:renderer,pipelined:true,gate:{stats:()=>({maxFramesInFlight:scenario==='pipeline-changed'?3:2})},adaptive:scenario==='adaptive-off'?null:{dpr:1.5,minDpr:1.1,maxDpr:1.6,verifiedFrames:1},shoreBusy:false,pendingShore:null,optionalEffects:{describe:()=>({disabled:[],degraded:false})}})};
++ const native={ready:true,evidence:vm.runInNewContext('({'+evidenceMethod+'}).evidence',{INTEGRATION_BUILD:scenario==='old-revision'?{revision:'2026-10-12-natural-surf-v7'}:INTEGRATION_BUILD,G:{time:{value:1}},app:renderer,pipelined:true,gate:{stats:()=>({maxFramesInFlight:scenario==='pipeline-changed'?3:2})},adaptive:scenario==='adaptive-off'?null:{dpr:1.5,minDpr:1.1,maxDpr:1.6,verifiedFrames:1},shoreBusy:false,pendingShore:null,optionalEffects:{describe:()=>({disabled:scenario==='effect-disabled'?[{effect:'breaker-lip'}]:[],degraded:scenario==='effect-disabled'})}})};
+  native.dispose=()=>events.push('disposed');
+  const win={location:{href:''},performance:{getEntriesByType:()=>[]},__daybuoyProfile:{id:'inlet-beach',lat:30.28,lon:-86,facing:201},__daybuoy:app,__daybuoyFixture:{apply(data){cacheReads=0;Object.assign(state,{fixture:true,fixtureId:data.id,data,time:data.time,live:false});},liveReview(){return{profile:{id:state.data.profileId,name:state.data.profileId},times:['sunrise','noon','sunset','night'].map((p,i)=>[p,i])};},reviewAt(time){state.time=time;return{time};}}};get('stage').contentWindow=win;
+  let stageSrc='';Object.defineProperty(get('stage'),'src',{get:()=>stageSrc,set(value){stageSrc=value;win.location.href=value;if(value.includes('&beach=')){assert(measured);const id=new URL(value,'https://test').searchParams.get('beach');Object.assign(state,{fixture:false,fixtureId:null,data:{source:'live',profileId:id==='cocoa-beach'&&(scenario==='location-failure'||scenario==='location-retry'&&value.endsWith('=1'))?'loading':id}});assert.equal(events.at(-1),'disposed');renderer.marine.profileId=id;win.__daybuoyProfile={id,lat:30.28,lon:-86,facing:201};}}});
+@@ -54,6 +54,7 @@ for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture','old-re
+  assert(submitted);assert.equal(submitted.kind,'weather');assert.equal(events.at(-1),'released');
+  if(['bad-dpr','wrong-fixture','old-revision','wrong-aa','flare-on','pipeline-changed','adaptive-off'].includes(scenario)){assert(submitted.report.error);assert.equal(submitted.files.length,1);assert(!events.includes('clip'));if(!['bad-dpr','wrong-fixture'].includes(scenario)){assert.equal(submitted.report.rendererMismatch.mismatches.length,1);assert(submitted.report.rendererMismatch.native);assert(submitted.report.error.includes('expected'));}}
+  else if(scenario==='location-failure'){assert.equal(submitted.report.locations.length,8);assert(submitted.report.locations.some(l=>l.profile.id==='san-diego'));assert(submitted.report.locationAttempts.some(a=>a.id==='cocoa-beach'&&a.state));assert(journal.completed.fps);assert(!journal.completed.complete);}
++ else if(scenario==='effect-disabled'){assert(submitted.report.error.includes('Full-effects gate unavailable'));assert(!journal.completed.fps);assert(!events.includes('clip'));}
+  else if(scenario==='upload-failure'){assert(journal.completed.fps);assert(journal.completed['location-phases-contact-sheet.jpg']);assert(!journal.completed['clear.jpg']);assert(!journal.completed.complete);assert.equal(submitted.key,'location-phases-contact-sheet.jpg','No diagnostic replaces pending media');}
+  else if(scenario==='clip-failure'){assert(journal.completed['scrub-part-1']);assert(!journal.completed['scrub-part-2']);assert(journal.completed.fps);assert(!journal.completed.complete);}
+  else{
+diff --git a/scripts/check-weather-optics.mjs b/scripts/check-weather-optics.mjs
+index 496b086..abd8938 100644
+--- a/scripts/check-weather-optics.mjs
++++ b/scripts/check-weather-optics.mjs
+@@ -40,6 +40,7 @@ assert.equal(WEATHER_FIXTURES.length,10);assert(WEATHER_FIXTURES.filter(f=>f.rev
+ const frozen=p=>execFileSync('git',['show','b28526883c84d2ab388e6ac0776dd1200a0675ad:'+p],{encoding:'utf8'});
+ const accepted=p=>execFileSync('git',['show','831258709f7ca9b781e3e9e9c41133b87279e42e:'+p],{encoding:'utf8'});
+ const rc3=p=>execFileSync('git',['show','d3bb33c5d91d47cd517cc5c62412f55478d76de0:'+p],{encoding:'utf8'});
++assert.equal(weather.split('export function guardNativeBreakerLip')[1],rc3('ocean-proof/proof/native-weather.js').split('export function guardNativeBreakerLip')[1],'RC5 restores the exact RC3 BreakerLip validity guard');
+ // RC4 exceptions: storm foam, onshore lips, fog, and the solar disc. Everything
+ // outside these explicitly bounded sections retains the earlier byte checks.
+ const priorSurfaces=rc3('ocean-proof/proof/weather-surfaces.js');
+@@ -51,7 +52,7 @@ assert(fogStart>0&&fogEnd>fogStart);preservedSurfaces=preservedSurfaces.slice(0,
+ assert.equal(preservedSurfaces,priorSurfaces,'RC4 must preserve rain, spray, sand, reflection and other material hooks');
+ assert(surfaces.includes('crestFoamInfo.reliefK*=1.0-.85*nativeNightStorm()'));
+ assert(surfaces.includes('nativeWeatherFog(col*alpha/max(aOut,.0001),pos)*aOut'));
+-assert(surfaces.includes('smoothstep(.78,1.03,b)'));
++assert(!surfaces.includes('lip.vertex=replace'),'RC5 restores the proven BreakerLip vertex path; weather remains fragment-only');
+ // Explicit Oct 11 exception: scrub-only horizon correction; the original
+ // water, sand, moon path, thin rain and lightning code remain byte-identical.
+ const surfaceStart=preservedSurfaces.indexOf(' // The atmosphere CPU readback');
+diff --git a/scripts/check-weather-surfaces.mjs b/scripts/check-weather-surfaces.mjs
+index 046f23f..9edef84 100644
+--- a/scripts/check-weather-surfaces.mjs
++++ b/scripts/check-weather-surfaces.mjs
+@@ -1,60 +1,5 @@
+-// Compile actual production material WGSL. Compute dispatch is deliberately
+-// omitted: Dawn null has 16 KB workgroup storage, below upstream SH's 18 KB.
+-// No pixels, iPhone throughput or full simulation validation is implied.
+-import assert from 'node:assert/strict';import fs from 'node:fs';
+-import {create,globals} from 'webgpu';Object.assign(globalThis,globals);
+-Object.defineProperty(globalThis,'navigator',{value:{gpu:create(['backend=null']),userAgent:'validation'},configurable:true});
+-globalThis.location={search:'?noClouds=1&quality=0'};globalThis.window=globalThis;globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=1;
+-globalThis.document={getElementById:()=>null};globalThis.fetch=async url=>new Response(fs.readFileSync(url instanceof URL?url:'ocean-proof/public/'+String(url).replace(/^\//,'')));
+-const {GPU}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js');
+-const {Engine}=await import('../ocean-proof/vendor/tidewater/src/engine/Engine.js');
+-const {MeshRenderer}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshRenderer.js');
+-const {PerspectiveCamera,Scene}=await import('../ocean-proof/vendor/tidewater/src/engine/index.js');
+-const {FrameUniforms}=await import('../ocean-proof/vendor/tidewater/src/engine/render/Frame.js');
+-const {composeShader}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Shader.js');
+-const {buildMeshShader}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshShader.js');
+-const {installNativeWeather}=await import('../ocean-proof/proof/native-weather.js');const {installNativeBeach}=await import('../ocean-proof/proof/NativeBeachScene.js');
+-const {installSkyOrb}=await import('../ocean-proof/proof/sky-orb.js');
+-const {installForecastSurf}=await import('../ocean-proof/proof/forecast-waves.js');
+-const {installSmallSurf}=await import('../ocean-proof/proof/scene-polish.js');
+-const {installWeatherSurfaces}=await import('../ocean-proof/proof/weather-surfaces.js');
+-const {BeachApp}=await import('../ocean-proof/proof/BeachApp.js');
+-const {ComputeKernel}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Compute.js');
+-ComputeKernel.prototype.dispatch=()=>{}; // no compute execution in this material-only test
+-Engine.prototype.init=async function(){await GPU.init({headless:true});this.canvas=this.domElement={width:390,height:844,style:{}};this.meshRenderer=new MeshRenderer();this.camera=new PerspectiveCamera(62,390/844,.3,60000);this.scene=new Scene();FrameUniforms.fields.outputResolution.value.set(390,844);GPU.computePipeline=()=>({pipeline:null,validationOnly:true});};
+-const app=new BeachApp();app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};app.frame=()=>{};
+-app.configureNativeShore=()=>{installSmallSurf(app.shore);app.forecastSurf=installForecastSurf(app.shore);};
+-const validated=[],bindingLimits=[];
+-app.precompile=async()=>{
+- GPU.device.pushErrorScope('validation');
+- assert.equal(app.fft.params.fields.sysA.value.length,4);
+- for(const key of ['initSpectrumKernel','conjugateKernel','copyH0Kernel','rowKernel','columnKernel']){const info=await GPU.device.createShaderModule({code:app.fft[key].source}).getCompilationInfo();assert.equal(info.messages.filter(m=>m.type==='error').length,0,key+': '+info.messages.map(m=>m.message).join('\n'));}
+- assert.equal(app.breakers.crest.count,app.breakers.NS*9);
+- const beach=installNativeBeach(app),surfaces=installWeatherSurfaces(app,beach);
+- assert(!app.spray.material.modules.includes(app.nativeWeather.module),'Spray material must not bind entire weather/cloud shader in vertex stage');
+- assert(app.spray.material.vertex.includes('let sun = frame.sunColor * sunVis;'),'Spray vertex shader must match the last passing v8.2');
+- assert.equal(app.spray.material.vertex.includes('nativeFoamIncident('),false,'No indirect weather function in Spray vertex');
+-
+- app.post._finalPass={source:fs.readFileSync('ocean-proof/vendor/tidewater/src/post/PostFX.js','utf8')};const orb=installSkyOrb(app,beach);const orbInfo=await GPU.device.createShaderModule({code:orb.pass.source}).getCompilationInfo();assert.equal(orbInfo.messages.filter(m=>m.type==='error').length,0,orbInfo.messages.map(m=>m.message).join('\n'));assert(orb.pass.source.includes('fn beachSkyColour('));assert.equal(orb.state().size,64);
+- assert.equal(surfaces.rain.geometry.instanceCount,384);assert(app.spray.module.code.includes('nativeWeather.gustExtra'));
+- assert(app.breakers.kernel.source.includes('nativeWeather.gustExtra'),'Gust must reach the compiled emitter, not just its module');
+- const computeInfo=await GPU.device.createShaderModule({code:app.breakers.kernel.source}).getCompilationInfo();
+- assert.equal(computeInfo.messages.filter(m=>m.type==='error').length,0,computeInfo.messages.map(m=>m.message).join('\n'));
+- const materials=[app.waterMaterial,app.terrain.material,beach.stand.material,surfaces.rain.material,app.breakers.mesh.material,app.spray.material];
+- for(const material of materials){
+-  // The real MeshRenderer resolves lazy lighting hooks before shader assembly.
+-  // RC3 restores the unmodified Spray material, including that lazy lifecycle.
+-  material.pipelineKey();
+-  const layout=[{name:'position',wgsl:'vec3f',location:0},{name:'normal',wgsl:'vec3f',location:1},{name:'uv',wgsl:'vec2f',location:2},...(material.attributes.nodeData?[{name:'nodeData',wgsl:'vec4f',location:3,instanced:true}]:[])];
+-  const src=buildMeshShader(material,layout,{kind:'main'}),composed=composeShader({...src,stage:'render'}),info=await GPU.device.createShaderModule({code:composed.code}).getCompilationInfo();
+-  assert.equal(info.messages.filter(m=>m.type==='error').length,0,material.name+' '+info.messages.map(m=>m.message).join('\n'));validated.push(material.name);
+- }
+- const error=await GPU.device.popErrorScope();
+- if(error){assert(error.message.includes('sampled textures (23)')&&error.message.includes('limit (16)'),error.message);bindingLimits.push('Water material needs 23 sampled textures including the single cloud atlas; Dawn null supports 16. Binding/pipeline execution is not verified.');}
+- assert.equal(Object.keys(app.nativeWeather.cache.module.bindings).filter(k=>k==='cloudAtlas').length,1);
+- assert(!app.nativeWeather.module.code.includes('marchLayer'),'No per-frame volumetric march');
+-};
+-let environmentLimit=null;
+-try{await app.init();}catch(e){if(!e.message.includes('storage textures (5)')||!e.message.includes('envSource mips'))throw e;environmentLimit='Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).';}
+- assert.equal(validated.length,6);
+-const result={backend:'Dawn null: shader semantics, no pixels',validated,bindingLimits,computeDispatch:'Not tested',environmentLimit,physicalDevice:false};fs.writeFileSync('night-report/weather-material-checks.json',JSON.stringify(result,null,2));console.log('PASS: '+validated.join(', ')+' production WGSL semantics. Resource-limited pipeline execution is unverified; no pixels or performance claim.');process.exit(0);
++// The incomplete six-material test is retired. Include every runtime guard.
++import {execFileSync} from 'node:child_process';
++execFileSync(process.execPath,['scripts/export-pipelines.mjs'],{stdio:'inherit'});
++execFileSync(process.execPath,['scripts/check-pipeline-modules.mjs'],{stdio:'inherit'});
++console.log('Apple WebKit pipeline validation is additionally required by build-hosting.mjs. No ignored resource-limit errors or Safari pass implied.');
+diff --git a/scripts/export-pipelines.mjs b/scripts/export-pipelines.mjs
+new file mode 100644
+index 0000000..8122d4d
+--- /dev/null
++++ b/scripts/export-pipelines.mjs
+@@ -0,0 +1,75 @@
++// INVENTORY ONLY. Null-device resource limits cannot represent an iPhone.
++// No GPU work executes here and this command NEVER issues a compiler pass.
++// check-pipelines-webkit.mjs replays every captured descriptor on Apple WebKit.
++import fs from 'node:fs';
++import assert from 'node:assert/strict';
++import {createHash} from 'node:crypto';
++import {create,globals} from 'webgpu';
++Object.assign(globalThis,globals);
++Object.defineProperty(globalThis,'navigator',{value:{gpu:create(['backend=null','enable-dawn-features=skip_validation']),userAgent:'iPhone pipeline inventory'},configurable:true});
++globalThis.location={search:'?noClouds=1&quality=0'};globalThis.window=globalThis;
++globalThis.innerWidth=390;globalThis.innerHeight=844;globalThis.devicePixelRatio=1.5;
++globalThis.document={getElementById:()=>null};
++globalThis.fetch=async url=>new Response(fs.readFileSync(url instanceof URL?url:'ocean-proof/public/'+String(url).replace(/^\//,'')));
++const {GPU}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/GPU.js');
++const {Engine}=await import('../ocean-proof/vendor/tidewater/src/engine/Engine.js');
++const {MeshRenderer}=await import('../ocean-proof/vendor/tidewater/src/engine/render/MeshRenderer.js');
++const {PerspectiveCamera,Scene}=await import('../ocean-proof/vendor/tidewater/src/engine/index.js');
++const {FrameUniforms}=await import('../ocean-proof/vendor/tidewater/src/engine/render/Frame.js');
++const {Texture}=await import('../ocean-proof/vendor/tidewater/src/engine/gpu/Texture.js');
++const {installNativeWeather,guardNativeBreakerLip}=await import('../ocean-proof/proof/native-weather.js');
++const {installNativeBeach}=await import('../ocean-proof/proof/NativeBeachScene.js');
++const {installForecastSurf}=await import('../ocean-proof/proof/forecast-waves.js');
++const {installSmallSurf}=await import('../ocean-proof/proof/scene-polish.js');
++const {installWeatherSurfaces}=await import('../ocean-proof/proof/weather-surfaces.js');
++const {NativeOverlays}=await import('../ocean-proof/proof/NativeOverlays.js');
++const {BeachApp}=await import('../ocean-proof/proof/BeachApp.js');
++const {INTEGRATION_BUILD}=await import('../ocean-proof/proof/integration-build.js');
++const objects=new WeakMap(),pipelines=[],shaders={};
++const hash=s=>createHash('sha256').update(s).digest('hex');
++const serialize=v=>v&&typeof v==='object'?(objects.has(v)?objects.get(v):Array.isArray(v)?v.map(serialize):Object.fromEntries(Object.entries(v).map(([k,x])=>[k,serialize(x)]))):v;
++// Commands are traversed to build lazy pipelines, never executed or certified.
++const noops=new Proxy({},{get:()=>()=>{}});
++const encoder=new Proxy({beginComputePass:()=>noops,beginRenderPass:()=>noops,finish:()=>null},{get:(o,k)=>o[k]||(()=>{})});
++Engine.prototype.init=async function(){
++ await GPU.init({headless:true});
++ for(const [method,kind] of [['createShaderModule','shader'],['createBindGroupLayout','bindGroupLayout'],['createPipelineLayout','pipelineLayout']]){
++  const original=GPU.device[method].bind(GPU.device);
++  GPU.device[method]=desc=>{const out=original(desc);const data=serialize(desc);if(kind==='shader'){const id=hash(data.code);shaders[id]=data;objects.set(out,{kind,id});}else objects.set(out,{kind,descriptor:data});return out;};
++ }
++ GPU.getEncoder=()=>encoder;GPU.submit=()=>{};GPU.pipelinesReady=async()=>{};
++ GPU.ready=h=>h.pipeline;
++ for(const [method,kind] of [['renderPipeline','render'],['computePipeline','compute']])GPU[method]=desc=>{const descriptor=serialize(desc);pipelines.push({kind,descriptor});return{pipeline:{},label:desc.label,failed:false};};
++ this.canvas=this.domElement={width:585,height:1266,style:{}};
++ this.meshRenderer=new MeshRenderer();this.meshRenderer.syncPipelines=false;
++ this.camera=new PerspectiveCamera(62,390/844,.3,60000);this.scene=new Scene();
++ FrameUniforms.fields.outputResolution.value.set(585,1266);
++};
++const app=new BeachApp();
++app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};
++app.configureNativeShore=()=>{installSmallSurf(app.shore);app.forecastSurf=installForecastSurf(app.shore);};
++const prepare=app.precompile.bind(app);
++app.precompile=async()=>{
++ guardNativeBreakerLip(app.breakers);const provenVertex=app.breakers.mesh.material.vertex;
++ const beach=installNativeBeach(app);new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
++ assert.equal(app.breakers.mesh.material.vertex,provenVertex,'BreakerLip vertex must retain the proven path');
++ assert(!app.spray.material.modules.includes(app.nativeWeather.module),'Spray weather dependency regression');
++ app.engine.setRenderScale(1.5);app.post.aaMode='fxaa';app.post.flare=null;
++ app.post.outputTexture=new Texture({label:'compile inventory output',width:585,height:1266,format:'bgra8unorm',usage:['render','copySrc','sample']});app.post.outputSize={width:585,height:1266};
++ app.spray.NG=app.spray.maxGPU;app.spray._buildUpdate();
++ await prepare();
++};
++await app.init();
++// All runtime conditions are uniforms. Exercise their control paths to discover
++// lazy pipelines too; precompile traverses every mesh, including invisible ones.
++for(const swell of [1,3,6]){app.setForecast({swell,period:swell===6?11:7,direction:180,wind:25,windDirection:180,tide:.2,cloud:100});app.frame(1/60);}
++const unique=[...new Map(pipelines.map(p=>[hash(JSON.stringify(p)),p])).values()];
++for(const label of ['BreakerLip main','Spray main','Forecast thin rain particles main'])assert(unique.some(p=>p.descriptor.label===label),'Missing pipeline '+label);
++assert(unique.some(p=>p.descriptor.label.includes('native sky')));
++assert(unique.filter(p=>p.kind==='compute').length>=20,'Incomplete compute traversal');
++const payload={schema:1,revision:INTEGRATION_BUILD.revision,features:[...GPU.features],scope:'All shipping native pipelines; inventory only, no compiler result',shaders,pipelines:unique};
++fs.mkdirSync('.pipeline-check',{recursive:true});
++fs.writeFileSync('.pipeline-check/manifest.json',JSON.stringify(payload));
++console.log('Exported '+unique.length+' pipeline descriptors, '+Object.keys(shaders).length+' shader modules. NOT a compile pass.');
++console.log(unique.map(p=>p.kind+': '+p.descriptor.label).join('\n'));
++GPU.device.destroy();process.exit(0);
+diff --git a/scripts/pipeline-compiler.html b/scripts/pipeline-compiler.html
+new file mode 100644
+index 0000000..942206b
+--- /dev/null
++++ b/scripts/pipeline-compiler.html
+@@ -0,0 +1,11 @@
++<!doctype html><meta charset="utf-8"><title>DayBuoy pipeline compilation</title>
++<script type="module">
++import {compilePipelines} from './pipeline-compiler.js';
++try{
++ const bytes=await (await fetch('/manifest.json')).arrayBuffer();
++ const manifest=JSON.parse(new TextDecoder().decode(bytes));
++ manifest.manifestHash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',bytes)),b=>b.toString(16).padStart(2,'0')).join('');
++ const result=await compilePipelines(manifest);
++ window.webkit.messageHandlers.pipelineResult.postMessage(JSON.stringify(result));
++}catch(error){window.webkit.messageHandlers.pipelineResult.postMessage(JSON.stringify({passed:false,errors:[String(error)]}));}
++</script>
+diff --git a/scripts/pipeline-compiler.js b/scripts/pipeline-compiler.js
+new file mode 100644
+index 0000000..e158bf8
+--- /dev/null
++++ b/scripts/pipeline-compiler.js
+@@ -0,0 +1,45 @@
++// Runs unchanged in Apple WKWebView (Safari's WebGPU implementation).
++// Every error, missing adapter, timeout or incomplete inventory is a failure.
++export async function compilePipelines(manifest,{gpu=navigator.gpu}={}){
++ const result={schema:1,backend:'Apple WebKit WebGPU',userAgent:navigator.userAgent,revision:manifest.revision,manifestHash:manifest.manifestHash,passed:false,modules:[],pipelines:[],errors:[],physicalIPhone:false};
++ let device;
++ try{
++  if(!gpu)throw Error('WebGPU unavailable; no compiler evidence');
++  const adapter=await gpu.requestAdapter({powerPreference:'high-performance'});
++  if(!adapter)throw Error('WebGPU adapter unavailable; no compiler evidence');
++  // Same negotiated limits as the frozen production GPU.init path.
++  const want={maxSampledTexturesPerShaderStage:32,maxSamplersPerShaderStage:16,maxStorageBuffersPerShaderStage:10,maxStorageTexturesPerShaderStage:8,maxComputeWorkgroupStorageSize:32768,maxColorAttachmentBytesPerSample:64,maxStorageBuffersInVertexStage:4,maxStorageBuffersInFragmentStage:8,maxStorageTexturesInFragmentStage:4,maxBindingsPerBindGroup:1000,maxBufferSize:1073741824,maxStorageBufferBindingSize:536870912};
++  const limits=Object.fromEntries(Object.entries(want).filter(([k])=>adapter.limits[k]!==undefined).map(([k,v])=>[k,Math.min(v,adapter.limits[k])]));
++  const features=manifest.features||[];
++  for(const feature of features)if(!adapter.features.has(feature))throw Error('Missing source variant capability: '+feature);
++  device=await adapter.requestDevice({requiredLimits:limits,requiredFeatures:features});
++  result.limits=limits;result.features=features;
++  device.addEventListener('uncapturederror',e=>result.errors.push(e.error.message));
++  const modules=new Map();
++  for(const [id,descriptor] of Object.entries(manifest.shaders)){
++   device.pushErrorScope('validation');
++   const module=device.createShaderModule(descriptor),info=await module.getCompilationInfo();
++   const errors=info.messages.filter(m=>m.type==='error').map(m=>`${m.lineNum}:${m.linePos} ${m.message}`);
++   const scoped=await device.popErrorScope();if(scoped)errors.push(scoped.message);
++   modules.set(id,module);result.modules.push({id,label:descriptor.label,errors});
++  }
++  const layoutCache=new Map();
++  function hydrate(value){
++   if(!value||typeof value!=='object')return value;
++   if(value.kind==='shader'){if(!modules.has(value.id))throw Error('Missing module '+value.id);return modules.get(value.id);}
++   if(value.kind==='bindGroupLayout'||value.kind==='pipelineLayout'){
++    const key=JSON.stringify(value);if(!layoutCache.has(key))layoutCache.set(key,device[value.kind==='bindGroupLayout'?'createBindGroupLayout':'createPipelineLayout'](hydrate(value.descriptor)));return layoutCache.get(key);
++   }
++   if(Array.isArray(value))return value.map(hydrate);
++   return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,hydrate(v)]));
++  }
++  for(const item of manifest.pipelines){
++   const errors=[];device.pushErrorScope('validation');
++   try{await device[item.kind==='render'?'createRenderPipelineAsync':'createComputePipelineAsync'](hydrate(item.descriptor));}catch(e){errors.push(e.message);}
++   const scoped=await device.popErrorScope();if(scoped)errors.push(scoped.message);
++   result.pipelines.push({kind:item.kind,label:item.descriptor.label,errors});
++  }
++  result.passed=result.errors.length===0&&result.modules.every(m=>!m.errors.length)&&result.pipelines.length===manifest.pipelines.length&&result.pipelines.length>0&&result.pipelines.every(p=>!p.errors.length);
++ }catch(e){result.errors.push(String(e.message||e));}finally{device?.destroy();}
++ return result;
++}
+diff --git a/src/native-startup.js b/src/native-startup.js
+index 354f4e9..3a4dd99 100644
+--- a/src/native-startup.js
++++ b/src/native-startup.js
+@@ -16,6 +16,9 @@ function createNativeStartup({load,dispose,onProgress,onReady,onFallback,now=()=
+  }
+  function retry(reason){
+   if(stopped||recovering)return;
++  // Shader source/layout failures are deterministic. A fresh iframe/device
++  // cannot repair them; optional effects have already been isolated in-place.
++  if(/(?:shader|pipeline).*(?:compil|initializ|reject|fail|invalid)|GPUValidationError|GPUPipelineError|WGSL/i.test(String(reason))){audit.history.push({attempt:audit.attempt,event:'compile-failed',reason:String(reason),at:now()});fail(reason);return;}
+   ready=false;recovering=true;stopTimer();audit.history.push({attempt:audit.attempt,event:'retry',reason:String(reason),at:now()});audit.lastError=String(reason);
+   dispose();
+   if(audit.attempt>=policy.attempts||elapsed>=policy.totalMs){fail(reason);return;}
+@@ -31,7 +34,7 @@ function createNativeStartup({load,dispose,onProgress,onReady,onFallback,now=()=
+  }
+  function message(d){
+   if(stopped||recovering)return;
+-  if(d.status==='failed'){retry(d.reason||'Renderer interrupted');return;}
++  if(d.status==='failed'){if(d.retryable===false){audit.history.push({attempt:audit.attempt,event:'compile-failed',reason:d.reason,at:now()});fail(d.reason||'GPU compilation failed');}else retry(d.reason||'Renderer interrupted');return;}
+   if(d.status==='loading'&&!ready){lastProgress=now();idleElapsed=0;audit.phase=d.phase||'loading';if(d.assetProgress)audit.assets=d.assetProgress;publish(d.label||'Preparing the beach',d.fraction);return;}
+   if(d.status==='ready'){stopTimer();ready=true;audit.phase='ready';audit.fraction=1;audit.history.push({attempt:audit.attempt,event:'ready',at:now()});publish('Beach ready',1);onReady();}
+  }
