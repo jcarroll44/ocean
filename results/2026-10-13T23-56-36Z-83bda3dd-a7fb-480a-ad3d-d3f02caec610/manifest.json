@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T23-56-36Z-83bda3dd-a7fb-480a-ad3d-d3f02caec610",
+  "kind": "weather",
+  "fingerprint": "337688acb48b326d358d4e30569016e5e22faf51d211f00fe9646bf317eaa03d",
+  "receivedAt": "2026-10-13T23:56:37.329Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1002542,
+      "type": "application/json",
+      "sha256": "10b3c26710e7229ebb715ce6af2b8fb5ed31c0cd2dab043145fea48129901112"
+    },
+    {
+      "name": "phase-san-diego-sunset.jpg",
+      "size": 72364,
+      "type": "image/jpeg",
+      "sha256": "4c4b8b5026d3d913e6fe152fd846ac33f42ac1248175bda6b1ce5efef2638794"
+    }
+  ]
+}
