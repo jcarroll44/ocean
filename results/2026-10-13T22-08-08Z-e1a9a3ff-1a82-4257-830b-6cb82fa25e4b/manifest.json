@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T22-08-08Z-e1a9a3ff-1a82-4257-830b-6cb82fa25e4b",
+  "kind": "weather",
+  "fingerprint": "ce629b3d0c67edd4c654d123ca7bbb21dd842dd04dfa1e12437d15f7604bc9b1",
+  "receivedAt": "2026-10-13T22:08:09.539Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1088021,
+      "type": "application/json",
+      "sha256": "379ada6c8be3c82fe0af3741ab467f33936c6fe04d4f355476eeaae694c16395"
+    },
+    {
+      "name": "fixtures-contact-sheet.jpg",
+      "size": 326233,
+      "type": "image/jpeg",
+      "sha256": "dc4bc708034e1a6d61341c3f76957185046a83c977ba9e396024ecc7b8c639d7"
+    }
+  ]
+}
