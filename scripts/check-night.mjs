@@ -26,7 +26,19 @@ context.engine.render(.016);assert.equal(rendered,1);assert.equal($('#ocean').st
 listeners.message({origin:'https://test',source:native.contentWindow,data:{type:'proof',status:'ready'}});context.engine.render(.016);assert.equal($('#ocean').style.opacity,'0');assert.equal(rendered,1);assert(native.contentWindow.sent.some(x=>x.type==='daybuoy-frame'&&x.forecast.swell===3));
 context.state.playing=true;context.engine.render(.016);assert.equal($('#ocean').style.opacity,'1');context.state.playing=false;context.uniforms.uSun.value.y=-.3;context.engine.render(.016);assert.equal($('#ocean').style.opacity,'1');
 listeners.message({origin:'https://test',source:native.contentWindow,data:{type:'proof',status:'failed'}});context.uniforms.uSun.value.y=.5;context.engine.render(.016);assert.equal($('#ocean').style.opacity,'1');ok('Archived adapter only (not shipped): packet, handoff and failure behavior');
-for(const file of ['src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js','src/weather-effects.js','src/celestial.js'])assert.equal(fs.readFileSync(file,'utf8'),applyApprovedCopy(file,execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:16000000})));ok('Camera, gestures, astronomy, weather and story behavior preserved; approved condition-copy exception only');
+for(const file of ['src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js','src/weather-effects.js','src/celestial.js']){
+ const approved=applyApprovedCopy(file,execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:16000000}));
+ let actual=fs.readFileSync(file,'utf8');
+ if(file==='src/camera.js'){
+  const hook='function approvedBeachTarget(){',end='\nlet cameraVelocity=';
+  const i=actual.indexOf(hook),j=actual.indexOf(end,i),a=approved.indexOf(hook),b=approved.indexOf(end,a);
+  assert(i>=0&&j>i&&a>=0&&b>a,'Inlet sunrise target hook preserved');
+  assert(actual.slice(i,j).includes("SITE.id==='inlet-beach'")&&actual.slice(i,j).includes('bearing=-83*RAD'),'Water-facing Inlet sunrise correction must remain');
+  actual=actual.slice(0,i)+approved.slice(a,b)+actual.slice(j);
+ }
+ assert.equal(actual,approved,file+' changed outside approved condition-copy/Inlet-sunrise scope');
+}
+ok('Camera outside Inlet sunrise, gestures, astronomy, weather and story preserved');
 for(const f of ['src/night-presentation.js','src/night-bridge.js'])execFileSync(process.execPath,['--check',f]);
 const html=fs.readFileSync('dist/index.html','utf8');new vm.Script(html.match(/<script>([\s\S]*)<\/script>/)[1]);ok('Final app bundle parses');
 fs.mkdirSync('night-report',{recursive:true});fs.writeFileSync('night-report/validation.json',JSON.stringify({date:'2026-10-06',checks,unverified:['iPhone sustained fps','full renderer shader compilation','visual comparison, screenshots and video','live forecast network reliability','rendered CSS, contrast and touch ergonomics']},null,2));console.log(JSON.stringify(checks,null,2));
