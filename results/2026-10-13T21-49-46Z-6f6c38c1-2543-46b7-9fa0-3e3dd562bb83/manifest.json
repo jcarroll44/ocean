@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T21-49-46Z-6f6c38c1-2543-46b7-9fa0-3e3dd562bb83",
+  "kind": "weather",
+  "fingerprint": "68203a1d82fdfe970edcae2920ef1bd7b2d402b93a60e3b75868b58728ab297c",
+  "receivedAt": "2026-10-13T21:49:47.626Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 988640,
+      "type": "application/json",
+      "sha256": "b3eb275ccdcbc6c3b7fc67bb4efe0643916952fae10cdba4c6caff179049ec61"
+    },
+    {
+      "name": "phase-san-diego-dusk.jpg",
+      "size": 54265,
+      "type": "image/jpeg",
+      "sha256": "2b70c3415340622d30d0174eb90c54f030106e6a1b3a118528b6ea9eb2705a19"
+    }
+  ]
+}
