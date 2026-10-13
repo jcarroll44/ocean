@@ -14,10 +14,17 @@ assert(app.includes("host.src='ocean-proof/proof/native-scene.html"));
 assert(app.includes('class="db-screen'));
 // Oct 11 explicitly authorizes the native sky/surf changes. Those files are
 // checked by check-scene-polish, including the unchanged pinned ocean vendor.
-for(const file of ['src/index.html','src/daybuoy.js','src/reference.css','src/reference-host.css','src/reference-fonts.css','src/home.js','src/camera.js','src/native-layer.js']){
+for(const file of ['src/index.html','src/daybuoy.js','src/reference.css','src/reference-host.css','src/reference-fonts.css','src/home.js','src/camera.js']){
  const before=execFileSync('git',['show','532dfcfccf30e65f9cca41b7bcefa2abb9537618:'+file],{encoding:'utf8',maxBuffer:20000000});
  assert.equal(read(file),applyApprovedWeather(file,applyApprovedCopy(file,before)),file+' must remain byte-identical except explicitly authorized copy/weather packet');
 }
+// Startup retries are explicitly approved; protect the established GPU contract
+// rather than demanding the historical adapter's byte-identical implementation.
+const nativeLayer=read('src/native-layer.js');
+assert(nativeLayer.includes("currentAttempt>=3")&&nativeLayer.includes("host.src='about:blank'"));
+assert(nativeLayer.includes("proof.startupComplete=true"));
+assert(nativeLayer.includes("nativeBaseURL")&&nativeLayer.includes("initAttempt="));
+assert(!nativeLayer.includes("fallback('Native beach initialization timed out')"));
 const retired=read('ocean-overcast-profile.html');assert(retired.includes('diagnosis closed'));assert(!retired.includes('<script'));assert(retired.includes('/ocean-live.html?gate=1'));
 const live=read('ocean-live.html');assert(live.includes('INTEGRATION_BUILD'));assert(live.includes('pinTestViewport'));assert(!live.includes('overcast-test='));assert(!live.includes('native-capture='));
 console.log('PASS: one build includes native Tidewater and approved Verdict-first; scene/UI/camera unchanged; diagnosis retired; live adaptive gate has no forced sky or capture-mode override. Source checks, not rendered UI.');

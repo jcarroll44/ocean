@@ -16,7 +16,7 @@ let now=10000;const c={console,document,parent:{postMessage(){}},window:{addEven
 vm.createContext(c);vm.runInContext(read(dir+'/assets/app.js'),c);
 const app=c.window.__daybuoy;assert(app.engine.nativeScene);assert.equal(contexts,0);assert.equal(app.state.review,false);assert.equal(app.state.debug,false);assert(!app.captureFrame&&!app.renderForCapture&&!app.reviewData&&!c.window.__ocean);
 assert.equal(Object.keys(app).sort().join(','),'conditions,engine,state,uniforms');
-const host=document.querySelector('#tidewater-ocean-layer');assert.equal(host.src,'/scene.html');
+const host=document.querySelector('#tidewater-ocean-layer');assert.equal(host.src,'/scene.html?initAttempt=1');
 const canvas={};Object.defineProperty(host,'contentWindow',{value:{__daybuoyOcean:{ready:true,canvas,draw(p){packet=p;draws++;}}}});
 events.message({origin:'https://test',source:host.contentWindow,data:{type:'daybuoy-ocean',status:'ready'}});
 app.state.data.source='live';app.state.data.retrievedAt=TestDate.now();app.state.forecastFailed=false;

@@ -53,16 +53,16 @@ fn cachedCloud(dir:vec3f)->vec4f {
    const load=async name=>{
     const base64=bundled?.[name];
     if(typeof base64==='string'){
-     window.__daybuoyStartupMark?.('cloud-asset-bundled',{name,bytes:Math.floor(base64.length*3/4)});
+     globalThis.window?.__daybuoyStartupMark?.('cloud-asset-bundled',{name,bytes:Math.floor(base64.length*3/4)});
      const bytes=atob(base64),data=new Uint8Array(bytes.length);
      for(let i=0;i<bytes.length;i++)data[i]=bytes.charCodeAt(i);
      return data;
     }
-    window.__daybuoyStartupMark?.('cloud-asset-fetch-start',{name});
+    globalThis.window?.__daybuoyStartupMark?.('cloud-asset-fetch-start',{name});
     const r=await fetch(new URL('./'+name,import.meta.url));
     if(!r.ok)throw Error('Cloud noise asset unavailable: '+name+' (HTTP '+r.status+')');
     const data=new Uint8Array(await r.arrayBuffer());
-    window.__daybuoyStartupMark?.('cloud-asset-fetch-complete',{name,bytes:data.byteLength});return data;
+    globalThis.window?.__daybuoyStartupMark?.('cloud-asset-fetch-complete',{name,bytes:data.byteLength});return data;
    };
    const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(load));
   if(shape.length!==128**3||detail.length!==32**3)throw Error('Cloud noise asset length mismatch');
