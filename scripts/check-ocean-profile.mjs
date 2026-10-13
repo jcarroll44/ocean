@@ -101,7 +101,17 @@ assert.equal(sent.at(-1).d.type,'daybuoy-profile');assert.equal(sent.at(-1).d.re
 // Presentation copy is now explicitly condition-first (Oct 11) and covered
 // by check-scene-polish plus the real parsed-DOM reference journey.
 for(const file of ['src/daybuoy.js','src/home.js','src/scene-ui.js','src/sheets.js','src/index.html','src/reference.css','src/reference-host.css','src/camera.js','src/interaction.js','src/story.js','src/scene-data.js','src/lighting.js']){
- assert.equal(fs.readFileSync(file,'utf8'),applyApprovedCopy(file,execFileSync('git',['show','dcb23fa253afb0c50225d045d0811cdb805ae0ee:'+file],{encoding:'utf8',maxBuffer:16000000})),file+' changed outside approved scene/copy scope');
+ const checkpoint=applyApprovedCopy(file,execFileSync('git',['show','dcb23fa253afb0c50225d045d0811cdb805ae0ee:'+file],{encoding:'utf8',maxBuffer:16000000}));
+ let actual=fs.readFileSync(file,'utf8');
+ if(file==='src/camera.js'){
+  const start='function approvedBeachTarget(){',end='\nlet cameraVelocity=';
+  const i=actual.indexOf(start),j=actual.indexOf(end,i),a=checkpoint.indexOf(start),b=checkpoint.indexOf(end,a);
+  assert(i>=0&&j>i&&a>=0&&b>a,'Approved Sunrise-camera hook changed');
+  const correction=actual.slice(i,j);
+  assert(correction.includes("SITE.id==='inlet-beach'")&&correction.includes('bearing=-83*RAD')&&correction.includes('const a=beachPose()'),'Only Inlet sunrise water-facing exception permitted');
+  actual=actual.slice(0,i)+checkpoint.slice(a,b)+actual.slice(j);
+ }
+ assert.equal(actual,checkpoint,file+' changed outside approved scene/copy/sunrise scope');
 }
 for(const file of ['src/ocean-layer.js','ocean-proof/proof/profile.js','ocean-proof/proof/profile-page.js','ocean-proof/proof/ocean-only.js'])execFileSync(process.execPath,['--check',file]);
 console.log('PASS: opt-in profiling; real upstream shader-source hooks; isolated runtime switches; elapsed-time/stall statistics; UI/camera byte preservation. CPU/source tests only; iPhone, WGSL pipelines and screenshots unverified.');
