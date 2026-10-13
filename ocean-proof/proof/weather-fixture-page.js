@@ -33,7 +33,7 @@ addEventListener('message',event=>{
  if(stageName==='first-live-frame-submitted')firstFixtureFrameAt??=performance.now();
  if(!busy&&stageName!=='first-live-frame-submitted')$('status').textContent='Loading · '+stageName;
 });
-stage.addEventListener('load',()=>trace('fixture-document-loaded',{url:stage.contentWindow?.location?.pathname||'unknown'}));
+stage.addEventListener?.('load',()=>trace('fixture-document-loaded',{url:stage.contentWindow?.location?.pathname||'unknown'}));
 for(const f of [...WEATHER_FIXTURES,...WAVE_FIXTURES]){const option=document.createElement('option');option.value=f.id;option.textContent=f.title;$('fixture').append(option);}
 $('fixture').value=gateRequested?HEAVIEST_FIXTURE:(query.get('fixture')||'clear');
 const download=(blob,name,label)=>{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.textContent=label;$('downloads').append(a);return a.href;};
@@ -43,7 +43,7 @@ async function untilReady(test,timeout=480000){
  for(;;){
   if(document.hidden){await waitVisible();start=performance.now();lastStageTime=start;}
   if(startupEvents.length!==lastEventCount){lastEventCount=startupEvents.length;lastStageTime=performance.now();}
-  try{if(test())return;}catch(error){if(!/Waiting for the native beach/.test(String(error.message)))trace('readiness-probe',{error:String(error.message).slice(0,180)});}
+  try{if(test())return;}catch(error){if(!/Waiting for the native beach/.test(String(error.message))&&Math.round(performance.now()/3000)!==Math.round((performance.now()-100)/3000))trace('readiness-probe',{error:String(error.message).slice(0,180)});}
   const snapshot=sceneSnapshot();
   if(snapshot.backend==='WebGL fallback')throw Error('Native fixture failed after retries at '+snapshot.stage+': '+snapshot.error);
   const now=performance.now();
