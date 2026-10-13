@@ -49,7 +49,22 @@ fn cachedCloud(dir:vec3f)->vec4f {
  const bake=new UniformBlock('CloudBake',{row:['u32',0],column:['u32',0],layer:['i32',1],width:['u32',512],height:['u32',128]});
  let kernel,targetKey='initial',scrubbing=false,work=b;const empty=[1,1,1];
  const api={module,schedule,setKey(key,dragging=false){scrubbing=!!dragging;targetKey=String(key??'live')+(scrubbing?':scrub':'');},state(now=performance.now()){return{...b,ready:schedule.valid&&schedule.completedKey===targetKey&&schedule.mix(now)===1,active:schedule.active,row:schedule.row,column:schedule.column,empty:!!empty[schedule.current],generations:schedule.generations,targetKey,completedKey:schedule.completedKey,scrubbing,activeResolution:[work.width,work.height],snapshotLayers:snapshot.fields.covers.value.toArray()};},async initialize(){
-  const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(async name=>{const r=await fetch(new URL('./'+name,import.meta.url));if(!r.ok)throw Error('Cloud noise asset unavailable: '+name);return new Uint8Array(await r.arrayBuffer());}));
+  const bundled=globalThis.__DAYBUOY_BUNDLED_CLOUDS__;
+   const load=async name=>{
+    const base64=bundled?.[name];
+    if(typeof base64==='string'){
+     window.__daybuoyStartupMark?.('cloud-asset-bundled',{name,bytes:Math.floor(base64.length*3/4)});
+     const bytes=atob(base64),data=new Uint8Array(bytes.length);
+     for(let i=0;i<bytes.length;i++)data[i]=bytes.charCodeAt(i);
+     return data;
+    }
+    window.__daybuoyStartupMark?.('cloud-asset-fetch-start',{name});
+    const r=await fetch(new URL('./'+name,import.meta.url));
+    if(!r.ok)throw Error('Cloud noise asset unavailable: '+name+' (HTTP '+r.status+')');
+    const data=new Uint8Array(await r.arrayBuffer());
+    window.__daybuoyStartupMark?.('cloud-asset-fetch-complete',{name,bytes:data.byteLength});return data;
+   };
+   const [shape,detail]=await Promise.all(['takram-shape.bin','takram-detail.bin'].map(load));
   if(shape.length!==128**3||detail.length!==32**3)throw Error('Cloud noise asset length mismatch');
   const noise=(label,size,data)=>new Texture({label,width:size,height:size,depth:size,dimension:'3d',format:'r8unorm',data});
   kernel=new ComputeKernel({label:'Amortized 3D cloud bake · 256 pixels',workgroupSize:[8,1,1],modules:[new ShaderModule({uniforms:snapshot,uniformName:'weather'}),new ShaderModule({uniforms:bake,uniformName:'bake'})],bindings:{cloudShape:{texture:noise('Takram shape',128,shape)},cloudErosion:{texture:noise('Takram erosion',32,detail)},cloudOutput:{storageTexture:atlas,viewDimension:'2d-array'}},code:CLOUD_BAKE_WGSL});

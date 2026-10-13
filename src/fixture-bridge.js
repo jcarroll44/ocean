@@ -2,7 +2,7 @@
 const fixtureRealForecast=realForecast,fixtureAdopt=adopt,fixtureRefresh=refresh,fixturePresentation=renderPresentation;
 realForecast=function(){return state.data?.source==='fixture'&&state.fixture===true||fixtureRealForecast();};
 adopt=function(data){if(state.fixture)return;fixtureAdopt(data);};
-refresh=async function(){if(state.fixture)return;return fixtureRefresh();};
+refresh=async function(){if(state.fixture||new URLSearchParams(location.search).has('gate-fixture'))return;return fixtureRefresh();};
 renderPresentation=function(){fixturePresentation();if(state.fixture&&new URLSearchParams(location.search).get('ocean-debug')==='1'){$('#app').dataset.developer='true';$('#source-label').textContent='FIXTURE · '+state.fixtureTitle;const b=$('#reference-banner');b.hidden=false;b.textContent='Synthetic weather fixture · not a live forecast';}};
 window.__daybuoyFixture={
  openPaywall,closePaywall,

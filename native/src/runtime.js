@@ -30,9 +30,9 @@ if(Capacitor.isNativePlatform()){
  const sent=new Map();
  window.addEventListener('daybuoy:diagnostic',event=>{
   const {source,code}=event.detail||{};
-  if(!['forecast','weather','offshore','marine','air','tide','tideHiLo','nws-surf','renderer'].includes(source)||code!=='refresh-failed'&&code!=='unavailable')return;
+  if(!['forecast','weather','offshore','marine','air','tide','tideHiLo','nws-surf','renderer'].includes(source)||!['refresh-failed','unavailable','init-failed','init-retry','init-timeout'].includes(code))return;
   const key=source+':'+code;if(Date.now()-(sent.get(key)||0)<15*60e3)return;sent.set(key,Date.now());
-  if(config.sentryDsn)captureMessage('DayBuoy feed unavailable',{level:'warning',tags:{feed:source,code}});
+  if(config.sentryDsn)captureMessage(source==='renderer'?'DayBuoy native initialization diagnostic':'DayBuoy feed unavailable',{level:'warning',tags:{feed:source,code,stage:String(event.detail?.stage||'unknown').slice(0,70),attempt:String(event.detail?.attempt||0)}});
  });
  // Updates arrive only through signed TestFlight / App Store builds. No OTA.
  // Widget cold launches start at now by default; warm launches use this event.

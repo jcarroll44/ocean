@@ -59,7 +59,7 @@ export class BeachApp extends App{
   this.initialQuality=this.profileConfig?{mode:'manual',level:0}:initialQuality();
   const stage=async(p,label)=>{onProgress(p,label);await new Promise(r=>setTimeout(r,0));};
   await stage(.02,'Opening the beach');
-  this.engine=new Engine(document.getElementById('app'));await this.engine.init();
+  this.engine=new Engine(document.getElementById('app'));window.__daybuoyStartupMark?.('webgpu-device-request-start');await this.engine.init();window.__daybuoyStartupMark?.('webgpu-device-ready');
   GPU.device.pushErrorScope('validation');
   const engine=this.engine,scene=this.scene=engine.scene,camera=this.camera=engine.camera;this.renderer=engine;
   this.beachProfile=sceneProfile();G.waterAbsorption.value.set(...this.beachProfile.water.absorption);G.waterScattering.value.set(...this.beachProfile.water.scattering);
@@ -132,7 +132,7 @@ export class BeachApp extends App{
    if(this.profileConfig.pass==='lod'){applyMeshLOD(this,2);this.activeQuality.lod=2;}
   }
   await stage(.65,'Finishing the waves');await this.precompile();
-  await stage(.95,'Opening your view');this.frame(1/60);await GPU.queue.onSubmittedWorkDone();
+  await stage(.95,'Opening your view');window.__daybuoyStartupMark?.('first-app-frame-start');this.frame(1/60);await GPU.queue.onSubmittedWorkDone();window.__daybuoyStartupMark?.('first-app-frame-complete');
   const validation=await GPU.device.popErrorScope();if(validation)throw Error('The wave renderer could not start on this device: '+validation.message);
  }
  setForecast(c){return applyMarine(this,G,c);}

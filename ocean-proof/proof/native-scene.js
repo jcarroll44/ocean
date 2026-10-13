@@ -27,11 +27,20 @@ function diagnosticHost(){let host=window;for(let depth=0;depth<5;depth++){try{i
 import {installWeatherSurfaces} from './weather-surfaces.js';
 
 const smoothLight=transitionLight();
-const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
+const startupAttempt=Number(new URLSearchParams(location.search).get('initAttempt')||1);
+const send=data=>parent.postMessage({type:'daybuoy-ocean',attempt:startupAttempt,...data},location.origin);
+let lastStartupStage='native-module';
+function markStartup(stage,detail={}){
+ const row={type:'daybuoy-startup',stage,detail,attempt:startupAttempt,at:new Date().toISOString(),elapsedMs:Math.round(performance.now())};
+ lastStartupStage=stage;try{top.postMessage(row,location.origin);}catch{}
+ send({status:'loading',stage,label:stage});
+}
+window.__daybuoyStartupMark=markStartup;
+markStartup('native-module-evaluated');
 let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
 const completionListeners=new Set();let trace,shoreUpload;
-function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});console.error('Tidewater ocean:',error);}
+function fail(error){if(failed)return;failed=true;const reason=String(error?.message||error),atStage=lastStartupStage;markStartup('initialization-failed',{atStage,reason:reason.slice(0,500)});send({status:'failed',reason,atStage});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
 // Release even when navigation interrupts initialization before the API exists.
 window.addEventListener('pagehide',()=>{failed=true;GPU.device?.destroy();});
@@ -49,7 +58,7 @@ try{
   if(regression.lip)guardNativeBreakerLip(app.breakers);
   beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
-  app.proofFlare=app.post.flare;
+  app.proofFlare=app.post.flare;markStartup('precompile-preparing');
   if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
   if(app.profileConfig?.pass==='native-flare'||settings.flare===false)app.post.flare=null;
   // Compile with live marine/weather uniforms, then execute all production
@@ -57,8 +66,10 @@ try{
   if(!app.profileConfig&&initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();app.nativeWeather?.update(packet);beach.update(packet);}
   }
-  await app.nativeWeather?.cache?.warm();trace?.track(app);await prepare();// Weather glyphs need no GPU orb pass or readback.
-  await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  markStartup('cloud-texture-bake-start');await app.nativeWeather?.cache?.warm();markStartup('cloud-texture-bake-complete');
+  trace?.track(app);markStartup('shader-compile-start');await prepare();// Weather glyphs need no GPU orb pass or readback.
+  await GPU.pipelinesReady();markStartup('shader-compile-complete');markStartup('first-frame-warmup-start');
+  app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();markStartup('first-frame-warmup-complete');
   trace?.event('precompile-complete',{syncCompiles:GPU.syncCompiles.slice()});
  };
  // Native terrain, sky and objects share Tidewater's one scene renderer.
@@ -85,7 +96,7 @@ try{
  };
  // Do not initialize the proof's fabricated fixed-time sun for app startup.
  const initial=parent.__daybuoy; if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
- await app.init((fraction,label)=>send({status:'loading',fraction,label}));
+ markStartup('native-app-init-start');await app.init((fraction,label)=>{markStartup('init-stage:'+label,{fraction});});markStartup('native-app-init-complete');
 
  if(app.profileConfig&&!app.qs.has('native-capture')){
   profileRun=pipelined?new CompletedProfileRun(app.profileConfig):new ProfileRun(app.profileConfig);
@@ -141,7 +152,7 @@ try{
   for(const listener of completionListeners){try{listener({now,count});}catch(e){completionListeners.delete(listener);console.warn('Completion subscriber stopped:',e);}}
   if(now-lastReport>1000){const fps=completed.reduce((n,e)=>n+e.count,0)/Math.min(3,Math.max(.001,(now-started)/1000));lastReport=now;send({status:'running',backend:'WebGPU',pin:PIN,fps,metric:pipelined?'gpu-completed-pipelined':mode.wait?'gpu-completed':'raf-submitted',resolution:[app.engine.width,app.engine.height],quality:app.activeQuality,waveSeconds:G.time.value,period:app.shore.period.value,...(pipelined?{pipeline:gate.stats(),readbackThrottle}:{})});}
  }
- const api=window.__daybuoyOcean={
+ let firstRendered=false;const api=window.__daybuoyOcean={
   dispose(){failed=true;completionListeners.clear();worker.terminate();GPU.device.destroy();},
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
   diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
@@ -184,7 +195,8 @@ try{
     }
     trace?.end(app);
     probe?.draw(performance.now()-cpuStart);
-    if(pipelined)gate.submittedFrame();else gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);return true;
+    if(pipelined)gate.submittedFrame();else gate.submitted(GPU.queue,rafTime??performance.now(),tick,fail);
+    if(!firstRendered){firstRendered=true;markStartup('first-live-frame-submitted');}return true;
    }catch(e){fail(e);return false;}
   }
  };
