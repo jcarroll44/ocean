@@ -63,6 +63,7 @@ if(engine?.nativeScene){
   if(d.status==='loading'&&!ready&&!failed)status(d.stage||d.label);
   if(d.status==='failed')retry(d.reason||'Native initialization failed');
   if(d.status==='ready'&&!failed){clearTimeout(watchdog);ready=true;proof.backend='WebGPU native scene';proof.stage='renderer-ready';}
+  if(d.status==='effect-disabled'){(proof.disabledEffects??=[]).push({effect:d.effect,pipeline:d.pipeline,reason:d.reason});try{window.dispatchEvent(new CustomEvent('daybuoy:diagnostic',{detail:{source:'renderer',code:'optional-disabled',effect:d.effect,stage:d.pipeline,attempt:currentAttempt}}));}catch{}}
   if(d.status==='running'){proof.metrics=d;if(debug){badge.hidden=false;badge.textContent=`Native beach · ${d.fps.toFixed(1)} fps · ${d.resolution.join('×')}`;}}
  });
  engine.render=function(){

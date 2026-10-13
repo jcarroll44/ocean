@@ -14,25 +14,29 @@ import {installNativeWeather,guardNativeBreakerLip} from '../ocean-proof/proof/n
 import {installSmallSurf,smallSurfSpan} from '../ocean-proof/proof/scene-polish.js';
 import {ShoreUpload} from '../ocean-proof/proof/shore-upload.js';
 import {installWeatherSurfaces} from '../ocean-proof/proof/weather-surfaces.js';
+import {createOptionalEffects,installOptionalSky} from '../ocean-proof/proof/optional-effects.js';
 const smoothLight=transitionLight();
 const send=data=>parent.postMessage({type:'daybuoy-ocean',...data},location.origin);
-let app,beach,overlays,packet,failed=false,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,shoreUpload;
-function fail(error){if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});}
+let optionalEffects;let app,beach,overlays,packet,failed=false,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,shoreUpload;
+function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;send({status:'failed',reason:String(error?.message||error)});}
 addEventListener('error',e=>fail(e.error||e.message));addEventListener('unhandledrejection',e=>fail(e.reason));
 try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();const settings=PRODUCTION_SETTINGS,adaptive=new AdaptiveResolution();
+ optionalEffects=createOptionalEffects(app,data=>{send(data);console.warn('DayBuoy optional effect:',data.effect,data.reason);});
  app.configureNativeWeather=()=>{app.nativeWeather=installNativeWeather(app);};
  app.configureNativeShore=()=>{installSmallSurf(app.shore);app.forecastSurf=installForecastSurf(app.shore);};
  const initial=parent.__daybuoy;if(initial)packet={sun:initial.uniforms.uSun.value.toArray(),moon:initial.uniforms.uMoon.value.toArray()};
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
-  guardNativeBreakerLip(app.breakers);beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
+  guardNativeBreakerLip(app.breakers);beach=await installOptionalSky(app,()=>installNativeBeach(app),GPU,optionalEffects);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};app.post.aaMode='fxaa';app.post.flare=null;
   if(initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf();app.nativeWeather.update(packet);beach.update(packet);}
   }
-  await app.nativeWeather.cache?.warm();await prepare();await GPU.pipelinesReady();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
+  try{if(!app.spray.updateKernel){app.spray.NG=app.spray.maxGPU;app.spray._buildUpdate();}await GPU.pipelinesReady();optionalEffects.checkPipelines();}
+  catch(error){if(!optionalEffects.handleError(error))throw error;}
+  await app.nativeWeather.cache?.warm();await prepare();await GPU.pipelinesReady();optionalEffects.checkPipelines();app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();
  };
  const originalReadback=app.applyAtmosphereReadback.bind(app);
  app.applyAtmosphereReadback=()=>{
@@ -42,7 +46,7 @@ try{
   if(packet.sun[1]<-.07)G.sunColor.value.setRGB(.6,.7,1).multiplyScalar(moonKeyStrength(moon?.[1]??-1,moonStrength,cover));
   else G.sunColor.value.multiplyScalar(1-cover*.88);
   G.skyIrradiance.value.multiplyScalar(1-cover*.40);
-  const flash=packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
+  const flash=optionalEffects.lightningDisabled?0:packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
   app.nativeWeather.light(G);smoothLight(G,app.nativeWeather?.uniforms.fields.transition.value>.01);
  };
  app.updateSun=()=>{
@@ -53,7 +57,7 @@ try{
  await app.init((fraction,label)=>send({status:'loading',fraction,label}));
  const gate=new FramePipeline({queue:GPU.queue,onComplete:e=>adaptive.observe(e.now,e.count),onError:fail});throttleReadbacks(app,GPU);
  document.addEventListener('visibilitychange',()=>adaptive.resetWindow());
- GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
+ GPU.device.addEventListener('uncapturederror',e=>{if(!optionalEffects.handleError(e.error))fail(e.error);});GPU.device.lost.then(info=>fail(info.message));
  const clock=new WaveClock(performance.now(),30),worker=new Worker('/assets/shore.js',{type:'module'});let first=true;
  function rebuildShore(){
   if(shoreBusy||!pendingShore)return;shoreBusy=true;const p=pendingShore;pendingShore=null;
@@ -81,6 +85,7 @@ try{
   get canvas(){return app.engine.canvas;},
   draw(p){
    if(failed||gate.busy||adaptive.pending)return false;
+   if(performance.now()-(this._optionalCheckAt||0)>2500){this._optionalCheckAt=performance.now();try{optionalEffects.checkPipelines();}catch(e){fail(e);return false;}}
    try{applyPacket(p);adaptive.verifyFrame(innerWidth,innerHeight,[app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height]);
     if(shoreUpload?.step()){shoreUpload.commit(app,GPU);shoreUpload=null;shoreBusy=false;rebuildShore();}
     renderAt(app,G,clock.sample(performance.now()));gate.submittedFrame();return true;

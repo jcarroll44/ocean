@@ -94,7 +94,7 @@ fn nativeWeatherSky(dir:vec3f,clear:vec3f)->vec3f {
   uniforms.fields.sun.value.set(-packet.sun[0],packet.sun[1],-packet.sun[2]);uniforms.fields.afternoon.value=packet.afternoon||0;uniforms.fields.storm.value=smooth(.4,3,uniforms.fields.rain.value);
   const moon=packet.moon||[0,-1,0];uniforms.fields.moon.value.set(-moon[0],moon[1],-moon[2]);uniforms.fields.moonlight.value=packet.moonlight||0;
   cache?.setKey(JSON.stringify([Number.isFinite(f.forecastTime)?Math.floor(f.forecastTime/30000):null,f.weatherRetrievedAt??null,...shelf,...['cloudLow','cloudMid','cloudHigh','rain','thunder'].map(k=>Number.isFinite(f[k])?Math.round(f[k]*10)/10:null)]),f.scrubbing);
-  const flash=f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
+  const flash=this.lightningDisabled||f.reducedMotion?0:Math.max(0,Math.min(1,packet.lightning||0));
   if(flash>.01&&uniforms.fields.flash.value<=.01){
    this.strikeNumber=(this.strikeNumber||0)+1;
    uniforms.fields.strike.value.set(stormBearing(f.offshore,this.strikeNumber),.48+.10*Math.abs(Math.sin(this.strikeNumber)),this.strikeNumber,0);

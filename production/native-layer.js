@@ -21,6 +21,7 @@ if(engine?.nativeScene){
   if(e.data.attempt!=null&&e.data.attempt!==currentAttempt)return;
   if(e.data.status==='loading'&&!ready&&!failed)status(e.data.stage||e.data.label);
   if(e.data.status==='failed')retry(e.data.reason||'Native initialization failed');
+  if(e.data.status==='effect-disabled'){try{dispatchEvent(new CustomEvent('daybuoy:diagnostic',{detail:{source:'renderer',code:'optional-disabled',effect:e.data.effect,stage:e.data.pipeline,attempt:currentAttempt}}));}catch{}}
   if(e.data.status==='ready'&&!failed){clearTimeout(watchdog);ready=true;}
  });
  engine.render=function(){

@@ -25,6 +25,7 @@ import {installHitchTrace} from './hitch-trace.js';
 // assuming one particular iframe depth. Production pages never enable it.
 function diagnosticHost(){let host=window;for(let depth=0;depth<5;depth++){try{if(['/ocean-live.html','/weather-fixtures.html'].some(p=>host.location.pathname.endsWith(p))||new URLSearchParams(host.location.search).get('ocean-debug')==='1')return true;if(host===host.parent)break;host=host.parent;}catch{break;}}return false;}
 import {installWeatherSurfaces} from './weather-surfaces.js';
+import {createOptionalEffects,installOptionalSky} from './optional-effects.js';
 
 const smoothLight=transitionLight();
 const startupAttempt=Number(new URLSearchParams(location.search).get('initAttempt')||1);
@@ -37,16 +38,17 @@ function markStartup(stage,detail={}){
 }
 window.__daybuoyStartupMark=markStartup;
 markStartup('native-module-evaluated');
-let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
+let optionalEffects;let app,beach,overlays,packet,capturing=false,failed=false,clock,completed=[],lastReport=0,forecastKey='',shoreKey='',shoreBusy=false,pendingShore,profileRun,profileDimensions,probe,rafTime;
 const started=performance.now();
 const completionListeners=new Set();let trace,shoreUpload;
-function fail(error){if(failed)return;failed=true;const reason=String(error?.message||error),atStage=lastStartupStage;markStartup('initialization-failed',{atStage,reason:reason.slice(0,500)});send({status:'failed',reason,atStage});console.error('Tidewater ocean:',error);}
+function fail(error){if(optionalEffects?.handleError(error))return;if(failed)return;failed=true;const reason=String(error?.message||error),atStage=lastStartupStage;markStartup('initialization-failed',{atStage,reason:reason.slice(0,500)});send({status:'failed',reason,atStage});console.error('Tidewater ocean:',error);}
 window.addEventListener('error',e=>fail(e.error||e.message));window.addEventListener('unhandledrejection',e=>fail(e.reason));
 // Release even when navigation interrupts initialization before the API exists.
 window.addEventListener('pagehide',()=>{failed=true;GPU.device?.destroy();});
 try{
  if(!navigator.gpu)throw Error('WebGPU unavailable');
  app=new BeachApp();
+ optionalEffects=createOptionalEffects(app,data=>{send(data);trace?.event('optional-effect',{effect:data.effect,pipeline:data.pipeline});console.warn('DayBuoy optional effect:',data.effect,data.reason);});
  const regression=overcastConfig(location.search);app.overcastDiagnostic=regression;
  const pipelined=!app.profileConfig||PIPE_PASSES.includes(app.profileConfig.pass);
  const settings=app.profileConfig??PRODUCTION_SETTINGS;
@@ -56,7 +58,8 @@ try{
  const prepare=app.precompile.bind(app);
  app.precompile=async()=>{
   if(regression.lip)guardNativeBreakerLip(app.breakers);
-  beach=installNativeBeach(app);overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
+  beach=await installOptionalSky(app,()=>installNativeBeach(app),GPU,optionalEffects);
+  overlays=new NativeOverlays(app.scene);app.weatherSurfaces=installWeatherSurfaces(app,beach);
   app.engine.setRenderScale(settings.dpr);app.activeQuality={...app.activeQuality,dpr:settings.dpr};
   app.proofFlare=app.post.flare;markStartup('precompile-preparing');
   if(app.profileConfig?.pass==='native-fxaa'||settings.aa==='fxaa')app.post.aaMode='fxaa';
@@ -66,9 +69,13 @@ try{
   if(!app.profileConfig&&initial?.state?.data?.source==='live'){
    const forecast=initial.conditions();if(app.setForecast(forecast)){packet={...packet,forecast};app.shore.breakSpan.value=smallSurfSpan(app.marine.amplitude,app.marine.period);app.shore.updateNativeSurf?.();app.nativeWeather?.update(packet);beach.update(packet);}
   }
+  // Build the optional spray compute pipeline before any warmup dispatch,
+  // so a failed particle kernel can be removed without killing the beach.
+  try{if(!app.spray.updateKernel){app.spray.NG=app.spray.maxGPU;app.spray._buildUpdate();}await GPU.pipelinesReady();optionalEffects.checkPipelines();}
+  catch(error){if(!optionalEffects.handleError(error))throw error;}
   markStartup('cloud-texture-bake-start');await app.nativeWeather?.cache?.warm();markStartup('cloud-texture-bake-complete');
   trace?.track(app);markStartup('shader-compile-start');await prepare();// Weather glyphs need no GPU orb pass or readback.
-  await GPU.pipelinesReady();markStartup('shader-compile-complete');markStartup('first-frame-warmup-start');
+  await GPU.pipelinesReady();optionalEffects.checkPipelines();markStartup('shader-compile-complete');markStartup('first-frame-warmup-start');
   app.frame(1/60);await GPU.pipelinesReady();await GPU.queue.onSubmittedWorkDone();markStartup('first-frame-warmup-complete');
   trace?.event('precompile-complete',{syncCompiles:GPU.syncCompiles.slice()});
  };
@@ -83,7 +90,7 @@ try{
    G.sunColor.value.setRGB(.6,.7,1).multiplyScalar(moonKeyStrength(moon?.[1]??-1,moonStrength,cover));
   }else G.sunColor.value.multiplyScalar(1-cover*.88);
   G.skyIrradiance.value.multiplyScalar(1-cover*.40);
-  const flash=packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
+  const flash=optionalEffects.lightningDisabled?0:packet.lightning||0;G.skyIrradiance.value.r+=flash*.14;G.skyIrradiance.value.g+=flash*.18;G.skyIrradiance.value.b+=flash*.23;
   app.nativeWeather?.light(G);smoothLight(G,app.nativeWeather?.uniforms.fields.transition.value>.01);
  };
  app.updateSun=()=>{
@@ -107,7 +114,7 @@ try{
  const readbackThrottle=pipelined?throttleReadbacks(app,GPU):null;
  if(adaptive&&!profileRun)document.addEventListener('visibilitychange',()=>adaptive.resetWindow());
  if(profileRun){probe=new LoopProbe(profileRun,mode);probe.readbacks(app);}
- GPU.device.addEventListener('uncapturederror',e=>fail(e.error));GPU.device.lost.then(info=>fail(info.message));
+ GPU.device.addEventListener('uncapturederror',e=>{if(!optionalEffects.handleError(e.error))fail(e.error);});GPU.device.lost.then(info=>fail(info.message));
  clock=new WaveClock(performance.now(),30);
  const worker=new Worker(new URL('./shore-worker.js',import.meta.url),{type:'module'});let first=true;
  window.addEventListener('pagehide',()=>worker.terminate());
@@ -155,8 +162,8 @@ try{
  let firstRendered=false;const api=window.__daybuoyOcean={
   dispose(){failed=true;completionListeners.clear();worker.terminate();GPU.device.destroy();},
   subscribeCompleted(listener){completionListeners.add(listener);return()=>completionListeners.delete(listener);},
-  diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null};},
-  evidence(){return {revision:INTEGRATION_BUILD.revision,waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,skyOrb:app.skyOrb?.state(),weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore};},
+  diagnostics(){return {trace:trace?.result()??null,adaptiveResolution:adaptive?.result()??null,optionalEffects:optionalEffects.describe()};},
+  evidence(){return {revision:INTEGRATION_BUILD.revision,waveSeconds:G.time.value,marine:app.marine,quality:{...app.activeQuality},post:{aa:app.post.aaMode,flare:!!app.post.flare},pipeline:pipelined?gate.stats():null,adaptiveResolution:adaptive?{currentDpr:adaptive.dpr,minDpr:adaptive.minDpr,maxDpr:adaptive.maxDpr,verifiedFrames:adaptive.verifiedFrames}:null,skyOrb:app.skyOrb?.state(),weather:{...app.nativeWeather?.state,cloudCache:app.nativeWeather?.cache?.state()},shoreDisplay:{breakSpan:app.shore.breakSpan.value},shoreFieldPending:shoreBusy||!!pendingShore,optionalEffects:optionalEffects.describe()};},
   get ready(){
    if(failed||capturing||profileRun?.done)return false;
    try{
@@ -176,6 +183,7 @@ try{
   draw(p){
    if(failed||gate.busy||capturing||profileRun?.done||adaptive?.pending)return false;
    const cpuStart=performance.now();trace?.begin();
+   if(cpuStart-(api._lastOptionalCheck||0)>2500){api._lastOptionalCheck=cpuStart;try{optionalEffects.checkPipelines();}catch(e){fail(e);return false;}}
    applyPacket(p);
    if(adaptive){
     try{adaptive.verifyFrame(innerWidth,innerHeight,[app.engine.width,app.engine.height,app.engine.canvas.width,app.engine.canvas.height]);}catch(e){fail(e);return false;}
