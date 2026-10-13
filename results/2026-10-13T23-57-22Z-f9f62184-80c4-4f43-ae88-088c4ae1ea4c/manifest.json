@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-13T23-57-22Z-f9f62184-80c4-4f43-ae88-088c4ae1ea4c",
+  "kind": "weather",
+  "fingerprint": "3754e4156eb16c8e58d0331df2d7b79feb0f7d0ef9fb2e2c108a4c9d4312d9a7",
+  "receivedAt": "2026-10-13T23:57:22.964Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1045893,
+      "type": "application/json",
+      "sha256": "4d4e0e8ba9aea1408c2f7de88432202c0c48236d3a1b3cc01861423cec132f3c"
+    },
+    {
+      "name": "location-phases-contact-sheet.jpg",
+      "size": 454720,
+      "type": "image/jpeg",
+      "sha256": "a532a613faabe8a2d75b8e2575157ca4e22806fd4b07f2853a28fe3bcebbab85"
+    }
+  ]
+}
