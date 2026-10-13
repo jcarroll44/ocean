@@ -1,9 +1,9 @@
 diff --git a/.github/workflows/webgpu-pipelines.yml b/.github/workflows/webgpu-pipelines.yml
 new file mode 100644
-index 0000000..4327ef3
+index 0000000..ec9711b
 --- /dev/null
 +++ b/.github/workflows/webgpu-pipelines.yml
-@@ -0,0 +1,30 @@
+@@ -0,0 +1,33 @@
 +name: Apple WebKit all-pipeline gate
 +on:
 +  push:
@@ -14,7 +14,9 @@ index 0000000..4327ef3
 +  contents: read
 +jobs:
 +  safari-wgsl:
-+    runs-on: macos-26
++    # Standard Intel runners have no WebGPU adapter. Actual pipeline creation
++    # requires the GPU-enabled Apple Silicon runner and enabled Actions billing.
++    runs-on: macos-26-xlarge
 +    timeout-minutes: 12
 +    steps:
 +      - uses: actions/checkout@v4
@@ -32,6 +34,7 @@ index 0000000..4327ef3
 +        with:
 +          name: webkit-pipeline-evidence
 +          path: .pipeline-check/*.json
++          include-hidden-files: true
 +          retention-days: 30
 +          if-no-files-found: error
 diff --git a/.gitignore b/.gitignore
@@ -68,10 +71,10 @@ index d5ff000..44916be 100644
 +not new iPhone pixels or FPS evidence.
 diff --git a/night-report/rc5-release.md b/night-report/rc5-release.md
 new file mode 100644
-index 0000000..63c6601
+index 0000000..717991e
 --- /dev/null
 +++ b/night-report/rc5-release.md
-@@ -0,0 +1,35 @@
+@@ -0,0 +1,50 @@
 +# RC5 pipeline repair
 +
 +RC4 introduced a reserved WGSL identifier (`coherent`) in the BreakerLip
@@ -107,6 +110,21 @@ index 0000000..63c6601
 +existing build, production and visual/source budget checks. No new phone FPS or
 +rendered-pixel claim is made. Current Apple CI result must be attached before
 +this candidate can be deployed.
++
++## CI infrastructure result (13 October)
++
++- Standard Apple Silicon run 38452544927 could not acquire a hosted runner;
++  GitHub reported capacity constraints.
++- GPU-enabled Apple Silicon run 38454468954 was blocked before starting by
++  GitHub account payments or its Actions spending limit.
++- Standard Intel Mac run 38455248956 executed the actual Apple WebKit harness.
++  It reported `WebGPU adapter unavailable; no compiler evidence`: zero shader
++  modules and zero pipelines compiled. This is NOT a shader-validation pass.
++  Artifact 11843270094 contains the exact manifest and failed compiler report.
++
++The workflow now targets the GPU-enabled Mac again. GitHub Actions billing /
++spending must permit that runner (or an equivalent GPU-capable Mac must run the
++same check). Release remains blocked; no RC5 deployment or phone gate is claimed.
 diff --git a/night-report/weather-material-checks.json b/night-report/weather-material-checks.json
 index 0d3d59e..ff358f7 100644
 --- a/night-report/weather-material-checks.json
@@ -135,6 +153,14 @@ index 0d3d59e..ff358f7 100644
 +  "errors": [],
 +  "passed": true
  }
+\ No newline at end of file
+diff --git a/night-report/webkit-pipeline-blocked.json b/night-report/webkit-pipeline-blocked.json
+new file mode 100644
+index 0000000..2914122
+--- /dev/null
++++ b/night-report/webkit-pipeline-blocked.json
+@@ -0,0 +1 @@
++{"schema":1,"backend":"Apple WebKit WebGPU","userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)","revision":"2026-10-13-pipeline-rc5","manifestHash":"f435bb650fbf6ec3dffaacf75f56891aa4be1fed4a24c02f75a0780190314745","passed":false,"modules":[],"pipelines":[],"errors":["WebGPU adapter unavailable; no compiler evidence"],"physicalIPhone":false}
 \ No newline at end of file
 diff --git a/ocean-proof/proof/integration-build.js b/ocean-proof/proof/integration-build.js
 index cb6190d..3b03fad 100644
@@ -204,10 +230,18 @@ index ed9a41f..dc239b7 100644
   mat.needsUpdate=true;
  }
 diff --git a/ocean-proof/proof/optional-effects.js b/ocean-proof/proof/optional-effects.js
-index 7ab642a..4594deb 100644
+index 7ab642a..2f01ce4 100644
 --- a/ocean-proof/proof/optional-effects.js
 +++ b/ocean-proof/proof/optional-effects.js
-@@ -12,6 +12,11 @@ export function createOptionalEffects(app,notify=()=>{}){
+@@ -1,6 +1,7 @@
+ // Startup-only WebGPU feature isolation. Mandatory water/sky/FFT pipelines are
+ // NEVER swallowed. Optional render effects are removed if their pipeline fails.
+ // In a successful build this is a no-op: same v8.2 shader/mesh/budget policy.
++const compileFailure=message=>Object.assign(Error(message),{code:'GPU_PIPELINE_COMPILE',retryable:false});
+ export function createOptionalEffects(app,notify=()=>{}){
+  const disabled=new Map(),reported=new Set();
+  const describe=()=>({disabled:[...disabled].map(([effect,data])=>({effect,...data})),degraded:disabled.size>0});
+@@ -12,6 +13,11 @@ export function createOptionalEffects(app,notify=()=>{}){
     const spray=app.spray;
     if(spray?.mesh){spray.mesh.visible=false;app.scene?.remove?.(spray.mesh);}
     if(spray)spray.update=()=>{}; // Skip the optional particle simulation.
@@ -219,7 +253,7 @@ index 7ab642a..4594deb 100644
    }else if(effect==='rain'){
     const rain=app.weatherSurfaces?.rain;
     if(rain){rain.visible=false;app.scene?.remove?.(rain);}
-@@ -24,6 +29,7 @@ export function createOptionalEffects(app,notify=()=>{}){
+@@ -24,6 +30,7 @@ export function createOptionalEffects(app,notify=()=>{}){
   function handleError(error){
    const message=String(error?.message||error);
    if(/\bSpray (?:main|depth|color|Update)\b/i.test(message)){disable('spray',message,'Spray');return true;}
@@ -227,14 +261,32 @@ index 7ab642a..4594deb 100644
    if(/\bForecast thin rain particles\b/i.test(message)){disable('rain',message,'Forecast thin rain particles');return true;}
    return false;
   }
-@@ -35,6 +41,7 @@ export function createOptionalEffects(app,notify=()=>{}){
+@@ -35,8 +42,9 @@ export function createOptionalEffects(app,notify=()=>{}){
     if(!p?.handle?.failed)continue;
     const label=p.label||p.handle.label||'unknown';
     if(/^Spray(?: |$)/i.test(label))disable('spray','GPU render pipeline failed',label);
 +   else if(/^BreakerLip(?: |$)/i.test(label))disable('breaker-lip',p.handle.compileError||'GPU render pipeline failed',label);
     else if(/^Forecast thin rain particles(?: |$)/i.test(label))disable('rain','GPU render pipeline failed',label);
-    else if(!reported.has(label)){reported.add(label);notify({status:'mandatory-pipeline-failed',pipeline:label});throw Error('Mandatory GPU pipeline could not initialize: '+label);}
+-   else if(!reported.has(label)){reported.add(label);notify({status:'mandatory-pipeline-failed',pipeline:label});throw Error('Mandatory GPU pipeline could not initialize: '+label);}
++   else if(!reported.has(label)){reported.add(label);notify({status:'mandatory-pipeline-failed',pipeline:label});throw compileFailure('Mandatory GPU pipeline could not initialize: '+label);}
    }
+   return describe();
+  }
+@@ -52,12 +60,12 @@ export async function installOptionalSky(app,createBeach,GPU,effects){
+  const module=app.nativeWeather?.module;
+  const code=module?.code||'',start=code.indexOf('fn nativeStormBolt(dir:vec3f)->vec3f {');
+  const end=code.indexOf('fn nativeCloudShadow(',start);
+- if(start<0||end<=start)throw Error('Mandatory sky failed and optional lightning could not be isolated');
++ if(start<0||end<=start)throw compileFailure('Mandatory sky failed and optional lightning could not be isolated');
+  effects.disable('lightning','Initial sky pipeline rejected; recompiling with optional bolt disabled',beach.pass.handle.label||'DayBuoy native sky');
+  module.code=code.slice(0,start)+'fn nativeStormBolt(dir:vec3f)->vec3f { return vec3f(0.0); }\n'+code.slice(end);
+  app.scene?.remove?.(beach.stand);
+  beach=createBeach(app);
+  await GPU.pipelinesReady({isolatedSky:beach.pass?.handle});
+- if(beach.pass?.handle?.failed)throw Error('Mandatory sky failed after disabling optional lightning');
++ if(beach.pass?.handle?.failed)throw compileFailure('Mandatory sky failed after disabling optional lightning');
+  return beach;
+ }
 diff --git a/ocean-proof/proof/startup-gpu.js b/ocean-proof/proof/startup-gpu.js
 index 5aef9df..f89eead 100644
 --- a/ocean-proof/proof/startup-gpu.js
@@ -414,7 +466,7 @@ index cd5ff80..2d93adf 100644
  execFileSync(process.execPath,['scripts/check-reference-preservation.mjs'],{stdio:'inherit'});
  execFileSync(process.execPath,['scripts/check-celestial.cjs'],{stdio:'inherit'});
 diff --git a/scripts/check-optional-effects.mjs b/scripts/check-optional-effects.mjs
-index cf54352..24b3733 100644
+index cf54352..60a834b 100644
 --- a/scripts/check-optional-effects.mjs
 +++ b/scripts/check-optional-effects.mjs
 @@ -14,6 +14,12 @@ assert.equal(spray.mesh.visible,false);assert.equal(spray.update(),undefined);
@@ -439,9 +491,12 @@ index cf54352..24b3733 100644
  const skyOk=await installOptionalSky(app,()=>({pass:{handle:{failed:false}}}),{pipelinesReady:async()=>{}},fx);
  assert(skyOk.pass);
  // RC2's mandatory-pipeline watcher and RC3's isolation must compose, not
-@@ -42,4 +48,20 @@ gpu.computePipeline({label:'FFT evolve',failed:true});await assert.rejects(gpu.p
+@@ -40,6 +46,22 @@ await installOptionalSky(recoverApp,()=>({pass:{handle:gpu.renderPipeline({label
+ assert.equal(tries,2);await gpu.pipelinesReady();
+ gpu.computePipeline({label:'FFT evolve',failed:true});await assert.rejects(gpu.pipelinesReady(),/FFT evolve/);watch.stop();
  const fatal=createOptionalEffects(recoverApp);
- await assert.rejects(installOptionalSky(recoverApp,()=>({pass:{handle:{failed:true}}}),{pipelinesReady:async()=>{}},fatal),/Mandatory sky failed after/);
+-await assert.rejects(installOptionalSky(recoverApp,()=>({pass:{handle:{failed:true}}}),{pipelinesReady:async()=>{}},fatal),/Mandatory sky failed after/);
++await assert.rejects(installOptionalSky(recoverApp,()=>({pass:{handle:{failed:true}}}),{pipelinesReady:async()=>{}},fatal),e=>e.retryable===false&&e.code==='GPU_PIPELINE_COMPILE'&&/Mandatory sky failed after/.test(e.message));
  assert.equal(fatal.handleError(Error('Water main')),false);
 -console.log('PASS: optional spray/rain/bolt pipeline failures disable only those effects, once; core-water errors still throw. Mock handles, not iPhone WGSL evidence.');
 +// Actual WebGPU validation scopes: reproduce RC4's invalid WGSL, then prove
@@ -513,10 +568,10 @@ index 0000000..6b4eedc
 +console.log(`PASS: exact ${report.revision} Apple WebKit evidence matches all ${report.pipelines.length} pipelines. Not an iPhone FPS test.`);
 diff --git a/scripts/check-pipelines-webkit.mjs b/scripts/check-pipelines-webkit.mjs
 new file mode 100644
-index 0000000..c4656a6
+index 0000000..6cd57d2
 --- /dev/null
 +++ b/scripts/check-pipelines-webkit.mjs
-@@ -0,0 +1,23 @@
+@@ -0,0 +1,24 @@
 +import fs from 'node:fs';
 +import http from 'node:http';
 +import path from 'node:path';
@@ -535,8 +590,9 @@ index 0000000..c4656a6
 + const bin=path.join(folder,'PipelineCompiler'),reportPath=path.join(folder,'webkit-report.json');
 + execFileSync('swiftc',['scripts/PipelineCompiler.swift','-framework','AppKit','-framework','WebKit','-o',bin],{stdio:'inherit'});
 + const status=await new Promise((resolve,reject)=>{const child=spawn(bin,[`http://127.0.0.1:${server.address().port}/pipeline-compiler.html`,reportPath],{stdio:'inherit'});child.on('error',reject);child.on('exit',resolve);});
-+ assert.equal(status,0,'Apple WebKit rejected a pipeline or could not compile');
 + const result=JSON.parse(fs.readFileSync(reportPath));
++ console.log(JSON.stringify({passed:result.passed,errors:result.errors,modules:result.modules?.length,pipelines:result.pipelines?.length,failures:[...(result.modules||[]),...(result.pipelines||[])].filter(p=>p.errors?.length)},null,2));
++ assert.equal(status,0,'Apple WebKit rejected a pipeline or could not compile');
 + assert.equal(result.manifestHash,createHash('sha256').update(bytes).digest('hex'),'Compiler result must match this exact manifest');
 + assert.equal(result.passed,true);assert.equal(result.pipelines.length,JSON.parse(bytes).pipelines.length);
 +}finally{server.close();}
