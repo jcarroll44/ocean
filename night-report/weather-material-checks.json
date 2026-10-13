@@ -5,7 +5,8 @@
     "Terrain",
     "material5",
     "Forecast thin rain particles",
-    "BreakerLip"
+    "BreakerLip",
+    "Spray"
   ],
   "bindingLimits": [
     "Water material needs 23 sampled textures including the single cloud atlas; Dawn null supports 16. Binding/pipeline execution is not verified."

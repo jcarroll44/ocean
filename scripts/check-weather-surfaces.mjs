@@ -36,7 +36,7 @@ app.precompile=async()=>{
  assert(app.breakers.kernel.source.includes('nativeWeather.gustExtra'),'Gust must reach the compiled emitter, not just its module');
  const computeInfo=await GPU.device.createShaderModule({code:app.breakers.kernel.source}).getCompilationInfo();
  assert.equal(computeInfo.messages.filter(m=>m.type==='error').length,0,computeInfo.messages.map(m=>m.message).join('\n'));
- const materials=[app.waterMaterial,app.terrain.material,beach.stand.material,surfaces.rain.material,app.breakers.mesh.material];
+ const materials=[app.waterMaterial,app.terrain.material,beach.stand.material,surfaces.rain.material,app.breakers.mesh.material,app.spray.material];
  for(const material of materials){
   const layout=[{name:'position',wgsl:'vec3f',location:0},{name:'normal',wgsl:'vec3f',location:1},{name:'uv',wgsl:'vec2f',location:2},...(material.attributes.nodeData?[{name:'nodeData',wgsl:'vec4f',location:3,instanced:true}]:[])];
   const src=buildMeshShader(material,layout,{kind:'main'}),composed=composeShader({...src,stage:'render'}),info=await GPU.device.createShaderModule({code:composed.code}).getCompilationInfo();
@@ -49,5 +49,5 @@ app.precompile=async()=>{
 };
 let environmentLimit=null;
 try{await app.init();}catch(e){if(!e.message.includes('storage textures (5)')||!e.message.includes('envSource mips'))throw e;environmentLimit='Full environment construction exceeds Dawn null compute storage-texture limit (5 required, 4 available).';}
-assert.equal(validated.length,5);
+ assert.equal(validated.length,6);
 const result={backend:'Dawn null: shader semantics, no pixels',validated,bindingLimits,computeDispatch:'Not tested',environmentLimit,physicalDevice:false};fs.writeFileSync('night-report/weather-material-checks.json',JSON.stringify(result,null,2));console.log('PASS: '+validated.join(', ')+' production WGSL semantics. Resource-limited pipeline execution is unverified; no pixels or performance claim.');process.exit(0);

@@ -207,7 +207,8 @@ fn marchLayer(rd:vec3f,layer:i32)->vec4f {
  let moonPower=weather.moonlight*smoothstep(-.02,.18,weather.moon.y);
  let direct=mix(.045*moonPower,weather.direct*weather.energy,weather.daylight);
  let warm=1.0-smoothstep(.0,.4,weather.sun.y);
- let lightColour=mix(vec3f(.55,.68,1.0),mix(vec3f(1.0,.94,.84),vec3f(1.0,.53,.28),warm),weather.daylight);
+ let nearSun=smoothstep(.55,.95,dot(normalize(rd.xz+vec2f(.00001)),normalize(light.xz+vec2f(.00001))));
+ let lightColour=mix(vec3f(.55,.68,1.0),mix(vec3f(1.0,.94,.84),vec3f(1.0,.64,.38),warm*nearSun*(1.0-weather.closed)),weather.daylight);
  let phase=.75*phaseHG(dot(rd,light),.55)+.25*phaseHG(dot(rd,light),-.2);
  var colour=vec3f(0.0);var trans=1.0;
  for(var i=0;i<18;i++){

@@ -22,7 +22,12 @@ export async function collectLocationGallery({stage,files,report,untilReady,wait
     for(const [phase,time] of review.times){
      audit.phase=phase+' render';const inputs=bridge.reviewAt(time);
      onStatus('Capturing '+review.profile.name+' · '+phase);
-     const blob=await visibleCapture(async()=>{await wait(3000);await untilReady(()=>{const e=liveOcean(win).evidence();return liveOcean(win).ready&&!e.shoreFieldPending&&e.weather?.cloudCache?.ready;});return captureScreenshot(win,{type:'image/jpeg',quality:.9});});
+     const blob=await visibleCapture(async()=>{
+      let pose=null,stableSince=null;
+      await untilReady(()=>{const next=Array.from(win.__daybuoy.engine.camera.matrixWorld.elements),now=performance.now();if(!pose||next.some((v,i)=>Math.abs(v-pose[i])>.0001)){pose=next;stableSince=now;return false;}return now-stableSince>=1000;});
+      // Wait a full reflection refresh after the camera settles. Three seconds
+      // from the start of a long yaw was still capturing motion-blurred frames.
+      await wait(3500);await untilReady(()=>{const e=liveOcean(win).evidence();return liveOcean(win).ready&&!e.shoreFieldPending&&e.weather?.cloudCache?.ready;});return captureScreenshot(win,{type:'image/jpeg',quality:.96});});
      const name='location-'+id+'-'+phase+'.jpg';
      pending.push({name,blob,evidence:{name,phase,...review,times:undefined,inputs,native:liveOcean(win).evidence()}});
     }

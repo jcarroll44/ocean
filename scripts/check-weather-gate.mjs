@@ -13,7 +13,7 @@ for(const scenario of ['desktop','pass','fail','bad-dpr','wrong-fixture','old-re
  const elements=new Map(),events=[];let tick=0,measured=false,submitted,interruptions=0;
  const interrupt=()=>{interruptions++;c.document.hidden=true;queueMicrotask(()=>{c.document.hidden=false;events.push('foreground');});throw Error('Capture interrupted while hidden.');};
  const node=()=>({style:{},append(){},hidden:false,textContent:'',disabled:false,value:'',src:''});const get=id=>elements.get(id)||elements.set(id,node()).get(id);
- const state={forecastLoaded:true},app={state,engine:{getSceneCanvas:()=>({})},conditions:()=>state.data.rows[0]};
+ const state={forecastLoaded:true},app={state,engine:{getSceneCanvas:()=>({}),camera:{matrixWorld:{elements:[1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1]}}},conditions:()=>state.data.rows[0]};
  let dpr=1.5,cacheReads=0;
  const renderer={marine:{profileId:'inlet-beach'},get activeQuality(){return{dpr};},post:{aaMode:scenario==='wrong-aa'?'taa':'fxaa',flare:scenario==='flare-on'},nativeWeather:{state:{offshoreSamples:21},cache:{state:()=>({ready:++cacheReads>3})}},shore:{breakSpan:{value:1}}};
  // Execute the real renderer evidence method so stale embedded revisions fail this test.

@@ -493,3 +493,13 @@ diagnostics on errors. Automatic sunrise/sunset framing must remain water-facing
 within profile yaw limits; do not turn inland to chase the sun. Preserve gestures,
 astronomical direction, waves and performance policy. The scrub video must hold
 the real paywall and verify it reached the composed recording frames.
+
+## October 13 — accepted v8.2; natural-light release candidate
+Run 2026-10-13T03-19-18Z-7d895907-a03a-4f5b-9b8b-06745a609501
+passed at 40.3 average, 35 minimum, no seconds under 30, and all 12 locations.
+Only correct dawn/dusk magenta, colored foam/crest bands, lime lips, purple
+overcast dawn, saturated dry sand and unsettled dusk captures. Retain the Inlet
+sunset reference composition and golden solar path. Deep blue overhead, gold/
+peach horizon, localized orange cloud illumination; preserve night and daytime
+appearance, waves, gestures, quality, sample budgets and the strict gate.
+New location images must come from the new device run, never recolored baselines.

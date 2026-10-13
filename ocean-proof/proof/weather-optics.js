@@ -31,7 +31,7 @@ export function offshoreShelf(points=[],localRain=0,facing=INLET_PROFILE.facing)
 }
 export const OPTICS_WGSL=`
 fn nativeDawnReflection(c:vec3f)->vec3f {
- let dawn=(1.0-nativeWeather.afternoon)*smoothstep(-.04,.015,nativeWeather.sun.y)*(1.0-smoothstep(.10,.27,nativeWeather.sun.y));
+ let dawn=smoothstep(-.04,.015,nativeWeather.sun.y)*(1.0-smoothstep(.10,.27,nativeWeather.sun.y));
  // Pink reflection has almost equal red/blue, so the old red/green-only
  // threshold missed it. Neutralise that narrow dawn chroma, not the sun path.
  let red=max(smoothstep(1.25,2.1,c.r/max(.003,c.g)),smoothstep(.035,.16,(min(c.r,c.b)-c.g)/max(.003,dot(c,vec3f(.2126,.7152,.0722)))));
@@ -40,6 +40,13 @@ fn nativeDawnReflection(c:vec3f)->vec3f {
 }
 fn nativeOvercastBackground()->vec3f {
  return mix(vec3f(.030,.036,.047),vec3f(.28,.285,.29)*(.7+.3*nativeWeather.energy),nativeWeather.daylight);
+}
+fn nativeLowSunLight(c:vec3f)->vec3f {
+ let lowSun=smoothstep(-.04,.015,nativeWeather.sun.y)*(1.0-smoothstep(.10,.27,nativeWeather.sun.y));
+ let l=dot(c,vec3f(.2126,.7152,.0722));
+ // Broad foam/film illumination stays near neutral, with a little warm light.
+ // This does not touch the Fresnel solar path or the teal material pigment.
+ return mix(c,l*vec3f(1.06,1.015,.93),lowSun*.92);
 }
 fn nativeHorizonColour(dir:vec3f)->vec3f {
  // At grazing angles kilometres of haze erase individual cloud columns.
@@ -58,6 +65,9 @@ fn nativeSandLight(col:vec3f,P:vec3f)->vec3f {
  // Preserve luminance and the wet reflection band, including lightning.
  let weight=nativeWeather.daylight*smoothstep(.4,.85,nativeWeather.cover)*smoothstep(.25,1.2,P.y-frame.seaLevel);
  let luminance=dot(col,vec3f(.2126,.7152,.0722));
- return mix(col,luminance*vec3f(1.035,1.0,.93)/1.002387,weight);
+ let lowSun=smoothstep(-.04,.015,nativeWeather.sun.y)*(1.0-smoothstep(.10,.27,nativeWeather.sun.y));
+ let dry=smoothstep(.25,1.2,P.y-frame.seaLevel);
+ let neutral=mix(vec3f(1.035,1.0,.93)/1.002387,vec3f(1.10,1.015,.82),lowSun*(1.0-nativeWeather.closed));
+ return mix(col,luminance*neutral,max(weight,lowSun*dry*.78));
 }
 `;

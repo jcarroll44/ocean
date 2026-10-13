@@ -23,10 +23,13 @@ export function installWeatherSurfaces(app,beach){
  water.output=replace(water.output,'let water = mix( transmitted, reflCol, F ) + sunSpec + skyRefl * ( 0.22 * rim );','let water = nativeDawnReflection(mix(transmitted,reflCol,F)+sunSpec+skyRefl*(.22*rim));');
  water.output=replace(water.output,'let Nup = normalize( mix( surf.normal,','let Nup = normalize( mix( normalize(surf.normal + nativeRainNormal(pos)),');
  water.output=replace(water.output,'var sunLight = frame.sunColor * sunShadowPCF','var sunLight = frame.sunColor * nativeCloudShadow(pos) * sunShadowPCF');
- water.output=replace(water.output,'let foamCol = foamLit * mat.foamIntensity;','let foamCol = (foamLit + nativeStormFoam()) * mat.foamIntensity;');
+ water.output=replace(water.output,'let foamCol = foamLit * mat.foamIntensity;','let foamCol = (nativeLowSunLight(foamLit) + nativeStormFoam()) * mat.foamIntensity;');
  water.output=replace(water.output,'r.color = vec4f( res, 1.0 );','r.color = vec4f( nativeWeatherFog(res,pos), 1.0 );');water.needsUpdate=true;
  const lip=app.breakers.mesh.material;
- lip.modules.push(module);lip.output=replace(lip.output,'let col = foamLit * mix(','let col = (foamLit + nativeStormFoam()) * mix(');lip.needsUpdate=true;
+ lip.modules.push(module);lip.output=replace(lip.output,'let col = foamLit * mix(','let col = (nativeLowSunLight(foamLit) + nativeStormFoam()) * mix(');
+ lip.output=replace(lip.output,'sun * tint *','nativeLowSunLight(sun) * tint *');
+ lip.output=replace(lip.output,'frame.skyIrradiance * tint *','nativeLowSunLight(frame.skyIrradiance) * tint *');
+ lip.needsUpdate=true;
  const terrain=app.terrain.material;
  terrain.modules.push(module);
  terrain.surface=replace(terrain.surface,'let wet = sat( wetFoam.x )','let wet = max(sat( wetFoam.x ), min(nativeWeather.rain * 0.22, 0.95))');
@@ -36,6 +39,10 @@ export function installWeatherSurfaces(app,beach){
  if(direct){direct.deps.push(module);direct.code=replace(direct.code,'var result = vec3f( 1.0 );','var result = vec3f( nativeCloudShadow(P) );');}
  // Gusts affect existing breaker spray, not additional emitters or allocations.
  app.spray.module.deps.push(module);
+ // Aerated crest spray shares the foam's broad illumination, not a red stripe.
+ app.spray.material.pipelineKey();app.spray.material.modules.push(module);
+ app.spray.material.vertex=replace(app.spray.material.vertex,'let sun = frame.sunColor * sunVis;','let sun = nativeLowSunLight(frame.sunColor) * sunVis;');
+ app.spray.material.needsUpdate=true;
  app.spray.module.code=replace(app.spray.module.code,'sprayVel[ slot ] = vec4f( v, size );','sprayVel[ slot ] = vec4f(v + vec3f(frame.windDir.x,0.18,frame.windDir.y) * nativeWeather.gustExtra * 0.35, size);');
  // Breakers compose their emitter in the constructor. Recompose once during
  // loading so the gust hook is in the real compute kernel before prewarming.

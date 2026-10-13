@@ -42,8 +42,8 @@ fn beachSkyColour(rd:vec3f)->vec3f {
  var zenith=mix(vec3f(0.003,0.010,0.043),vec3f(0.007,0.078,0.30),day)+vec3f(0.006,0.011,0.020)*beachSky.moonlight*night;
  var horizon=mix(vec3f(0.012,0.027,0.072),vec3f(0.23,0.44,0.62),day)+vec3f(0.009,0.014,0.022)*beachSky.moonlight*night;
  let evening=1.0-smoothstep(-0.015,0.20,sun.y);
- zenith=mix(zenith,mix(vec3f(0.10,0.16,0.30),mix(vec3f(0.055,0.13,0.29),vec3f(0.26,0.065,0.17),evening),beachSky.afternoon),warm*0.82*(0.45+0.55*facing));
- horizon=mix(horizon,mix(vec3f(0.94,0.49,0.32),mix(vec3f(1.0,0.60,0.23),vec3f(0.98,0.23,0.105),evening),beachSky.afternoon),warm*0.94*facing);
+ zenith=mix(zenith,vec3f(0.025,0.085,0.23),warm*0.55);
+ horizon=mix(horizon,mix(vec3f(0.94,0.57,0.34),vec3f(1.0,0.60,0.27),beachSky.afternoon),warm*0.94*facing);
  horizon=mix(horizon,mix(horizon,vec3f(0.20,0.24,0.38),0.55),warm*(1.0-facing));
  let sd=max(dot(rd,sun),0.0);horizon+=vec3f(0.16,0.07,0.015)*pow(sd,5.0)*warm;
  var col=mix(zenith,horizon,low)*mix(1.0,mix(0.62,1.12,facing),warm);

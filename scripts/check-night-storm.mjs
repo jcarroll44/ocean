@@ -31,7 +31,7 @@ assert.equal(storm.app.settings.exposure,.55,'No exposure/tonemap change');
 const surfaces=read('ocean-proof/proof/weather-surfaces.js');
 assert(surfaces.includes('geometry.instanceCount=384'));assert(surfaces.includes('const rain=new Mesh('));assert.equal((surfaces.match(/new Mesh\(/g)||[]).length,1);
 assert(!surfaces.includes('rainSheet')&&!surfaces.includes('let sheet=')&&!surfaces.includes('let threads='));assert(surfaces.includes('nativeWeather.rain>.001'));
-assert(surfaces.includes('foamLit + nativeStormFoam()'));
+assert(surfaces.includes('nativeLowSunLight(foamLit) + nativeStormFoam()'));
 const shader=read('ocean-proof/proof/layered-weather.js');
 assert(shader.includes('nativeWeather.flash<0.003'));assert(shader.includes('fn nativeStormBolt'));assert(!shader.includes('frame.time*0.32'));
 for(const path of ['ocean-proof/proof/adaptive-resolution.js','ocean-proof/proof/pipeline.js'])assert(fs.existsSync(path));
