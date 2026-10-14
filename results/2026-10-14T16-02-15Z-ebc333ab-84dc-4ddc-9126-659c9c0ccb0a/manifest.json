@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T16-02-15Z-ebc333ab-84dc-4ddc-9126-659c9c0ccb0a",
+  "kind": "weather",
+  "fingerprint": "f91b0f29be31b4091adbfd0423db586de8ee728ee4abde76b6b9eb7941fd2b2b",
+  "receivedAt": "2026-10-14T16:02:17.010Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1318211,
+      "type": "application/json",
+      "sha256": "e78136d88645016c1779251f0aeee316648fec661424e0ee8ea696eb200490be"
+    },
+    {
+      "name": "clearing.jpg",
+      "size": 350237,
+      "type": "image/jpeg",
+      "sha256": "1287b65a910600b411e0aedb8b09bafe66f623136e3da5769a4746893dc7b525"
+    }
+  ]
+}
