@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T01-08-04Z-8b1543c0-1ead-438f-b260-197bb4b6c1b5",
+  "kind": "weather",
+  "fingerprint": "5999dc38bbf79765ab7540d4b947515dc84cf055181bc84fb360e5b39d8ac736",
+  "receivedAt": "2026-10-14T01:08:05.241Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1546536,
+      "type": "application/json",
+      "sha256": "761d96d1c9f075e0666793b47ae6ede787ee904d05ae3430ffe5725fd0c941da"
+    },
+    {
+      "name": "location-cocoa-beach-sunset.jpg",
+      "size": 67862,
+      "type": "image/jpeg",
+      "sha256": "fc6e1cc7d7ba8c2b102b7fd6dd9cf6a0f6496cd3a320e41adc815a225820fd66"
+    }
+  ]
+}
