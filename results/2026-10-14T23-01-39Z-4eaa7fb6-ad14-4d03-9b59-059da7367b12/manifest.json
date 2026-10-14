@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T23-01-39Z-4eaa7fb6-ad14-4d03-9b59-059da7367b12",
+  "kind": "weather",
+  "fingerprint": "37682b52dde735ea3eb2edf865bba67555405e4ca8feec6b1442b4669cfbaf19",
+  "receivedAt": "2026-10-14T23:01:41.919Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2353854,
+      "type": "application/json",
+      "sha256": "5f9742be26d09705b00517ab2d1abd5f7a0336200edb87f56294cc676cf7e321"
+    },
+    {
+      "name": "overcast.jpg",
+      "size": 283636,
+      "type": "image/jpeg",
+      "sha256": "bb8c27655f5663e6362f3ee74e702e8c711aaf958add10a79f0b8d7275c31791"
+    }
+  ]
+}
