@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-49-45Z-bd08067d-a8ad-48d0-bc73-5bbedc50e3b0",
+  "kind": "weather",
+  "fingerprint": "75b48bca6de1b464a4b036815fac15dfbeba287f0e10b453b3c03a86f8be6c81",
+  "receivedAt": "2026-10-14T20:49:46.021Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2444334,
+      "type": "application/json",
+      "sha256": "9a570a72f47c602d96e54007a6a9caeeed3d45adc4df420c4c7b6bb6394122cb"
+    },
+    {
+      "name": "squall-approaching.jpg",
+      "size": 323226,
+      "type": "image/jpeg",
+      "sha256": "165f3e0868a723a301c17db61e41650c69eb8c8290e874789bbf6eb187f5cfc6"
+    }
+  ]
+}
