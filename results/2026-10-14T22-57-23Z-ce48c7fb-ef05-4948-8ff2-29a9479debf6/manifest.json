@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T22-57-23Z-ce48c7fb-ef05-4948-8ff2-29a9479debf6",
+  "kind": "weather",
+  "fingerprint": "57966aa88ed82c06fa46601701aa9a9a6fdcf4b1870245e0b6357d6cfa481d85",
+  "receivedAt": "2026-10-14T22:57:27.016Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1953912,
+      "type": "application/json",
+      "sha256": "5a3466b17fcd7b405670a356d3b83170f16a489eae4c5156b2732d48b6e03aa3"
+    },
+    {
+      "name": "phase-cocoa-beach-sunrise.jpg",
+      "size": 555436,
+      "type": "image/jpeg",
+      "sha256": "05f390df144fadca6d83e3c5a5f25da29b768a455a72d92d020ef9778cfdda7b"
+    }
+  ]
+}
