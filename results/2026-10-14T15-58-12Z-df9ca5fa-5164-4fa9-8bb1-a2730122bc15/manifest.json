@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T15-58-12Z-df9ca5fa-5164-4fa9-8bb1-a2730122bc15",
+  "kind": "weather",
+  "fingerprint": "25494682b9f43692b9413ccbbb7792209203ef3c60539ca435ee15068c7013f2",
+  "receivedAt": "2026-10-14T15:58:13.058Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1007713,
+      "type": "application/json",
+      "sha256": "f2e29d66970825ebd83a03123c24885f86fe1e9b847a2a9a54a8095be27fb985"
+    },
+    {
+      "name": "phase-cocoa-beach-midday.jpg",
+      "size": 341315,
+      "type": "image/jpeg",
+      "sha256": "a24fc9504a0ad71c5392f8ffaa033a00ceb4f11b0119acba7a33fae2323763d5"
+    }
+  ]
+}
