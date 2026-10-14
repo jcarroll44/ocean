@@ -1,5 +1,132 @@
 # DayBuoy — current handoff
 
+Updated: 2026-10-14 · RC7 coherent-surf / still-quality pass.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence revision: `2026-10-14-coherent-surf-rc7`.
+- Saved-results/share tools: `2026-10-13-share-resume-1`; compatible and unchanged.
+- Canonical source is this private Sites repository, approved branch `main`.
+  Base: accepted RC6 `e7e113f2d6bd0ee8e867258899944d05ed01dd40`.
+- Private project: `appgprj_6ac49343ea048191b93c8d1135390e39`.
+  Fresh get_site + credential + source helper before edits; preserve audience.
+  Never deploy the separate public Site during these passes.
+- GitHub integration: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** GitHub source is older than Sites; its root
+  handoff is a continuation mirror, not the deployed app source.
+- Evidence stays on `wip/tidewater-in-app`, `results/`. No secret output/commits.
+- Gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-coherent-surf-rc7
+- New pixels get a new evidence session. Never delete/relabel RC5/RC6 sessions.
+  Capture failures resume from acknowledged uploads without remeasuring FPS.
+- Deployment and exact source provenance are verified in the receipt below.
+
+## Verified RC7 deployment receipt
+
+- Private source commit: `dae16d5837ff6b57a6884e883e961b4567d293bd`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_9b67f1b904848191aa85c0881af88332`.
+- Deployment: `appgdep_6acedeed2fac8191bbba40406d0d1d15`; **succeeded** at 2026-10-14T01:46:34.621815+00:00.
+- Live origin: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site
+- Post-deploy probe: exact packaged gate HTML and hashed gate bundle; all 11
+  native-asset SHA-256 hashes verified (4,361,031 bytes); uploader ready.
+  Share results, durable sessions, phase captures and segmented video present.
+- Private checkout clean after source-helper commit/push/package. No GitHub
+  main writes. This GitHub WIP file is a continuation mirror, not app source.
+- RC7 iPhone FPS and rendered pixels remain unverified. Run the linked gate;
+  do not substitute the accepted RC6 measurement for RC7 evidence.
+
+## What passed
+
+- Retrieved RC6 JSON, parent `2026-10-14T00-53-45Z-f9b12ba2-62e5-44a2-9021-48f32cd9d689`,
+  final `results/2026-10-14T01-09-37Z-9a2d3831-c75e-4952-ba97-589a0f8fda41/report.json`:
+  **41.183333 average, 34 minimum, zero seconds below 30, 120 seconds / 4942 frames.**
+- Reviewed original RC6 small/medium/groundswell/onshore/offshore images, Inlet
+  sunrise/sunset/overcast dawn and Cocoa dusk. RC6 visual defects are genuine.
+  Most later originals were only 429×768 at adaptive DPR 1.1.
+- Targeted RC7 scalar-wave and still-lifecycle tests pass; source tests preserve
+  the real gold sky, core live draw, strict gate, resume and Share results.
+- Full build, all-seven-interaction audit and all-pipeline local WGSL validation:
+  **PASS**. Strict Dawn WGSL: **78 modules / 79 pipeline descriptors**, no errors;
+  RC4 reserved-word negative test rejected. Manifest hash:
+  `d1f8638167bb01f12cbd7702b026e2e0d5f25b9bc0a8d205bea6b7bebd87b23b`.
+  Expected invalid-pipeline log is the negative test, not a shipping failure.
+  No GPU runner. Packaging rechecks this exact revision/hash before release.
+- Local tests are not a real-browser/device/visual pass. RC6 FPS is baseline
+  evidence only; RC7 must be measured separately on the iPhone.
+
+## What changed and decisions
+
+- Coherent three-slot crest identity by wave index rather than distance zone.
+  Previously adjacent stations selected different waves at the zone boundary,
+  and the valid-endpoint guard correctly left disconnected teal fragments.
+- Larger-wave sets retain an organized wave through the lull; reduced alongshore
+  amplitude variation for long swell. Keep true H/2, period, directions and FFT.
+  Outer-bar gate remains restricted to big set waves; 1 ft reference unchanged.
+- Restore connected, irregular whitewater density on actual landing/roller masks
+  instead of masking most of the foam out again. Spilling wind-sea foam starts
+  at the crest; collapsed rollers no longer retain low-curl unbroken geometry.
+- Onshore plunging-sheet opacity is suppressed in the fragment only. Proven
+  Spray and BreakerLip vertex sources/dependencies and validity guards remain.
+- Low-sun swash no longer clamps occluded rays into the orange solar horizon
+  away from the actual sun bearing. Preserve the true gold Fresnel path.
+- Sand separates broad diffuse peach / gray-blue shadow from wet solar glints,
+  with fill reaching damp sand too. Opaque-dawn water neutralizes warm sediment
+  and seabed constituents rather than merely changing the illuminant.
+- Cloud ambient is peach toward the low sun and soft blue overhead, in the
+  existing bake. The approved RC6 physical sky/disc implementation is unchanged.
+- Clear dusk sky/water use one twilight air endpoint; opaque distant water
+  converges before the far clip instead of exposing a hard horizon seam.
+- Inlet sunrise now uses −65° seaward yaw, −13° pitch, 70° FOV: horizon ~33.5%,
+  entire horizontal view water-facing. Real sun stays astronomical, even offscreen.
+- Stills: drain timed work; hold one settled simulation/light/cache/exposure;
+  render at device DPR up to 3 (3 MP hard bound), zero motion-blur shutter; copy
+  synchronously and release high-resolution GPU targets before JPEG encoding.
+  Restore production DPR on all exits. Still metadata records exact resolution
+  separately from measured DPR. No upscale, temporal average or retouch.
+- Every still now waits for 1.8 seconds of stable camera plus complete target
+  sky/shore state. Small/medium wave comparisons no longer capture different
+  points during the automatic camera transition. Bounded failure, not a blurry
+  "successful" screenshot. Native still allocation/draw/encode/hidden errors
+  are covered by restoration tests; existing durable uploads are unchanged.
+- Keep segmented low-memory video and per-part immutable uploads unchanged.
+
+## Open issues
+
+- All eight corrected appearances still require authentic RC7 iPhone captures.
+  No rendering browser is available here; do not promise pixel perfection from
+  scalar tests/WGSL. Check both new looks and 120-second thermal throughput.
+- Native-resolution still peak memory is bounded but needs iPhone verification.
+  If interrupted, acknowledged FPS/media remain intact and reload resumes.
+- WeatherKit / RevenueCat account activation, signing and TestFlight remain
+  owner-account/Mac tasks; existing release docs are not activation evidence.
+
+## Next steps
+
+1. User runs the RC7 120-second gate and Share results; fetch its JSON and originals.
+2. Compare wave scale, 21 solar phases and contact sheets to authentic RC6.
+3. Continue only from the canonical private Sites source above; never substitute
+   this older GitHub app source. Preserve confirmed results and resume receipts.
+
+## Rules and invariants
+
+- Autonomous implementation; never expose secrets, never GitHub main.
+- Vendor `4811ba48d795197de5621985f404e765c0b7c0ef` unchanged; MIT Tidewater and
+  Takram credits. No advice / “safe” copy, crowd reporting or fabricated evidence.
+  Estimates retain est. + source.
+- v8.2 timing budgets: DPR 1.5 initial / 1.1 floor / 1.6 ceiling / .05 steps,
+  38 down / 46 up; FXAA/no flare; two GPU frames; FFT reused at 40 Hz;
+  crest 48×4, spacing 1.2 m, 12 lip vertices, one secant; cloud 512×128 triple
+  cache, 256 idle / 2048 transition pixels, 18 primary / 3 shadow / 8 shelf,
+  20-second refresh; 384 thin-rain quads. No capture during 15+120 second gate.
+- All seven interaction checks and full build are mandatory before delivery.
+  Full actual pipeline/module WGSL validation locally; no GPU runner.
+- Preserve functional UI, seven gestures, source validity, startup caching,
+  compile-failure isolation, saved receipts, resumption, Share results.
+
+## Archived handoff — RC6
+
 Updated: 2026-10-14 · RC6 low-sun color pass only.
 Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
 INTERACTION-CONTRACT.md. This section supersedes the archived history below.
