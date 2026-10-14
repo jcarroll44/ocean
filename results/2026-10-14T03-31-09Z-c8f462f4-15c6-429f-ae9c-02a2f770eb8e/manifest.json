@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T03-31-09Z-c8f462f4-15c6-429f-ae9c-02a2f770eb8e",
+  "kind": "weather",
+  "fingerprint": "213a80c75c1b5c844ae0fb89e7ff5f2cf08816b1f322afdc337eaaa1fda8658f",
+  "receivedAt": "2026-10-14T03:31:10.918Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1023280,
+      "type": "application/json",
+      "sha256": "0f26262c044f71f26d735b3ea0d7a8df4649c34c4109709f650f8af587260622"
+    },
+    {
+      "name": "phase-cocoa-beach-sunset.jpg",
+      "size": 378837,
+      "type": "image/jpeg",
+      "sha256": "323cf3024e92ce6cb5db0bc89efd0d4deb611356b2cae079366e5f9fa1db966f"
+    }
+  ]
+}
