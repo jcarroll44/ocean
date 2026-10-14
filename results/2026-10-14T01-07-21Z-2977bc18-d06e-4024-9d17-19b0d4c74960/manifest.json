@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T01-07-21Z-2977bc18-d06e-4024-9d17-19b0d4c74960",
+  "kind": "weather",
+  "fingerprint": "d33dd27d5ef54624ada6f0e5b43aaecb85c8806ce0fced29c04e6cfd4c5c1bad",
+  "receivedAt": "2026-10-14T01:07:22.401Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1523999,
+      "type": "application/json",
+      "sha256": "e6ff80ba47fa8f8a9f4d3c7b3401f67b900a04446577dae7289444a319ab80c1"
+    },
+    {
+      "name": "location-cocoa-beach-sunrise.jpg",
+      "size": 98916,
+      "type": "image/jpeg",
+      "sha256": "784d9fab71fcff65c37b4de9a1cb0016525f152a4877387bd822baba6f95db68"
+    }
+  ]
+}
