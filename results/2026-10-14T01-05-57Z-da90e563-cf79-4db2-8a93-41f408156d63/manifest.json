@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T01-05-57Z-da90e563-cf79-4db2-8a93-41f408156d63",
+  "kind": "weather",
+  "fingerprint": "d9e9d3e3ed9820dea7909680d857fb962edd8b666e64ac43f11edb373012f637",
+  "receivedAt": "2026-10-14T01:05:57.716Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1480643,
+      "type": "application/json",
+      "sha256": "bb627fcae97e0d0ee93ceef587ff473c8c9d34d05020df53e5770cc3e81df9e3"
+    },
+    {
+      "name": "location-inlet-beach-sunrise.jpg",
+      "size": 72660,
+      "type": "image/jpeg",
+      "sha256": "61198b23b331c2ea4fc6dfed39647d6ac202c92439707aca5fd2e69c5e4fd9d1"
+    }
+  ]
+}
