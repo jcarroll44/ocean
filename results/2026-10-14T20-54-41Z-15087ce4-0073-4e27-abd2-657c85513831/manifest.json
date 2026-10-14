@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-54-41Z-15087ce4-0073-4e27-abd2-657c85513831",
+  "kind": "weather",
+  "fingerprint": "fefba0aaa6aed8222638d3e477e479b2d0b459d33b7227a8e92c74dc89368f72",
+  "receivedAt": "2026-10-14T20:54:41.955Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2971530,
+      "type": "application/json",
+      "sha256": "2d3e8f2b991bc390cb21a9a8395a238834670673fd2b76d5305d5c30ac075721"
+    },
+    {
+      "name": "wave-chunk-wave-offshore-2026-10-14t20-54-34z-32d76002-722e-49fc-bc42-f9edd8ea8cab-1.mp4",
+      "size": 64603,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "e405763274f0bef21378399494a9c5c405e74cc85a96f03a47527682612a95d8"
+    }
+  ]
+}
