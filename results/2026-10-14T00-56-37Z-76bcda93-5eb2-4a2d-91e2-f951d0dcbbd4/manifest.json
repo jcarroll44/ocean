@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T00-56-37Z-76bcda93-5eb2-4a2d-91e2-f951d0dcbbd4",
+  "kind": "weather",
+  "fingerprint": "853fdab9f5b383c117efa420b92dcee84acea4a8cd316936cceda90ced845525",
+  "receivedAt": "2026-10-14T00:56:38.445Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 843541,
+      "type": "application/json",
+      "sha256": "647cf1dece9c49188c8af88b6082ef6a3f9c9695bd700e7277dd952c94a8e0d8"
+    },
+    {
+      "name": "phase-inlet-beach-sunrise.jpg",
+      "size": 66662,
+      "type": "image/jpeg",
+      "sha256": "0aa46c24bfdb98522988406e159bce9ed492144a989b9a57a7041865d4506e43"
+    }
+  ]
+}
