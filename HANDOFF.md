@@ -1,5 +1,143 @@
 # DayBuoy — current handoff
 
+Updated: 2026-10-14 · RC6 low-sun color pass only.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence revision: `2026-10-14-low-sun-rc6`.
+- Capture tools unchanged: `2026-10-13-share-resume-1`.
+- Canonical deployed source: private Sites commit `e7e113f2d6bd0ee8e867258899944d05ed01dd40`, approved branch `main`.
+  Deployment succeeded 2026-10-14T00:37:49.950070+00:00.
+  This GitHub file is a handoff mirror, NOT the matching application source.
+  Open the private Sites source before implementation; preserve newer remote work.
+  Base was `2f678e567de4bb483d2a8a3e64024ef66bf152d6` (functional RC5).
+- Owner-private project: `appgprj_6ac49343ea048191b93c8d1135390e39`.
+  Use fresh Sites get_site + credential + source helper before edits. Preserve
+  audience and newer remote work. Never deploy the separate public Site.
+- GitHub integration: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** GitHub app source is older than Sites;
+  the root HANDOFF there is a continuation mirror, not canonical deployed code.
+- Evidence: GitHub `wip/tidewater-in-app`, `results/`. No secret output/commits.
+- Same gate workflow + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-low-sun-rc6
+- RC6 changes real pixels, so it gets a new evidence key. Existing RC5 sessions
+  and uploaded files remain intact. Capture-only fixes must NOT bump that key.
+- Deployment: `appgdep_6acececfada081919f197599b5fc94d5` — succeeded.
+  Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_0b2aaf2cb2fc8191b71f799e7309c255`.
+  Full private and production builds, all 78 WGSL modules and seven interaction
+  checks passed. Real-device color/FPS validation is still the iPhone gate.
+
+## What passed
+
+- **Retrieved actual RC5 JSON** (not merely user-reported): parent run
+  `2026-10-13T23-49-02Z-8c7938d3-2460-455b-93c6-c5189caae283`, final report
+  `results/2026-10-14T00-05-46Z-3104df5d-2734-48a7-b7a5-8a64dcfe0d11/report.json`.
+  **40.621953 avg, 33 minimum, zero seconds below 30, 120.009 seconds.**
+  21 phase photos, ten weather photos, five waves, twelve live locations and
+  four day/paywall video parts completed. See `night-report/rc5-accepted-evidence.json`.
+- User accepted RC5 functionality and captures; no functional changes this pass.
+- v8.2 baseline: 40.3 avg / 35 min / zero under 30. Not RC6 device evidence.
+- Targeted RC6 checks passed: actual opaque-dawn lighting rejects the red key;
+  night air endpoint is shared; material relighting avoids near-zero blue division;
+  sand fill uses albedo/normal/occlusion above the wet band; functional, simulation,
+  quality and camera files remain byte-identical to accepted RC5.
+- Full build / strict WGSL / seven-interaction suite: **PASS** locally.
+  All 78 shader modules from 79 pipelines validated; the RC4 reserved-word
+  negative case was rejected. Final production packaging reruns its release guard.
+  Local tests are not a real-browser/device/visual pass. No GPU runner is used.
+
+## What changed and decisions
+
+- Low-sun background and disc now use the existing Tidewater Hillaire scattering
+  and solar-transmittance LUTs, which already light the ocean. No screen tint,
+  new renderer, texture assets, lookup-table size, raymarch or extra render pass.
+- Clear-air haze used to replace that solar sector with neutral gray. It now
+  preserves directional low-sun radiance; opaque forecast weather stays neutral.
+- Clouds reuse physical solar chroma in the existing immutable bake; warm light
+  is localized toward the sun, with cooler subdued ambient away from it.
+- Dry quartz sand gets broad diffuse sky fill through its actual albedo, normal
+  and occlusion. Wet sand and lightning reflections retain their existing path.
+- Orange crest plumes were primarily Spray's vertex-carried solar lighting:
+  earlier foam fixes never reached vCol/vFwd. Relight both in the fragment only,
+  using existing frame uniforms and reconstructed scalar scattering weights.
+  Spray and BreakerLip vertices/dependencies stay on the proven path. Foam/lip
+  diffuse illumination is also bounded away from red/yellow chroma at low sun.
+  Physical gold Fresnel glints are retained; the old broad red-channel clamp
+  was whitening them and is now limited to genuine magenta outliers.
+- Night sky and distant ocean now converge to one air color before the far clip;
+  the old dark fog constant caused the horizontal belt in the reviewed image.
+- An opaque dawn deck previously retained the red direct key because its deck
+  weight began above +1 degree. Close that key and supply gray-blue diffuse light.
+- Kept the current physical atmosphere instead of adopting Takram's separate
+  Three WebGPU/TSL atmosphere stack during a bounded color pass. Current Takram
+  WebGPU docs describe work-in-progress integration; existing MIT credits remain.
+- Four user photos were read as color references only. None entered app assets.
+- Inspected genuine RC5 Inlet sunset/night/overcast-dawn and Cocoa sunrise photos.
+  No new images are invented, edited, or substituted for RC6 device captures.
+
+## Open issues
+
+- RC6 colors and sustained FPS need the iPhone run. Local WGSL proves syntax /
+  module validation, not Safari appearance or frame rate. New gate must include
+  all low-sun phases and Share results; compare against the supplied Gulf photos.
+- No physical browser is available in this work environment; no rendered preview
+  was performed here. Do not claim a visual match or a fresh 30+ FPS pass.
+- Signing/TestFlight and WeatherKit/RevenueCat owner account setup remain separate
+  Mac/account tasks. Existing release documentation does not prove activation.
+
+## Next steps
+
+1. Verify the latest Sites deployment and its exact source SHA if resuming.
+   The GitHub WIP handoff current section records the completed publication.
+2. Run the linked 120-second gate on iPhone; use Share results after captures.
+   Preserve saved results and receipts; never remeasure to conceal a capture failure.
+3. Review the actual new JSON and original phase/weather/wave sheets. Narrow any
+   further changes to observed color issues. Update this handoff at end of pass.
+
+## Rules and invariants
+
+- Work autonomously; concise updates and one link. Never commit/push GitHub main.
+  Private Sites main is authorized. Never print or commit credentials/tokens.
+- Freeze vendor `4811ba48d795197de5621985f404e765c0b7c0ef`, wave geometry/spectra,
+  startup caching/retries, UI, camera, gestures, native astronomy and Share results.
+  MIT credits: Tidewater and Takram. No advice / “safe” wording or crowd reports;
+  estimates labelled est. with their source.
+- v8.2 budgets unchanged: DPR 1.5 initially / 1.1 floor / 1.6 ceiling / .05 steps /
+  38-down,46-up; FXAA, no flare; two GPU frames in flight; reused FFT at 40 Hz;
+  crest 48×4, 12 lip vertices; 512×128 triple cloud cache, 256 idle / 2048 transition
+  pixels, 18 primary + 3 shadow + 8 shelf steps, 20 s refresh; 384 rain particles.
+- 15 s warmup then uninterrupted 120 measured seconds, EVERY second >=30 GPU
+  completions. No upload/encoding/capture/share prep during timing.
+- Local strict validation of all shipping WGSL before release. No GPU runner.
+  Compile errors are nonretryable; disable only the failing optional effect,
+  keep the ocean running; a degraded scene cannot pass the full-effects gate.
+- Saved evidence DB `daybuoy-evidence-v1`, schema 2. Never clear earlier sessions.
+  FPS uploads first, each immutable image/clip follows with acknowledgment.
+  Retry pending bytes before new captures; null errors normalize without mutation.
+  Four 8 s video parts, max 288×640, 12 fps, 600 kb/s; last includes paywall.
+- Required every delivery: `node scripts/check-interactions.cjs` and
+  `node scripts/build.mjs`, production build/check, hosting build/release guard.
+  Seven checks: look, sun drag, timeline, pinch/reset, water sheet, Back to now,
+  Watch pause. Keep source/data validity assertions; don't weaken a failing gate.
+
+## Useful paths
+
+- `NativeBeachScene.js`, `native-weather.js`, `weather-optics.js`,
+  `weather-surfaces.js`, `layered-weather.js`, `cloud-cache.js` under ocean-proof/proof.
+- `scripts/check-low-sun.mjs`: bounded color contract and functional byte freeze.
+- `scripts/export-pipelines.mjs`: complete runtime inventory; checks both proven vertices.
+- `scripts/check-pipeline-modules.mjs`, `check-pipeline-release.mjs`: strict local release.
+- `results-upload.js`, `share-results.js`, `weather-fixture-page.js`: unchanged evidence.
+
+---
+
+
+## Archived handoff
+
+# DayBuoy — current handoff
+
 Updated: 2026-10-13 · saved-results sharing / RC5 capture continuation.
 Start a new thread with **“Read HANDOFF.md and continue.”** This current section
 supersedes the archived notes below. Also read AGENTS.md and INTERACTION-CONTRACT.md.
