@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T01-09-01Z-1263d96a-2e7f-4308-9b5e-ecccf9354c3a",
+  "kind": "weather",
+  "fingerprint": "d0c6c9dd7159cc89f6b9950bddda937dce784a000d3b1d8e43dd741c8cd8412d",
+  "receivedAt": "2026-10-14T01:09:01.831Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1580408,
+      "type": "application/json",
+      "sha256": "e00c899b4aa6c0e2502b444af7028e6c6a1b9ad680f3de2189e6280aabb0deeb"
+    },
+    {
+      "name": "location-san-diego-noon.jpg",
+      "size": 61507,
+      "type": "image/jpeg",
+      "sha256": "da29e8c27434e4ed004b0c57b9c7517c29e0236b9f67a46a6c85cac3268a23d3"
+    }
+  ]
+}
