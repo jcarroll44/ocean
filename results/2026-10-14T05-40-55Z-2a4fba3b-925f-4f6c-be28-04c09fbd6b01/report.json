@@ -1,0 +1,941 @@
+{
+  "schema": 5,
+  "runId": "2026-10-14T05-40-55Z-2a4fba3b-925f-4f6c-be28-04c09fbd6b01",
+  "kind": "weather",
+  "build": {
+    "revision": "2026-10-14-shore-realism-rc9",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "source": "synthetic fixtures",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) GSA/441.5.989047059 Mobile/15E148 Safari/604.1",
+  "startedAt": "2026-10-14T05:40:43.760Z",
+  "heaviest": "night-storm",
+  "viewport": [
+    390,
+    659
+  ],
+  "viewportEvents": [],
+  "wakeLockEvents": [
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-14T05:40:43.758Z"
+    },
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-14T05:40:44.125Z"
+    }
+  ],
+  "gallery": [],
+  "samples": [],
+  "captureTools": "2026-10-13-share-resume-1",
+  "visits": [
+    {
+      "at": "2026-10-14T05:40:43.765Z",
+      "resumingParts": 0
+    }
+  ],
+  "error": "Beach startup failed: The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+  "startup": {
+    "backend": "WebGL fallback",
+    "error": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+    "revision": "2026-10-14-shore-realism-rc9",
+    "phase": "failed",
+    "attempt": 3,
+    "label": "initialization-failed",
+    "fraction": 0.9849999999999999,
+    "history": [
+      {
+        "attempt": 1,
+        "event": "start",
+        "at": 276
+      },
+      {
+        "attempt": 1,
+        "event": "retry",
+        "reason": "GPU device lost during startup: destroyed",
+        "at": 3152
+      },
+      {
+        "attempt": 2,
+        "event": "start",
+        "at": 4680
+      },
+      {
+        "attempt": 2,
+        "event": "retry",
+        "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+        "at": 6642
+      },
+      {
+        "attempt": 3,
+        "event": "start",
+        "at": 9643
+      },
+      {
+        "attempt": 3,
+        "event": "retry",
+        "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+        "at": 11455
+      }
+    ],
+    "policy": {
+      "attempts": 3,
+      "attemptMs": 480000,
+      "idleMs": 180000,
+      "totalMs": 1080000
+    },
+    "assets": {
+      "complete": 11,
+      "totalAssets": 11,
+      "bytes": 4368120,
+      "totalBytes": 4368120,
+      "cached": 11,
+      "persistent": true
+    },
+    "lastError": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+    "elapsedMs": 4187,
+    "events": [
+      {
+        "stage": "fixture-bundled-data-apply-start",
+        "detail": {
+          "id": "night-storm",
+          "profile": "inlet-beach"
+        },
+        "at": "2026-10-14T05:40:44.129Z",
+        "elapsedMs": 2183
+      },
+      {
+        "stage": "fixture-bundled-data-applied",
+        "detail": {
+          "id": "night-storm",
+          "rows": 193
+        },
+        "at": "2026-10-14T05:40:44.130Z",
+        "elapsedMs": 2184
+      },
+      {
+        "stage": "native-document-loaded",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.236Z",
+          "elapsedMs": 119.00000000000001
+        },
+        "at": "2026-10-14T05:40:44.237Z",
+        "elapsedMs": 2291
+      },
+      {
+        "stage": "fixture-document-loaded",
+        "detail": {
+          "url": "/"
+        },
+        "at": "2026-10-14T05:40:44.283Z",
+        "elapsedMs": 2337
+      },
+      {
+        "stage": "native-module-evaluated",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.760Z",
+          "elapsedMs": 643
+        },
+        "at": "2026-10-14T05:40:44.763Z",
+        "elapsedMs": 2817
+      },
+      {
+        "stage": "native-app-init-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.762Z",
+          "elapsedMs": 644
+        },
+        "at": "2026-10-14T05:40:44.763Z",
+        "elapsedMs": 2817
+      },
+      {
+        "stage": "init-stage:Opening the beach",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.762Z",
+          "elapsedMs": 645,
+          "fraction": 0.02
+        },
+        "at": "2026-10-14T05:40:44.763Z",
+        "elapsedMs": 2817
+      },
+      {
+        "stage": "webgpu-device-request-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.763Z",
+          "elapsedMs": 645
+        },
+        "at": "2026-10-14T05:40:44.775Z",
+        "elapsedMs": 2829
+      },
+      {
+        "stage": "webgpu-device-ready",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.767Z",
+          "elapsedMs": 649
+        },
+        "at": "2026-10-14T05:40:44.775Z",
+        "elapsedMs": 2829
+      },
+      {
+        "stage": "init-stage:Preparing the sky",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.770Z",
+          "elapsedMs": 653,
+          "fraction": 0.1
+        },
+        "at": "2026-10-14T05:40:44.775Z",
+        "elapsedMs": 2829
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.780Z",
+          "elapsedMs": 662,
+          "name": "takram-shape.bin"
+        },
+        "at": "2026-10-14T05:40:44.780Z",
+        "elapsedMs": 2834
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.780Z",
+          "elapsedMs": 662,
+          "name": "takram-detail.bin"
+        },
+        "at": "2026-10-14T05:40:44.780Z",
+        "elapsedMs": 2834
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.788Z",
+          "elapsedMs": 671,
+          "name": "takram-shape.bin",
+          "bytes": 2097152
+        },
+        "at": "2026-10-14T05:40:44.789Z",
+        "elapsedMs": 2843
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.801Z",
+          "elapsedMs": 683,
+          "name": "takram-detail.bin",
+          "bytes": 32768
+        },
+        "at": "2026-10-14T05:40:44.802Z",
+        "elapsedMs": 2856
+      },
+      {
+        "stage": "init-stage:Preparing white sand",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:44.825Z",
+          "elapsedMs": 708,
+          "fraction": 0.2
+        },
+        "at": "2026-10-14T05:40:44.826Z",
+        "elapsedMs": 2880
+      },
+      {
+        "stage": "init-stage:Preparing the waves",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:45.681Z",
+          "elapsedMs": 1563,
+          "fraction": 0.34
+        },
+        "at": "2026-10-14T05:40:45.696Z",
+        "elapsedMs": 3750
+      },
+      {
+        "stage": "init-stage:Preparing light and reflections",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.401Z",
+          "elapsedMs": 2284,
+          "fraction": 0.5
+        },
+        "at": "2026-10-14T05:40:46.409Z",
+        "elapsedMs": 4463
+      },
+      {
+        "stage": "init-stage:Finishing the waves",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.416Z",
+          "elapsedMs": 2299,
+          "fraction": 0.65
+        },
+        "at": "2026-10-14T05:40:46.419Z",
+        "elapsedMs": 4473
+      },
+      {
+        "stage": "precompile-preparing",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.454Z",
+          "elapsedMs": 2337
+        },
+        "at": "2026-10-14T05:40:46.455Z",
+        "elapsedMs": 4509
+      },
+      {
+        "stage": "cloud-texture-bake-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.472Z",
+          "elapsedMs": 2354
+        },
+        "at": "2026-10-14T05:40:46.482Z",
+        "elapsedMs": 4536
+      },
+      {
+        "stage": "cloud-texture-bake-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.473Z",
+          "elapsedMs": 2355
+        },
+        "at": "2026-10-14T05:40:46.482Z",
+        "elapsedMs": 4536
+      },
+      {
+        "stage": "shader-compile-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.473Z",
+          "elapsedMs": 2355
+        },
+        "at": "2026-10-14T05:40:46.482Z",
+        "elapsedMs": 4536
+      },
+      {
+        "stage": "initialization-failed",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-14T05:40:46.905Z",
+          "elapsedMs": 2788,
+          "atStage": "shader-compile-start",
+          "reason": "GPU device lost during startup: destroyed"
+        },
+        "at": "2026-10-14T05:40:46.908Z",
+        "elapsedMs": 4962
+      },
+      {
+        "stage": "startup-failure-observed",
+        "detail": {
+          "reason": "GPU device lost during startup: destroyed",
+          "attempt": 1,
+          "atStage": "shader-compile-start"
+        },
+        "at": "2026-10-14T05:40:46.910Z",
+        "elapsedMs": 4964
+      },
+      {
+        "stage": "native-document-loaded",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.627Z",
+          "elapsedMs": 131
+        },
+        "at": "2026-10-14T05:40:48.631Z",
+        "elapsedMs": 6685
+      },
+      {
+        "stage": "native-module-evaluated",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.776Z",
+          "elapsedMs": 280
+        },
+        "at": "2026-10-14T05:40:48.778Z",
+        "elapsedMs": 6832
+      },
+      {
+        "stage": "native-app-init-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.777Z",
+          "elapsedMs": 282
+        },
+        "at": "2026-10-14T05:40:48.778Z",
+        "elapsedMs": 6832
+      },
+      {
+        "stage": "init-stage:Opening the beach",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.778Z",
+          "elapsedMs": 282,
+          "fraction": 0.02
+        },
+        "at": "2026-10-14T05:40:48.778Z",
+        "elapsedMs": 6832
+      },
+      {
+        "stage": "webgpu-device-request-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.778Z",
+          "elapsedMs": 282
+        },
+        "at": "2026-10-14T05:40:48.794Z",
+        "elapsedMs": 6848
+      },
+      {
+        "stage": "webgpu-device-ready",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.786Z",
+          "elapsedMs": 291
+        },
+        "at": "2026-10-14T05:40:48.794Z",
+        "elapsedMs": 6848
+      },
+      {
+        "stage": "init-stage:Preparing the sky",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.788Z",
+          "elapsedMs": 292,
+          "fraction": 0.1
+        },
+        "at": "2026-10-14T05:40:48.794Z",
+        "elapsedMs": 6848
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.799Z",
+          "elapsedMs": 303,
+          "name": "takram-shape.bin"
+        },
+        "at": "2026-10-14T05:40:48.799Z",
+        "elapsedMs": 6853
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.799Z",
+          "elapsedMs": 303,
+          "name": "takram-detail.bin"
+        },
+        "at": "2026-10-14T05:40:48.800Z",
+        "elapsedMs": 6854
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.806Z",
+          "elapsedMs": 310,
+          "name": "takram-shape.bin",
+          "bytes": 2097152
+        },
+        "at": "2026-10-14T05:40:48.806Z",
+        "elapsedMs": 6860
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.806Z",
+          "elapsedMs": 310,
+          "name": "takram-detail.bin",
+          "bytes": 32768
+        },
+        "at": "2026-10-14T05:40:48.807Z",
+        "elapsedMs": 6861
+      },
+      {
+        "stage": "init-stage:Preparing white sand",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:48.816Z",
+          "elapsedMs": 320,
+          "fraction": 0.2
+        },
+        "at": "2026-10-14T05:40:48.817Z",
+        "elapsedMs": 6871
+      },
+      {
+        "stage": "init-stage:Preparing the waves",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:49.471Z",
+          "elapsedMs": 975,
+          "fraction": 0.34
+        },
+        "at": "2026-10-14T05:40:49.488Z",
+        "elapsedMs": 7542
+      },
+      {
+        "stage": "init-stage:Preparing light and reflections",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.047Z",
+          "elapsedMs": 1551,
+          "fraction": 0.5
+        },
+        "at": "2026-10-14T05:40:50.053Z",
+        "elapsedMs": 8107
+      },
+      {
+        "stage": "init-stage:Finishing the waves",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.057Z",
+          "elapsedMs": 1561,
+          "fraction": 0.65
+        },
+        "at": "2026-10-14T05:40:50.067Z",
+        "elapsedMs": 8121
+      },
+      {
+        "stage": "precompile-preparing",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.091Z",
+          "elapsedMs": 1595
+        },
+        "at": "2026-10-14T05:40:50.092Z",
+        "elapsedMs": 8146
+      },
+      {
+        "stage": "cloud-texture-bake-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.106Z",
+          "elapsedMs": 1610
+        },
+        "at": "2026-10-14T05:40:50.116Z",
+        "elapsedMs": 8170
+      },
+      {
+        "stage": "cloud-texture-bake-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.106Z",
+          "elapsedMs": 1610
+        },
+        "at": "2026-10-14T05:40:50.116Z",
+        "elapsedMs": 8170
+      },
+      {
+        "stage": "shader-compile-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.106Z",
+          "elapsedMs": 1610
+        },
+        "at": "2026-10-14T05:40:50.116Z",
+        "elapsedMs": 8170
+      },
+      {
+        "stage": "shader-compile-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.276Z",
+          "elapsedMs": 1780
+        },
+        "at": "2026-10-14T05:40:50.280Z",
+        "elapsedMs": 8334
+      },
+      {
+        "stage": "first-frame-warmup-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.276Z",
+          "elapsedMs": 1780
+        },
+        "at": "2026-10-14T05:40:50.280Z",
+        "elapsedMs": 8334
+      },
+      {
+        "stage": "first-frame-warmup-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.346Z",
+          "elapsedMs": 1850
+        },
+        "at": "2026-10-14T05:40:50.348Z",
+        "elapsedMs": 8402
+      },
+      {
+        "stage": "init-stage:Opening your view",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.346Z",
+          "elapsedMs": 1850,
+          "fraction": 0.95
+        },
+        "at": "2026-10-14T05:40:50.348Z",
+        "elapsedMs": 8402
+      },
+      {
+        "stage": "first-app-frame-start",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.348Z",
+          "elapsedMs": 1852
+        },
+        "at": "2026-10-14T05:40:50.350Z",
+        "elapsedMs": 8404
+      },
+      {
+        "stage": "first-app-frame-complete",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.397Z",
+          "elapsedMs": 1901
+        },
+        "at": "2026-10-14T05:40:50.397Z",
+        "elapsedMs": 8451
+      },
+      {
+        "stage": "initialization-failed",
+        "detail": {
+          "attempt": 2,
+          "sourceAt": "2026-10-14T05:40:50.400Z",
+          "elapsedMs": 1905,
+          "atStage": "first-app-frame-complete",
+          "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)"
+        },
+        "at": "2026-10-14T05:40:50.401Z",
+        "elapsedMs": 8455
+      },
+      {
+        "stage": "startup-failure-observed",
+        "detail": {
+          "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+          "attempt": 2,
+          "atStage": "first-app-frame-complete"
+        },
+        "at": "2026-10-14T05:40:50.401Z",
+        "elapsedMs": 8455
+      },
+      {
+        "stage": "native-document-loaded",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.511Z",
+          "elapsedMs": 103.00000000000001
+        },
+        "at": "2026-10-14T05:40:53.512Z",
+        "elapsedMs": 11566
+      },
+      {
+        "stage": "native-module-evaluated",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.661Z",
+          "elapsedMs": 253
+        },
+        "at": "2026-10-14T05:40:53.666Z",
+        "elapsedMs": 11720
+      },
+      {
+        "stage": "native-app-init-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.662Z",
+          "elapsedMs": 254
+        },
+        "at": "2026-10-14T05:40:53.666Z",
+        "elapsedMs": 11720
+      },
+      {
+        "stage": "init-stage:Opening the beach",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.662Z",
+          "elapsedMs": 254,
+          "fraction": 0.02
+        },
+        "at": "2026-10-14T05:40:53.666Z",
+        "elapsedMs": 11720
+      },
+      {
+        "stage": "webgpu-device-request-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.666Z",
+          "elapsedMs": 258
+        },
+        "at": "2026-10-14T05:40:53.669Z",
+        "elapsedMs": 11723
+      },
+      {
+        "stage": "webgpu-device-ready",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.668Z",
+          "elapsedMs": 260
+        },
+        "at": "2026-10-14T05:40:53.669Z",
+        "elapsedMs": 11723
+      },
+      {
+        "stage": "init-stage:Preparing the sky",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.669Z",
+          "elapsedMs": 261,
+          "fraction": 0.1
+        },
+        "at": "2026-10-14T05:40:53.669Z",
+        "elapsedMs": 11723
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.673Z",
+          "elapsedMs": 265,
+          "name": "takram-shape.bin"
+        },
+        "at": "2026-10-14T05:40:53.673Z",
+        "elapsedMs": 11728
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.673Z",
+          "elapsedMs": 265,
+          "name": "takram-detail.bin"
+        },
+        "at": "2026-10-14T05:40:53.673Z",
+        "elapsedMs": 11728
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.678Z",
+          "elapsedMs": 270,
+          "name": "takram-shape.bin",
+          "bytes": 2097152
+        },
+        "at": "2026-10-14T05:40:53.678Z",
+        "elapsedMs": 11732
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.678Z",
+          "elapsedMs": 270,
+          "name": "takram-detail.bin",
+          "bytes": 32768
+        },
+        "at": "2026-10-14T05:40:53.679Z",
+        "elapsedMs": 11733
+      },
+      {
+        "stage": "init-stage:Preparing white sand",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:53.687Z",
+          "elapsedMs": 279,
+          "fraction": 0.2
+        },
+        "at": "2026-10-14T05:40:53.687Z",
+        "elapsedMs": 11741
+      },
+      {
+        "stage": "init-stage:Preparing the waves",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.308Z",
+          "elapsedMs": 900,
+          "fraction": 0.34
+        },
+        "at": "2026-10-14T05:40:54.314Z",
+        "elapsedMs": 12369
+      },
+      {
+        "stage": "init-stage:Preparing light and reflections",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.868Z",
+          "elapsedMs": 1460,
+          "fraction": 0.5
+        },
+        "at": "2026-10-14T05:40:54.876Z",
+        "elapsedMs": 12930
+      },
+      {
+        "stage": "init-stage:Finishing the waves",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.881Z",
+          "elapsedMs": 1473,
+          "fraction": 0.65
+        },
+        "at": "2026-10-14T05:40:54.883Z",
+        "elapsedMs": 12937
+      },
+      {
+        "stage": "precompile-preparing",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.914Z",
+          "elapsedMs": 1506
+        },
+        "at": "2026-10-14T05:40:54.915Z",
+        "elapsedMs": 12969
+      },
+      {
+        "stage": "cloud-texture-bake-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.928Z",
+          "elapsedMs": 1520
+        },
+        "at": "2026-10-14T05:40:54.936Z",
+        "elapsedMs": 12991
+      },
+      {
+        "stage": "cloud-texture-bake-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.928Z",
+          "elapsedMs": 1520
+        },
+        "at": "2026-10-14T05:40:54.936Z",
+        "elapsedMs": 12991
+      },
+      {
+        "stage": "shader-compile-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:54.928Z",
+          "elapsedMs": 1520
+        },
+        "at": "2026-10-14T05:40:54.936Z",
+        "elapsedMs": 12991
+      },
+      {
+        "stage": "shader-compile-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.097Z",
+          "elapsedMs": 1689
+        },
+        "at": "2026-10-14T05:40:55.100Z",
+        "elapsedMs": 13154
+      },
+      {
+        "stage": "first-frame-warmup-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.097Z",
+          "elapsedMs": 1689
+        },
+        "at": "2026-10-14T05:40:55.100Z",
+        "elapsedMs": 13154
+      },
+      {
+        "stage": "first-frame-warmup-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.161Z",
+          "elapsedMs": 1753
+        },
+        "at": "2026-10-14T05:40:55.163Z",
+        "elapsedMs": 13217
+      },
+      {
+        "stage": "init-stage:Opening your view",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.161Z",
+          "elapsedMs": 1753,
+          "fraction": 0.95
+        },
+        "at": "2026-10-14T05:40:55.163Z",
+        "elapsedMs": 13218
+      },
+      {
+        "stage": "first-app-frame-start",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.163Z",
+          "elapsedMs": 1755
+        },
+        "at": "2026-10-14T05:40:55.165Z",
+        "elapsedMs": 13219
+      },
+      {
+        "stage": "first-app-frame-complete",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.212Z",
+          "elapsedMs": 1804
+        },
+        "at": "2026-10-14T05:40:55.213Z",
+        "elapsedMs": 13267
+      },
+      {
+        "stage": "initialization-failed",
+        "detail": {
+          "attempt": 3,
+          "sourceAt": "2026-10-14T05:40:55.213Z",
+          "elapsedMs": 1805,
+          "atStage": "first-app-frame-complete",
+          "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)"
+        },
+        "at": "2026-10-14T05:40:55.213Z",
+        "elapsedMs": 13267
+      },
+      {
+        "stage": "startup-failure-observed",
+        "detail": {
+          "reason": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+          "attempt": 3,
+          "atStage": "first-app-frame-complete"
+        },
+        "at": "2026-10-14T05:40:55.213Z",
+        "elapsedMs": 13267
+      }
+    ],
+    "network": {
+      "profile": "inlet-beach",
+      "fixture": "night-storm",
+      "fixtureLoaded": true,
+      "backend": "WebGL fallback",
+      "error": "The wave renderer could not start on this device: Resource usage limits exceeded: uniformBufferCount(13) > deviceLimits.maxUniformBuffersPerShaderStage(12) || storageBufferCount(7) > deviceLimits.maxStorageBuffersPerShaderStage(10) || samplerCount(9) > deviceLimits.maxSamplersPerShaderStage(16) || textureCount(14) > deviceLimits.maxSampledTexturesPerShaderStage(32) || storageTextureCount(0) > deviceLimits.maxStorageTexturesPerShaderStage(8)",
+      "attempts": [],
+      "nativeReady": false,
+      "dataFetchesBeforeFirstFrame": []
+    },
+    "firstFixtureFrameAt": null
+  },
+  "parentRunId": "2026-10-14T05-40-43Z-ba8b89b4-ffc8-4337-86c3-af0a3daa4962",
+  "part": "interrupted-1791956455839",
+  "evidenceIndex": {},
+  "partial": true
+}
