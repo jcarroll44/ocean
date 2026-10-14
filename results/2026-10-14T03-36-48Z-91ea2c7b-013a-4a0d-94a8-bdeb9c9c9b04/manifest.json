@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T03-36-48Z-91ea2c7b-013a-4a0d-94a8-bdeb9c9c9b04",
+  "kind": "weather",
+  "fingerprint": "f937b93542189da175614c986e96d28fa840e0b6aefa224152134f8f8ed15d96",
+  "receivedAt": "2026-10-14T03:37:51.658Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1616085,
+      "type": "application/json",
+      "sha256": "97a10721a5736739dffb0f605dfb3c36b125c188075efa9ad65cadc518cd9f9a"
+    },
+    {
+      "name": "scrub-part-3.mp4",
+      "size": 393221,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "ecbb9d39819d9c83d40fa9bb7e0e59183e6c527a24dafff4ab046a963b8c8134"
+    }
+  ]
+}
