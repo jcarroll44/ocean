@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-46-36Z-ed0768e1-241a-4493-b626-209d1e186690",
+  "kind": "weather",
+  "fingerprint": "6b73c4bdf74d49d7906cb8fc6c6f191956b7514845b770063d3bce045b41538d",
+  "receivedAt": "2026-10-14T20:46:36.909Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2100128,
+      "type": "application/json",
+      "sha256": "7bb4d5e2d8a4db95b616af460b154906311189676edcfed6214ade2d083ff897"
+    },
+    {
+      "name": "phase-cocoa-beach-dusk.jpg",
+      "size": 354112,
+      "type": "image/jpeg",
+      "sha256": "db3b6c401a0b822135eff010e3fe0dbe0b647fa3619af5a4b0f2504291ee8174"
+    }
+  ]
+}
