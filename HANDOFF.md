@@ -1,34 +1,37 @@
-# DayBuoy handoff — RC12b validation candidate, NOT DEPLOYED
+# DayBuoy handoff — RC12b deployed; phone test pending
 
 Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
 
 ## Current revision and source
 
-- Working candidate: `2026-10-15-surf-truth-rc12b` (the exact revision requested by Jacob). **Not deployed; sustained hardware release gate is blocked.**
-- Canonical private Sites candidate source checkpoint: `123dea53d7ab303e89b68dc569aeeae80b6f4185`. This GitHub handoff mirror points to that unpublished source; the GitHub runtime is not the canonical candidate.
-- Current live runtime is still failed RC12: `2026-10-14-surf-truth-rc12`, deployed source `ef09723dfe5be658457ce2d61dae5622270215de`. Do not describe that URL as RC12b.
-- Existing live gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-surf-truth-rc12
+- Deployed candidate: `2026-10-15-surf-truth-rc12b` (the exact revision requested by Jacob). **Deployment succeeded; iPhone hardware test pending.**
+- Renderer/physics/capture source: `123dea53d7ab303e89b68dc569aeeae80b6f4185`. This deployment pass adds only saved GPU timing summaries and completion-window metadata; no renderer/shader changes.
+- Deployed source: `afa9dc16e5ff53266937ac73424ef07155b6171a`. The following handoff checkpoint is documentation only; the renderer remains identical to `123dea53`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_73e7487a644481918a927872eadb4123`.
+- Deployment `appgdep_6acfde88417c819189701100e4f85c43` succeeded at `2026-10-14T19:57:10.009422+00:00`.
+- Live gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-15-surf-truth-rc12b
 - Immutable scene starting point: `scene-baseline-rc11`, source `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
-- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; source/deploy `main` approved. Preserve owner-private audience. Source checkpoint is permitted; deployment requires the new sustained hardware pass.
+- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; source/deploy `main` approved. Preserve owner-private audience. Jacob explicitly authorizes deployment now; the iPhone gate supplies the hardware test.
 - GitHub continuation branch `wip/tidewater-verdict-first`, evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
 - Capture tools: `2026-10-15-streaming-capture-rc12b`.
 
 ## What passed
 
+- Deployment pass: 26 GPU timing summary tests and durable FPS checkpoint assertion PASS; complete build, production startup and hosting packaging PASS. Per-pass first/last 20 medians, native timed-window filtering, true frame-span drift and coverage are saved in `gpuTiming` before captures. Historical RC11 per-pass comparison is included; missing RC11 total span remains explicitly unmeasured.
 - Accepted RC11 device baseline: 40.6236 avg / 34 min / 0 seconds under 30, captures 36/36. These results do not certify RC12b.
 - RC12b surf cache: 96,000 comparisons against actual RC12 scalar functions; maximum height difference 0.111%, vertical profile difference 1.382%, absolute curl difference 0.0484. Forecast-order regression passes. Cache uses the existing shore travel-time resource, adds 532,480 padded bytes (526,336 coefficient bytes) and no binding or per-frame CPU bake. Original field bytes and logical resolution are unchanged.
 - Normal FFT row/column WGSL, uniforms, bindings, foam bounds and dispatch sequence match RC11. Four 256 cascades and the existing update/reuse cadence are unchanged. The separate compression snapshot program replaces one column dispatch only for calibration/diagnostics outside the FPS window.
 - Focused capture/storage tests pass: individual retries, bounded one-second streaming fragments, durable progress, hidden-tab retry with fresh take IDs, reload reconstruction of five continuous six-second files, Share results and unchanged FPS accounting. Mock codec/network/storage tests, not iOS evidence.
 - Sustained-performance grader passes 56 positive/negative unit cases; it rejects missing hardware samples, null/software adapters, stale manifests, raised limits and thermal drift. Test fixtures are not benchmark results.
-- Strict local 80 WGSL modules / 84 complete pipelines pass at default limits: maximum12 uniforms / 8 storage buffers / 9 samplers / 16 sampled textures. All 24 boundary/negative cases pass. All three strict startup checks and 36 still command paths pass with a null backend.
+- Strict local 80 WGSL modules / 84 complete pipelines pass at default limits: maximum 12 uniforms / 8 storage buffers / 9 samplers / 16 sampled textures. All 24 boundary/negative cases pass. All three strict startup checks and 36 still command paths pass with a null backend.
 - Complete integration build and all seven automated interaction checks PASS. Production minified startup/forecast forwarding and 25-file allowlist PASS. Private startup bundles contain 11 verified assets (4,396,059 bytes); release startup assets total 3,098,172 bytes. Startup cache/retry checks PASS.
 - Shader manifest: `2f8427bc7f9aa88354e4d5c0ccfdad104f2e107292d13cba62d30f71867d69f4`. Sites Worker packaging with byte-identical native assets PASS. Changed-text credential-pattern scan and `git diff --check` PASS.
-- Sustained release CLI exits with a blocking failure when the genuine measurements are absent; `night-report/rc12b-sustained-release.json` records unmeasured candidate/baseline values, not a performance pass.
+- Controlled-comparison CLI still requires genuine measurements; the current user authorization instead deploys for the iPhone gate. `night-report/rc12b-sustained-release.json` records unmeasured values and that authorization, not a performance pass.
 - Local tests are not a real-browser/device/visual pass. No RC12b phone FPS, rendered pixels, actual 36-image gallery or encoded iOS clips have been observed.
 
 ## Open issues
 
-- **Required pre-shipping hardware test unavailable:** this host has no `/dev/dri`; both Vulkan and OpenGL WebGPU adapter requests return null. See `night-report/rc12b-hardware-availability.json`. Do not use the GPU runner, fabricate timings, or deploy until this requirement is met or Jacob explicitly changes it.
+- Host has no hardware GPU. Jacob explicitly replaced that deployment blocker: deploy now and use his iPhone gate. Do not use the GPU runner or fabricate timings. Phone acceptance remains pending.
 - Need a genuine controlled 120-second night-storm RC11/RC12b comparison on the same GPU/settings: cool GPU span <=RC11+1.0 ms; last 20 median <=110% of first 20; >=36 avg and every second >=30. Earlier uploaded traces contain per-pass durations but no complete first-to-last GPU spans. Summing overlapping tile-GPU pass durations is not a valid total.
 - RC12 uploaded result was 21.1383 avg / 10 min / 110 seconds under 30; water 17.712→34.912 ms and FFT 5.049→13.757 ms (first/last 20 populated samples). See `night-report/rc12b-device-analysis.md` and JSON.
 - The latest uploaded report contains the full 120.019 seconds / 2,537 completions. It does not contain the reported 36-second renderer interruption or the I/O exception. Their exact device causes remain unverified. New failure tracing will preserve stage/error/elapsed details.
@@ -39,9 +42,9 @@ Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERA
 
 ## Next steps
 
-1. RC12b local implementation/validation is complete. Preserve this unpublished checkpoint and obtain the genuine sustained hardware test before deployment; do not spend another pass repeating the same null/mock tests.
-2. On an available hardware WebGPU host, run matching RC11 and RC12b 120-second production night-storm captures with identical fixed viewport/DPR settings. Include complete frame-pass spans and per-pass samples. Grade with `node scripts/check-sustained-performance.mjs --candidate FILE --baseline FILE`; its explicit envelope is documented in `scripts/sustained-performance.mjs`.
-3. Ship only after cool delta <=1 ms and late/early <=1.10. Then run the existing iPhone gate, 36 stills, five wave-truth checks and five six-second clips. Share results must reconstruct from saved progress after reload; do not rerun acknowledged FPS or stills.
+1. RC12b is deployed with first20/last20 GPU summaries; deployment receipt is recorded above. No more renderer changes in this pass.
+2. Run the existing iPhone gate. Its first durable FPS report includes `gpuTiming`: timed per-pass first20/last20 medians, frame-span drift, resolution history and historical RC11 reference. Total RC11+1 ms remains unmeasured unless a matching RC11 frame span becomes available; never sum passes.
+3. Read the uploaded phone FPS, GPU timing, 36 stills, five truth checks and five clips. Require the existing FPS/capture gates; evaluate drift and cost honestly. Share results survives reload; acknowledged FPS/stills are not rerun.
 4. Read matching evidence and compare waves visually before acceptance. Keep `scene-baseline-rc11` immutable; do not begin RC13.
 
 ## Rules and invariants
