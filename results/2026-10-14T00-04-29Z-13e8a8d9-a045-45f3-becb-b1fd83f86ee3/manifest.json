@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T00-04-29Z-13e8a8d9-a045-45f3-becb-b1fd83f86ee3",
+  "kind": "weather",
+  "fingerprint": "5b6e17d8ea0e413b3efac63165ec81f995023e4c416d593227a79bd809fbf355",
+  "receivedAt": "2026-10-14T00:04:29.727Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1581004,
+      "type": "application/json",
+      "sha256": "b59141b08b3881a16e9acee029b12483d646d54ba150166e47456388192166ba"
+    },
+    {
+      "name": "location-cocoa-beach-night.jpg",
+      "size": 60275,
+      "type": "image/jpeg",
+      "sha256": "4ebcb59661b7c52084dacb331d94739f4bee405014c67a966438a22d0157e154"
+    }
+  ]
+}
