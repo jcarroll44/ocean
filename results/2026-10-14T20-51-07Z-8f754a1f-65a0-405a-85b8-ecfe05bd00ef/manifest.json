@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-51-07Z-8f754a1f-65a0-405a-85b8-ecfe05bd00ef",
+  "kind": "weather",
+  "fingerprint": "2ab5ac712927286d93ad46be4e8e785563afd34686d1e2507e2812ee23b7975b",
+  "receivedAt": "2026-10-14T20:51:07.787Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2575233,
+      "type": "application/json",
+      "sha256": "d005815f175be00c631929144725d8d8570b76b619f3c7fb2c96a4845aa8af25"
+    },
+    {
+      "name": "wave-groundswell.jpg",
+      "size": 324667,
+      "type": "image/jpeg",
+      "sha256": "72f285ff1f3b17a90584d131d964b521c0f2d51bbe87b1cf18e883e08be6e776"
+    }
+  ]
+}
