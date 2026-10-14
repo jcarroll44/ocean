@@ -1,3 +1,56 @@
+# DayBuoy handoff — RC12 surf truth candidate
+
+Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate: `2026-10-14-surf-truth-rc12`; local validation complete. Not yet device-accepted.
+- Deployed source: `ef09723dfe5be658457ce2d61dae5622270215de`. The follow-up handoff checkpoint changes documentation only, not this deployed runtime.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_44f098d589788191a58ff207d4e65dff`.
+- Deployment `appgdep_6acfca5b04088191a79671c4749363f2` succeeded at `2026-10-14T18:31:08.311657+00:00`.
+- Immutable scene starting point: `scene-baseline-rc11`, source `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
+- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; source/deploy `main` approved. Preserve owner-private audience.
+- GitHub continuation branch `wip/tidewater-verdict-first`, evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+- Capture additions: `2026-10-14-wave-truth-clips-rc12`; existing still and scrub mechanics unchanged.
+- Gate ready for the iPhone run: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-surf-truth-rc12
+
+## What passed
+
+- Accepted RC11 device baseline: 40.6236 avg / 34 min / 0 seconds under 30, captures 36/36. Those results do not certify RC12.
+- RC12 full build and all seven automated interaction checks PASS. Production minified startup/forecast forwarding and the 25-file allowlist PASS; 11 verified startup assets and revisioned-cache/retry tests PASS.
+- Sites Worker packaging PASS with byte-identical native static assets; no runtime credentials in the artifact. Changed-text credential-pattern scan and `git diff --check` PASS.
+- Deployed HTTPS verification PASS: exact RC12 manifest, SHA-256/length for all 11 assets (4,391,852 bytes), exact gate HTML and bundled gate module. This checks served bytes, not browser rendering.
+- Strict local 79 WGSL modules / 83 complete pipelines PASS at default limits: maximum 12 uniforms / 8 storage buffers / 9 samplers / 16 sampled textures per stage. All 24 boundary/negative cases pass. Shader manifest `81ef065f2d3c9df5718c0a469a40e6e687f0fde3b9156533aebf36ac0a21d288`.
+- Strict null-backend initialization plus all 36 still command paths PASS (Inlet 22, Cocoa 7, San Diego 7). Actual wave-truth command/readback orchestration runs locally; empty null-backend output correctly fails truth checks.
+- Current production scalar wave heights/groups and actual travel-time fields PASS: 1/3/6 ft cases measure 0.3022/0.9040/1.8093 m Hs. Independent numerical and negative-metric tests pass. See `night-report/rc12-surf-truth-local.json`.
+- Five six-second clip, frozen-frame rejection, bounded encoding, independent upload, interrupted-upload retry, reload and Share-file tests PASS with mocked storage/encoding. Real gate orchestration retains FPS and acknowledged captures; truth failures remain REVIEW, not a false pass.
+- Scope checks preserve RC11 UI/camera/sky/light/sand, vendor, existing still freeze/settle and live draw loop, and all sustained budgets. Current changes and reference limitations are in `night-report/rc12-report.md`.
+- Local tests are not a real-browser/device/visual pass. No RC12 phone FPS, pixels, native Share or rendered recordings have been observed yet.
+
+## Open issues
+
+- RC12 device wave-truth metrics, five clips, visual comparison and sustained gate remain pending.
+- Hs is the highest-third mean, not every wave. The height probe measures the coherent breaking face before independent FFT surface chop. Refraction/group/whitecap targets are explicitly labelled model estimates. No local bathymetric survey is available.
+- Real Inlet and Crystal Pier/Pacific Beach footage was inspected for crest/foam morphology. Its camera heights and unknown wave conditions prevent a quantitative matched-view claim. Compare the new phone stills/clips before acceptance.
+- Future RC13 clouds, RC14 seams/night zigzag+blob/overcast sand crack, RC15 sun glow/light are deferred. Do not implement them in RC12.
+- WeatherKit/RevenueCat activation and signing/TestFlight remain owner/Mac work.
+
+## Next steps
+
+1. Run the existing iPhone gate. Require >=36 avg, >=30 every whole second for 120 s, 36 stills and all five wave-truth conditions/clips. Use Share results after completion; saved results survive a reload. No baseline promotion without matching evidence and visual review.
+2. Read the fresh uploaded JSON and five motion clips. Check height/stand, cadence, sets, angles, cap area and connected face/lip/foam against reference footage with comparable framing and conditions.
+3. Fix only concrete RC12 regressions if found. Do not start RC13 without completing RC12 acceptance. Keep `scene-baseline-rc11` immutable.
+
+## Rules and invariants
+
+- RC12 is the user's explicit surf-only exception to the RC11 freeze. UI, astronomy, camera, sky/light/sand, still tooling and budgets stay frozen.
+- Keep DPR floor 1.1, four 256 FFT cascades at existing 40 Hz reuse, 48 crest samples / 1.2 m stations / 12 lip vertices, spray16384, lightmap256 and existing reflection/cloud work.
+- No raised WebGPU limits, GPU runner, synthetic claims of device/visual success, secrets in output/commits, advice wording or crowd reporting. Preserve estimate/source labels and Tidewater/Takram MIT credits.
+- Gate first, durable upload before captures; each new clip independently persisted/uploaded. Share results must work from saved data after reload. Keep null-abort and still-timeout recovery.
+- Every delivery: all seven interaction checks, full build and default-limit pipeline/startup/capture checks. Update this handoff at the end of each pass.
+
+## Archived handoff — RC11 accepted freeze
+
 # DayBuoy handoff — RC11 scene baseline FROZEN
 
 Updated: 2026-10-14 UTC · RC11 accepted by Jacob after the uploaded iPhone run.
