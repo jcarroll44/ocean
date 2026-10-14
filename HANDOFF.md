@@ -1,3 +1,53 @@
+# DayBuoy handoff — RC12c deployed; iPhone test pending
+
+Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate: `2026-10-15-surf-truth-rc12c`. Local validation complete; the iPhone is the hardware test. No device acceptance yet.
+- Deployed source: `14b4c9657bc9155fac00491702a19794168c3575`. This follow-up handoff checkpoint is documentation only.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_0947de4dce7081919decf5080d9c8da8`.
+- Deployment `appgdep_6acfe616196c8191bfa622a6fb0c016b` succeeded at `2026-10-14T20:29:40.025169+00:00`.
+- Live gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-15-surf-truth-rc12c
+- Immutable accepted renderer: `scene-baseline-rc11` / `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
+- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its `main` is the approved deploy channel. Preserve owner-private audience.
+- GitHub continuation `wip/tidewater-verdict-first`; uploaded evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+- Capture tools: `2026-10-15-blob-recovery-rc12c`.
+
+## What passed
+
+- RC11 remains the accepted baseline: 40.6236 average /34 minimum /zero seconds below30;36/36 stills. No later build inherits that acceptance.
+- RC12c focused media tests reproduce the cross-realm ArrayBuffer defect: genuine bytes returned from the scene iframe failed parent `instanceof`, leaving a wrapper object for FormData. Native-brand detection reconstructs a genuine Blob. Null/empty/malformed capture output and corrupt restored queue parts are rejected/logged individually; valid bytes/receipts remain intact. Recorder errors retry only their capture and later captures continue.
+- Cached optical cross-section numerical checks:96,000 existing wave samples and669,330 optical comparisons pass; maximum X0.2586%/Y1.2544% of face height. Geometry/truth remains analytic; up to44 repeated sin/cos/pow/exp operations in the eligible water fragment are replaced by cached bases. Static table adds524,288 bytes to the existing field, zero new bindings/passes or per-frame bake. Actual GPU improvement awaits phone evidence.
+- Isolated RC11 control is built from249 pinned source files, with only current timing instrumentation plus worker routing/provenance. Baseline78 WGSL modules /82 full pipelines and22 Inlet startup capture commands pass at default limits.
+-53 GPU-summary/comparison tests pass:5/30/120-second windows, first20/last20/full medians, sample counts/overlap, exact-resolution cohorts, true GPU span and +1ms water/total comparisons. Missing data cannot become a pass.
+- Gate orchestration tests pass:5s precheck blocks before candidate if average<36;120s candidate is saved before30s control; control failure continues captures and stays resumable; null clips do not stop36 stills/remaining clips; acknowledged FPS is never rerun.
+- Complete integration build and all seven interaction checks PASS. Candidate80 WGSL modules /84 full pipelines PASS at default limits (12 uniform/8 storage/9 samplers/16 sampled textures); all36 strict startup/still command paths PASS. Production minified startup/forecast forwarding and25-file allowlist PASS. Private native bundles preload13 verified assets including the pinned control; public assets omit it. No real-device result is claimed.
+- Local tests are not a real-browser/device/visual pass. No RC12c iPhone FPS, rendered pixels, thermal reading or new device acceptance is claimed.
+
+## Open issues
+
+- Latest RC12b upload measured6.1239 average /2 minimum /120 seconds below30. Timed water40.726→125.036ms; true GPU span78.329→234.571ms (+199.469%). User reports thermal throttling; no temperature sensor exists. The16.1ms water sample is during warmup at585×988, not a controlled same-resolution cool-clock median. See `night-report/rc12c-device-analysis.md`.
+- Uploaded partial RC12b report contains neither the reported FormData exception nor the9s renderer interruption. The byte-boundary bug is independently reproduced. Duplicate boot/global error listeners were removed because they could bypass native optional-effect isolation; exact causation of that device interruption remains unverified. Parent failures now retain nonempty reasons/stage/code/attempt.
+- RC12c hardware budget/visual acceptance awaits the phone. Preserve >=36 average and>=30 in EVERY whole second of120 seconds,36/36 stills, +/-20% simulation truth and five continuous clips. Never claim FPS from numerical/WGSL/null-backend tests.
+- Sequential RC11 control runs after candidate with a fresh GPU device and same adaptive policy. Temperature may change; output sizes are recorded. Unequal/changed sizes make the overall+1ms check unmeasured; matched-resolution cohorts are provided without claiming a controlled thermal experiment.
+- RC13 clouds, RC14 transitions and RC15 light remain deferred. Signing, WeatherKit/RevenueCat activation and TestFlight require owner/Mac steps.
+
+## Next steps
+
+1. RC12c local checks, production/hosting packaging and private deployment are complete; receipt is above. Do not change code before reading the new phone evidence.
+2. User runs the same gate in Safari. It performs5s RC11 readiness,120s candidate,30s RC11 control, then captures/truth/clips; each acknowledged result survives reload. Warm precheck stops before120s and offers an explicit retry.
+3. Read both per-pass GPU summaries and matched-resolution budget/difference fields in `gpuComparison`, candidate<=10% span drift, FPS bins,36 stills/truth/clips. Inspect device visuals before accepting. No baseline promotion or RC13 yet.
+
+## Rules and invariants
+
+- Only RC12c media boundaries/startup diagnostics, fragment surf caching and private control phases are authorized. UI/camera/sky/light/sand/still freeze/settle mechanics unchanged.
+- Keep DPR floor1.1,4×256 FFT cascades with unchanged reuse,48 crest samples/1.2m stations/12 lip vertices,16,384 spray and256 lightmap. No raised WebGPU limits or GPU runner.
+- No secrets, advice wording or crowd reporting. Preserve estimates/source attribution and Tidewater/Takram MIT credits.
+- No capture/encoding/upload during any timed window. Save candidate FPS before control/captures. Retain the exact baseline tag and acknowledged evidence. Update this handoff every pass.
+
+## Archived handoff — RC12b deployment
+
 # DayBuoy handoff — RC12b deployed; phone test pending
 
 Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
