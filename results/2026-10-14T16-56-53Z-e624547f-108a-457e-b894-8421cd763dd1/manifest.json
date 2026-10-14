@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T16-56-53Z-e624547f-108a-457e-b894-8421cd763dd1",
+  "kind": "weather",
+  "fingerprint": "d5211aa7d520018722fbd231e32d2533064c151d3873a1cdc62eb102393e8696",
+  "receivedAt": "2026-10-14T16:56:54.235Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1191482,
+      "type": "application/json",
+      "sha256": "46c2339d28f82625e15d29e5d89683928f638d4a6a3754825f1881b22dea7794"
+    },
+    {
+      "name": "phase-san-diego-night.jpg",
+      "size": 312952,
+      "type": "image/jpeg",
+      "sha256": "5f03c350283d8788a5bca5c43b6d6bbeee2513247a01c38fef5c70a91e99c786"
+    }
+  ]
+}
