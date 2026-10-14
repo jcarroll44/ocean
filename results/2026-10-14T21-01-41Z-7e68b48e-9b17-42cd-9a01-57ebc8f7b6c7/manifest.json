@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T21-01-41Z-7e68b48e-9b17-42cd-9a01-57ebc8f7b6c7",
+  "kind": "weather",
+  "fingerprint": "65f1458a3671761a8b1390c244cfdf4c95b7a88ae783245a706f654816bf0b67",
+  "receivedAt": "2026-10-14T21:01:42.861Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3629186,
+      "type": "application/json",
+      "sha256": "e92d32f70c4fa1815f44772114696ec0fbdc515a840df39dadee3fd8b3fb7848"
+    },
+    {
+      "name": "location-san-diego-sunset.jpg",
+      "size": 733904,
+      "type": "image/jpeg",
+      "sha256": "6cf1da81a78823de2890f1bc9f5948772879f3843242faf7fed27eb4f0b25a48"
+    }
+  ]
+}
