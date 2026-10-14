@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T16-03-24Z-ab5ec3fe-e512-4b4a-81ad-031962bf4df3",
+  "kind": "weather",
+  "fingerprint": "aaf7294c3085c075d7dfaf1614ba0aadb0a541b181bbb2da9a443b4308e8ea0b",
+  "receivedAt": "2026-10-14T16:03:25.522Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1392727,
+      "type": "application/json",
+      "sha256": "8aba0183db06a30096570c7f69233ce3d7bc13efcb8bab47e04f80f31715625d"
+    },
+    {
+      "name": "wave-onshore.jpg",
+      "size": 353623,
+      "type": "image/jpeg",
+      "sha256": "78eb54fc957b6b1516e12503d3321afe5327f81c6ee08dce4ddc39bc0f061491"
+    }
+  ]
+}
