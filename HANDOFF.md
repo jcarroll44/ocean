@@ -1,5 +1,111 @@
 # DayBuoy handoff
 
+Updated: 2026-10-14 UTC · RC11 sustained scene candidate.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence: `2026-10-14-sustained-scene-rc11`.
+- Saved-results/share tools: `2026-10-13-share-resume-1`, unchanged.
+- Canonical source: private Sites repo, approved deploy branch `main`.
+  RC10 base: `c0abbaed3147ac263e137c74e15e689f5313e55f`.
+- Project: `appgprj_6ac49343ea048191b93c8d1135390e39`, owner-private.
+- GitHub mirror: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** Evidence: `wip/tidewater-in-app`.
+- Gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-sustained-scene-rc11
+- Published private source: `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_c6ceda20f1dc8191afa9a306fe00f46f`.
+- Deployment: `appgdep_6acfb0ec153c8191b9775db38aaa0902`, **succeeded** at 2026-10-14T16:42:33.407999+00:00.
+- Delivered gate HTML and bundle matched packaged bytes; all 11 native assets
+  SHA-256 verified (4,372,379 bytes). Uploader ready on the established WIP
+  evidence branch. Share/resume retained. Working tree clean after publication.
+- This verifies delivery, not iPhone rendering or FPS. No GitHub main writes.
+
+## What passed
+
+- RC10 iPhone captures 36/36; cadence FAILED: 33.371663 average / 28 minimum /
+  five seconds below 30 in 120.012 seconds (4,005 completed frames).
+  Parent run `2026-10-14T15-49-28Z-b41715c0-59d1-4d1f-b297-e7e4ec86b429`;
+  retrieved report blob `266dc04991b74d1a76c53f4b3ec81716e3c4ab11`.
+- RC8 accepted iPhone: 39.646035 average / 31 minimum / zero seconds below 30.
+- Reviewed all three authentic RC10 contact sheets and sampled GPU timing traces.
+  `night-report/rc11-device-analysis.json` records source IDs and the comparison.
+- Full build and all seven interaction checks: PASS (automated).
+- Strict local WGSL: 78 modules; all 82 complete pipeline creations pass on a
+  default-limit Dawn null device, with no requested raised limits. Per-stage
+  maxima: 12 uniforms / 8 storage buffers / 9 samplers / 16 sampled textures.
+  All 24 boundary/one-over negative cases pass.
+- All 36 settled still GPU command sequences pass: Inlet 22, Cocoa 7, San Diego 7.
+  Existing phase orchestration and upload/resume scenarios also pass.
+- Exact shader manifest SHA-256: `b312de3bab24e63bd78640c869cad56dda007434919098d647ac9dd72133cc91`.
+  Receipts: `night-report/rc11-sustained-checks.json` plus current-revision
+  pipeline/startup details in `night-report/rc10-default-resources.json`.
+- Production minified startup/forecast/camera and 25-file allowlist checks PASS.
+  Native startup has 11 verified assets; caching and retry tests PASS.
+- Exact optimized bloom tent passes 1,800 arbitrary-coordinate/HDR/edge cases;
+  new budgets and RC10 waveform/foam/functional source preservation pass.
+- Local tests are not a real-browser/device/visual pass. Dawn null validates
+  GPU pipelines/commands; DOM/JPEG/settle-clock doubles produce no real images.
+  No GPU runner used. No claim of a measured RC11 FPS gain before the phone run.
+
+## What changed and decisions
+
+- Exact four-channel fields now use one aligned vec4 storage load in place of
+  four separately bounded scalar loads. Float32 values, bounds and uploads stay
+  identical. Native default-limit packing and pinned vendor remain intact.
+- Native spray capacity 32,768 -> 16,384; visible splash/mist emission unchanged.
+  Existing emission feedback reduces subpixel drops/ligaments to fit capacity.
+- Underwater illumination lookups 512² -> 256² (75% fewer generated texels).
+  This is low-frequency submerged lighting, not the water/foam surface. Visible
+  foam/caustic textures, ocean mesh, crest samples and FFT remain unchanged.
+- Stationary environment probe refresh 3 -> 6 seconds. Real solar movement and
+  forced still refresh still bypass the timer. No reduction to cube resolution.
+- Original bloom pyramid/resolution/strength retained. Exact phase-aware bilinear
+  folding reduces each tent from nine taps to four; no new post pass.
+- Remove duplicate grey horizon blend; narrow the sky convergence, move water
+  haze completion before the far clip and sample clear air above the intense
+  orange horizon row. Slightly soften the existing solar glare coefficients.
+  No added texture taps, passes or raymarches for these optical refinements.
+- RC10 UI, capture tooling, Share results/resume, cloud cache, 1.1 DPR floor,
+  High mesh, all wave/foam expressions, FFT and two-frame submission unchanged.
+
+## Open issues
+
+- RC11 target: >=36 average, every second >=30 for a full 120 s. Device speed
+  and the final rendered appearance await Jacob's cool-phone Safari run.
+- Uploaded RC8 and RC10 user agents identify the Google app embedded browser;
+  source differences and heat are not controlled A/B variables. GPU pass timing
+  intervals can overlap on tile hardware; do not add them as independent costs.
+- Scene freezes AFTER RC11 device acceptance. It is not accepted or frozen yet.
+- WeatherKit/RevenueCat activation, signing and TestFlight remain owner/Mac work.
+
+## Next steps
+
+1. RC11 deployed and delivered assets verified; all local required checks passed.
+2. User runs RC11 in Safari with phone cool. Retrieve fresh JSON and images.
+3. Accept only >=36 average and >=30 each second for the full 120 seconds, with
+   complete captures. Then freeze the accepted scene. Do not claim acceptance
+   or measured headroom from this source/local-validation pass.
+
+## Rules and invariants
+
+- No secrets in output/commits. Never GitHub main; private Sites main approved.
+- Fresh Sites helper before edits; preserve private audience and prior evidence.
+- Pinned Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef`; MIT Tidewater/Takram
+  credits. Estimates retain `est.` + source; no advice copy or crowd reporting.
+- Local complete WGSL/default-limit pipeline creation before any gate link.
+  No raised limits. No GPU runner. No phone/pixel claims from null tests.
+- DPR 1.5/min1.1/max1.6/step.05, 38 down/46 up; High/FXAA/no flare;
+  two frames in flight; FFT reuse40 Hz; crest48×4; cloud512×128 triple cache,
+  256 idle/2048 transition pixels,18primary/3shadow/8shelf,20s refresh;384 rain.
+  No capture/encoding/upload during 15s warmup + 120s measured gate.
+
+## Archived handoff — RC10
+
+# DayBuoy handoff
+
 Updated: 2026-10-14 UTC · RC10 default-resource startup repair.
 Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
 INTERACTION-CONTRACT.md. This section supersedes the archived history below.
