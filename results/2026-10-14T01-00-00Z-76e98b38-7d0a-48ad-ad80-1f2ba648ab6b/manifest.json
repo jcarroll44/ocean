@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T01-00-00Z-76e98b38-7d0a-48ad-ad80-1f2ba648ab6b",
+  "kind": "weather",
+  "fingerprint": "55abd3dacf2fe510103dae96bbc7f65b1f5aad2ced6732c126e997c2a96d8076",
+  "receivedAt": "2026-10-14T01:00:01.126Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 959167,
+      "type": "application/json",
+      "sha256": "71584b0f303f9455e309a11721528ef6c7b4d3281e234098cf593916bba4b173"
+    },
+    {
+      "name": "phase-cocoa-beach-night.jpg",
+      "size": 47325,
+      "type": "image/jpeg",
+      "sha256": "02421537f7102be715b700af51677afdf2ee20ed55febb4ad3616325324909eb"
+    }
+  ]
+}
