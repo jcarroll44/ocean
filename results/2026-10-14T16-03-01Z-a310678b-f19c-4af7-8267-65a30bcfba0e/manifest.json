@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T16-03-01Z-a310678b-f19c-4af7-8267-65a30bcfba0e",
+  "kind": "weather",
+  "fingerprint": "3d7249418f54e4bf6abfa3a5dcf08a335635f9e4b5338507c5ae9f67925f5fd8",
+  "receivedAt": "2026-10-14T16:03:01.741Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1367726,
+      "type": "application/json",
+      "sha256": "2457c5d9b3798f1f8a10a8c681134738cb559b4e3b033d8ecfe9c1de68f14e1b"
+    },
+    {
+      "name": "wave-medium.jpg",
+      "size": 300011,
+      "type": "image/jpeg",
+      "sha256": "5ef102f690a06cbe128e710b23c4e7c9d84f33e987c7ce4db506bffacc5d71a3"
+    }
+  ]
+}
