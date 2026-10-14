@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T17-06-10Z-7132211b-526c-45f6-8ece-f32cb457627a",
+  "kind": "weather",
+  "fingerprint": "1d25a12bad88f29934687e7d338f3e4943096b2e335b5e76c5f63ad39b0d88a6",
+  "receivedAt": "2026-10-14T17:06:11.898Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1883522,
+      "type": "application/json",
+      "sha256": "598091ac8a744bafc55203a62015875d2124eb69c4113504fd29f37274bb596c"
+    },
+    {
+      "name": "location-san-diego-night.jpg",
+      "size": 244961,
+      "type": "image/jpeg",
+      "sha256": "39029e51a22fb45c749f06451e4bae6899fe60f595256aa34bc88692a7bb0e41"
+    }
+  ]
+}
