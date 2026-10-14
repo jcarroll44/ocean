@@ -1,5 +1,120 @@
 # DayBuoy — current handoff
 
+Updated: 2026-10-14 UTC · RC8 frozen-capture regression repair.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence revision: `2026-10-14-frozen-capture-rc8`.
+- Saved-results/share tools: `2026-10-13-share-resume-1`, unchanged.
+- Canonical source: private Sites repo, approved deploy branch `main`.
+  Base RC7: `dae16d5837ff6b57a6884e883e961b4567d293bd`.
+- Private project: `appgprj_6ac49343ea048191b93c8d1135390e39`.
+  Preserve owner-private access; do not deploy the separate public Site.
+- GitHub continuation mirror: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** The GitHub app source is older than Sites.
+- Evidence remains `results/` on `wip/tidewater-in-app`; preserve earlier sessions.
+- Gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-frozen-capture-rc8
+- The exact source-helper commit and successful deployment are recorded below.
+  This file mirrors canonical private Sites source; do not deploy this older
+  GitHub app tree over the current Site.
+
+## Verified RC8 deployment receipt
+
+- Canonical private source SHA: `1161f2288a034ac198d740506dbf718d5b87f5bf`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_d3ddff756e5c8191a6ac6a62b024b9dc`.
+- Deployment: `appgdep_6acef5317ab48191a504fcce236fcf73`, **succeeded** at 2026-10-14T03:21:33.286707+00:00.
+- Live origin: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site
+- Post-deploy check: gate HTML and hashed bundle match the exact package; all
+  11 native-asset SHA-256 hashes verified (4,363,972 bytes). The phase bundle
+  contains per-attempt settle reporting and captured-unsettled retention.
+  Share results and resumable captures present; results uploader ready.
+- Private source checkout clean; no GitHub main write. RC8 iPhone captures and
+  cadence are still pending. Local 21/21 means mocked GPU/encoder orchestration,
+  never authentic new image or FPS evidence.
+
+## What passed
+
+- Retrieved RC7 JSON:
+  `results/2026-10-14T02-52-00Z-dd648789-98de-4cad-97ff-6156526dd5e4/report.json`,
+  blob `d1b26bbe4c2cdad161e2c9adf814260392c4dc94`:
+  **40.184969 average / 33 minimum / zero seconds under 30 / 120.02 seconds**.
+  4,823 GPU-completed frames. Phase captures 0/21, 12 failed profile attempts.
+- Local reproduction executes the RC7 settle function: stationary camera and
+  complete sky still time out when GPU submission capacity periodically closes.
+- RC8 actual collector → screenshot adapter → native capture method → still
+  helper completes **21/21** for busy/pending work, permanent sky timeout,
+  interrupted upload/resumption and failed-draw recovery. All per-phase settle
+  attempts log seven metrics. Timeout case retains all 21 marked unsettled.
+  Receipt: `night-report/rc8-local-captures.json` (mock GPU/encoder/clock).
+- Native-resolution bounds, zero shutter, held clocks, restore-before-encoding,
+  hidden-page handling and byte-identical accepted scene/budgets checks pass.
+- Full build and all seven interaction checks: **PASS**. Strict local Dawn WGSL:
+  **78 modules / 79 pipeline descriptors**, zero errors; reserved-identifier
+  negative test rejected. Exact RC8 manifest hash:
+  `caff9de0ac9121771126aa3148958a40ca12d5c449713249d3b93280bfc130ca`.
+  Cloud display blend completion and still-only periodic-refresh suppression also
+  passed against the actual cache on Dawn null. No GPU runner used.
+- Local tests are not a real-browser/device/visual pass. No browser renderer is
+  available here. Do not call the local 21/21 tests authentic rendered images.
+
+## What changed / root cause
+
+- RC7 incorrectly used `api.ready` as content stability. It is a scheduling flag
+  that goes false at two outstanding GPU frames (and during a capture lock).
+  Every such sample reset the 1.8-second stable window; this was unrelated to
+  whether the surf or cloud pixels were actually stable. Its timeout occurred
+  before native capture began, explaining null `native.still` and absent metrics.
+- Private still mode freezes the parent clock/camera, selects the same approved
+  target (or held manual view), drains native work and applies one frozen packet.
+  Wave/FFT time, sky inputs, simulation updates and motion blur are held before
+  checking. Finish only pending immutable sky/shore work at that same instant.
+  A newly completed shore field refreshes its geometry at zero time step. Finish
+  the display blend with periodic refresh disabled; resolve forecast display easing
+  and reflected-sky faces to the same frozen hour so no prior-phase haze survives.
+- Metrics: native camera matrix/projection delta, wave/FFT clock deltas, sky-input
+  change, complete target sky, pending shore field and stable-window duration.
+  Every metric records threshold, final value and elapsed ms in each phase's
+  `phaseAttempts[].captures[].settle`; native.still also updates during checks.
+- At 45 seconds, still capture continues with `unsettled: true` and failed metrics.
+  Contact-sheet labels and JSON disclose this. No image is fabricated. Hidden,
+  GPU, allocation and encoding failures still propagate and restore capture state.
+- Removed the redundant live phase-camera readiness loop. Normal product camera,
+  UI, shaders, waves/colors, strict FPS gate and live rendering remain RC7 bytes.
+  Keep DPR 1.1–1.6 and all v8.2 FFT/crest/cloud/particle/frame budgets unchanged.
+- RC7's resumable/immutable uploads, segmented video and Share results unchanged.
+
+## Open issues
+
+- RC8 actual iPhone 21-phase rendering and peak memory remain to be verified.
+  RC7 colors/wave corrections still lack authentic phase images because RC7
+  captures failed. Do not claim visual acceptance or new RC8 FPS from RC7 results.
+- WeatherKit/RevenueCat activation, signing and TestFlight are still owner-account
+  and Mac tasks; retain the existing release instructions.
+
+## Next steps
+
+1. User runs RC8 gate + Share results. Fetch JSON and originals without asking for
+   manual downloads; inspect all 21 metrics/images, contact sheets and memory.
+2. Compare actual RC8 imagery to RC6 references; preserve completed uploads on
+   reload and never substitute an older measurement for a new revision.
+3. Continue from the private Sites source/deployment above, not older GitHub app code.
+
+## Rules and invariants
+
+- Autonomous work; no secrets in output/commits; never GitHub main.
+- Fresh Sites source helper before edits; private source main deploy is approved.
+- Pinned Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef`; MIT Tidewater/Takram
+  credits retained. Estimates `est.` + source. No advice copy or crowd reporting.
+- All seven interactions + full build + strict complete local WGSL before a link.
+  No GPU runner. Physical iPhone rendering/performance is the user's device test.
+- Preserve RC7 appearance, functional UI, input ownership, startup/cache, optional
+  compile-failure isolation, frame/DPR budgets, durable evidence and Share results.
+
+## Archived handoff — RC7
+
 Updated: 2026-10-14 · RC7 coherent-surf / still-quality pass.
 Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
 INTERACTION-CONTRACT.md. This section supersedes the archived history below.
