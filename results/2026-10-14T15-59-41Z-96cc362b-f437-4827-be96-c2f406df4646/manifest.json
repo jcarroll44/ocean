@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T15-59-41Z-96cc362b-f437-4827-be96-c2f406df4646",
+  "kind": "weather",
+  "fingerprint": "e2f02df8ef3ce7a3153f9396259eebc341c72ed406b09b719f191af00e34c7b6",
+  "receivedAt": "2026-10-14T15:59:42.138Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1132870,
+      "type": "application/json",
+      "sha256": "d824e2045fe4129cb33aaca21006ca72c52e397bf1a0ea303a217c40ffc86c39"
+    },
+    {
+      "name": "phase-san-diego-midday.jpg",
+      "size": 339463,
+      "type": "image/jpeg",
+      "sha256": "5ced0d16c73972b16865af50b2c4d9765fcbd89e4b3eb0c9af921cd5b3f27abb"
+    }
+  ]
+}
