@@ -1,3 +1,108 @@
+# DayBuoy handoff
+
+Updated: 2026-10-14 UTC · RC10 default-resource startup repair.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence revision: `2026-10-14-default-resources-rc10`.
+- Saved-results/share tools: `2026-10-13-share-resume-1`, unchanged.
+- Canonical source: private Sites repo, approved deploy branch `main`.
+  Base RC9 source: `2e0bdf67d07e25eb5a744e2e410d24822d8f5196`.
+- Project: `appgprj_6ac49343ea048191b93c8d1135390e39`. Preserve owner-private access.
+- GitHub continuation mirror: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** Evidence stays on `wip/tidewater-in-app`.
+- Gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-default-resources-rc10
+- Published private source: `c0abbaed3147ac263e137c74e15e689f5313e55f`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_04b8177987f88191bee7b90039761a39`.
+- Deployment: `appgdep_6acf1e876b348191bd89b19766d123e0`, **succeeded** at 2026-10-14T06:17:54.267995+00:00.
+- Live gate HTML and bundle match packaged bytes; all 11 native assets SHA-256
+  verified (4,371,973 bytes), RC10 revision confirmed, uploader ready on the WIP
+  evidence branch. Share/resume present. This is transport, not a device test.
+- Working tree clean after deployment. No GitHub main writes.
+
+## What passed
+
+- Accepted RC8 iPhone: 39.646 average / 31 minimum / zero seconds below 30;
+  36/36 captures. RC9 has NO device acceptance: startup failed three times.
+- Retrieved RC9 failure from
+  `results/2026-10-14T05-40-55Z-2a4fba3b-925f-4f6c-be28-04c09fbd6b01/report.json`,
+  blob `dec3d72430e3412960cdaa66785a6b52504da1c1`. Spray Update layout exactly
+  reproduces 13 uniforms / 7 storage buffers / 9 samplers / 14 textures.
+- Full build and all seven interaction checks: PASS. Strict local WGSL: all
+  78 modules; complete strict creation: all 82 pipeline descriptors (including
+  direct mipmaps), no errors and no requested higher limits.
+- Per-stage maxima: 12 uniforms / 8 storage buffers / 9 samplers / 16 sampled
+  textures. All 24 exact-boundary/one-over negative cases pass. The guard runs
+  in the build and release packaging checks and the existing CI workflow.
+- Default-device startup and settled still GPU command sequences: Inlet 22/22,
+  Cocoa 7/7, San Diego 7/7, total 36/36. Full-resolution bounded targets, shader
+  bindings, row uploads, queue operations and restoration pass. Existing RC8
+  21-phase orchestration still passes all four failure/resumption scenarios.
+- Exact evidence manifest SHA-256:
+  `8c02f752ced6227ef8583bc3124b34346771bf55831d530fa2491b79f7fb403b`.
+  Durable report: `night-report/rc10-default-resources.json`.
+- Local tests are not a real-browser/device/visual pass. Dawn null validates
+  GPU pipelines/commands; DOM/JPEG/settle-clock doubles produce no real images.
+  No GPU runner is used. New iPhone throughput/appearance remain unverified.
+
+## What changed / root cause
+
+- RC9 added the atmosphere dependency to shared weather for the horizon blend.
+  Spray's compute kernel inherited its extra uniform, reaching 13, even though
+  the gust computation did not read it. Module-only WGSL tests missed the layout.
+- Atmosphere values now share the existing NativeWeather buffer and their exact
+  original live CPU handles. Existing atmosphere bake kernels keep their buffer.
+  All RC9 visual expressions, wave/foam/sand/horizon math and lighting are kept.
+- Stage visibility excludes resources unreachable from that entry point. The
+  full guard aggregates every group, including frame/draw and direct mipmaps.
+- Native builds use a narrow adapter over the UNMODIFIED pinned vendor. Three
+  exact-load CPU float32 fields use storage buffers with identical payloads and
+  manual interpolation. Four identical-size RGBA8 material/foam maps share one
+  array, copying every original mip unchanged once during startup. Same filters,
+  gradients, LOD and resolution; old images retire after queue completion.
+- No raised device limits. Build guard: 12 uniform / 10 storage / 16 sampler /
+  16 sampled-texture cap per stage; strict local default device also enforces
+  its tighter 8-storage cap, 4 storage textures and 16 KiB workgroup memory.
+  FFT level 5 stores move from A to B using the EXISTING full-precision mipMid:
+  same transforms, values, workgroups, two mip dispatches and 40 Hz reuse.
+  SH scratch packs RGB without vec3 padding. Other box-mip chains use <=4 outputs
+  per dispatch (512² maps add only the final 1px mip reduction).
+- UI, capture/tooling, gate duration/threshold, profile/camera, startup caching,
+  upload/resume, Share results, cloud/crest/rain/DPR budgets remain unchanged.
+
+## Open issues
+
+- RC10 iPhone startup, appearance and sustained >=30 per second require the run.
+  RC9 realism was never visually verified because of its startup failure.
+- WeatherKit/RevenueCat activation, signing and TestFlight remain owner/Mac work.
+
+## Next steps
+
+1. RC10 deployed and delivered assets verified. User runs the same 120-second
+   gate and captures on iPhone.
+2. Fetch fresh results/latest.json and its immutable report; confirm RC10 revision,
+   >=30 FPS each second, three-profile startup and all 36 captures.
+3. Compare RC10 images with accepted RC8. Preserve earlier FPS/media; never reuse
+   an older gate as new-build evidence.
+
+## Rules and invariants
+
+- No secrets in output/commits; never GitHub main; private Sites main approved.
+- Fresh Sites helper before edits; preserve private audience.
+- Pinned Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef`, MIT Tidewater/Takram
+  credits. Estimates retain `est.` + source. No advice copy or crowd reporting.
+- Full build/all seven interactions, strict WGSL, all resource limits, complete
+  default-device pipeline creation/startup/still checks before a link. No GPU runner.
+- v8.2 DPR 1.5/min1.1/max1.6/step.05, 38 down/46 up; High/FXAA/no flare;
+  two frames in flight; FFT reuse40 Hz; crest48×4; cloud512×128 triple cache,
+  256 idle/2048 transition pixels,18primary/3shadow/8shelf,20s refresh;384 rain.
+  No capture/encoding/upload during 15s warmup + 120s measured gate.
+
+## Archived handoff — RC9
+
 # DayBuoy — current handoff
 
 Updated: 2026-10-14 UTC · RC9 shore realism pass.
