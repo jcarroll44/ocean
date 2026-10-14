@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T16-53-38Z-ddb55bd2-6b33-498a-8f42-c63ec4276cf4",
+  "kind": "weather",
+  "fingerprint": "432255546fa6bf7e2025ebc9e360a35f1f2e5d6e528a9dfe0501381f8498b438",
+  "receivedAt": "2026-10-14T16:53:38.363Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 877207,
+      "type": "application/json",
+      "sha256": "0d5c11ca4ca08af121086dcab97c220980d0311b91d4343abbfc39d79684a7b4"
+    },
+    {
+      "name": "phase-inlet-beach-goldenhour.jpg",
+      "size": 442489,
+      "type": "image/jpeg",
+      "sha256": "ff7219389a329df6183cacd173454a7bcaaf4621f0531b80167362aa84b4237d"
+    }
+  ]
+}
