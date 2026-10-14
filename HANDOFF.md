@@ -1,5 +1,114 @@
 # DayBuoy — current handoff
 
+Updated: 2026-10-14 UTC · RC9 shore realism pass.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes the archived history below.
+
+## Current revision and source
+
+- Renderer/evidence revision: `2026-10-14-shore-realism-rc9`.
+- Saved-results/share tools: `2026-10-13-share-resume-1`, byte-identical to RC8.
+- Canonical private Sites repo, approved deploy branch `main`; RC8 base
+  `1161f2288a034ac198d740506dbf718d5b87f5bf`.
+- Private project `appgprj_6ac49343ea048191b93c8d1135390e39`; owner-private.
+- GitHub continuation mirror: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** GitHub app source is older than Sites.
+- Evidence: `results/` on `wip/tidewater-in-app`; preserve all earlier sessions.
+- RC9 gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-shore-realism-rc9
+- Published private source: `2e0bdf67d07e25eb5a744e2e410d24822d8f5196`.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_47129f4b4c948191a6eee032479d32e4`.
+- Deployment: `appgdep_6acf0f131f8481919ee80d818b410412`, **succeeded** at 2026-10-14T05:11:58.952357+00:00.
+- Live gate HTML/bundle matched packaged bytes; all 11 native assets SHA-256
+  verified (4,368,120 bytes), RC9 revision confirmed, uploader ready on the WIP
+  evidence branch. Share/resume present. This is transport, not a device test.
+- Production minified startup/forwarding and 25-file allowlist checks passed.
+  No UI, capture tooling, vendor, FFT or budget changes; working tree clean.
+
+## What passed
+
+- Authentic RC8 report:
+  `results/2026-10-14T04-28-18Z-7ee7fad1-0986-4ef1-a49d-3d553c71fd3e/report.json`,
+  blob `c35e7597cd869358908405183d67f83f853940b5`.
+  **39.646035 average / 31 minimum / zero seconds under 30 / 120.012 seconds**;
+  4,758 completed frames. 21 solar phases + 10 weather + 5 wave captures complete,
+  all 21 phases settled. User accepts RC8 functionality. This is NOT RC9 FPS.
+- Reviewed authentic RC8 waves, weather and 21-phase contact sheets and the
+  original thunderstorm photo, all via that report's immutable evidenceIndex.
+- RC9 actual scalar shader tests reproduce RC8's submerged large-wave bores:
+  about 50% of sampled 3 ft nearshore crests and 81% of 6 ft nearshore crests
+  were at/below mean water. RC9 sampled large bores are above water, conserving
+  their depth-limited height. This is mathematical coverage, not rendered pixels.
+  Small-day amplitudes/profile remain numerically exact. About 21% of sampled
+  6 ft set crests reach the outer-bar depth; 1/3 ft do not.
+- Final full build and all seven interaction checks: **PASS**. Strict local
+  Dawn WGSL: **78 modules / 79 pipeline descriptors**, zero errors; RC4 invalid
+  reserved-identifier test rejected. Manifest hash:
+  `a1c759a6bcf3fcefb3badf8fbb7d6f8f6bfe799cea632005e0c7f1c24fb39b51`.
+- Actual RC8 capture orchestration again passed 21/21 phases in four mocked
+  scenarios: busy/pending work, unsettled timeout, upload/reload and draw failure.
+  UI/capture/source/FFT/budget byte checks passed against RC8. New mathematical
+  receipt: `night-report/rc9-realism-checks.json`. No additional foam taps/loops,
+  and the same proven lip/spray vertices and independent compile-failure isolation.
+- Local tests are not a real-browser/device/visual pass. No browser renderer
+  is available here. No GPU runner used; user's iPhone is the device test.
+
+## What changed and decisions
+
+- Fix the bore datum: RC8 carried an offshore trough into a dissipated shallow
+  roller, burying large breaking waves under the swash. Keep physical H/2 and
+  depth-limited Hb; larger rollers now straddle mean water. Do not inflate Hs.
+- Long-period crest phase/amplitude variation is smoother and its plunge interval
+  broader. Remove the duplicate arbitrary 85 m cutoff; the shared depth/set
+  calculation remains the authority for outer-bar breaking. Same 48 samples,
+  4 m step, 1.2 m station spacing, 12 lip vertices and one secant refinement.
+- Distant foam no longer averages each vertex patch to a solid white rectangle.
+  World-space streak breakup reuses the existing bubble sample; no added texture
+  fetches, loops or passes. Foam remains on the simulated surface/roller.
+- Foam and spray diffuse illumination now neutralizes the ambient hemisphere as
+  well as direct sun, including dusk. Proven Spray/BreakerLip vertices untouched.
+- Sky and distant water converge on the same atmospheric radiance and bearing
+  before the far clip. Retain physical gold scattering, soften the solar horizon
+  row, and remove the dark shelf's exemption from horizon haze. Heavy opaque
+  weather skips the added clear-air LUT lookup.
+- Cloudy sand receives diffuse sky fill; rain alone no longer makes all emerged
+  sand nearly fully wet. High-sun diffuse sand chroma follows the profile pigment
+  instead of a pink horizon probe. Wet solar/lightning reflections remain.
+- Select a visible, forecast-supported lightning sector and bound bolt height.
+  If only an offscreen sector is supported (or view too tight), show cloud flash
+  without inventing a bolt inside the frame. Existing sun glare widened softly.
+- All UI, startup, source data, profile/camera, still/video capture, upload/resume,
+  Share results, cache scheduler and v8.2 throughput settings unchanged from RC8.
+
+## Open issues
+
+- RC9 appearance and sustained iPhone performance require the new gate/photos.
+  Mathematical and compiler checks cannot confirm the finished on-screen look.
+- WeatherKit/RevenueCat activation, signing and TestFlight remain owner/Mac work;
+  keep the existing instructions. No account activation claimed by this pass.
+
+## Next steps
+
+1. User runs RC9's 120-second gate and unchanged automatic captures/Share results.
+2. Fetch fresh latest/report and originals; compare wave height/whitewater,
+   storm foam, horizon, dusk colors, sand, lightning and sun to actual RC8.
+3. Preserve completed FPS/media on reload; never reuse RC8 FPS for RC9.
+
+## Rules and invariants
+
+- No secrets in output/commits; never GitHub main; private Sites main approved.
+- Fresh Sites helper before edits; preserve private audience.
+- Pinned Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef`, MIT Tidewater/Takram
+  credits. Estimates retain `est.` + source. No advice copy or crowd reporting.
+- All seven interaction checks, full build and complete strict local WGSL before
+  a link. No GPU runner. Capture tooling and UI must remain accepted RC8 bytes.
+- v8.2 budgets: DPR 1.5 / min1.1 / max1.6 / step.05, 38 down / 46 up,
+  High/FXAA/no flare, two frames in flight, FFT reuse40 Hz; crest48×4,
+  cloud512×128 triple cache / 256 idle / 2048 transition pixels,18primary/3shadow/
+  8shelf samples,20s refresh,384 rain quads. No capture/encoding/upload in timing.
+
+## Archived handoff — RC8
+
 Updated: 2026-10-14 UTC · RC8 frozen-capture regression repair.
 Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
 INTERACTION-CONTRACT.md. This section supersedes the archived history below.
@@ -17,23 +126,9 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 - Evidence remains `results/` on `wip/tidewater-in-app`; preserve earlier sessions.
 - Gate + Share results:
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-frozen-capture-rc8
-- The exact source-helper commit and successful deployment are recorded below.
-  This file mirrors canonical private Sites source; do not deploy this older
-  GitHub app tree over the current Site.
-
-## Verified RC8 deployment receipt
-
-- Canonical private source SHA: `1161f2288a034ac198d740506dbf718d5b87f5bf`.
-- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_d3ddff756e5c8191a6ac6a62b024b9dc`.
-- Deployment: `appgdep_6acef5317ab48191a504fcce236fcf73`, **succeeded** at 2026-10-14T03:21:33.286707+00:00.
-- Live origin: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site
-- Post-deploy check: gate HTML and hashed bundle match the exact package; all
-  11 native-asset SHA-256 hashes verified (4,363,972 bytes). The phase bundle
-  contains per-attempt settle reporting and captured-unsettled retention.
-  Share results and resumable captures present; results uploader ready.
-- Private source checkout clean; no GitHub main write. RC8 iPhone captures and
-  cadence are still pending. Local 21/21 means mocked GPU/encoder orchestration,
-  never authentic new image or FPS evidence.
+- The source-helper commit containing this handoff is the RC8 deployment
+  candidate. Final private source SHA/deployment receipt goes in the GitHub WIP
+  handoff mirror after publication and delivered-asset verification.
 
 ## What passed
 
@@ -96,11 +191,12 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ## Next steps
 
-1. User runs RC8 gate + Share results. Fetch JSON and originals without asking for
+1. Finish mandatory build/WGSL checks, publish the exact RC8 source/archive, verify
+   deployed assets and save the final receipt in the GitHub WIP handoff mirror.
+2. User runs RC8 gate + Share results. Fetch JSON and originals without asking for
    manual downloads; inspect all 21 metrics/images, contact sheets and memory.
-2. Compare actual RC8 imagery to RC6 references; preserve completed uploads on
+3. Compare actual RC8 imagery to RC6 references; preserve completed uploads on
    reload and never substitute an older measurement for a new revision.
-3. Continue from the private Sites source/deployment above, not older GitHub app code.
 
 ## Rules and invariants
 
@@ -136,21 +232,8 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-coherent-surf-rc7
 - New pixels get a new evidence session. Never delete/relabel RC5/RC6 sessions.
   Capture failures resume from acknowledged uploads without remeasuring FPS.
-- Deployment and exact source provenance are verified in the receipt below.
-
-## Verified RC7 deployment receipt
-
-- Private source commit: `dae16d5837ff6b57a6884e883e961b4567d293bd`.
-- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_9b67f1b904848191aa85c0881af88332`.
-- Deployment: `appgdep_6acedeed2fac8191bbba40406d0d1d15`; **succeeded** at 2026-10-14T01:46:34.621815+00:00.
-- Live origin: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site
-- Post-deploy probe: exact packaged gate HTML and hashed gate bundle; all 11
-  native-asset SHA-256 hashes verified (4,361,031 bytes); uploader ready.
-  Share results, durable sessions, phase captures and segmented video present.
-- Private checkout clean after source-helper commit/push/package. No GitHub
-  main writes. This GitHub WIP file is a continuation mirror, not app source.
-- RC7 iPhone FPS and rendered pixels remain unverified. Run the linked gate;
-  do not substitute the accepted RC6 measurement for RC7 evidence.
+- Deployment and source provenance must be verified after packaging; the GitHub
+  mirror records the final private source SHA and deployment receipt.
 
 ## What passed
 
@@ -219,10 +302,12 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ## Next steps
 
-1. User runs the RC7 120-second gate and Share results; fetch its JSON and originals.
-2. Compare wave scale, 21 solar phases and contact sheets to authentic RC6.
-3. Continue only from the canonical private Sites source above; never substitute
-   this older GitHub app source. Preserve confirmed results and resume receipts.
+1. Reconcile the completed publication receipt in Sites / GitHub WIP handoff.
+   The source commit containing this handoff is the deployed source candidate.
+2. Verify deployed revision/assets before delivery; never substitute an older
+   source tree from GitHub for this canonical private Sites checkout.
+3. User runs 120-second gate and Share results; fetch latest JSON and originals.
+   Compare wave scale, 21 solar phases and contact sheets to authentic RC6.
 
 ## Rules and invariants
 
@@ -250,11 +335,9 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 - Renderer/evidence revision: `2026-10-14-low-sun-rc6`.
 - Capture tools unchanged: `2026-10-13-share-resume-1`.
-- Canonical deployed source: private Sites commit `e7e113f2d6bd0ee8e867258899944d05ed01dd40`, approved branch `main`.
-  Deployment succeeded 2026-10-14T00:37:49.950070+00:00.
-  This GitHub file is a handoff mirror, NOT the matching application source.
-  Open the private Sites source before implementation; preserve newer remote work.
-  Base was `2f678e567de4bb483d2a8a3e64024ef66bf152d6` (functional RC5).
+- Canonical source: this private Sites repository, approved branch `main`.
+  Source is the commit containing this handoff (`git rev-parse HEAD`). Base:
+  `2f678e567de4bb483d2a8a3e64024ef66bf152d6` (functional RC5).
 - Owner-private project: `appgprj_6ac49343ea048191b93c8d1135390e39`.
   Use fresh Sites get_site + credential + source helper before edits. Preserve
   audience and newer remote work. Never deploy the separate public Site.
@@ -266,10 +349,8 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-low-sun-rc6
 - RC6 changes real pixels, so it gets a new evidence key. Existing RC5 sessions
   and uploaded files remain intact. Capture-only fixes must NOT bump that key.
-- Deployment: `appgdep_6acececfada081919f197599b5fc94d5` — succeeded.
-  Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_0b2aaf2cb2fc8191b71f799e7309c255`.
-  Full private and production builds, all 78 WGSL modules and seven interaction
-  checks passed. Real-device color/FPS validation is still the iPhone gate.
+- Publication uses this exact committed source and matching validated archive.
+  Verify its status using Sites; the GitHub mirror records the completed deploy.
 
 ## What passed
 
@@ -375,149 +456,9 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ---
 
+## Archived handoff — historical only; do not follow over current section
 
-## Archived handoff
-
-# DayBuoy — current handoff
-
-Updated: 2026-10-13 · saved-results sharing / RC5 capture continuation.
-Start a new thread with **“Read HANDOFF.md and continue.”** This current section
-supersedes the archived notes below. Also read AGENTS.md and INTERACTION-CONTRACT.md.
-
-## Current revision and source
-
-- Renderer / resumable-session revision: `2026-10-13-pipeline-rc5` — DO NOT bump
-  for capture-only fixes; doing so would disconnect the phone's saved gate.
-- Capture tools: `2026-10-13-share-resume-1` (separate from renderer identity).
-- Canonical deployed source is private Sites commit `2f678e567de4bb483d2a8a3e64024ef66bf152d6`.
-  This GitHub file is a handoff mirror, NOT a claim that the GitHub app source
-  matches that build. Open the private Sites source before continuing implementation.
-  Deployment succeeded 2026-10-13T23:30:33Z.
-- Canonical deploy source: the private Sites repo, branch `main` (approved).
-  Project: `appgprj_6ac49343ea048191b93c8d1135390e39`, owner-private.
-- GitHub integration: `github.com/jcarroll44/ocean`, `wip/tidewater-verdict-first`.
-  **Never commit/push GitHub main.** Do not overwrite GitHub WIP from this repo:
-  GitHub contains an older source checkpoint and separate evidence history.
-- Results upload destination: `results/` on GitHub `wip/tidewater-in-app`.
-  Runtime credentials remain server-only; never print or commit secret values.
-- Same gate / resume URL:
-  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-13-pipeline-rc5
-- Use fresh Sites get_site + credential + source helper before edits. Preserve
-  the returned audience and source. Do not deploy to the separate public Site.
-  Confirm the latest deployment's exact commit/status through Sites when resuming.
-
-## What passed
-
-- User-reported physical RC5 iPhone gate: **39.0 avg, 31 min, 0 seconds under 30**.
-  The connector returned an older 17:23 UTC latest-results pointer during the
-  previous pass; don't pretend that older JSON is this RC5 run.
-- Previous accepted v8.2 device baseline: 40.3 avg, 35 min, 0 under 30; all
-  12 location captures. It is baseline evidence, not proof of newer colors.
-- BreakerLip restored to the exact RC3 vertex guard and dependency path;
-  reserved WGSL `coherent` removed. Spray's proven vertex path is retained.
-- Local strict WGSL: 78 modules from 79 runtime pipeline descriptors. The
-  RC4 invalid-keyword negative case is rejected. User explicitly authorized
-  local validation and forbids using the GPU runner. No Apple GPU CI required.
-- Previous null hotfix reproduced `evidenceUpload` assignment to null, then
-  normalized errors, retried one aborted storage write and stored media bytes
-  instead of native Blob handles. Original v2 queues remain readable.
-- This pass targeted tests: original full-size sheets and JSON/text survive
-  reload; old sheets rebuild only from saved image thumbnails; the share call
-  happens synchronously on tap; cancel/fallback works; finished reloads do not
-  start a gate; null abort/resume preserves original FPS and completed media.
-- Full-build / seven-interaction verification for this pass: **PASS**. All 78
-  strict WGSL modules passed; all 11 renderer assets are unchanged from RC5.
-  All automated tests use mocked storage/OS/browser where applicable, not new
-  physical iPhone imagery, share-sheet behavior or FPS.
-
-## What changed in this pass
-
-- Gate page has **Share results**: summary (revision, avg/min FPS, seconds under
-  30, errors), `summary.txt`, `weather-gate.json`, and available phase/weather/
-  wave contact sheets via `navigator.share({files,...})`. Downloads are the
-  disclosed fallback if file sharing is unavailable. Files are ready before tap.
-- Full-size contact sheets are kept in the existing IndexedDB session. Earlier
-  RC5 sessions rebuild sheets from their saved per-image thumbnails, without
-  recapturing, changing pixels or running the renderer. Missing sheets are listed.
-- Stored error history survives reload independently of immutable upload payloads.
-- A finished session reopens read-only for sharing. Only **Run a new gate**
-  explicitly replaces a finished session. Unfinished runs resume automatically.
-- AGENTS.md now requires updating this handoff at the end of every pass;
-  the build checks its current revision, sections and continuation rules.
-- No scene, ocean, shader, product UI, camera or performance-budget change.
-
-## Open issues
-
-- Physical iPhone Share results behavior and post-hotfix capture completion
-  still require Jacob's run. Do not claim the OS share sheet was device-tested.
-- Sunrise/golden-hour/sunset/dusk color corrections remain visually unverified
-  until the actual RC5 contact sheets arrive. Review all three coastlines, plus
-  weather and wave galleries. Do not recolor previous evidence or invent images.
-- The original storage-abort cause on the phone is not proven. If it recurs,
-  inspect the normalized error and durable session state; never restart a passed
-  gate or replace an acknowledged upload as a workaround.
-- Native signing/TestFlight and WeatherKit/RevenueCat account configuration
-  remain separate owner/Mac tasks; existing release docs do not prove activation.
-
-## Next steps
-
-1. Use the SAME resume URL above in the same iPhone browser. Tap **Share results**
-   to send saved JSON/contact sheets; an unfinished run resumes missing captures.
-   Verify the latest Sites deployment if resuming code work. Keep the
-   renderer/session revision unchanged for capture-only changes.
-2. On Jacob's next results message, first inspect shared `weather-gate.json`,
-   summary and contact sheets, or read GitHub `results/latest.json` and its folder.
-   Verify revision, parentRunId, timestamps and evidenceIndex; do not confuse an
-   older cached pointer, one media part or baseline run with current evidence.
-3. Continue only missing captures. FPS must not rerun if `session.completed.fps`
-   exists. A pending immutable part is retried before any new capture.
-4. Review genuine pixels for outstanding colors/artifacts. Make bounded changes
-   only if needed, preserve the passed budgets, and update this handoff again.
-
-## Rules and invariants
-
-- User wants concise updates and one link. Work autonomously within this scope.
-- Never GitHub main, never secret output/commits. Private Sites main is approved.
-- Freeze Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef` and approved ocean,
-  waves, sky, weather, moon, camera and UI. MIT credits: Tidewater and Takram.
-- No advice / “safe” wording; estimates labeled est. with source; no crowd reports.
-- DPR starts 1.5, floor 1.1, max 1.6, 0.05 steps, down/up 38/46. FXAA, no flare,
-  two frames in flight; FFT reuse at 40 Hz; crest 48×4, 12 lip vertices; bounded
-  512×128 cloud cache (256 idle/2048 transition pixels), 384 rain particles.
-- Keep 15 s warmup + uninterrupted 120 measured seconds, EVERY second >=30 GPU
-  completions. No uploads, encoding, screenshots or share preparation during FPS.
-- Compile failures are not retryable. Disable only an optional failed effect;
-  preserve ocean/simulation. A degraded scene cannot pass the full-effects gate.
-- IndexedDB `daybuoy-evidence-v1`, schema 2, `pending` and `sessions`; same RC5
-  revision key. Never clear it or change it to hide a capture/storage failure.
-- Evidence: FPS uploads first, then each immutable image/clip part with receipt.
-  Four separate 8-second day/paywall clips: max 288×640, 12 fps, 600 kb/s.
-- Required: `node scripts/check-interactions.cjs`, `node scripts/build.mjs`;
-  then production build/check and hosting build before helper packaging/deploy.
-  All seven checks: look, sun drag, timeline, pinch/reset, water sheet, Back to
-  now, Watch pause. Local tests are not a real-browser/device/visual pass.
-
-## Useful implementation paths
-
-- `ocean-proof/proof/weather-fixture-page.js`: strict gate + resumable capture flow.
-- `results-upload.js`: IndexedDB journal, immutable parts, saved sheets/errors.
-- `share-results.js`: prepared native share payload and saved-sheet reconstruction.
-- `evidence-error.js`: non-mutating null/primitive/DOMException normalization.
-- `location-phase-gallery.js`, `location-gallery.js`, `scrub-evidence.js`: media.
-- `scripts/check-share-results.mjs`, `check-evidence-checkpoints.mjs`,
-  `check-weather-gate.mjs`: share/storage/resume regression tests.
-- `scripts/check-pipeline-release.mjs`: matching local WGSL report release guard.
-- `night-report/rc5-release.md`, `rc5-capture-resume.md`: compile/capture repair notes.
-- `server/results.js`: fixed-branch authenticated upload endpoint.
-
----
-
-
-## Archived GitHub handoff — historical; current section above takes precedence
-
-# DayBuoy — Tidewater handoff
-
-## Current: combined live gate — October 8, 11:35 PM Chicago
+## Historical: combined live gate — October 8, 11:35 PM Chicago
 
 This section supersedes the diagnostic instructions below. New integration branch: `wip/tidewater-verdict-first`; main, `proof/tidewater`, and the existing WIP code branch stay untouched. The approved exact Verdict-first v1 is already in the Tidewater source. Do not merge the older September 30 `app-v2` UI over it. Reference: `ui-reference/daybuoy-reference.html`, exact `src/reference.css` and bundled Poppins fonts. Tidewater pin: `4811ba48d795197de5621985f404e765c0b7c0ef`. Integration starts from GitHub WIP `2e9aab0481200280ffcf0d70cb225a70268bcc48` / Sites source `0b253b18e47aa73a1417f4dcc7a577fb7b48c49d`.
 
