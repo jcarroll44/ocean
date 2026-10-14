@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-51-27Z-89750677-1130-4545-b5e6-3f76472ed6f6",
+  "kind": "weather",
+  "fingerprint": "169083c81a9292dffaab9c7af21ec4ddb2812e6944f2126ad551b230b6926f4f",
+  "receivedAt": "2026-10-14T20:51:28.658Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2611929,
+      "type": "application/json",
+      "sha256": "740df0b4373f75e6994e04367bb48dd92419bb6829184831cce995d2035ca1f2"
+    },
+    {
+      "name": "wave-offshore.jpg",
+      "size": 309227,
+      "type": "image/jpeg",
+      "sha256": "d2e97447f00f23d59e376a096f17551a2f5e2de1c3a5315154d559be6ba2765d"
+    }
+  ]
+}
