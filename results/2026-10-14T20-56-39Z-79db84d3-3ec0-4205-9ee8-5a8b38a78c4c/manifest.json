@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-14T20-56-39Z-79db84d3-3ec0-4205-9ee8-5a8b38a78c4c",
+  "kind": "weather",
+  "fingerprint": "69b4d4a11be72b8a6199c9f736a6570b21c63b105e12b127ad311f6bce6e5a81",
+  "receivedAt": "2026-10-14T20:56:40.060Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3376712,
+      "type": "application/json",
+      "sha256": "077ceb6702c4b312fe380690b6296c8d824704eacc683ef870244e8a7436108c"
+    },
+    {
+      "name": "sunset-scrub.mp4",
+      "size": 540005,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "f8b52fc2653baeefbf9cc0d090cd5eeae7012afda91cd328bf25511640205277"
+    }
+  ]
+}
