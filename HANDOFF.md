@@ -1,3 +1,99 @@
+# DayBuoy handoff — RC11 scene baseline FROZEN
+
+Updated: 2026-10-14 UTC · RC11 accepted by Jacob after the uploaded iPhone run.
+Start a new thread with **“Read HANDOFF.md and continue.”** Read AGENTS.md and
+INTERACTION-CONTRACT.md. This section supersedes every archived candidate scope.
+
+## Current revision and source
+
+- **Frozen scene baseline:** `2026-10-14-sustained-scene-rc11`.
+- Annotated tag **`scene-baseline-rc11`**, pushed and verified in the canonical
+  private Sites source repository, points to the exact accepted source commit
+  **`4530d24a008cb45b4d72539ac2f07df1144adbd8`**.
+  Tag object: `27a0702c09ffe7a53c50eba38bc329a94c1788aa`.
+  The tag identifies the deployed scene, not this later documentation commit.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_c6ceda20f1dc8191afa9a306fe00f46f`.
+  Successful deployment: `appgdep_6acfb0ec153c8191b9775db38aaa0902`
+  at `2026-10-14T16:42:33.407999+00:00`. Keep that accepted deployment live.
+- Saved-results/share tools: `2026-10-13-share-resume-1`, unchanged.
+- Canonical source: private Sites repo, approved source/deploy branch `main`;
+  project `appgprj_6ac49343ea048191b93c8d1135390e39`, owner-private.
+- GitHub continuation mirror: `jcarroll44/ocean`, `wip/tidewater-verdict-first`.
+  **Never commit/push GitHub main.** Evidence: `wip/tidewater-in-app`.
+  The GitHub mirror is not the canonical scene source or the tag location.
+- Same gate + Share results:
+  https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-sustained-scene-rc11
+
+## What passed
+
+- **Accepted iPhone RC11 gate:** **40.62364587847072 average FPS / 34 minimum /
+  zero seconds below 30**, 4,875 GPU-completed frames over **120.004 seconds**.
+  All 120 whole-second samples meet the existing cadence requirement.
+- **Captures 36/36:** 10 weather fixtures + 5 wave cases + 21 location/phase stills.
+  Uploaded report is complete (`partial: false`, `part: complete`).
+- Gate parent run: `2026-10-14T16-50-34Z-a920eb8e-e19c-4847-bfa0-2fa487a0d76b`.
+  Complete report: `results/2026-10-14T17-06-15Z-655fcb35-b920-49d5-8068-a1302b71567c/report.json`
+  on `wip/tidewater-in-app`; blob `b1bc3ca3440324ad2ad19c210d8d57c6732ae07a`.
+  These numbers were read from that JSON and accepted by the user. Its user
+  agent identifies an iPhone with GSA; do not relabel it a controlled Safari A/B.
+- RC11 release validation passed: all seven interaction checks, full build,
+  78 WGSL modules / 82 complete default-limit pipeline creations, all 36 local
+  still command paths, production startup/allowlist and startup-cache checks.
+  Per-stage maxima: 12 uniforms / 8 storage buffers / 9 samplers / 16 textures.
+  Shader manifest: `b312de3bab24e63bd78640c869cad56dda007434919098d647ac9dd72133cc91`.
+- Local tests are not a real-browser/device/visual pass. The phone result above
+  is authentic uploaded evidence; local Dawn-null/mocked checks validate code
+  and commands, not rendered pixels or sustained phone performance.
+- Freeze pass: all seven automated interaction checks and the full build were
+  rerun successfully. Only these handoff/workflow documents changed; all other
+  tracked source and deployed build files remain identical to the baseline tag.
+
+## Open issues
+
+**Deferred polish backlog — record only; do not work on it without a new request:**
+
+1. Hard horizon line in squall approaching and clearing.
+2. Night storm: bright zigzag line on sand and white blob in surf.
+3. Inlet overcast dawn: dark crack line on sand.
+4. Soft glow on the sun.
+
+These are accepted deferred items, not permission to change the frozen scene.
+WeatherKit/RevenueCat activation, signing and TestFlight remain owner/Mac work.
+
+## Next steps
+
+1. **Stand by for the UI/brand spec.** Do not start the deferred polish backlog.
+2. Future UI/brand work must preserve the frozen scene and performance.
+3. Keep the existing 120-second gate, captures, saved-results resumption and
+   Share results as the required check for **every future build**, including
+   UI/brand builds. Require a fresh matching-build run: >=36 average FPS,
+   every whole second >=30, and 36/36 captures. Old RC11 results never certify
+   changed code. Do not relax the gate or change capture tooling as a side effect.
+
+## Rules and invariants
+
+- **No scene, wave, sky or shader changes unless Jacob explicitly asks.**
+  Freeze RC11 ocean, geometry, foam, lighting, sand, sun/moon, camera framing,
+  shader/resource adapters and renderer/performance settings. This acceptance
+  supersedes all earlier candidate permissions to keep refining the scene.
+- No secrets in output/commits. Never GitHub main; private Sites main approved.
+  Preserve the private audience, acknowledged results and immutable baseline tag.
+- Before every future build delivery, run the existing interaction/full-build
+  checks and complete local WGSL/default-limit validation. No raised limits
+  (12 uniform, 10 storage buffers, 16 samplers, 16 sampled textures per stage).
+  No GPU runner. Keep the matching device gate required for acceptance.
+- Preserve the 1.1 DPR floor and all accepted RC11 budgets: 16,384 spray capacity,
+  256² underwater lightmap, 6s stationary reflection refresh, exact 4-tap tent,
+  two GPU frames in flight, FFT reuse40 Hz, crest48×4, cloud512×128 triple cache,
+  256 idle/2048 transition pixels, 18primary/3shadow/8shelf, 20s refresh, 384 rain.
+  No capture/encoding/upload during 15s warmup + 120s measured gate.
+- Pinned Tidewater `4811ba48d795197de5621985f404e765c0b7c0ef`; keep MIT
+  Tidewater/Takram credits, `est.` + source labels, no advice copy/crowd reporting.
+- This freeze pass changes documentation and adds the baseline tag only.
+  Runtime, scene, UI, gate, captures and the accepted deployed artifact stay intact.
+
+## Archived handoff — RC11 candidate before acceptance
+
 # DayBuoy handoff
 
 Updated: 2026-10-14 UTC · RC11 sustained scene candidate.
@@ -15,13 +111,7 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
   **Never commit/push GitHub main.** Evidence: `wip/tidewater-in-app`.
 - Gate + Share results:
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-sustained-scene-rc11
-- Published private source: `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
-- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_c6ceda20f1dc8191afa9a306fe00f46f`.
-- Deployment: `appgdep_6acfb0ec153c8191b9775db38aaa0902`, **succeeded** at 2026-10-14T16:42:33.407999+00:00.
-- Delivered gate HTML and bundle matched packaged bytes; all 11 native assets
-  SHA-256 verified (4,372,379 bytes). Uploader ready on the established WIP
-  evidence branch. Share/resume retained. Working tree clean after publication.
-- This verifies delivery, not iPhone rendering or FPS. No GitHub main writes.
+- Final source/deployment receipts go in the GitHub WIP handoff after publication.
 
 ## What passed
 
@@ -83,11 +173,10 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ## Next steps
 
-1. RC11 deployed and delivered assets verified; all local required checks passed.
-2. User runs RC11 in Safari with phone cool. Retrieve fresh JSON and images.
-3. Accept only >=36 average and >=30 each second for the full 120 seconds, with
-   complete captures. Then freeze the accepted scene. Do not claim acceptance
-   or measured headroom from this source/local-validation pass.
+1. Local validation complete. Package the checked source and production bundle.
+2. Deploy private Sites main and verify delivered assets; mirror final receipts.
+3. User runs RC11 in Safari with phone cool. Retrieve fresh JSON and images;
+   accept only >=36 average and >=30 each second, then freeze the scene.
 
 ## Rules and invariants
 
@@ -121,13 +210,8 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
   **Never commit/push GitHub main.** Evidence stays on `wip/tidewater-in-app`.
 - Gate + Share results:
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-default-resources-rc10
-- Published private source: `c0abbaed3147ac263e137c74e15e689f5313e55f`.
-- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_04b8177987f88191bee7b90039761a39`.
-- Deployment: `appgdep_6acf1e876b348191bd89b19766d123e0`, **succeeded** at 2026-10-14T06:17:54.267995+00:00.
-- Live gate HTML and bundle match packaged bytes; all 11 native assets SHA-256
-  verified (4,371,973 bytes), RC10 revision confirmed, uploader ready on the WIP
-  evidence branch. Share/resume present. This is transport, not a device test.
-- Working tree clean after deployment. No GitHub main writes.
+- This source-helper commit is the RC10 candidate. The GitHub WIP handoff mirror
+  receives final source/deployment receipts after verified publication.
 
 ## What passed
 
@@ -187,12 +271,11 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ## Next steps
 
-1. RC10 deployed and delivered assets verified. User runs the same 120-second
-   gate and captures on iPhone.
-2. Fetch fresh results/latest.json and its immutable report; confirm RC10 revision,
-   >=30 FPS each second, three-profile startup and all 36 captures.
-3. Compare RC10 images with accepted RC8. Preserve earlier FPS/media; never reuse
-   an older gate as new-build evidence.
+1. Local validation complete; package unchanged checked source.
+2. Publish checked source/archive through private Sites main; verify assets and
+   mirror final receipts to the GitHub WIP HANDOFF.md.
+3. User runs RC10. Fetch fresh results/latest.json and compare images with RC8.
+   Preserve earlier FPS/media; never reuse an older gate as new-build evidence.
 
 ## Rules and invariants
 
@@ -227,14 +310,8 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 - Evidence: `results/` on `wip/tidewater-in-app`; preserve all earlier sessions.
 - RC9 gate + Share results:
   https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-14-shore-realism-rc9
-- Published private source: `2e0bdf67d07e25eb5a744e2e410d24822d8f5196`.
-- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_47129f4b4c948191a6eee032479d32e4`.
-- Deployment: `appgdep_6acf0f131f8481919ee80d818b410412`, **succeeded** at 2026-10-14T05:11:58.952357+00:00.
-- Live gate HTML/bundle matched packaged bytes; all 11 native assets SHA-256
-  verified (4,368,120 bytes), RC9 revision confirmed, uploader ready on the WIP
-  evidence branch. Share/resume present. This is transport, not a device test.
-- Production minified startup/forwarding and 25-file allowlist checks passed.
-  No UI, capture tooling, vendor, FFT or budget changes; working tree clean.
+- The helper commit containing this handoff is the deployment candidate. Save
+  final source/deployment receipt to the GitHub WIP handoff after publication.
 
 ## What passed
 
@@ -300,10 +377,10 @@ INTERACTION-CONTRACT.md. This section supersedes the archived history below.
 
 ## Next steps
 
-1. User runs RC9's 120-second gate and unchanged automatic captures/Share results.
-2. Fetch fresh latest/report and originals; compare wave height/whitewater,
-   storm foam, horizon, dusk colors, sand, lightning and sun to actual RC8.
-3. Preserve completed FPS/media on reload; never reuse RC8 FPS for RC9.
+1. Publish the checked exact source/archive through the private Sites helper.
+2. Verify delivered revision/assets and update the WIP handoff with receipts.
+3. User runs RC9; fetch fresh latest/report and compare original images to RC8.
+   Preserve completed FPS/media on reload; never reuse RC8 FPS for RC9.
 
 ## Rules and invariants
 
