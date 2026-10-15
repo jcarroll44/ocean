@@ -1,3 +1,55 @@
+# DayBuoy handoff — RC14 deployed; iPhone gate pending
+
+Updated: 2026-10-15 UTC (October 14 America/Chicago). Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate: `2026-10-17-polish-rc14`; full integration, production and hosting packaging validation passed. Not device accepted yet.
+- Deployed source: `d00123d3d23c1fd2ab40433d8f38b877398d6ceb`. This following handoff checkpoint is documentation only.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_cfa3797126fc8191bc08eb26768c5aad`.
+- Deployment `appgdep_6ad048b763cc81919e73f3f35a45d458` succeeded at `2026-10-15T03:30:14.458942+00:00`.
+- Accepted performance baseline: canonical private Sites tag `scene-baseline-rc13` -> exact runtime `45dfa68f8998d9480d9ea9142a866d5093cc3f5c`. Annotated tag `e5ae28d3972a3ba7fcb69e1b5a8bdafb3c4aa344` pushed and remote target verified. This is performance acceptance, not visual acceptance.
+- Surf-truth baseline remains immutable `scene-baseline-rc12c` -> `14b4c9657bc9155fac00491702a19794168c3575`; retain `scene-baseline-rc11` -> `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
+- Live gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-17-polish-rc14
+- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its `main` is the approved deploy channel. Preserve owner-private audience.
+- GitHub continuation `wip/tidewater-verdict-first`; uploaded evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+- Core capture tools remain `2026-10-15-blob-recovery-rc12c`; RC14 adds a separate resumable beach-camera comparison after timed windows.
+
+## What passed
+
+- RC13 performance ACCEPTED by Jacob: Safari39.7avg,zero seconds under30,water14.0ms. Exact uploaded run `2026-10-15T02-51-41Z-a1a8929b-0e21-492a-8361-8ef705a0931e`, parent `2026-10-15T02-30-19Z-bf58fdcf-84e4-415d-976a-76199fac5f2d`, report blob `fa05009a5afda8d380f240bf4c852b273cc3892a`:39.73703avg,30minimum,zero below30,36stills.
+- RC13 actual color failures are five stills plus the sunset clip (6/37 checks), not six stills. Failed stills: Inlet sunrise/sunset, Cocoa sunrise/sunset and Mission sunset; sunset clip25/70 frames. All reported sky samples pass; residual failures are in water. Original evidence is saved under `night-report/rc14-before-*`.
+- Offshore actual whitecap coverage0.00431495 versus target0.00624921 is30.95% BELOW target; the gate reports absolute error. User requests almost no offshore whitecaps; preserve both the intent and raw signed measurement.
+- RC14 all seven interaction checks and complete integration build PASS. Candidate80WGSL/84full pipelines pass strict default limits:12uniform/8storage/9samplers/16textures. All36initialization/still command sequences PASS. Exact RC11 and RC12c controls also compile/initialize.
+- RC14 materials:500,000 source/filter/sharpen/bloom/ACES/8bit cases and131,072synthetic JPEG pixels pass with zero violations; old-path negative control reproduces20,076failures. Cloud actual-asset filtering/wind/freeze checks,12phase whitecap calibration/held-out/lifecycle tests, and camera source/retry/reload/Share checks PASS. This does not certify37device-rendered audits.
+- Production minified startup/live forecast/camera checks and25-file allowlist PASS. Renderer/capture scope, default limits, FFT and budgets remain enforced. The one opt-in PostFX patch is SHA256-pinned separately; disabling all3options reconstructs exact original upstream bytes. Other213upstream files are unchanged.
+- Hosting Worker package PASS, including all source/destination byte and static-index checks. Changed text credential-pattern scan returned zero matches. Implementation decisions and remaining comparison limits are in `night-report/rc14-report.md`.
+- Local tests are not a real-browser/device/visual pass. No RC14 phone FPS, rendered pixel pass or camera match is claimed yet.
+
+## Open issues
+
+- RC14 visual and phone performance acceptance remain pending. Run the unchanged120s/36stills/37colorchecks/5wave truth and clips, plus the additional real-camera pair.
+- A real camera match must retain its original frame, source, fetch/frame-time uncertainty, weather/marine values and view limitations. Do not substitute a fixture or call an old image live. A nighttime/obscured camera cannot validate daytime material color.
+- Keep total GPU<=RC12c+1.0ms; report actual first20/last20 span drift and preserve established<=10% drift grading. Sequential controls are not constant-temperature evidence; unequal dimensions remain explicitly unmeasured.
+- RC13 raw span23.485->28.629ms is+21.90% drift, distinct from user performance acceptance; candidate fixed429x768, control changed size, overall+1ms comparison unmeasured. Preserve the uploaded raw grades; do not relabel them zero drift.
+- RC15 light and unrelated scene/UI work remain deferred. Signing, WeatherKit/RevenueCat activation and TestFlight require owner/Mac steps.
+
+## Next steps
+
+1. Implementation and focused cloud/material/whitecap/camera checks are complete; do not expand scope or change locked surf.
+2. Full integration, production, hosting checks and private deployment are complete; receipt is above. Mirror this handoff to GitHub WIP. Do not change this deployed candidate before reading its phone evidence.
+3. User runs phone gate. Inspect all original audits/truth/actual GPU comparisons and the new camera pair before visual acceptance or further tuning. No phone result is presumed from local tests.
+
+## Rules and invariants
+
+- Core surf height/period/sets/refraction/breaker/tide/geometry stay locked to RC12c. Only explicit offshore wind-cap target/calibration is allowed to change, with independent unchanged ±20% truth validation.
+- Preserve UI, camera, original36stills and37colorchecks, capture freeze/settle/recovery/Share, numeric thresholds, source labels and Tidewater/Takram MIT credits.
+- Keep DPRfloor1.1,4x256FFT/reuse,48crest samples/1.2mstations/12lip vertices,16,384spray,256lightmap,512x128cloudatlas18primary/3shadow steps/256pixels perframe/20srefresh and default WebGPU limits. No GPU runner.
+- Gate:5sexactRC11 readiness,120scandidate saved before30sexactRC12c control, then captures/truth/clips/camera/Share. No media/network/encoding during timed windows. Preserve acknowledged evidence on reload.
+- No secrets, advice wording or crowd reporting. Label estimates and source uncertainty. Update this file every pass.
+
+## Archived handoff — RC13 deployment before acceptance
+
 # DayBuoy handoff — RC13 deployed; iPhone gate pending
 
 Updated: 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
