@@ -1,0 +1,6526 @@
+{
+  "schema": 2,
+  "kind": "startup-only",
+  "revision": "2026-10-17-perf-rc14c-startup2",
+  "build": {
+    "revision": "2026-10-17-perf-rc14c-startup2",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "runId": "2026-10-15T17-40-02Z-b9bfb271-6e6f-4725-845b-2c5832854728",
+  "parentRunId": "2026-10-15T17-37-52Z-8247d252-7f11-441a-bc27-5cd6438ca53f",
+  "part": "startup-14",
+  "network": "cellular",
+  "networkSource": "Manually selected by tester; connection type is not detected or verified",
+  "device": {
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+    "platform": "iPhone",
+    "maxTouchPoints": 5,
+    "webgpuExposed": true,
+    "driverGPUMemoryAvailable": false
+  },
+  "policy": {
+    "count": 20,
+    "deadlineMs": 240000,
+    "cacheDeadlineMs": 10000,
+    "wifiFirstFrameTargetMs": 4000,
+    "revision": "2026-10-17-perf-rc14c-startup2",
+    "cachePrefix": "daybuoy-native-assets-",
+    "fixture": "night-storm",
+    "performanceGateRun": false,
+    "capturesRun": false,
+    "resourceScope": "Owned WebGPU allocations; descriptor byte estimates do not measure driver residency."
+  },
+  "startedAt": "2026-10-15T17:37:52.838Z",
+  "checkpointAt": "2026-10-15T17:40:02.768Z",
+  "results": [
+    {
+      "index": 14,
+      "startedAt": "2026-10-15T17:39:58.007Z",
+      "status": "passed",
+      "lastStage": "Beach ready",
+      "deadlineMs": 240000,
+      "cachePolicy": {
+        "scope": "app-cache-cold",
+        "httpReloadRequested": true,
+        "browserHttpCacheErased": false,
+        "clear": {
+          "name": "daybuoy-native-assets-2026-10-17-perf-rc14c-startup2",
+          "deleted": true,
+          "cleared": true
+        }
+      },
+      "gpuBeforeOpen": {
+        "aggregate": {
+          "sessionsStarted": 13,
+          "sessionsDisposed": 13,
+          "devicesCreated": 13,
+          "devicesLive": 0,
+          "devicesDestroyed": 13,
+          "estimatedBytes": 0,
+          "peakEstimatedBytes": 217877010,
+          "buffersLive": 0,
+          "texturesLive": 0,
+          "querySetsLive": 0,
+          "buffersCreated": 1248,
+          "texturesCreated": 884,
+          "querySetsCreated": 13,
+          "shaderModulesCreated": 1040,
+          "samplersCreated": 117,
+          "bindGroupsCreated": 1755,
+          "bindGroupLayoutsCreated": 767,
+          "pipelineLayoutsCreated": 1248,
+          "pipelinesCreated": 1274,
+          "bufferBytes": 0,
+          "textureBytes": 0
+        },
+        "recent": [
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 1,
+            "startedAtMs": 1689,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3631,
+            "elapsedMs": 1943
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 2,
+            "startedAtMs": 1629,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3428,
+            "elapsedMs": 1799
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 3,
+            "startedAtMs": 1841,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3426,
+            "elapsedMs": 1586
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 4,
+            "startedAtMs": 1490,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3051,
+            "elapsedMs": 1562
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 5,
+            "startedAtMs": 1844,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3468,
+            "elapsedMs": 1624
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 6,
+            "startedAtMs": 1856,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3462,
+            "elapsedMs": 1607
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 7,
+            "startedAtMs": 2521,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 4183,
+            "elapsedMs": 1662
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 8,
+            "startedAtMs": 2021,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3671.0000000000005,
+            "elapsedMs": 1650
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 9,
+            "startedAtMs": 2428,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3978,
+            "elapsedMs": 1550
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 10,
+            "startedAtMs": 3604,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 5098,
+            "elapsedMs": 1494
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 11,
+            "startedAtMs": 2205,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3756,
+            "elapsedMs": 1551
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 12,
+            "startedAtMs": 1319,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 2854,
+            "elapsedMs": 1535
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 13,
+            "startedAtMs": 1508,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3112,
+            "elapsedMs": 1604
+          }
+        ],
+        "memory": {
+          "driverBytes": null,
+          "scope": "Tracked resource descriptor estimates; not driver residency."
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 699,
+        "dpr": 3
+      },
+      "appURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/?ocean-debug=1&gate-fixture=1&beach=inlet-beach&startup-check=1&startup-cold=2026-10-15T17-37-52Z-8247d252-7f11-441a-bc27-5cd6438ca53f-14&v=2026-10-17-perf-rc14c-startup2",
+      "startup": {
+        "phase": "ready",
+        "label": "Beach ready",
+        "attempt": 1,
+        "stage": "native-app-init-complete",
+        "stageElapsedMs": 0,
+        "stages": [
+          {
+            "stage": "document",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 251,
+            "thresholdMs": 15000,
+            "at": 1780
+          },
+          {
+            "stage": "assets",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 1002,
+            "thresholdMs": 15000,
+            "at": 2735
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2780.0000000000005
+          },
+          {
+            "stage": "native-module-evaluated",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2780.0000000000005
+          },
+          {
+            "stage": "native-app-init-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2781
+          },
+          {
+            "stage": "init-stage:Opening the beach",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2781
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2786
+          },
+          {
+            "stage": "webgpu-device-request-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2786
+          },
+          {
+            "stage": "webgpu-device-ready",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2786
+          },
+          {
+            "stage": "init-stage:Preparing the sky",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2786
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2806
+          },
+          {
+            "stage": "cloud-asset-fetch-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2806
+          },
+          {
+            "stage": "cloud-asset-fetch-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2822
+          },
+          {
+            "stage": "init-stage:Preparing white sand",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 2822
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3370
+          },
+          {
+            "stage": "init-stage:Preparing the waves",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3370
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 700,
+            "thresholdMs": 15000,
+            "at": 3881
+          },
+          {
+            "stage": "init-stage:Preparing light and reflections",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3881
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 507,
+            "thresholdMs": 15000,
+            "at": 3894
+          },
+          {
+            "stage": "init-stage:Finishing the waves",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3894
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3922
+          },
+          {
+            "stage": "precompile-preparing",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3947
+          },
+          {
+            "stage": "cloud-texture-bake-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3947
+          },
+          {
+            "stage": "cloud-texture-bake-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 3947
+          },
+          {
+            "stage": "shader-compile-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4128
+          },
+          {
+            "stage": "shader-compile-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4128
+          },
+          {
+            "stage": "first-frame-warmup-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 252,
+            "thresholdMs": 15000,
+            "at": 4192
+          },
+          {
+            "stage": "first-frame-warmup-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4192
+          },
+          {
+            "stage": "init-stage:Opening your view",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4192
+          },
+          {
+            "stage": "renderer",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4195
+          },
+          {
+            "stage": "first-app-frame-start",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4233
+          },
+          {
+            "stage": "first-app-frame-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4233
+          },
+          {
+            "stage": "native-app-init-complete",
+            "status": "complete",
+            "attempt": 1,
+            "elapsedMs": 0,
+            "thresholdMs": 15000,
+            "at": 4233
+          }
+        ],
+        "policy": {
+          "attempts": 3,
+          "attemptMs": 90000,
+          "idleMs": 15000,
+          "stageMs": 15000,
+          "totalMs": 285000
+        },
+        "history": [
+          {
+            "attempt": 1,
+            "event": "start",
+            "at": 1421
+          },
+          {
+            "attempt": 1,
+            "event": "ready",
+            "at": 4233
+          }
+        ],
+        "assets": {
+          "complete": 11,
+          "totalAssets": 11,
+          "bytes": 4440052,
+          "totalBytes": 4440052,
+          "cached": 0,
+          "persistent": true,
+          "optionalFailures": [],
+          "skipped": 0,
+          "resolved": 11,
+          "forceNetwork": true,
+          "requestDeadlineMs": 15000
+        }
+      },
+      "assetEvents": [
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 334
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 335
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 336
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 109546,
+          "persistent": true,
+          "at": 571
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 572
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 2127866,
+          "persistent": true,
+          "at": 763
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 32768,
+          "persistent": true,
+          "at": 763
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 764
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 765
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 113,
+          "persistent": true,
+          "at": 911
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 911
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 33203,
+          "persistent": true,
+          "at": 953
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 953
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7932,
+          "persistent": true,
+          "at": 1063
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 1063
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7840,
+          "persistent": true,
+          "at": 1147
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 1152
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 2097152,
+          "persistent": true,
+          "at": 1184
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7884,
+          "persistent": true,
+          "at": 1184
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "at": 1185
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7748,
+          "persistent": true,
+          "at": 1263
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup2",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 8000,
+          "persistent": true,
+          "at": 1284
+        }
+      ],
+      "cloudCache": {
+        "disabled": false,
+        "optionalFailure": null
+      },
+      "gpuCensus": {
+        "session": {
+          "devicesCreated": 1,
+          "devicesLive": 1,
+          "devicesDestroyed": 0,
+          "estimatedBytes": 217877010,
+          "peakEstimatedBytes": 217877010,
+          "buffersLive": 94,
+          "texturesLive": 64,
+          "querySetsLive": 1,
+          "buffersCreated": 96,
+          "texturesCreated": 68,
+          "querySetsCreated": 1,
+          "shaderModulesCreated": 80,
+          "samplersCreated": 9,
+          "bindGroupsCreated": 135,
+          "bindGroupLayoutsCreated": 59,
+          "pipelineLayoutsCreated": 96,
+          "pipelinesCreated": 98,
+          "bufferBytes": 47057280,
+          "textureBytes": 170819730,
+          "id": 14,
+          "startedAtMs": 1331,
+          "disposed": false,
+          "reason": null,
+          "elapsedMs": 1555
+        },
+        "aggregate": {
+          "sessionsStarted": 14,
+          "sessionsDisposed": 13,
+          "devicesCreated": 14,
+          "devicesLive": 1,
+          "devicesDestroyed": 13,
+          "estimatedBytes": 217877010,
+          "peakEstimatedBytes": 217877010,
+          "buffersLive": 94,
+          "texturesLive": 64,
+          "querySetsLive": 1,
+          "buffersCreated": 1344,
+          "texturesCreated": 952,
+          "querySetsCreated": 14,
+          "shaderModulesCreated": 1120,
+          "samplersCreated": 126,
+          "bindGroupsCreated": 1890,
+          "bindGroupLayoutsCreated": 826,
+          "pipelineLayoutsCreated": 1344,
+          "pipelinesCreated": 1372,
+          "bufferBytes": 47057280,
+          "textureBytes": 170819730
+        },
+        "memory": {
+          "scope": "Tracked destroyable resource descriptors and explicit destroy calls; byte estimates exclude driver residency, alignment and internal allocations.",
+          "driverBytes": null,
+          "nonDestroyableLiveCounts": null,
+          "nonDestroyableTracking": "Creation totals only; no strong references retained for pipelines, modules, samplers or bind groups."
+        },
+        "pending": {
+          "timers": 0,
+          "animationFrames": 0,
+          "listeners": 7,
+          "cleanupHooks": 5
+        }
+      },
+      "pipelineDiagnostics": {
+        "asyncOnly": true,
+        "timeoutMs": 4500,
+        "disposed": false,
+        "compiled": 98,
+        "pendingCount": 0,
+        "pending": [],
+        "attempts": [
+          {
+            "pipeline": "Atmosphere Transmittance",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1339,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Atmosphere MultiScat",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1339,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Atmosphere SkyView",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1340,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Atmosphere Irradiance",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1340,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Amortized 3D cloud bake · 256 pixels",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1355,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Atmosphere Transmittance",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1357,
+            "elapsedMs": 18
+          },
+          {
+            "pipeline": "Atmosphere MultiScat",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1357,
+            "elapsedMs": 18
+          },
+          {
+            "pipeline": "Atmosphere SkyView",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1357,
+            "elapsedMs": 17
+          },
+          {
+            "pipeline": "Atmosphere Irradiance",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1357,
+            "elapsedMs": 17
+          },
+          {
+            "pipeline": "Amortized 3D cloud bake · 256 pixels",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1358,
+            "elapsedMs": 3
+          },
+          {
+            "pipeline": "Env Face 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1362,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1363,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1364,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1365,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1366,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1367,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1367,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1367,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1367,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1368,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1368,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1368,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1368,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1369,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1369,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1369,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1369,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env GGX 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1370,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env SH",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1370,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env SH",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1370,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "envSource mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1370,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "envSource mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1370,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "mipmap rgba8unorm",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1710,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Terrain Sun Shadow",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1917,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Env Face 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 559
+          },
+          {
+            "pipeline": "Env Face 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 558
+          },
+          {
+            "pipeline": "Env Face 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 557
+          },
+          {
+            "pipeline": "Env Face 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 556
+          },
+          {
+            "pipeline": "Env Face 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 555
+          },
+          {
+            "pipeline": "Env Face 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 554
+          },
+          {
+            "pipeline": "Env GGX 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 554
+          },
+          {
+            "pipeline": "Env GGX 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 554
+          },
+          {
+            "pipeline": "Env GGX 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 554
+          },
+          {
+            "pipeline": "Env GGX 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 553
+          },
+          {
+            "pipeline": "Env GGX 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 553
+          },
+          {
+            "pipeline": "Env GGX 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 553
+          },
+          {
+            "pipeline": "Env GGX 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 553
+          },
+          {
+            "pipeline": "Env GGX 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 552
+          },
+          {
+            "pipeline": "Env GGX 2",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 552
+          },
+          {
+            "pipeline": "Env GGX 3",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 552
+          },
+          {
+            "pipeline": "Env GGX 4",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 552
+          },
+          {
+            "pipeline": "Env GGX 5",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 551
+          },
+          {
+            "pipeline": "Env SH",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 551
+          },
+          {
+            "pipeline": "Env SH",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 551
+          },
+          {
+            "pipeline": "envSource mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 551
+          },
+          {
+            "pipeline": "envSource mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 551
+          },
+          {
+            "pipeline": "mipmap rgba8unorm",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 1921,
+            "elapsedMs": 211
+          },
+          {
+            "pipeline": "Ocean Init Spectrum",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1926,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Conjugate",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1926,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Copy H0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1926,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean FFT Rows",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1927,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean FFT Columns",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1928,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean FFT Compression Snapshot",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1928,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1928,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1928,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1928,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ocean Mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1929,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Foam Pattern",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1929,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsFine mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1990,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsFine mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1990,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsFine mips C",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1991,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsFine0",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1991,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsFine1",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1991,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsBroad mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1993,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsBroad mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1993,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsBroad0",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1994,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "causticsBroad1",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 1994,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Shore Sim",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2405,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Underwater Light Map 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2409,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Underwater Light Map 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2410,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ground Bounce Bake",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2411,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Ground Bounce Blur",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2411,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "sky background",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2412,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Surf Crests",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2427,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Terrain Sun Shadow",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 515
+          },
+          {
+            "pipeline": "Ocean Init Spectrum",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 506
+          },
+          {
+            "pipeline": "Ocean Conjugate",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 506
+          },
+          {
+            "pipeline": "Ocean Copy H0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 506
+          },
+          {
+            "pipeline": "Ocean FFT Rows",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 505
+          },
+          {
+            "pipeline": "Ocean FFT Columns",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 504
+          },
+          {
+            "pipeline": "Ocean FFT Compression Snapshot",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 504
+          },
+          {
+            "pipeline": "Ocean Mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 504
+          },
+          {
+            "pipeline": "Ocean Mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 504
+          },
+          {
+            "pipeline": "Ocean Mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 504
+          },
+          {
+            "pipeline": "Ocean Mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 503
+          },
+          {
+            "pipeline": "Foam Pattern",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 503
+          },
+          {
+            "pipeline": "causticsFine mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 442
+          },
+          {
+            "pipeline": "causticsFine mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 442
+          },
+          {
+            "pipeline": "causticsFine mips C",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 441
+          },
+          {
+            "pipeline": "causticsFine0",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 441
+          },
+          {
+            "pipeline": "causticsFine1",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 441
+          },
+          {
+            "pipeline": "causticsBroad mips A",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 439
+          },
+          {
+            "pipeline": "causticsBroad mips B",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 439
+          },
+          {
+            "pipeline": "causticsBroad0",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 438
+          },
+          {
+            "pipeline": "causticsBroad1",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 438
+          },
+          {
+            "pipeline": "Shore Sim",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2432,
+            "elapsedMs": 27
+          },
+          {
+            "pipeline": "AO depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2433,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "AO blur x",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2434,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "AO blur y",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2435,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "TAAU",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2438,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "TAAU",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2440,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Motion Blur Tiles",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2441,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Motion Blur Neighbourhood",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2441,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Lens Flare Visibility",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2442,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "DayBuoy native sky and celestial bodies",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2447,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Underwater Light Map 0",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 53
+          },
+          {
+            "pipeline": "Underwater Light Map 1",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 52
+          },
+          {
+            "pipeline": "Ground Bounce Bake",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 51
+          },
+          {
+            "pipeline": "Ground Bounce Blur",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 51
+          },
+          {
+            "pipeline": "sky background",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 50
+          },
+          {
+            "pipeline": "Surf Crests",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 35
+          },
+          {
+            "pipeline": "AO depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 29
+          },
+          {
+            "pipeline": "AO blur x",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 28
+          },
+          {
+            "pipeline": "AO blur y",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 27
+          },
+          {
+            "pipeline": "TAAU",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 24
+          },
+          {
+            "pipeline": "TAAU",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 22
+          },
+          {
+            "pipeline": "Motion Blur Tiles",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 21
+          },
+          {
+            "pipeline": "Motion Blur Neighbourhood",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 21
+          },
+          {
+            "pipeline": "Lens Flare Visibility",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 20
+          },
+          {
+            "pipeline": "DayBuoy native sky and celestial bodies",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2462,
+            "elapsedMs": 15
+          },
+          {
+            "pipeline": "mipmap rgba16float",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2462,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "mipmap rgba16float",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2464,
+            "elapsedMs": 2
+          },
+          {
+            "pipeline": "Wave truth shared-state probe",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2466,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Surf Crests",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2469,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Spray Update",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2472,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Wave truth shared-state probe",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2487,
+            "elapsedMs": 21
+          },
+          {
+            "pipeline": "Surf Crests",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2487,
+            "elapsedMs": 18
+          },
+          {
+            "pipeline": "Spray Update",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2487,
+            "elapsedMs": 15
+          },
+          {
+            "pipeline": "medium",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2490,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "beauty (AO + haze + underwater)",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2492,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "GTAO",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2493,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "underwater shafts",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2495,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2495,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2495,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2496,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2496,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2496,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2496,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2497,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2497,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2497,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Auto Exposure",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2497,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "final (grade + tonemap)",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2498,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "medium",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 29
+          },
+          {
+            "pipeline": "beauty (AO + haze + underwater)",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 27
+          },
+          {
+            "pipeline": "GTAO",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 26
+          },
+          {
+            "pipeline": "underwater shafts",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 24
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 24
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 24
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 23
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 23
+          },
+          {
+            "pipeline": "bloom down",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 23
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 23
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 22
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 22
+          },
+          {
+            "pipeline": "bloom up",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 22
+          },
+          {
+            "pipeline": "Auto Exposure",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 22
+          },
+          {
+            "pipeline": "final (grade + tonemap)",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2519,
+            "elapsedMs": 21
+          },
+          {
+            "pipeline": "Water Queries",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2521,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Terrain depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2530,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "material5 depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2532,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Terrain main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2537,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "material5 main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2540,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "opaque depth half",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2540,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Terrain color",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2546,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "water main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2553,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Forecast thin rain particles main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2555,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "BreakerLip main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2559,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Spray main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2562,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "AA none",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2563,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "FXAA",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2563,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "water main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "start",
+            "atMs": 2574,
+            "elapsedMs": 0
+          },
+          {
+            "pipeline": "Water Queries",
+            "kind": "compute",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2577,
+            "elapsedMs": 56
+          },
+          {
+            "pipeline": "Terrain depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 126
+          },
+          {
+            "pipeline": "material5 depth",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 124
+          },
+          {
+            "pipeline": "Terrain main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 119
+          },
+          {
+            "pipeline": "material5 main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 116
+          },
+          {
+            "pipeline": "opaque depth half",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 116
+          },
+          {
+            "pipeline": "Terrain color",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 110
+          },
+          {
+            "pipeline": "water main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 103
+          },
+          {
+            "pipeline": "Forecast thin rain particles main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 101
+          },
+          {
+            "pipeline": "BreakerLip main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 97
+          },
+          {
+            "pipeline": "Spray main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 94
+          },
+          {
+            "pipeline": "AA none",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 93
+          },
+          {
+            "pipeline": "FXAA",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 93
+          },
+          {
+            "pipeline": "water main",
+            "kind": "render",
+            "attempt": 1,
+            "event": "complete",
+            "atMs": 2656,
+            "elapsedMs": 82
+          }
+        ],
+        "degraded": []
+      },
+      "degraded": false,
+      "confirmedCompletions": 2,
+      "stageEvents": [
+        {
+          "stage": "native-document-loaded",
+          "attempt": 1,
+          "elapsedMs": 1676,
+          "detail": {}
+        },
+        {
+          "stage": "native-module-evaluated",
+          "attempt": 1,
+          "elapsedMs": 2800,
+          "detail": {}
+        },
+        {
+          "stage": "native-app-init-start",
+          "attempt": 1,
+          "elapsedMs": 2800,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Opening the beach",
+          "attempt": 1,
+          "elapsedMs": 2800,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-request-start",
+          "attempt": 1,
+          "elapsedMs": 2806,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-ready",
+          "attempt": 1,
+          "elapsedMs": 2806,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the sky",
+          "attempt": 1,
+          "elapsedMs": 2806,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 1,
+          "elapsedMs": 2826,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 1,
+          "elapsedMs": 2826,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 1,
+          "elapsedMs": 2826,
+          "detail": {
+            "bytes": 2097152
+          }
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 1,
+          "elapsedMs": 2826,
+          "detail": {
+            "bytes": 32768
+          }
+        },
+        {
+          "stage": "init-stage:Preparing white sand",
+          "attempt": 1,
+          "elapsedMs": 2841,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the waves",
+          "attempt": 1,
+          "elapsedMs": 3389,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing light and reflections",
+          "attempt": 1,
+          "elapsedMs": 3900,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Finishing the waves",
+          "attempt": 1,
+          "elapsedMs": 3913,
+          "detail": {}
+        },
+        {
+          "stage": "precompile-preparing",
+          "attempt": 1,
+          "elapsedMs": 3940,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-start",
+          "attempt": 1,
+          "elapsedMs": 3967,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-complete",
+          "attempt": 1,
+          "elapsedMs": 3967,
+          "detail": {}
+        },
+        {
+          "stage": "shader-compile-start",
+          "attempt": 1,
+          "elapsedMs": 3967,
+          "detail": {}
+        },
+        {
+          "stage": "shader-compile-complete",
+          "attempt": 1,
+          "elapsedMs": 4147,
+          "detail": {}
+        },
+        {
+          "stage": "first-frame-warmup-start",
+          "attempt": 1,
+          "elapsedMs": 4147,
+          "detail": {}
+        },
+        {
+          "stage": "first-frame-warmup-complete",
+          "attempt": 1,
+          "elapsedMs": 4212,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Opening your view",
+          "attempt": 1,
+          "elapsedMs": 4212,
+          "detail": {}
+        },
+        {
+          "stage": "first-app-frame-start",
+          "attempt": 1,
+          "elapsedMs": 4214,
+          "detail": {}
+        },
+        {
+          "stage": "first-app-frame-complete",
+          "attempt": 1,
+          "elapsedMs": 4251,
+          "detail": {}
+        },
+        {
+          "stage": "native-app-init-complete",
+          "attempt": 1,
+          "elapsedMs": 4253,
+          "detail": {}
+        },
+        {
+          "stage": "first-live-frame-submitted",
+          "attempt": 1,
+          "elapsedMs": 4264,
+          "detail": {}
+        }
+      ],
+      "initializationErrors": [],
+      "assetProgress": {
+        "complete": 11,
+        "totalAssets": 11,
+        "bytes": 4440052,
+        "totalBytes": 4440052,
+        "cached": 0,
+        "persistent": true,
+        "optionalFailures": [],
+        "skipped": 0,
+        "resolved": 11,
+        "forceNetwork": true,
+        "requestDeadlineMs": 15000
+      },
+      "backend": "WebGPU native scene",
+      "pipelineSessions": [
+        {
+          "sessionId": 14,
+          "attempt": 1,
+          "capturedAt": "2026-10-15T17:40:02.379Z",
+          "diagnostics": {
+            "asyncOnly": true,
+            "timeoutMs": 4500,
+            "disposed": false,
+            "compiled": 98,
+            "pendingCount": 0,
+            "pending": [],
+            "attempts": [
+              {
+                "pipeline": "Atmosphere Transmittance",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1339,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Atmosphere MultiScat",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1339,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Atmosphere SkyView",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1340,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Atmosphere Irradiance",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1340,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Amortized 3D cloud bake · 256 pixels",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1355,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Atmosphere Transmittance",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1357,
+                "elapsedMs": 18
+              },
+              {
+                "pipeline": "Atmosphere MultiScat",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1357,
+                "elapsedMs": 18
+              },
+              {
+                "pipeline": "Atmosphere SkyView",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1357,
+                "elapsedMs": 17
+              },
+              {
+                "pipeline": "Atmosphere Irradiance",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1357,
+                "elapsedMs": 17
+              },
+              {
+                "pipeline": "Amortized 3D cloud bake · 256 pixels",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1358,
+                "elapsedMs": 3
+              },
+              {
+                "pipeline": "Env Face 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1362,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1363,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1364,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1365,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1366,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1367,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1367,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1367,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1367,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1368,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1368,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1368,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1368,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1369,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1369,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1369,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1369,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env GGX 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1370,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env SH",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1370,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env SH",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1370,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "envSource mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1370,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "envSource mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1370,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "mipmap rgba8unorm",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1710,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Terrain Sun Shadow",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1917,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Env Face 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 559
+              },
+              {
+                "pipeline": "Env Face 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 558
+              },
+              {
+                "pipeline": "Env Face 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 557
+              },
+              {
+                "pipeline": "Env Face 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 556
+              },
+              {
+                "pipeline": "Env Face 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 555
+              },
+              {
+                "pipeline": "Env Face 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 554
+              },
+              {
+                "pipeline": "Env GGX 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 554
+              },
+              {
+                "pipeline": "Env GGX 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 554
+              },
+              {
+                "pipeline": "Env GGX 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 554
+              },
+              {
+                "pipeline": "Env GGX 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 553
+              },
+              {
+                "pipeline": "Env GGX 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 553
+              },
+              {
+                "pipeline": "Env GGX 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 553
+              },
+              {
+                "pipeline": "Env GGX 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 553
+              },
+              {
+                "pipeline": "Env GGX 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 552
+              },
+              {
+                "pipeline": "Env GGX 2",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 552
+              },
+              {
+                "pipeline": "Env GGX 3",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 552
+              },
+              {
+                "pipeline": "Env GGX 4",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 552
+              },
+              {
+                "pipeline": "Env GGX 5",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 551
+              },
+              {
+                "pipeline": "Env SH",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 551
+              },
+              {
+                "pipeline": "Env SH",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 551
+              },
+              {
+                "pipeline": "envSource mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 551
+              },
+              {
+                "pipeline": "envSource mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 551
+              },
+              {
+                "pipeline": "mipmap rgba8unorm",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 1921,
+                "elapsedMs": 211
+              },
+              {
+                "pipeline": "Ocean Init Spectrum",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1926,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Conjugate",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1926,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Copy H0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1926,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean FFT Rows",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1927,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean FFT Columns",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1928,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean FFT Compression Snapshot",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1928,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1928,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1928,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1928,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ocean Mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1929,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Foam Pattern",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1929,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsFine mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1990,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsFine mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1990,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsFine mips C",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1991,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsFine0",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1991,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsFine1",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1991,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsBroad mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1993,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsBroad mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1993,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsBroad0",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1994,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "causticsBroad1",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 1994,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Shore Sim",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2405,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Underwater Light Map 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2409,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Underwater Light Map 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2410,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ground Bounce Bake",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2411,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Ground Bounce Blur",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2411,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "sky background",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2412,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Surf Crests",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2427,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Terrain Sun Shadow",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 515
+              },
+              {
+                "pipeline": "Ocean Init Spectrum",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 506
+              },
+              {
+                "pipeline": "Ocean Conjugate",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 506
+              },
+              {
+                "pipeline": "Ocean Copy H0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 506
+              },
+              {
+                "pipeline": "Ocean FFT Rows",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 505
+              },
+              {
+                "pipeline": "Ocean FFT Columns",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 504
+              },
+              {
+                "pipeline": "Ocean FFT Compression Snapshot",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 504
+              },
+              {
+                "pipeline": "Ocean Mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 504
+              },
+              {
+                "pipeline": "Ocean Mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 504
+              },
+              {
+                "pipeline": "Ocean Mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 504
+              },
+              {
+                "pipeline": "Ocean Mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 503
+              },
+              {
+                "pipeline": "Foam Pattern",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 503
+              },
+              {
+                "pipeline": "causticsFine mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 442
+              },
+              {
+                "pipeline": "causticsFine mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 442
+              },
+              {
+                "pipeline": "causticsFine mips C",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 441
+              },
+              {
+                "pipeline": "causticsFine0",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 441
+              },
+              {
+                "pipeline": "causticsFine1",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 441
+              },
+              {
+                "pipeline": "causticsBroad mips A",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 439
+              },
+              {
+                "pipeline": "causticsBroad mips B",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 439
+              },
+              {
+                "pipeline": "causticsBroad0",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 438
+              },
+              {
+                "pipeline": "causticsBroad1",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 438
+              },
+              {
+                "pipeline": "Shore Sim",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2432,
+                "elapsedMs": 27
+              },
+              {
+                "pipeline": "AO depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2433,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "AO blur x",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2434,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "AO blur y",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2435,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "TAAU",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2438,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "TAAU",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2440,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Motion Blur Tiles",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2441,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Motion Blur Neighbourhood",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2441,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Lens Flare Visibility",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2442,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "DayBuoy native sky and celestial bodies",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2447,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Underwater Light Map 0",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 53
+              },
+              {
+                "pipeline": "Underwater Light Map 1",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 52
+              },
+              {
+                "pipeline": "Ground Bounce Bake",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 51
+              },
+              {
+                "pipeline": "Ground Bounce Blur",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 51
+              },
+              {
+                "pipeline": "sky background",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 50
+              },
+              {
+                "pipeline": "Surf Crests",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 35
+              },
+              {
+                "pipeline": "AO depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 29
+              },
+              {
+                "pipeline": "AO blur x",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 28
+              },
+              {
+                "pipeline": "AO blur y",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 27
+              },
+              {
+                "pipeline": "TAAU",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 24
+              },
+              {
+                "pipeline": "TAAU",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 22
+              },
+              {
+                "pipeline": "Motion Blur Tiles",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 21
+              },
+              {
+                "pipeline": "Motion Blur Neighbourhood",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 21
+              },
+              {
+                "pipeline": "Lens Flare Visibility",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 20
+              },
+              {
+                "pipeline": "DayBuoy native sky and celestial bodies",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2462,
+                "elapsedMs": 15
+              },
+              {
+                "pipeline": "mipmap rgba16float",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2462,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "mipmap rgba16float",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2464,
+                "elapsedMs": 2
+              },
+              {
+                "pipeline": "Wave truth shared-state probe",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2466,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Surf Crests",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2469,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Spray Update",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2472,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Wave truth shared-state probe",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2487,
+                "elapsedMs": 21
+              },
+              {
+                "pipeline": "Surf Crests",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2487,
+                "elapsedMs": 18
+              },
+              {
+                "pipeline": "Spray Update",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2487,
+                "elapsedMs": 15
+              },
+              {
+                "pipeline": "medium",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2490,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "beauty (AO + haze + underwater)",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2492,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "GTAO",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2493,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "underwater shafts",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2495,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2495,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2495,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2496,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2496,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2496,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2496,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2497,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2497,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2497,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Auto Exposure",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2497,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "final (grade + tonemap)",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2498,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "medium",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 29
+              },
+              {
+                "pipeline": "beauty (AO + haze + underwater)",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 27
+              },
+              {
+                "pipeline": "GTAO",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 26
+              },
+              {
+                "pipeline": "underwater shafts",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 24
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 24
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 24
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 23
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 23
+              },
+              {
+                "pipeline": "bloom down",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 23
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 23
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 22
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 22
+              },
+              {
+                "pipeline": "bloom up",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 22
+              },
+              {
+                "pipeline": "Auto Exposure",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 22
+              },
+              {
+                "pipeline": "final (grade + tonemap)",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2519,
+                "elapsedMs": 21
+              },
+              {
+                "pipeline": "Water Queries",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2521,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Terrain depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2530,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "material5 depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2532,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Terrain main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2537,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "material5 main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2540,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "opaque depth half",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2540,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Terrain color",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2546,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "water main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2553,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Forecast thin rain particles main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2555,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "BreakerLip main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2559,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Spray main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2562,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "AA none",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2563,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "FXAA",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2563,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "water main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "start",
+                "atMs": 2574,
+                "elapsedMs": 0
+              },
+              {
+                "pipeline": "Water Queries",
+                "kind": "compute",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2577,
+                "elapsedMs": 56
+              },
+              {
+                "pipeline": "Terrain depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 126
+              },
+              {
+                "pipeline": "material5 depth",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 124
+              },
+              {
+                "pipeline": "Terrain main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 119
+              },
+              {
+                "pipeline": "material5 main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 116
+              },
+              {
+                "pipeline": "opaque depth half",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 116
+              },
+              {
+                "pipeline": "Terrain color",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 110
+              },
+              {
+                "pipeline": "water main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 103
+              },
+              {
+                "pipeline": "Forecast thin rain particles main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 101
+              },
+              {
+                "pipeline": "BreakerLip main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 97
+              },
+              {
+                "pipeline": "Spray main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 94
+              },
+              {
+                "pipeline": "AA none",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 93
+              },
+              {
+                "pipeline": "FXAA",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 93
+              },
+              {
+                "pipeline": "water main",
+                "kind": "render",
+                "attempt": 1,
+                "event": "complete",
+                "atMs": 2656,
+                "elapsedMs": 82
+              }
+            ],
+            "degraded": []
+          }
+        }
+      ],
+      "optionalEffects": {
+        "disabled": [],
+        "degraded": false
+      },
+      "nativeRevision": "2026-10-17-perf-rc14c-startup2",
+      "reason": null,
+      "elapsedMs": 4355,
+      "finishedAt": "2026-10-15T17:40:02.380Z",
+      "firstFrameMs": 4355,
+      "failedAssetURLs": [],
+      "lastFailure": null,
+      "resources": [
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2",
+          "ms": 122,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2",
+          "ms": 141,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2",
+          "ms": 118,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2",
+          "ms": 104,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2",
+          "ms": 112,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-scene.html?noClouds=1&quality=0&startup-cold=2026-10-15T17-37-52Z-8247d252-7f11-441a-bc27-5cd6438ca53f-14&v=2026-10-17-perf-rc14c-startup2&nativeAttempt=1",
+          "ms": 105.00000000000023,
+          "transferBytes": 1053,
+          "decodedBytes": 1340
+        }
+      ],
+      "gpuLifecycle": {
+        "owner": "parent-startup-controller",
+        "before": {
+          "session": {
+            "devicesCreated": 1,
+            "devicesLive": 1,
+            "devicesDestroyed": 0,
+            "estimatedBytes": 217877010,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 94,
+            "texturesLive": 64,
+            "querySetsLive": 1,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 47057280,
+            "textureBytes": 170819730,
+            "id": 14,
+            "startedAtMs": 1331,
+            "disposed": false,
+            "reason": null,
+            "elapsedMs": 1560
+          },
+          "aggregate": {
+            "sessionsStarted": 14,
+            "sessionsDisposed": 13,
+            "devicesCreated": 14,
+            "devicesLive": 1,
+            "devicesDestroyed": 13,
+            "estimatedBytes": 217877010,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 94,
+            "texturesLive": 64,
+            "querySetsLive": 1,
+            "buffersCreated": 1344,
+            "texturesCreated": 952,
+            "querySetsCreated": 14,
+            "shaderModulesCreated": 1120,
+            "samplersCreated": 126,
+            "bindGroupsCreated": 1890,
+            "bindGroupLayoutsCreated": 826,
+            "pipelineLayoutsCreated": 1344,
+            "pipelinesCreated": 1372,
+            "bufferBytes": 47057280,
+            "textureBytes": 170819730
+          },
+          "memory": {
+            "scope": "Tracked destroyable resource descriptors and explicit destroy calls; byte estimates exclude driver residency, alignment and internal allocations.",
+            "driverBytes": null,
+            "nonDestroyableLiveCounts": null,
+            "nonDestroyableTracking": "Creation totals only; no strong references retained for pipelines, modules, samplers or bind groups."
+          },
+          "pending": {
+            "timers": 0,
+            "animationFrames": 0,
+            "listeners": 7,
+            "cleanupHooks": 5
+          }
+        },
+        "after": {
+          "session": {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 14,
+            "startedAtMs": 1331,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 2891,
+            "elapsedMs": 1560
+          },
+          "aggregate": {
+            "sessionsStarted": 14,
+            "sessionsDisposed": 14,
+            "devicesCreated": 14,
+            "devicesLive": 0,
+            "devicesDestroyed": 14,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 1344,
+            "texturesCreated": 952,
+            "querySetsCreated": 14,
+            "shaderModulesCreated": 1120,
+            "samplersCreated": 126,
+            "bindGroupsCreated": 1890,
+            "bindGroupLayoutsCreated": 826,
+            "pipelineLayoutsCreated": 1344,
+            "pipelinesCreated": 1372,
+            "bufferBytes": 0,
+            "textureBytes": 0
+          },
+          "memory": {
+            "scope": "Tracked destroyable resource descriptors and explicit destroy calls; byte estimates exclude driver residency, alignment and internal allocations.",
+            "driverBytes": null,
+            "nonDestroyableLiveCounts": null,
+            "nonDestroyableTracking": "Creation totals only; no strong references retained for pipelines, modules, samplers or bind groups."
+          },
+          "pending": {
+            "timers": 0,
+            "animationFrames": 0,
+            "listeners": 0,
+            "cleanupHooks": 0
+          }
+        },
+        "pipelines": {
+          "asyncOnly": true,
+          "timeoutMs": 4500,
+          "disposed": true,
+          "compiled": 98,
+          "pendingCount": 0,
+          "pending": [],
+          "attempts": [
+            {
+              "pipeline": "Atmosphere Transmittance",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1339,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Atmosphere MultiScat",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1339,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Atmosphere SkyView",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1340,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Atmosphere Irradiance",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1340,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Amortized 3D cloud bake · 256 pixels",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1355,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Atmosphere Transmittance",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1357,
+              "elapsedMs": 18
+            },
+            {
+              "pipeline": "Atmosphere MultiScat",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1357,
+              "elapsedMs": 18
+            },
+            {
+              "pipeline": "Atmosphere SkyView",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1357,
+              "elapsedMs": 17
+            },
+            {
+              "pipeline": "Atmosphere Irradiance",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1357,
+              "elapsedMs": 17
+            },
+            {
+              "pipeline": "Amortized 3D cloud bake · 256 pixels",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1358,
+              "elapsedMs": 3
+            },
+            {
+              "pipeline": "Env Face 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1362,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1363,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1364,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1365,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1366,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1367,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1367,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1367,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1367,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1368,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1368,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1368,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1368,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1369,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1369,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1369,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1369,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env GGX 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1370,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env SH",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1370,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env SH",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1370,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "envSource mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1370,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "envSource mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1370,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "mipmap rgba8unorm",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1710,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Terrain Sun Shadow",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1917,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Env Face 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 559
+            },
+            {
+              "pipeline": "Env Face 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 558
+            },
+            {
+              "pipeline": "Env Face 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 557
+            },
+            {
+              "pipeline": "Env Face 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 556
+            },
+            {
+              "pipeline": "Env Face 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 555
+            },
+            {
+              "pipeline": "Env Face 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 554
+            },
+            {
+              "pipeline": "Env GGX 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 554
+            },
+            {
+              "pipeline": "Env GGX 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 554
+            },
+            {
+              "pipeline": "Env GGX 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 554
+            },
+            {
+              "pipeline": "Env GGX 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 553
+            },
+            {
+              "pipeline": "Env GGX 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 553
+            },
+            {
+              "pipeline": "Env GGX 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 553
+            },
+            {
+              "pipeline": "Env GGX 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 553
+            },
+            {
+              "pipeline": "Env GGX 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 552
+            },
+            {
+              "pipeline": "Env GGX 2",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 552
+            },
+            {
+              "pipeline": "Env GGX 3",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 552
+            },
+            {
+              "pipeline": "Env GGX 4",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 552
+            },
+            {
+              "pipeline": "Env GGX 5",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 551
+            },
+            {
+              "pipeline": "Env SH",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 551
+            },
+            {
+              "pipeline": "Env SH",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 551
+            },
+            {
+              "pipeline": "envSource mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 551
+            },
+            {
+              "pipeline": "envSource mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 551
+            },
+            {
+              "pipeline": "mipmap rgba8unorm",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 1921,
+              "elapsedMs": 211
+            },
+            {
+              "pipeline": "Ocean Init Spectrum",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1926,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Conjugate",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1926,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Copy H0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1926,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean FFT Rows",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1927,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean FFT Columns",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1928,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean FFT Compression Snapshot",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1928,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1928,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1928,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1928,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ocean Mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1929,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Foam Pattern",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1929,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsFine mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1990,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsFine mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1990,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsFine mips C",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1991,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsFine0",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1991,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsFine1",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1991,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsBroad mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1993,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsBroad mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1993,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsBroad0",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1994,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "causticsBroad1",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 1994,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Shore Sim",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2405,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Underwater Light Map 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2409,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Underwater Light Map 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2410,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ground Bounce Bake",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2411,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Ground Bounce Blur",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2411,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "sky background",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2412,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Surf Crests",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2427,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Terrain Sun Shadow",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 515
+            },
+            {
+              "pipeline": "Ocean Init Spectrum",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 506
+            },
+            {
+              "pipeline": "Ocean Conjugate",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 506
+            },
+            {
+              "pipeline": "Ocean Copy H0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 506
+            },
+            {
+              "pipeline": "Ocean FFT Rows",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 505
+            },
+            {
+              "pipeline": "Ocean FFT Columns",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 504
+            },
+            {
+              "pipeline": "Ocean FFT Compression Snapshot",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 504
+            },
+            {
+              "pipeline": "Ocean Mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 504
+            },
+            {
+              "pipeline": "Ocean Mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 504
+            },
+            {
+              "pipeline": "Ocean Mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 504
+            },
+            {
+              "pipeline": "Ocean Mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 503
+            },
+            {
+              "pipeline": "Foam Pattern",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 503
+            },
+            {
+              "pipeline": "causticsFine mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 442
+            },
+            {
+              "pipeline": "causticsFine mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 442
+            },
+            {
+              "pipeline": "causticsFine mips C",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 441
+            },
+            {
+              "pipeline": "causticsFine0",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 441
+            },
+            {
+              "pipeline": "causticsFine1",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 441
+            },
+            {
+              "pipeline": "causticsBroad mips A",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 439
+            },
+            {
+              "pipeline": "causticsBroad mips B",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 439
+            },
+            {
+              "pipeline": "causticsBroad0",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 438
+            },
+            {
+              "pipeline": "causticsBroad1",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 438
+            },
+            {
+              "pipeline": "Shore Sim",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2432,
+              "elapsedMs": 27
+            },
+            {
+              "pipeline": "AO depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2433,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "AO blur x",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2434,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "AO blur y",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2435,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "TAAU",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2438,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "TAAU",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2440,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Motion Blur Tiles",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2441,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Motion Blur Neighbourhood",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2441,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Lens Flare Visibility",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2442,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "DayBuoy native sky and celestial bodies",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2447,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Underwater Light Map 0",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 53
+            },
+            {
+              "pipeline": "Underwater Light Map 1",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 52
+            },
+            {
+              "pipeline": "Ground Bounce Bake",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 51
+            },
+            {
+              "pipeline": "Ground Bounce Blur",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 51
+            },
+            {
+              "pipeline": "sky background",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 50
+            },
+            {
+              "pipeline": "Surf Crests",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 35
+            },
+            {
+              "pipeline": "AO depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 29
+            },
+            {
+              "pipeline": "AO blur x",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 28
+            },
+            {
+              "pipeline": "AO blur y",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 27
+            },
+            {
+              "pipeline": "TAAU",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 24
+            },
+            {
+              "pipeline": "TAAU",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 22
+            },
+            {
+              "pipeline": "Motion Blur Tiles",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 21
+            },
+            {
+              "pipeline": "Motion Blur Neighbourhood",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 21
+            },
+            {
+              "pipeline": "Lens Flare Visibility",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 20
+            },
+            {
+              "pipeline": "DayBuoy native sky and celestial bodies",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2462,
+              "elapsedMs": 15
+            },
+            {
+              "pipeline": "mipmap rgba16float",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2462,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "mipmap rgba16float",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2464,
+              "elapsedMs": 2
+            },
+            {
+              "pipeline": "Wave truth shared-state probe",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2466,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Surf Crests",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2469,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Spray Update",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2472,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Wave truth shared-state probe",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2487,
+              "elapsedMs": 21
+            },
+            {
+              "pipeline": "Surf Crests",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2487,
+              "elapsedMs": 18
+            },
+            {
+              "pipeline": "Spray Update",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2487,
+              "elapsedMs": 15
+            },
+            {
+              "pipeline": "medium",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2490,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "beauty (AO + haze + underwater)",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2492,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "GTAO",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2493,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "underwater shafts",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2495,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2495,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2495,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2496,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2496,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2496,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2496,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2497,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2497,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2497,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Auto Exposure",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2497,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "final (grade + tonemap)",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2498,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "medium",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 29
+            },
+            {
+              "pipeline": "beauty (AO + haze + underwater)",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 27
+            },
+            {
+              "pipeline": "GTAO",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 26
+            },
+            {
+              "pipeline": "underwater shafts",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 24
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 24
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 24
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 23
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 23
+            },
+            {
+              "pipeline": "bloom down",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 23
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 23
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 22
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 22
+            },
+            {
+              "pipeline": "bloom up",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 22
+            },
+            {
+              "pipeline": "Auto Exposure",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 22
+            },
+            {
+              "pipeline": "final (grade + tonemap)",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2519,
+              "elapsedMs": 21
+            },
+            {
+              "pipeline": "Water Queries",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2521,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Terrain depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2530,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "material5 depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2532,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Terrain main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2537,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "material5 main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2540,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "opaque depth half",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2540,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Terrain color",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2546,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "water main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2553,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Forecast thin rain particles main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2555,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "BreakerLip main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2559,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Spray main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2562,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "AA none",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2563,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "FXAA",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2563,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "water main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "start",
+              "atMs": 2574,
+              "elapsedMs": 0
+            },
+            {
+              "pipeline": "Water Queries",
+              "kind": "compute",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2577,
+              "elapsedMs": 56
+            },
+            {
+              "pipeline": "Terrain depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 126
+            },
+            {
+              "pipeline": "material5 depth",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 124
+            },
+            {
+              "pipeline": "Terrain main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 119
+            },
+            {
+              "pipeline": "material5 main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 116
+            },
+            {
+              "pipeline": "opaque depth half",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 116
+            },
+            {
+              "pipeline": "Terrain color",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 110
+            },
+            {
+              "pipeline": "water main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 103
+            },
+            {
+              "pipeline": "Forecast thin rain particles main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 101
+            },
+            {
+              "pipeline": "BreakerLip main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 97
+            },
+            {
+              "pipeline": "Spray main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 94
+            },
+            {
+              "pipeline": "AA none",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 93
+            },
+            {
+              "pipeline": "FXAA",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 93
+            },
+            {
+              "pipeline": "water main",
+              "kind": "render",
+              "attempt": 1,
+              "event": "complete",
+              "atMs": 2656,
+              "elapsedMs": 82
+            }
+          ],
+          "degraded": []
+        },
+        "error": null
+      },
+      "gpuAfterClose": {
+        "aggregate": {
+          "sessionsStarted": 14,
+          "sessionsDisposed": 14,
+          "devicesCreated": 14,
+          "devicesLive": 0,
+          "devicesDestroyed": 14,
+          "estimatedBytes": 0,
+          "peakEstimatedBytes": 217877010,
+          "buffersLive": 0,
+          "texturesLive": 0,
+          "querySetsLive": 0,
+          "buffersCreated": 1344,
+          "texturesCreated": 952,
+          "querySetsCreated": 14,
+          "shaderModulesCreated": 1120,
+          "samplersCreated": 126,
+          "bindGroupsCreated": 1890,
+          "bindGroupLayoutsCreated": 826,
+          "pipelineLayoutsCreated": 1344,
+          "pipelinesCreated": 1372,
+          "bufferBytes": 0,
+          "textureBytes": 0
+        },
+        "recent": [
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 1,
+            "startedAtMs": 1689,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3631,
+            "elapsedMs": 1943
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 2,
+            "startedAtMs": 1629,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3428,
+            "elapsedMs": 1799
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 3,
+            "startedAtMs": 1841,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3426,
+            "elapsedMs": 1586
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 4,
+            "startedAtMs": 1490,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3051,
+            "elapsedMs": 1562
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 5,
+            "startedAtMs": 1844,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3468,
+            "elapsedMs": 1624
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 6,
+            "startedAtMs": 1856,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3462,
+            "elapsedMs": 1607
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 7,
+            "startedAtMs": 2521,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 4183,
+            "elapsedMs": 1662
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 8,
+            "startedAtMs": 2021,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3671.0000000000005,
+            "elapsedMs": 1650
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 9,
+            "startedAtMs": 2428,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3978,
+            "elapsedMs": 1550
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 10,
+            "startedAtMs": 3604,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 5098,
+            "elapsedMs": 1494
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 11,
+            "startedAtMs": 2205,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3756,
+            "elapsedMs": 1551
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 12,
+            "startedAtMs": 1319,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 2854,
+            "elapsedMs": 1535
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 13,
+            "startedAtMs": 1508,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 3112,
+            "elapsedMs": 1604
+          },
+          {
+            "devicesCreated": 1,
+            "devicesLive": 0,
+            "devicesDestroyed": 1,
+            "estimatedBytes": 0,
+            "peakEstimatedBytes": 217877010,
+            "buffersLive": 0,
+            "texturesLive": 0,
+            "querySetsLive": 0,
+            "buffersCreated": 96,
+            "texturesCreated": 68,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 80,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 135,
+            "bindGroupLayoutsCreated": 59,
+            "pipelineLayoutsCreated": 96,
+            "pipelinesCreated": 98,
+            "bufferBytes": 0,
+            "textureBytes": 0,
+            "id": 14,
+            "startedAtMs": 1331,
+            "disposed": true,
+            "reason": "native-startup-dispose",
+            "disposedAtMs": 2891,
+            "elapsedMs": 1560
+          }
+        ],
+        "memory": {
+          "driverBytes": null,
+          "scope": "Tracked resource descriptor estimates; not driver residency."
+        }
+      }
+    }
+  ],
+  "scope": "One completed startup attempt; not a performance gate."
+}
