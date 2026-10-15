@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-34-58Z-5944b03e-b771-4204-9dcd-7d07371b4b75",
+  "kind": "weather",
+  "fingerprint": "42f270f9b5bf9a7c61f882e2b6e6109751ace1111aa1c0aac519a143906311a8",
+  "receivedAt": "2026-10-15T02:34:59.404Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 1932782,
+      "type": "application/json",
+      "sha256": "209247a5c85a64470c8036a14ce30543b16f4b7433fdd591e28e73a9ab26326b"
+    },
+    {
+      "name": "phase-inlet-beach-dusk.jpg",
+      "size": 283450,
+      "type": "image/jpeg",
+      "sha256": "a9b372f4da17c22f2357c3b293698d6005e54bcd40c79fa611dc02f4e2692e3c"
+    }
+  ]
+}
