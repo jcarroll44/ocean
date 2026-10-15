@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T03-55-00Z-86139f31-4688-4ab2-aae4-7b6c4aa77999",
+  "kind": "weather",
+  "fingerprint": "cbdc99db14e7df29864d0f5dee720676b825d5c4de46d860f0ed9e63322a3939",
+  "receivedAt": "2026-10-15T03:55:01.132Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3264323,
+      "type": "application/json",
+      "sha256": "a9aee513c0d7b7bb50c102facea42d4d6c2a91a64ecead1fc43c06806dab73dd"
+    },
+    {
+      "name": "thunderstorm.jpg",
+      "size": 349988,
+      "type": "image/jpeg",
+      "sha256": "20b1ddbd7a22894dbaf54dbbdaafc6ad5d8de497fd7ce985814bab3eb30bdf71"
+    }
+  ]
+}
