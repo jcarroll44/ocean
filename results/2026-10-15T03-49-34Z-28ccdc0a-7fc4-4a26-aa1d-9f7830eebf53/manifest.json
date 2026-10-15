@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T03-49-34Z-28ccdc0a-7fc4-4a26-aa1d-9f7830eebf53",
+  "kind": "weather",
+  "fingerprint": "fca58fa81d2f17939b47008ab583824d3b760f5b05109aed2a068d45bff37176",
+  "receivedAt": "2026-10-15T03:49:35.092Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2586609,
+      "type": "application/json",
+      "sha256": "8f67cf3611c184c589c757f50fa79ff07973b3b8b4f5d3c43021bfd79a8b6728"
+    },
+    {
+      "name": "phase-inlet-beach-midday.jpg",
+      "size": 360364,
+      "type": "image/jpeg",
+      "sha256": "6c73635589d7b7341e814080e1ebbb4df0c6a7d6ad11dbfb93306e0a13587788"
+    }
+  ]
+}
