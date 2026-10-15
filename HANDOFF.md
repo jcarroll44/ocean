@@ -1,3 +1,52 @@
+# DayBuoy handoff — RC13 deployed; iPhone gate pending
+
+Updated: 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate: `2026-10-16-clouds-rc13`; complete local integration, production and hosting packaging validation passed. No device acceptance yet.
+- Deployed source: `45dfa68f8998d9480d9ea9142a866d5093cc3f5c`. This following handoff checkpoint is documentation only.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_afcbbef8ba9881919f73e7f941573809`.
+- Deployment `appgdep_6ad02bd05acc81918649f788d5d3485e` succeeded at `2026-10-15T01:26:57.709828+00:00`.
+- Accepted surf-truth baseline: immutable canonical private Sites tag `scene-baseline-rc12c` -> exact runtime `14b4c9657bc9155fac00491702a19794168c3575`. Annotated tag object `2ae2ddb6d10f569aef66fe2d77945d6507e43028`; pushed and remote target verified.
+- Retain prior immutable `scene-baseline-rc11` -> `4530d24a008cb45b4d72539ac2f07df1144adbd8`.
+- Live gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-clouds-rc13
+- Private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its `main` is the approved deploy channel. Preserve owner-private audience.
+- GitHub continuation `wip/tidewater-verdict-first`; uploaded evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+- Capture tools: `2026-10-15-blob-recovery-rc12c`. Still/clip/settle/resume/Share implementations remain byte-identical; gate comparison now uses exact RC12c and requires the existing37 color checks.
+
+## What passed
+
+- RC12c explicitly ACCEPTED by Jacob:39.0avg, water14.0ms vsRC11 13.9ms, reported zero late drift, wave truth5/5 within1.3%. Surf behavior is locked. Accepted upload `results/2026-10-14T21-02-04Z-6c7e39e3-584f-4366-a2af-0cfa5cd20a6f/report.json`, parent `2026-10-14T20-40-31Z-ba046301-3678-46f8-887f-e78bb2b34217`, confirms38.95595avg/29min/one second under30 and36stills. User accepts that29fps second as thermal with RC11 control26.59645; do not rewrite raw cadence or relax future criteria.
+- RC12c evidence inspected:10weather and5wave images pass existing pixel audit; nine solar-phase images plus sunset clip fail. Sunset87/96frames fail,15,267lime and208magenta sampled pixels. Before images/clip and extracted evidence are under `night-report/rc13-before-*` and `rc13-rc12c-baseline-evidence.json`.
+- Complete integration build and all seven interaction checks PASS. Exact RC12c surf/capture/UI/camera/budget freeze PASS. Current cloud morphology, live/paused wind and actual still-clock freeze PASS; 20,480 water material/ACES colour cases and 2,625 cloud/sky composite cases PASS. 96,000 surf samples and 669,330 optical comparisons remain unchanged.
+- Candidate 80 WGSL modules / 84 complete pipelines PASS at default limits (max 12 uniform / 8 storage / 9 samplers / 16 sampled textures). All 36 initialization/still command paths PASS. Immutable RC11 readiness and RC12c budget controls also pass strict pipeline/startup checks. 54 timing-summary cases, actual gate orchestration including three failed/missing-colour cases, all recovery/Share/startup-cache checks PASS.
+- Production minified startup/forecast/camera checks and 25-file allowlist PASS. Hosting packages all assets through a fresh staging tree, verifies every path and byte before and after atomic replacement, and retains the existing static-asset index checks; final hosting build PASS.
+- Added clouds/clarity/colour details and decisions: `night-report/rc13-report.md`. One complete composite atlas follows its optically dominant wind between bakes; all layers use individual winds during the 20-second full bake. This bounded-cost approximation is recorded in cloud evidence.
+- Local tests are not a real-browser/device/visual pass. No RC13 rendered pixels, iPhone throughput or acceptance claimed.
+
+## Open issues
+
+- RC13 must be checked on the phone:>=36avg,>=30 every whole second of120s,36/36stills, wave truth5/5 within20%, five6sclips and37 passing pixel checks (36stills plus sunset clip). Color tests on material math are not rendered audit results.
+- Accepted RC12c raw GPU frame-span medians are22.8218->26.4413ms(+15.86%) across changing adaptive sizes; saved drift grade is fail and overall+1ms comparison unmeasured. This differs from the user's zero-drift interpretation. Preserve raw evidence and record acceptance as explicit user judgment, not a zero-drift instrument reading. Sequential control is not constant-temperature evidence.
+- RC13 total GPU target<=RC12c+1.0ms; keep established<=10% first20/last20 drift grading and record actual value. Changed/unmatched sizes stay unmeasured with exact-resolution cohorts. Never sum overlapping pass durations.
+- RC14 seams/swash and RC15 light remain deferred. Signing, WeatherKit/RevenueCat activation and TestFlight still require owner/Mac steps.
+
+## Next steps
+
+1. Implementation and complete mandatory integration checks are finished. Do not change locked surf.
+2. Production/hosting packaging and private deployment are complete; receipt is above. The phone is the hardware/visual test. No host GPU runner was used.
+3. User runs phone gate. Inspect fresh GPU comparisons, all raw still/clip audits and cloud/surf visual continuity before acceptance. Preserve this deployed source until that evidence is reviewed. Mirror this handoff to GitHub WIP.
+
+## Rules and invariants
+
+- RC13 only: cloud morphology/wind, removal of blur, water hue and night/dusk exposure/no sunrise magenta. Surf physics/geometry/FFT/truth, UI/camera and capture tooling are frozen to RC12c.
+- Keep DPR floor1.1,4x256 FFT and unchanged reuse,48crest samples/1.2m stations/12lip vertices,16,384spray,256lightmap and default WebGPU limits. Existing cloud atlas512x128,18primary/3shadowsteps,256baked pixels/frame,20srefresh; no added full-screen march.
+- Gate:5s exactRC11 readiness (below36 stops),120s candidate saved before30s exactRC12c control, then captures/truth/clips/Share. Dispose old renderer/device between phases. No capture/upload/encoding inside timed windows. Preserve acknowledged evidence after reload.
+- No secrets, advice wording or crowd reporting. Keep estimates/source attribution and Tidewater/Takram MIT credits. Update root HANDOFF.md every pass.
+
+## Archived handoff — RC12c deployment before acceptance
+
 # DayBuoy handoff — RC12c deployed; iPhone test pending
 
 Updated: 2026-10-14 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
