@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-22-42Z-fe0aaa38-0906-4214-a6ec-52052abcef64",
+  "kind": "weather",
+  "fingerprint": "6b013fc05934210dc77c820bfd3cb5b477afd865aebcd557916c6f4f89b7c8d9",
+  "receivedAt": "2026-10-15T02:22:42.636Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2627098,
+      "type": "application/json",
+      "sha256": "127f3bc2ee8d2ef25f75efc60ec58839552bd0f77bc169ed96c6e246974c715c"
+    },
+    {
+      "name": "night-storm.jpg",
+      "size": 396660,
+      "type": "image/jpeg",
+      "sha256": "9633e8665e9978e08faaf87e04a1cb6e7067d9dd09c8a7c2116c5232197e3ee1"
+    }
+  ]
+}
