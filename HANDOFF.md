@@ -1,3 +1,42 @@
+# DayBuoy handoff — RC14c frozen; startup2 GPU recovery
+
+Updated2026-10-15UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Candidate revision `2026-10-17-perf-rc14c-startup2`; DEPLOYED; full integration, production and hosting validation PASS. Starting source `8e71d883d288ab9bae78c06a4545e406ceb8f89c`.
+- Deployed runtime source `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. Saved version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_d7181a6649a881919de226a344fa8c3a`; deployment `appgdep_6ad104aacce881919e0bc72d20f99efc` succeeded2026-10-15T16:52:11.707385Z. This subsequent checkpoint changes documentation/evidence only.
+- Frozen launch scene: canonical private Sites tag `scene-baseline-rc14c`, runtime `ed8981803abe0d98a97dd7940499699c86a91352`. No healthy scene/shader/physics/appearance changes authorized. This pass repairs startup only.
+- Canonical private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its main is approved for deployment. Owner-private audience retained. GitHub WIP `wip/tidewater-verdict-first`, evidence `wip/tidewater-in-app`.
+- Capture tools remain `2026-10-15-blob-recovery-rc12c`. Existing full120-second gate, captures and Share remain intact; no full gate required for this startup-only pass.
+- Startup-check URL: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-17-perf-rc14c-startup2
+
+## What passed
+
+- Prior actualiPhone startup1: Wi-Fi19/20, median5146ms; cellular19/20, median5447ms. All38successful starts nondegraded. Sixteen successes first recovered fromGPUinitialization errors: fifteen device-destroyed, one shader-module creation. Two failed rows are interrupted/reloaded checkpoints at shader-compile-start, not a measured shader timeout. Source-provenance analysis and failed raw reports are in `night-report/startup2-before-*`.
+- Prior launch acceptance:39.3428avg,30minimum,zero under30,36/36captures,surftruth5/5,water14.0901→14.0346ms. Raw sunset scrub2/90 retained; do not rewrite acceptance measurements.
+- Startup2 full integration build PASS, including all seven interaction checks, strict default-limit validation of84pipelines and36capture command sequences. Async timeout/retry/latecompletion/mandatoryinitialization tests PASS. Controlled20cycle ownership test and actualDawnnull20device lifecycle test PASS: zero trackeddevices/buffers/textures/querysets/estimatedbytes after each teardown; zero validationerrors. Browserdriver memory remains unavailable. Local tests are not a real-browser/device/visual pass.
+
+## Open issues
+
+- No actual iPhone rerun on either network yet. Do not report20/20 Wi-Fi/cellular or<=4s phone median from hosttransport/mocks/Dawnnull. The host has no supported physicaliPhone or WebGPU hardware access.
+- The uploaded reports did not contain GPUresource counts or a specific failing pipeline. Leak is suspected, not proven. Newly instrumented ownership/teardown must distinguish zero live tracked resources from unavailable driver memory.
+- Timeout fallback must remain explicitly degraded. Requiredpipeline fallback cannot count as native first-frame success; deterministic shader errors are not retryable.
+
+## Next steps
+
+1. Implemented async-only pipelines (4.5s perattempt, one timeoutretry; deterministic errors not retried), owned partialstartup/disposal,15s rendererstage watchdog, individual15s assetrequest deadlines, and bounded resource/pipeline diagnostics. Healthy scene WGSL/physics/UI remain exact. Aggregateassets maytake longer while individualrequests arebounded and productive; stalledassetprogress is still watched. Requiredpipeline exhaustion activates existing simplifiedrenderer and cannotpass nativecheck. Optional spray/lip/rain or lightning-free sky recovery explicitly marks degradation.
+2. Full integration, production, hosting and private deployment complete. Archive883 deployedfiles matched; deployed36URL HTTP/status/bytes/SHA audit PASS (`night-report/startup2-deployed-assets.json`). Pinned RC11/RC12c controls use the same bounded async/owned-lifetime CPU adapters, with exact inverse source checks. Preserve immutabletags.
+3. Run actual20starts on each phone connection; savedJSON reports reliability, full-quality recovery, firstframe median, pipeline retries and post-disposal counts. Preserve results afterreload. Final user reply is startup-check URL only.
+
+## Rules and invariants
+
+- Never commit/push GitHub main. Private Sites main is approved. No secrets in logs/source.
+- Preserve RC14c launch tag and accepted look; surftruth locked. DPRfloor1.1,4x256FFT,defaultWebGPUlimits. No GPU runner; no full gate for this pass.
+- No advice wording or crowd reporting; estimates labelled est. with source; Tidewater/Takram MITcredits retained. Update HANDOFF everypass and mirror to GitHubWIP.
+
+## Archived handoff — startup1 before shader/restart review
+
 # DayBuoy handoff — RC14c accepted; startup-only repair
 
 Updated 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
