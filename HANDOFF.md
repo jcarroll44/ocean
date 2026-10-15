@@ -1,3 +1,45 @@
+# DayBuoy handoff — accepted launch scene, frozen
+
+Updated 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- **Launch scene: `scene-baseline-rc14c-startup`**, exact accepted runtime **`c6d8241f1a2f248e62b3ad3c15ffc1203df65473`** in the canonical private Sites source repository. Revision `2026-10-17-perf-rc14c-startup2`.
+- RC14c and the accepted startup repairs are already integrated: the launch commit descends from `scene-baseline-rc14c` (`ed8981803abe0d98a97dd7940499699c86a91352`). Keep the original tag immutable; no renderer merge or rebuild is necessary.
+- User accepted startup on October 15: 20/20 Wi-Fi, 20/20 cellular, zero leaked tracked GPU resources across 41 sessions, median first frame 4.0–4.4 seconds. These are user-reported iPhone results, not host measurements.
+- The accepted runtime remains deployed: saved version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_d7181a6649a881919de226a344fa8c3a`, deployment `appgdep_6ad104aacce881919e0bc72d20f99efc`. This acceptance pass updates tags and documentation only; do not replace the tested deployment.
+- Canonical Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; approved private source main. GitHub continuation: `jcarroll44/ocean`, `wip/tidewater-verdict-first`. The canonical launch tag is in the private Sites repo, not a GitHub tag. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+- Existing gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-17-perf-rc14c-startup2
+- Startup check: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-17-perf-rc14c-startup2
+
+## What passed
+
+- iPhone Safari startup accepted by Jacob: Wi-Fi 20/20; cellular 20/20; zero leaked tracked GPU resources across 41 sessions; first-frame median 4.0–4.4 s. Preserve this range; do not rewrite it as every network <=4.0 s. Driver-resident memory is not measured by the tracked resource census.
+- RC14c scene acceptance remains: 39.3428 average FPS, 30 minimum, zero seconds below 30, 36/36 captures, wave truth 5/5, water 14.0901→14.0346 ms. Raw sunset scrub 2/90 failures remains accepted, not relabelled.
+- The exact startup runtime previously passed full integration/production/hosting validation, all seven interaction checks, default-limit validation of 84 pipelines, 36 command captures, async pipeline recovery tests and controlled/Dawn-null 20-cycle ownership checks. Archive 883 files and deployed 36-URL body audit matched. Local tests are not a real-browser/device/visual pass.
+- New launch tag is checked against the original RC14c ancestry, published to the canonical source, and fetched into a fresh empty receiving repository before handoff. Runtime files and deployment are unchanged.
+
+## Open issues
+
+- No further scene or startup work is authorized. Wait for Jacob's next task.
+- Keep historical deferred visual items and raw audit results below; their presence is not permission to resume them.
+- Optional-effect fallback remains explicitly degraded; deterministic shader errors remain nonretryable. Do not weaken either gate or resource accounting.
+
+## Next steps
+
+1. **Features lane:** read `SCENE-LAUNCH.md`, open the canonical project through Sites, obtain its current source credential through the supported tool, and fetch `refs/tags/scene-baseline-rc14c-startup` into your checkout. Verify the peeled commit is `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. No token belongs in shell arguments, source, logs or Git remotes.
+2. Use the exact tagged scene/startup implementation when integrating Features. Preserve that lane's UI, features, hosting project identity and data work. Do not wholesale reset its checkout or deploy this scene repo over the Features site. GitHub HANDOFF mirrors this source pointer; do not assume GitHub WIP HEAD is the launch renderer.
+3. Existing 120-second performance gate, 36 captures, wave truth, saved evidence and Share results remain the acceptance check for future changed builds. This tag/documentation-only pass needs no new full gate.
+4. Stand by. No scene, wave, sky, shader, lighting, camera or startup changes without a new explicit request.
+
+## Rules and invariants
+
+- Never commit/push GitHub main. Private Sites main is approved. Never print or commit credentials.
+- Keep `scene-baseline-rc14c-startup` and all earlier accepted tags immutable. Frozen surf truth, accepted RC14c look, DPR floor 1.1, 4x256 FFT and default WebGPU limits remain intact.
+- No GPU runner, no unsolicited scene work, no advice wording or crowd reporting. Estimates labelled est. with source; retain Tidewater and Takram MIT credits. Update HANDOFF every pass and mirror to GitHub WIP.
+
+## Archived handoff — before startup acceptance
+
 # DayBuoy handoff — RC14c frozen; startup2 GPU recovery
 
 Updated2026-10-15UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
