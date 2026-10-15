@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-20-01Z-1c406116-16bf-479c-95c9-5bf3864d4b51",
+  "kind": "weather",
+  "fingerprint": "6c4321ec951b3db89d3ac0ba97ca6805b643a0ac838aa30b76b3a339e108c914",
+  "receivedAt": "2026-10-15T02:20:02.470Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2316239,
+      "type": "application/json",
+      "sha256": "7a971576c00628b0165e653a3a12281174a29dece5cec8e703593ba868abbec8"
+    },
+    {
+      "name": "phase-san-diego-goldenhour.jpg",
+      "size": 488172,
+      "type": "image/jpeg",
+      "sha256": "8dee395d9b4d22423ff75194c500339ecd07ba6fddd432a30ad67006775b3a51"
+    }
+  ]
+}
