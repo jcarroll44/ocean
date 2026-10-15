@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T05-40-52Z-b1c1dd53-ca0e-4083-8593-5852857d51b9",
+  "kind": "weather",
+  "fingerprint": "8a4517d692462ec41db835019bd8948f8a9455bf8cd2251dc4e99683a04ae80b",
+  "receivedAt": "2026-10-15T05:40:52.650Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3327437,
+      "type": "application/json",
+      "sha256": "7cd602fd44aa6047ec9a827391071dec4e1fe1efb0a25e6e3783d56ba8353f02"
+    },
+    {
+      "name": "wave-chunk-wave-groundswell-2026-10-15t05-40-33z-241a5a94-beb4-4d13-9db3-ffb7e9b00c7f-4.mp4",
+      "size": 73654,
+      "type": "video/mp4; codecs=avc1.42000a",
+      "sha256": "6aa6b84d2b7e0d40ddcea42c69eabb705f7b4d5c99e1666706d3b88bdcc59a64"
+    }
+  ]
+}
