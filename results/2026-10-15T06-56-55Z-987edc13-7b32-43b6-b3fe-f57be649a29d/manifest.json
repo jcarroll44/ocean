@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T06-56-55Z-987edc13-7b32-43b6-b3fe-f57be649a29d",
+  "kind": "weather",
+  "fingerprint": "5f8909d6967f579e2adb18ad5a4ab34f71d8ff533cab90f2d16a6897d8263339",
+  "receivedAt": "2026-10-15T06:56:56.504Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 5283692,
+      "type": "application/json",
+      "sha256": "7cf450c0496f6af0734090c691a025fff5e44e01c5582ba2707420c0a93dcc61"
+    },
+    {
+      "name": "phase-san-diego-overcastdawn.png",
+      "size": 2753665,
+      "type": "image/png",
+      "sha256": "bc33bd2840710b263d7ba8a3f9421c0eab53bed5480d0373a76977b522d83e9e"
+    }
+  ]
+}
