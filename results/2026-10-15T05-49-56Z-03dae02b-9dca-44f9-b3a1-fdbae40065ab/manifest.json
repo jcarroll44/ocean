@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T05-49-56Z-03dae02b-9dca-44f9-b3a1-fdbae40065ab",
+  "kind": "weather",
+  "fingerprint": "e0a777af2795f6302feb78412921da5041821cdbbbd1d12d7ef01392251d8109",
+  "receivedAt": "2026-10-15T05:49:57.548Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 4290073,
+      "type": "application/json",
+      "sha256": "0a1654ae90fb221c4bdfed9eee9a689dd3f698dfe5c08c65bda86c293a3517c8"
+    },
+    {
+      "name": "beachcam-source.jpg",
+      "size": 30000,
+      "type": "image/jpeg",
+      "sha256": "2be4fbd962e427c9fd118934cedeaf5b69e45b4a3bd670be71e5cd222029bc9a"
+    },
+    {
+      "name": "beachcam-render.jpg",
+      "size": 264350,
+      "type": "image/jpeg",
+      "sha256": "702b482d583f4c819ebc6cd54cc44629facc98a036842a3a57a9871f9147d455"
+    }
+  ]
+}
