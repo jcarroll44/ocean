@@ -1,3 +1,54 @@
+# DayBuoy handoff — RC14b deployed; iPhone gate pending
+
+Updated: 2026-10-15 UTC (October 14 America/Chicago). Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate: `2026-10-17-polish-rc14b`; full local integration, production and hosting checks pass. Device acceptance is pending.
+- Deployed source: `5d8e5718205d6530f0ade9d6b2667079d881fc98`. This following checkpoint is documentation only.
+- Saved version: `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_384a0fef6a7c81919e452baf1750cab0`.
+- Deployment `appgdep_6ad0593664ac81919eee5244d7c197e6` succeeded at `2026-10-15T04:40:39.942008+00:00`.
+- Starting source: RC14 runtime `d00123d3d23c1fd2ab40433d8f38b877398d6ceb`, prior doc checkpoint `67d9b04a49429c0d356599ff021b1f96ce4cd0d2`.
+- RC14 is NOT accepted. User accepts wave truth5/5 and night/storm appearance only.
+- Immutable tags remain scene-baseline-rc13 (performance only), scene-baseline-rc12c (surf truth), scene-baseline-rc11.
+- Gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-17-polish-rc14b
+- Canonical private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its main is the approved deployment channel. Keep owner-private audience. Features work uses a separate project/branch; do not modify it.
+- GitHub continuation `wip/tidewater-verdict-first`; evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+- Capture tools remain `2026-10-15-blob-recovery-rc12c`; preserve the same gate,36 original stills,37 color checks, five wave clips, camera comparison and Share results.
+
+## What passed
+
+- User reports RC14 wave truth5/5 and accepted night/storm; remaining performance/low-sun visual defects block full acceptance.
+- Latest RC14 report recovered under `night-report/rc14b-before-report.json`:38.3535avg,29min,two seconds below30. Trace around58–60s shows increased water+transparent GPU time, fixed resolution, CPUmax2–3ms, no cloud bake or allocation/compile events. A60second background-job cause is NOT established.
+- Camera fix follows redirects with no forwarded credentials; native HTTP301/302/303/307/308, loop/non-JPEG and existing recovery/Share tests pass. Actual SoWal JPEG fetch/validation succeeded locally; gate must still capture the real rendered side-by-side.
+- Complete integration build and all seven interaction checks PASS. Candidate80WGSL/84full pipelines PASS at default limits:12uniform/8storage/9samplers/16textures;36startup/still command sequences PASS. Pinned RC11/RC12c controls compile/initialize. No vendor edits or capture/UI/physics scope drift.
+- RC14b cloud continuity/source radiance checks pass with the actual pinned3D assets; accepted night/closed/thunder branch remains exact. Source/material/codec checks cover fused water correction, actual inline spray at sunrise/dusk, slope-sensitive sand fill, zero-weight SSR/rain/lip skips and night identities. Camera redirects/recovery and same-submission diagnostic-state checks pass.
+- Production minified startup/live-forecast/camera checks and25-file allowlist PASS;11verified assets,3,116,626bytes. Hosting source/destination byte checks and static index PASS. Changed-text credential scan:74files,zero matches; git diff --check PASS.
+- Implementation decisions and limits are recorded in `night-report/rc14b-report.md`; original phone evidence and three-run dip comparison remain under `night-report/rc14b-before-*` and `rc14b-hitch-*`.
+- Local tests are not a real-browser/device/visual pass. RC14b phone FPS,37 rendered color checks and camera comparison remain unverified.
+
+## Open issues
+
+- Targeted implementation, full integration, production/hosting packaging and private deployment are complete. Preserve this candidate until fresh phone evidence is reviewed; no device pass is presumed.
+- Water target<=14.3ms, total<=RC12c+1ms,>=36avg and>=30 every whole second. Preserve actual first20/last20 timing and measured drift; never claim a GPU pass from source tests.
+- Camera exposure time/view calibration are unpublished. Preserve unretouched originals, timestamp uncertainty and conditions; a night/glare image cannot certify daytime color matching.
+- RC15/unrelated UI/features are deferred.
+
+## Next steps
+
+1. Targeted fixes and mandatory integration/default-limit/startup/interaction checks are complete; runtime is frozen pending device evidence.
+2. Private deployment is complete; receipt is above. Mirror this handoff to the GitHub WIP continuation branch. Never write GitHub main.
+3. User runs the iPhone gate; inspect raw timing, all original audits/truth and real camera pair before acceptance.
+
+## Rules and invariants
+
+- Preserve RC14 core surf truth/offshore calibration, UI/camera, capture freeze/recovery/Share, numeric thresholds and Tidewater/Takram MIT credits.
+- DPRfloor1.1,4x256FFT/reuse,48crest samples/1.2mstations/12lip vertices,16,384spray,256lightmap and default WebGPU limits. No GPU runner.
+- No encoding/upload/capture during timed windows. Keep acknowledged results on reload. No fabricated timing or rendered checks.
+- No secrets, advice wording or crowd reporting. Label estimates with source. Update HANDOFF every pass.
+
+## Archived handoff — RC14 before device review
+
 # DayBuoy handoff — RC14 deployed; iPhone gate pending
 
 Updated: 2026-10-15 UTC (October 14 America/Chicago). Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
