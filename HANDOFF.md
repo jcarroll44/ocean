@@ -1,3 +1,58 @@
+# DayBuoy handoff — RC14c deployed; iPhone gate pending
+
+Updated2026-10-15UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Deployed candidate `2026-10-17-perf-rc14c`; full local integration, production and hosting validation pass. Phone acceptance remains pending.
+- Deployed runtime source `ed8981803abe0d98a97dd7940499699c86a91352`. This following checkpoint is documentation only.
+- Saved version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_f4f6ba6fe0cc819191fefca42433fe1f`.
+- Deployment `appgdep_6ad071a6a0b48191af940e2b1970309f` succeeded at `2026-10-15T06:24:55.452666+00:00`.
+- Changed-text credential scan:86files,zero matches; git diff --check PASS.
+- Starting source: accepted RC14b appearance at runtime `5d8e5718205d6530f0ade9d6b2667079d881fc98`, prior doc checkpoint `19882d7cb53a1395ca9ec451a287d7c16d8f297f`.
+- RC14b appearance ACCEPTED: clouds, sunset scrub0/89 failures, wave truth5/5. Palette, forms, lighting and UI/camera remain frozen. RC14b performance and four still audits failed.
+- Canonical private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its main is the approved deployment channel. Preserve owner-private audience. Separate Features project is out of scope.
+- Capture tools `2026-10-15-blob-recovery-rc12c`; preserve120s gate,36originalstills,37colorchecks,five wave clips and Share. RC14c explicitly changes phase original encoding toPNG and adds durable camera night-skip only.
+- Deployed gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-17-perf-rc14c
+- Immutable baseline tags: scene-baseline-rc11,scene-baseline-rc12c,scene-baseline-rc13. The launch tag `scene-baseline-rc14c` is pending fresh matching phone acceptance; do not move old tags.
+- GitHub continuation `wip/tidewater-verdict-first`; evidence `wip/tidewater-in-app`. Never commit/push GitHub main.
+
+## What passed
+
+- Full `scripts/build.mjs` PASS, including all seven interaction checks, surf truth math, strict appearance/scope checks, capture/recovery/Share, default-limit startup and original36capture command sequences (22Inlet,7Cocoa,7SanDiego).
+- Candidate80WGSL modules/84full pipelines PASS at default limits:12uniform,8storage,9samplers,16sampledtextures. No raised limits. ExactRC11 andRC12c control shaders/startups also pass.
+- FFT cadence numerical checks over120s and jittered long-run preserve absolute wave time and all foam elapsed time. At39FPS normal transforms decrease4680→2340; at43FPS2580 and60FPS3600 remain exact. Snapshot/restoration updates bypass reuse. These are scheduling counts, not measured GPU savings.
+- Exact opaque-foam zero-weight work and dead-spray degenerate-vertex checks PASS; accepted optical expressions, derivatives, debug/velocity/mask paths and all visual budgets remain intact. Production/gate share the same adapters.
+- Original failing JPEGs verified4:2:0. Actual quantization tables introduce32forbidden pixels into65536numerical passing pixels; PNG preserves bytes exactly withzero. Raw/decoded audits retain all thresholds; oldJPEG/newPNG mixed resume and wrong-MIME failure tests PASS. This does not establish the four original raw canvases were clean.
+- Camera night-skip before renderer/fetch, independent edge daylight check, durable JSON-only completion/reload/Share and daylight redirect/pair recovery PASS. Existing solar algorithm matches5856date/location cases.
+- Hosting Worker/source-destination byte equality/static index PASS.
+- Production minified startup/live forecast/camera and25-file allowlist PASS;11verified startup assets,3,118,108bytes. Local tests are not a real-browser/device/visual pass. No RC14c phone throughput or rendered0-failure claim.
+- Null-backend readback staging is explicitly initialized in the host exporter only; two repeated strict startup runs pass without relaxing `truth.pass=false` or zero-height assertions. No runtime truth-probe changes.
+
+## Open issues
+
+- Actual RC14b upload:38.5766avg,23minimum,5under30,36stills. Actual post-candidate control is exactRC12c37.4022avg,28min,oneunder30, notRC11. Read original evidence/provenance in `night-report/rc14c-before-*`.
+- No specific60sjob or unbounded-resource cause was established. Normal20scloud bake overlaps the hitch but costs0.105–0.254ms; CPU~2ms; severalGPU passes slow. FFT reuse discontinuity below40FPS is a proven workload amplifier and is fixed. Do not claim it proves the initial trigger or device temperature.
+- Actual RC14b water first20→last20 medians12.6121→15.8949ms;13.6234ms is embedded historicalRC11 reference. GPUspan20.9848→30.5638ms; output dimensions change. Never sum overlapping passes or claim matched-resolution+1ms from that report.
+- Fresh phone must establish>=36avg, every second>=30,water<=14.3ms,total<=RC12c+1ms and<=10%late drift; all original audits/truth/captures remain required. Four raw still audits are not yet measured forRC14c.
+- Camera exposure/view calibration remains unknown. At night persist “night — skipped”; no fabricated image or daylight comparison.
+
+## Next steps
+
+1. Integration, production, hosting and private deployment are complete. Receipts are above. Mirror this documentation-only checkpoint to GitHub WIP; do not redeploy unchanged runtime.
+2. Run the matching RC14c iPhone gate. Inspect jobtimestamps, actualFFTcounts, resourcebyte deltas, first/last20GPU timing,36stills/37audits and truth5/5.
+3. Only after matching acceptance, tag exact runtime as `scene-baseline-rc14c` launch scene. Preserve accepted appearance; no unrelated UI/features work.
+
+## Rules and invariants
+
+- Exact RC14b palette/cloud/lighting/camera/UI and core surf truth/geometry remain frozen. Only equivalent skipped work, amortizedFFT scheduling, diagnostic metadata, lossless phase evidence and daylight skip are authorized.
+- DPRfloor1.1,4x256FFT and unchanged geometry/cloud/spray budgets; defaultWebGPU limits; no GPU runner.
+- Resource census covers observed allocations and explicitdestroy after trace installation, not earlierresources,GC/device-loss retirement or driverresidency. No extraGPU fence/readback; bounded diagnostics.
+- No media/network work during timing; preserve acknowledged evidence after reload. All original numeric thresholds,37colorchecks and Share retained.
+- No secrets, advice wording or crowd reporting. Estimates labelled est. with source; Tidewater/Takram MIT credits. Update HANDOFF every pass.
+
+## Archived handoff — RC14b before user review
+
 # DayBuoy handoff — RC14b deployed; iPhone gate pending
 
 Updated: 2026-10-15 UTC (October 14 America/Chicago). Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
