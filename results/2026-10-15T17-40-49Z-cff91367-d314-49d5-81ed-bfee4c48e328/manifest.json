@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T17-40-49Z-cff91367-d314-49d5-81ed-bfee4c48e328",
+  "kind": "smoke",
+  "fingerprint": "5cc1d46f0928df212e595fb09ed2aecea38fb4f49af70bbad8a2c9976edffaf1",
+  "receivedAt": "2026-10-15T17:40:49.959Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 201662,
+      "type": "application/json",
+      "sha256": "10b4b457f0ba51543f7dc28c3827ce45e0ccb3d92f9cdbcbcb078c2f6999f011"
+    }
+  ]
+}
