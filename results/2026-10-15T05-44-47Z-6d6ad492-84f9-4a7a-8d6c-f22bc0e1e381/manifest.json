@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T05-44-47Z-6d6ad492-84f9-4a7a-8d6c-f22bc0e1e381",
+  "kind": "weather",
+  "fingerprint": "7a0e70204ba46d10acbe884064b157a0c9acf8f67bd838b808deac6e466550bc",
+  "receivedAt": "2026-10-15T05:44:48.244Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3961602,
+      "type": "application/json",
+      "sha256": "53b97905cd347d3fd76c99a0d8bdcddc35a3d4415078982b522c927092d3040b"
+    },
+    {
+      "name": "location-inlet-beach-noon.jpg",
+      "size": 383379,
+      "type": "image/jpeg",
+      "sha256": "1c1f33b5308d8e991dbfe85d55030280d87f21a546be8752d2ad47688123e90e"
+    }
+  ]
+}
