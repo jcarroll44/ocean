@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T04-05-27Z-e95f0250-4c3e-4c50-8e0f-37b799ecd93b",
+  "kind": "weather",
+  "fingerprint": "3a0f4e88ac71c8c1095273058c713e2be757d42119c182247486a3075ecd1794",
+  "receivedAt": "2026-10-15T04:05:29.611Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 4423901,
+      "type": "application/json",
+      "sha256": "7afcfea1022f603b6ba36226b0db0c550a812d0df1d45ac4b18dc4c24a592c33"
+    },
+    {
+      "name": "location-san-diego-sunrise.jpg",
+      "size": 520188,
+      "type": "image/jpeg",
+      "sha256": "f4540129a4cad2bca4003d3bf940fe4cfe2a02bd5fdabf9263cdeaa59d894f63"
+    }
+  ]
+}
