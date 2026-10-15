@@ -1,0 +1,539 @@
+{
+  "schema": 5,
+  "runId": "2026-10-15T02-10-52Z-74b43e08-2fb5-4131-940f-e5dc18b78b9e",
+  "kind": "weather",
+  "build": {
+    "revision": "2026-10-16-clouds-rc13",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "source": "synthetic fixtures",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "startedAt": "2026-10-15T01:49:30.159Z",
+  "heaviest": "night-storm",
+  "viewport": [
+    390,
+    699
+  ],
+  "viewportEvents": [
+    {
+      "at": "2026-10-15T01:49:31.919Z",
+      "outer": [
+        390,
+        683
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:31.936Z",
+      "outer": [
+        390,
+        669
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:31.991Z",
+      "outer": [
+        390,
+        646
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:32.024Z",
+      "outer": [
+        390,
+        647
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:32.797Z",
+      "outer": [
+        390,
+        699
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:34.056Z",
+      "outer": [
+        390,
+        699
+      ],
+      "visual": [
+        390,
+        421
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    },
+    {
+      "at": "2026-10-15T01:49:36.418Z",
+      "outer": [
+        390,
+        699
+      ],
+      "visual": [
+        390,
+        699
+      ],
+      "renderViewport": [
+        390,
+        699
+      ],
+      "action": "Browser viewport changed; fixed test surface retained; FPS clock uninterrupted."
+    }
+  ],
+  "wakeLockEvents": [
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-15T01:49:30.158Z"
+    },
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-15T01:49:30.160Z"
+    },
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-15T01:49:30.585Z"
+    },
+    {
+      "state": "denied",
+      "detail": "Auto-awake unavailable. Tap here to retry or turn Auto-Lock off.",
+      "at": "2026-10-15T01:58:05.237Z"
+    }
+  ],
+  "gallery": [],
+  "samples": [],
+  "captureTools": "2026-10-15-blob-recovery-rc12c",
+  "visits": [
+    {
+      "at": "2026-10-15T01:49:30.160Z",
+      "resumingParts": 0
+    }
+  ],
+  "error": "Beach preparation limit reached at Beach ready. Please retry when the connection is available.",
+  "startup": {
+    "backend": "WebGPU native scene",
+    "error": null,
+    "revision": "2026-10-16-clouds-rc13",
+    "phase": "ready",
+    "attempt": 1,
+    "label": "Beach ready",
+    "fraction": 1,
+    "history": [
+      {
+        "attempt": 1,
+        "event": "start",
+        "at": 381
+      },
+      {
+        "attempt": 1,
+        "event": "ready",
+        "at": 3674
+      }
+    ],
+    "policy": {
+      "attempts": 3,
+      "attemptMs": 480000,
+      "idleMs": 180000,
+      "totalMs": 1080000
+    },
+    "assets": {
+      "complete": 15,
+      "totalAssets": 15,
+      "bytes": 8767937,
+      "totalBytes": 8767937,
+      "cached": 0,
+      "persistent": true
+    },
+    "elapsedMs": 3265,
+    "events": [
+      {
+        "stage": "renderer-selection",
+        "detail": {
+          "mode": "rc11",
+          "commit": "4530d24a008cb45b4d72539ac2f07df1144adbd8"
+        },
+        "at": "2026-10-15T01:49:30.160Z",
+        "elapsedMs": 2072
+      },
+      {
+        "stage": "fixture-bundled-data-apply-start",
+        "detail": {
+          "id": "night-storm",
+          "profile": "inlet-beach"
+        },
+        "at": "2026-10-15T01:49:30.587Z",
+        "elapsedMs": 2500
+      },
+      {
+        "stage": "fixture-bundled-data-applied",
+        "detail": {
+          "id": "night-storm",
+          "rows": 193
+        },
+        "at": "2026-10-15T01:49:30.588Z",
+        "elapsedMs": 2500
+      },
+      {
+        "stage": "native-document-loaded",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:30.869Z",
+          "elapsedMs": 285.00000000000006
+        },
+        "at": "2026-10-15T01:49:30.872Z",
+        "elapsedMs": 2784
+      },
+      {
+        "stage": "fixture-document-loaded",
+        "detail": {
+          "url": "/"
+        },
+        "at": "2026-10-15T01:49:30.973Z",
+        "elapsedMs": 2885
+      },
+      {
+        "stage": "native-module-evaluated",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.978Z",
+          "elapsedMs": 1394
+        },
+        "at": "2026-10-15T01:49:31.979Z",
+        "elapsedMs": 3891
+      },
+      {
+        "stage": "native-app-init-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.979Z",
+          "elapsedMs": 1394
+        },
+        "at": "2026-10-15T01:49:31.979Z",
+        "elapsedMs": 3891
+      },
+      {
+        "stage": "init-stage:Opening the beach",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.979Z",
+          "elapsedMs": 1395,
+          "fraction": 0.02
+        },
+        "at": "2026-10-15T01:49:31.979Z",
+        "elapsedMs": 3891
+      },
+      {
+        "stage": "webgpu-device-request-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.979Z",
+          "elapsedMs": 1395
+        },
+        "at": "2026-10-15T01:49:32.002Z",
+        "elapsedMs": 3915
+      },
+      {
+        "stage": "webgpu-device-ready",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.988Z",
+          "elapsedMs": 1404
+        },
+        "at": "2026-10-15T01:49:32.003Z",
+        "elapsedMs": 3915
+      },
+      {
+        "stage": "init-stage:Preparing the sky",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:31.991Z",
+          "elapsedMs": 1407,
+          "fraction": 0.1
+        },
+        "at": "2026-10-15T01:49:32.003Z",
+        "elapsedMs": 3915
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.011Z",
+          "elapsedMs": 1427,
+          "name": "takram-shape.bin"
+        },
+        "at": "2026-10-15T01:49:32.012Z",
+        "elapsedMs": 3924
+      },
+      {
+        "stage": "cloud-asset-fetch-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.011Z",
+          "elapsedMs": 1427,
+          "name": "takram-detail.bin"
+        },
+        "at": "2026-10-15T01:49:32.012Z",
+        "elapsedMs": 3924
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.020Z",
+          "elapsedMs": 1436,
+          "name": "takram-shape.bin",
+          "bytes": 2097152
+        },
+        "at": "2026-10-15T01:49:32.023Z",
+        "elapsedMs": 3935
+      },
+      {
+        "stage": "cloud-asset-fetch-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.020Z",
+          "elapsedMs": 1436,
+          "name": "takram-detail.bin",
+          "bytes": 32768
+        },
+        "at": "2026-10-15T01:49:32.023Z",
+        "elapsedMs": 3935
+      },
+      {
+        "stage": "init-stage:Preparing white sand",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.044Z",
+          "elapsedMs": 1459,
+          "fraction": 0.2
+        },
+        "at": "2026-10-15T01:49:32.047Z",
+        "elapsedMs": 3959
+      },
+      {
+        "stage": "init-stage:Preparing the waves",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:32.791Z",
+          "elapsedMs": 2206,
+          "fraction": 0.34
+        },
+        "at": "2026-10-15T01:49:32.809Z",
+        "elapsedMs": 4721
+      },
+      {
+        "stage": "init-stage:Preparing light and reflections",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.370Z",
+          "elapsedMs": 2786,
+          "fraction": 0.5
+        },
+        "at": "2026-10-15T01:49:33.402Z",
+        "elapsedMs": 5314
+      },
+      {
+        "stage": "init-stage:Finishing the waves",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.411Z",
+          "elapsedMs": 2827,
+          "fraction": 0.65
+        },
+        "at": "2026-10-15T01:49:33.411Z",
+        "elapsedMs": 5323
+      },
+      {
+        "stage": "precompile-preparing",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.463Z",
+          "elapsedMs": 2879
+        },
+        "at": "2026-10-15T01:49:33.466Z",
+        "elapsedMs": 5378
+      },
+      {
+        "stage": "cloud-texture-bake-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.479Z",
+          "elapsedMs": 2895
+        },
+        "at": "2026-10-15T01:49:33.492Z",
+        "elapsedMs": 5404
+      },
+      {
+        "stage": "cloud-texture-bake-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.480Z",
+          "elapsedMs": 2896
+        },
+        "at": "2026-10-15T01:49:33.492Z",
+        "elapsedMs": 5404
+      },
+      {
+        "stage": "shader-compile-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.480Z",
+          "elapsedMs": 2896
+        },
+        "at": "2026-10-15T01:49:33.492Z",
+        "elapsedMs": 5404
+      },
+      {
+        "stage": "shader-compile-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.739Z",
+          "elapsedMs": 3155
+        },
+        "at": "2026-10-15T01:49:33.743Z",
+        "elapsedMs": 5655
+      },
+      {
+        "stage": "first-frame-warmup-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.739Z",
+          "elapsedMs": 3155
+        },
+        "at": "2026-10-15T01:49:33.743Z",
+        "elapsedMs": 5655
+      },
+      {
+        "stage": "first-frame-warmup-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.793Z",
+          "elapsedMs": 3209
+        },
+        "at": "2026-10-15T01:49:33.793Z",
+        "elapsedMs": 5706
+      },
+      {
+        "stage": "init-stage:Opening your view",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.793Z",
+          "elapsedMs": 3209,
+          "fraction": 0.95
+        },
+        "at": "2026-10-15T01:49:33.794Z",
+        "elapsedMs": 5706
+      },
+      {
+        "stage": "first-app-frame-start",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.794Z",
+          "elapsedMs": 3209
+        },
+        "at": "2026-10-15T01:49:33.798Z",
+        "elapsedMs": 5710
+      },
+      {
+        "stage": "first-app-frame-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.830Z",
+          "elapsedMs": 3246
+        },
+        "at": "2026-10-15T01:49:33.830Z",
+        "elapsedMs": 5742
+      },
+      {
+        "stage": "native-app-init-complete",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.832Z",
+          "elapsedMs": 3248
+        },
+        "at": "2026-10-15T01:49:33.837Z",
+        "elapsedMs": 5749
+      },
+      {
+        "stage": "first-live-frame-submitted",
+        "detail": {
+          "attempt": 1,
+          "sourceAt": "2026-10-15T01:49:33.856Z",
+          "elapsedMs": 3271
+        },
+        "at": "2026-10-15T01:49:33.859Z",
+        "elapsedMs": 5771
+      }
+    ],
+    "network": {
+      "profile": "inlet-beach",
+      "fixture": "night-storm",
+      "fixtureLoaded": true,
+      "backend": "WebGPU native scene",
+      "error": null,
+      "stage": "first-live-frame",
+      "attempts": [],
+      "nativeReady": false,
+      "dataFetchesBeforeFirstFrame": []
+    },
+    "firstFixtureFrameAt": 5771
+  },
+  "parentRunId": "2026-10-15T01-49-30Z-99a8e41f-cb7f-4bbb-9301-69865f5fdf02",
+  "part": "interrupted-1792030252135",
+  "evidenceIndex": {},
+  "partial": true
+}
