@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T06-58-24Z-78696b6d-3e76-47dc-9e56-fb563528bc65",
+  "kind": "weather",
+  "fingerprint": "78a35f0e7916969bbede33d82c24eda24cf5ab8bf0afe4c2660cf1b362ba0560",
+  "receivedAt": "2026-10-15T06:58:25.632Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 5414938,
+      "type": "application/json",
+      "sha256": "9bc3baeef0456fde2a03f75a2ab27c582809792d3efa0fdcaf51b86d4eb4996e"
+    },
+    {
+      "name": "light-rain.jpg",
+      "size": 278012,
+      "type": "image/jpeg",
+      "sha256": "e798d96cadc86b0aaf112e465707a4b78718d4917cfbc88a1661402387dc3237"
+    }
+  ]
+}
