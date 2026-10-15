@@ -1,0 +1,678 @@
+{
+  "schema": 1,
+  "kind": "startup-only",
+  "revision": "2026-10-17-perf-rc14c-startup1",
+  "build": {
+    "revision": "2026-10-17-perf-rc14c-startup1",
+    "branch": "wip/tidewater-verdict-first",
+    "tidewater": "4811ba48d795197de5621985f404e765c0b7c0ef",
+    "ui": "Approved exact Verdict-first v1 (2026-10-06)",
+    "uiReference": "ui-reference/daybuoy-reference.html",
+    "evidenceBranch": "wip/tidewater-in-app"
+  },
+  "runId": "2026-10-15T16-11-23Z-9cf33343-aa77-4377-9511-73e3c5d1cd95",
+  "parentRunId": "2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6",
+  "part": "startup-11",
+  "network": "cellular",
+  "networkSource": "Manually selected by tester; connection type is not detected or verified",
+  "device": {
+    "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+    "platform": "iPhone",
+    "maxTouchPoints": 5,
+    "webgpuExposed": true
+  },
+  "policy": {
+    "count": 20,
+    "deadlineMs": 240000,
+    "cacheDeadlineMs": 10000,
+    "revision": "2026-10-17-perf-rc14c-startup1",
+    "cachePrefix": "daybuoy-native-assets-",
+    "fixture": "night-storm",
+    "performanceGateRun": false,
+    "capturesRun": false
+  },
+  "startedAt": "2026-10-15T16:09:19.530Z",
+  "checkpointAt": "2026-10-15T16:11:23.953Z",
+  "results": [
+    {
+      "index": 11,
+      "startedAt": "2026-10-15T16:11:12.931Z",
+      "status": "passed",
+      "lastStage": "Beach ready",
+      "deadlineMs": 240000,
+      "cachePolicy": {
+        "scope": "app-cache-cold",
+        "httpReloadRequested": true,
+        "browserHttpCacheErased": false,
+        "clear": {
+          "name": "daybuoy-native-assets-2026-10-17-perf-rc14c-startup1",
+          "deleted": true,
+          "cleared": true
+        }
+      },
+      "viewport": {
+        "width": 390,
+        "height": 699,
+        "dpr": 3
+      },
+      "appURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/?ocean-debug=1&gate-fixture=1&beach=inlet-beach&startup-check=1&startup-cold=2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6-11&v=2026-10-17-perf-rc14c-startup1",
+      "startup": {
+        "phase": "ready",
+        "label": "Beach ready",
+        "attempt": 2,
+        "lastError": "GPU device lost during startup: destroyed",
+        "lastFailure": {
+          "reason": "GPU device lost during startup: destroyed",
+          "code": null,
+          "atStage": "shader-compile-start",
+          "retryable": null,
+          "at": 4299,
+          "attempt": 1
+        },
+        "history": [
+          {
+            "attempt": 1,
+            "event": "start",
+            "at": 583
+          },
+          {
+            "event": "failure-detail",
+            "reason": "GPU device lost during startup: destroyed",
+            "code": null,
+            "atStage": "shader-compile-start",
+            "retryable": null,
+            "at": 4299,
+            "attempt": 1
+          },
+          {
+            "attempt": 1,
+            "event": "retry",
+            "reason": "GPU device lost during startup: destroyed",
+            "at": 4299
+          },
+          {
+            "attempt": 2,
+            "event": "start",
+            "at": 5800
+          },
+          {
+            "attempt": 2,
+            "event": "ready",
+            "at": 9965
+          }
+        ],
+        "assets": {
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1&asset-attempt=1&startup-cold=2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6-11"
+        }
+      },
+      "assetProgress": {
+        "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1&asset-attempt=1&startup-cold=2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6-11"
+      },
+      "assetEvents": [
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1343
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1345
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1346
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/shore-worker.js?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 109546,
+          "persistent": true,
+          "at": 1495
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1495
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-detail.bin?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 32768,
+          "persistent": true,
+          "at": 1667
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1667
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-entry.js?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 2115900,
+          "persistent": true,
+          "at": 1773
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1774
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/area.png?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 33203,
+          "persistent": true,
+          "at": 1850
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1850
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/takram-shape.bin?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 2097152,
+          "persistent": true,
+          "at": 1871
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1871
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/textures/smaa/search.png?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 113,
+          "persistent": true,
+          "at": 1873
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1873
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7932,
+          "persistent": true,
+          "at": 1958
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1959
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7840,
+          "persistent": true,
+          "at": 1963
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7884,
+          "persistent": true,
+          "at": 1963
+        },
+        {
+          "event": "fetch-start",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "at": 1964
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 7748,
+          "persistent": true,
+          "at": 2067
+        },
+        {
+          "event": "fetch-complete",
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "assetURL": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2?v=2026-10-17-perf-rc14c-startup1",
+          "attempt": 1,
+          "status": 200,
+          "bytes": 8000,
+          "persistent": true,
+          "at": 2073
+        }
+      ],
+      "optionalEffects": {
+        "disabled": [],
+        "degraded": false
+      },
+      "cloudCache": {
+        "disabled": false,
+        "optionalFailure": null
+      },
+      "degraded": false,
+      "backend": "WebGPU native scene",
+      "nativeRevision": "2026-10-17-perf-rc14c-startup1",
+      "confirmedCompletions": 7,
+      "stageEvents": [
+        {
+          "stage": "native-document-loaded",
+          "attempt": 1,
+          "elapsedMs": 1288,
+          "detail": {}
+        },
+        {
+          "stage": "native-module-evaluated",
+          "attempt": 1,
+          "elapsedMs": 2524,
+          "detail": {}
+        },
+        {
+          "stage": "native-app-init-start",
+          "attempt": 1,
+          "elapsedMs": 2524,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Opening the beach",
+          "attempt": 1,
+          "elapsedMs": 2524,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-request-start",
+          "attempt": 1,
+          "elapsedMs": 2530,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-ready",
+          "attempt": 1,
+          "elapsedMs": 2531,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the sky",
+          "attempt": 1,
+          "elapsedMs": 2531,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 1,
+          "elapsedMs": 2566,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 1,
+          "elapsedMs": 2566,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 1,
+          "elapsedMs": 2566,
+          "detail": {
+            "bytes": 2097152
+          }
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 1,
+          "elapsedMs": 2566,
+          "detail": {
+            "bytes": 32768
+          }
+        },
+        {
+          "stage": "init-stage:Preparing white sand",
+          "attempt": 1,
+          "elapsedMs": 2587,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the waves",
+          "attempt": 1,
+          "elapsedMs": 3370,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing light and reflections",
+          "attempt": 1,
+          "elapsedMs": 4177,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Finishing the waves",
+          "attempt": 1,
+          "elapsedMs": 4185,
+          "detail": {}
+        },
+        {
+          "stage": "precompile-preparing",
+          "attempt": 1,
+          "elapsedMs": 4220,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-start",
+          "attempt": 1,
+          "elapsedMs": 4247,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-complete",
+          "attempt": 1,
+          "elapsedMs": 4247,
+          "detail": {}
+        },
+        {
+          "stage": "shader-compile-start",
+          "attempt": 1,
+          "elapsedMs": 4247,
+          "detail": {}
+        },
+        {
+          "stage": "initialization-failed",
+          "attempt": 1,
+          "elapsedMs": 4674,
+          "detail": {
+            "reason": "GPU device lost during startup: destroyed",
+            "atStage": "shader-compile-start"
+          }
+        },
+        {
+          "stage": "native-document-loaded",
+          "attempt": 2,
+          "elapsedMs": 7387,
+          "detail": {}
+        },
+        {
+          "stage": "native-module-evaluated",
+          "attempt": 2,
+          "elapsedMs": 8633,
+          "detail": {}
+        },
+        {
+          "stage": "native-app-init-start",
+          "attempt": 2,
+          "elapsedMs": 8633,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Opening the beach",
+          "attempt": 2,
+          "elapsedMs": 8633,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-request-start",
+          "attempt": 2,
+          "elapsedMs": 8642,
+          "detail": {}
+        },
+        {
+          "stage": "webgpu-device-ready",
+          "attempt": 2,
+          "elapsedMs": 8642,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the sky",
+          "attempt": 2,
+          "elapsedMs": 8642,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 2,
+          "elapsedMs": 8668,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-start",
+          "attempt": 2,
+          "elapsedMs": 8668,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 2,
+          "elapsedMs": 8668,
+          "detail": {
+            "bytes": 2097152
+          }
+        },
+        {
+          "stage": "cloud-asset-fetch-complete",
+          "attempt": 2,
+          "elapsedMs": 8668,
+          "detail": {
+            "bytes": 32768
+          }
+        },
+        {
+          "stage": "init-stage:Preparing white sand",
+          "attempt": 2,
+          "elapsedMs": 8680,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing the waves",
+          "attempt": 2,
+          "elapsedMs": 9333,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Preparing light and reflections",
+          "attempt": 2,
+          "elapsedMs": 9974,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Finishing the waves",
+          "attempt": 2,
+          "elapsedMs": 9989,
+          "detail": {}
+        },
+        {
+          "stage": "precompile-preparing",
+          "attempt": 2,
+          "elapsedMs": 10035,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-start",
+          "attempt": 2,
+          "elapsedMs": 10059,
+          "detail": {}
+        },
+        {
+          "stage": "cloud-texture-bake-complete",
+          "attempt": 2,
+          "elapsedMs": 10059,
+          "detail": {}
+        },
+        {
+          "stage": "shader-compile-start",
+          "attempt": 2,
+          "elapsedMs": 10059,
+          "detail": {}
+        },
+        {
+          "stage": "shader-compile-complete",
+          "attempt": 2,
+          "elapsedMs": 10256,
+          "detail": {}
+        },
+        {
+          "stage": "first-frame-warmup-start",
+          "attempt": 2,
+          "elapsedMs": 10257,
+          "detail": {}
+        },
+        {
+          "stage": "first-frame-warmup-complete",
+          "attempt": 2,
+          "elapsedMs": 10299,
+          "detail": {}
+        },
+        {
+          "stage": "init-stage:Opening your view",
+          "attempt": 2,
+          "elapsedMs": 10299,
+          "detail": {}
+        },
+        {
+          "stage": "first-app-frame-start",
+          "attempt": 2,
+          "elapsedMs": 10302,
+          "detail": {}
+        },
+        {
+          "stage": "first-app-frame-complete",
+          "attempt": 2,
+          "elapsedMs": 10337,
+          "detail": {}
+        },
+        {
+          "stage": "native-app-init-complete",
+          "attempt": 2,
+          "elapsedMs": 10340,
+          "detail": {}
+        },
+        {
+          "stage": "first-live-frame-submitted",
+          "attempt": 2,
+          "elapsedMs": 10357,
+          "detail": {}
+        }
+      ],
+      "initializationErrors": [
+        {
+          "stage": "initialization-failed",
+          "attempt": 1,
+          "elapsedMs": 4674,
+          "detail": {
+            "reason": "GPU device lost during startup: destroyed",
+            "atStage": "shader-compile-start"
+          }
+        }
+      ],
+      "reason": null,
+      "elapsedMs": 10640,
+      "finishedAt": "2026-10-15T16:11:23.576Z",
+      "firstFrameMs": 10640,
+      "failedAssetURLs": [],
+      "lastFailure": {
+        "reason": "GPU device lost during startup: destroyed",
+        "code": null,
+        "atStage": "shader-compile-start",
+        "retryable": null,
+        "at": 4299,
+        "attempt": 1
+      },
+      "resources": [
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-400-normal.woff2",
+          "ms": 170,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-500-normal.woff2",
+          "ms": 171,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-600-normal.woff2",
+          "ms": 141,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-200-normal.woff2",
+          "ms": 144,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ui-reference/fonts/poppins-latin-300-normal.woff2",
+          "ms": 142,
+          "transferBytes": 0,
+          "decodedBytes": 0
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-scene.html?noClouds=1&quality=0&startup-cold=2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6-11&v=2026-10-17-perf-rc14c-startup1&nativeAttempt=1",
+          "ms": 141,
+          "transferBytes": 1052,
+          "decodedBytes": 1340
+        },
+        {
+          "url": "https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/ocean-proof/proof/native-scene.html?noClouds=1&quality=0&startup-cold=2026-10-15T16-09-19Z-ed3f0f0c-e9bb-4b93-a177-f505d0290fc6-11&v=2026-10-17-perf-rc14c-startup1&nativeAttempt=2",
+          "ms": 119,
+          "transferBytes": 1052,
+          "decodedBytes": 1340
+        }
+      ]
+    }
+  ],
+  "scope": "One completed startup attempt; not a performance gate."
+}
