@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-38-51Z-7fdc480b-1ebc-444a-9c50-4851dd5c1a02",
+  "kind": "weather",
+  "fingerprint": "4970d72433e09680fd570251d5bb7c8baed7962e302436ab8e6213c63117f1e4",
+  "receivedAt": "2026-10-15T02:38:51.787Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2416172,
+      "type": "application/json",
+      "sha256": "372176b411748bd24691ca2b5ca2ca938a8626a3429a90a96ed0eca25aa57411"
+    },
+    {
+      "name": "partly-cloudy.jpg",
+      "size": 394028,
+      "type": "image/jpeg",
+      "sha256": "7f2c76f35e4b8a58a18070bf3a08be2f117f8cfabc18ae71506405de6b50168f"
+    }
+  ]
+}
