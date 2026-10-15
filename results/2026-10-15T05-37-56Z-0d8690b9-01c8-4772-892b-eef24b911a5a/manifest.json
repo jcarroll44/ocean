@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T05-37-56Z-0d8690b9-01c8-4772-892b-eef24b911a5a",
+  "kind": "weather",
+  "fingerprint": "7fa742fc9f9bbc31451726510661705750fbbf6ab89379b90888465d9f05fe66",
+  "receivedAt": "2026-10-15T05:37:57.112Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 3017048,
+      "type": "application/json",
+      "sha256": "4e5e6af9f27fd91b07a917764d65b4d25e139978f27e126e21fb31982c7ab5a5"
+    },
+    {
+      "name": "night-clear.jpg",
+      "size": 373934,
+      "type": "image/jpeg",
+      "sha256": "6251fd246e7b3dfee6e2b13356d85fccb46038482fe8650bb2045a776cdd5ac2"
+    }
+  ]
+}
