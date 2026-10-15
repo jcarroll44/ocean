@@ -1,3 +1,51 @@
+# DayBuoy handoff — RC14c accepted; startup-only repair
+
+Updated 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- RC14c is the accepted, frozen launch scene. Canonical private Sites tag `scene-baseline-rc14c` points to runtime `ed8981803abe0d98a97dd7940499699c86a91352`; remote tag verified. Earlier tags remain immutable.
+- Transport revision `2026-10-17-perf-rc14c-startup1`; normal scene unchanged. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+- Canonical private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`; its main is the approved deploy channel. GitHub continuation `wip/tidewater-verdict-first`, evidence `wip/tidewater-in-app`. Separate Features site is out of scope.
+- Startup-only check: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-17-perf-rc14c-startup1
+- Existing gate stays intact: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-17-perf-rc14c-startup1
+- Deployed runtime `f9bae851baebb1f8526ec28499d035283c4dcaf8`; version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_2e0bebc6ac888191b583ce50bd2a35b1`; deployment `appgdep_6ad081da50e08191a7bdd2d75b280617` succeeded `2026-10-15T07:33:59.265814Z`. Initial checkpoint `8a34458e3e1addf717ef3b2cd9d23df2b515f967` had a packaging mismatch caught by post-deploy audit; do not treat it as the final verified package.
+
+## What passed
+
+- Actual accepted phone upload: run `2026-10-15T07-06-09Z-bbd65c76-318e-4c82-8948-262175958bfc`, revision `2026-10-17-perf-rc14c`;39.3428 FPS average,30 minimum,zero seconds below30,36/36 stills,truth5/5. Water first20→last20 medians14.0901→14.0346ms, frame-span drift+6.4128%. Raw sunset scrub retains2/90 failures. User explicitly accepted launch scene; do not reopen visual work. Provenance in `night-report/rc14c-accepted-provenance.json`.
+- Final startup patch full local integration/production/default-limit validation PASS:80 WGSL modules,84 complete pipelines,36 null-backend capture command sequences; all seven interaction checks; candidate/control optional fallback;20-run journal semantics;25-file production allowlist; every original hosting asset byte-identical. These are not phone results. Final archive823 verified files,zero missing/mismatched; deployed36URL/status/byte/SHA audit PASS. Actual WebKit fourth-request recovery11/11assets PASS and preloaded shape handoff2,097,152bytes/exactSHA/zero further cache or network reads PASS. Native GPU unavailable on host. Actual deployed host-WebKit transport matrix20/20 PASS:10 ordinary and10 simulated256KiB/s+300ms delivery; every fresh context confirmed empty cache, HTTP reload,11/11 verified assets,zero skips and exact texture handoff. Delayed median32.71s (30.61–33.79s). Actual deployed startup UI guard, saved-result reload and Share→JSON download PASS. Host has no WebGPU, so these are NOT iPhone/native-first-frame results. Harness DNS/307 setup failures are preserved separately and excluded because no app startup executed.
+- Real host Playwright WebKit transport recovered after three injected request failures on the fourth attempt. Host WebKit has no WebGPU; no native first-frame claim. New final deployment will be checked separately.
+
+## Diagnosis and changes
+
+- Original iPhone trace had completed cloud detail but stalled reading cloud shape after preload. Verify full cached bodies, hold bounded verified cloud/SMAA bytes until consumed, retry initial+3 with1.5/3/4.5s backoff, log actual URL/status/bytes. Cache operations have3s deadlines; cache denial cannot block network.
+- All optional assets share a45s deadline. Exhausted optional cloud/SMAA/font assets are logged and skipped, never retried by consumers a second time. Required active renderer/worker stay mandatory. Inactive controls are excluded until selected. Optional cloud failure disables only cloud cache; no shader or normal-path appearance changes.
+- Packaging audit found fresh manifest with old renderer/HTML in hosting/public. Build now snapshots every source asset, stages explicit fresh writes and verifies all original SHA-256 values through public/framework/final trees. Final archive and deployed bytes must match.
+- Separate startup-only page runs20 attempts per manually labelled network, stores every completed result, resumes after reload, requests HTTP reload and clears only current native asset cache. It never runs FPS/captures and does not overwrite latest full-gate results.
+
+- Actual warm WebKit CacheStorage PASS:11/11 full bodies read and SHA-verified,4,428,086bytes,15ms,zero network calls/requests andzero skips. Verified shape handoff also passes after this warm preload. `night-report/rc14c-startup-final-webkit-warm-cache.json`.
+
+## Open issues
+
+- iPhone Safari cold start20/20 on Wi-Fi and20/20 cellular is not yet measured. This host cannot operate the user's iPhone or cellular connection. Report host transport results separately and leave device counts unmeasured until actual reports arrive.
+- Playwright WebKit on this Linux host has no WebGPU adapter. Actual deployed transport is tested; native first frame cannot be certified here.
+- Optional-asset degraded startup must be visible in diagnostic results; it is not a successful full-visual capture/performance pass. Required asset or GPU failure must remain failed.
+
+## Next steps
+
+1. Implementation, full local build, default-limit validation, archive verification, private deployment,36-URL deployed body audit and20/20 host-WebKit transport tests are complete. No full device gate required by the latest instruction.
+2. Actual phone validation is outstanding: open the startup-only page once on Wi-Fi and once on cellular. It runs20 starts per selected network, reports full/degraded startup separately, saves and uploads each result, and supports reload/resume/Share. Do not claim a phone20/20 result until those real reports exist.
+3. Preserve launch scene tag, locked surf truth and existing gate/Share/capture mechanisms. Future changes follow the existing gate unless explicitly superseded.
+
+## Rules and invariants
+
+- Never commit/push GitHub main. Private Sites main is approved. No secrets in logs/source. Local tests are not a real-browser/device/visual pass.
+- Freeze RC14c visuals and RC12c surf. DPR floor1.1,4x256 FFT, default WebGPU limits. No GPU runner. Normal render budgets/settings unchanged.
+- No advice wording or crowd reporting; estimates labelled est. with sources; retain Tidewater/Takram MIT credits. Update this root HANDOFF at every pass and mirror it to GitHub WIP.
+
+## Archived handoff — before startup failure report
+
 # DayBuoy handoff — RC14c deployed; iPhone gate pending
 
 Updated2026-10-15UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
