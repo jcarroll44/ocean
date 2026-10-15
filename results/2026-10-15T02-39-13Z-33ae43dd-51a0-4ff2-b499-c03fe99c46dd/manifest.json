@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-39-13Z-33ae43dd-51a0-4ff2-b499-c03fe99c46dd",
+  "kind": "weather",
+  "fingerprint": "c2181dfd1f95aa076bd70c7ea296317c332ee381e939c773db8d3ad867e7d654",
+  "receivedAt": "2026-10-15T02:39:14.878Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2455481,
+      "type": "application/json",
+      "sha256": "f1d31b628726dd00a6e94c939381ad621f8feca65c38351895e6ec828ecbdcda"
+    },
+    {
+      "name": "fog.jpg",
+      "size": 176362,
+      "type": "image/jpeg",
+      "sha256": "825988d62f89d8a11cfc3c1004b8a6e6bcdaff911b5094171c520323e3e31ac3"
+    }
+  ]
+}
