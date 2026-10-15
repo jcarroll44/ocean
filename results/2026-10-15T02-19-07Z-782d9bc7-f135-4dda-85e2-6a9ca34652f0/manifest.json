@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-15T02-19-07Z-782d9bc7-f135-4dda-85e2-6a9ca34652f0",
+  "kind": "weather",
+  "fingerprint": "b2078657da746cddf42d7565803c0a9556bae7a12e360aca87805f210f0d35db",
+  "receivedAt": "2026-10-15T02:19:07.642Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 2207143,
+      "type": "application/json",
+      "sha256": "f4dc32ddff19edff6df4177cd788d4a3707e56225d40295ec306d87ecac2c1dd"
+    },
+    {
+      "name": "phase-cocoa-beach-overcastdawn.jpg",
+      "size": 365241,
+      "type": "image/jpeg",
+      "sha256": "0f2831230a8c1b3e606ca3b177bb74fad6019eb1b35a957e8d8f1395ac94f628"
+    }
+  ]
+}
