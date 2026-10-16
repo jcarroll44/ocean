@@ -1,3 +1,46 @@
+# DayBuoy handoff — RC15 storm-cell candidate
+
+Updated 2026-10-16 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+## Current revision and source
+
+- Candidate revision `2026-10-16-stormcells-rc15`, based on accepted launch tag `scene-baseline-rc14c-startup`, exact runtime `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. Starting documentation checkpoint `1b12e5a89b5806d9ac6b9bc76e90df75857860ff`.
+- Scope: public `stormCells` conditions plus localized existing volumetric clouds; no new render passes. Existing UI, water/waves/surf truth, sky atmosphere, sand, camera and startup recovery remain frozen outside this explicit cell extension.
+- Deployed candidate runtime `09158aad40c9c09cd51be439bf20110a75c2bd13`, private Sites version 58, saved version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_2fb1a7cbbca0819195d8bd36d61dc536`, deployment `appgdep_6ad282531ef88191b5a7c75597672105` (succeeded). Follow-up documentation checkpoints do not change this tested source pointer. No RC15 device pass claimed; do not create `scene-baseline-rc15-stormcells` until fresh matching device acceptance.
+- Canonical private Sites project `appgprj_6ac49343ea048191b93c8d1135390e39`. Private source main is approved; preserve audience. GitHub continuation `wip/tidewater-verdict-first`; never GitHub main. Features must continue using accepted launch tag until this candidate passes.
+- Capture tools remain `2026-10-15-blob-recovery-rc12c`. Keep all original 36 stills, 37 color audits, five wave-truth cases, saved evidence and Share intact.
+- Gate route after deployment: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15
+- Startup route after deployment: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-16-stormcells-rc15
+
+## What passed
+
+- Prior accepted launch startup: user-reported iPhone Safari 20/20 Wi-Fi and 20/20 cellular, zero leaked tracked GPU resources across 41 sessions, first-frame median 4.0–4.4 s. These results certify the prior tag only.
+- Prior RC14c scene: 39.3428 average FPS, minimum 30, zero seconds below 30, 36/36 stills, wave truth 5/5; water 14.0901→14.0346 ms. Raw sunset scrub 2/90 retained as accepted, not rewritten.
+- Full `node scripts/build.mjs` passes, including all seven interaction checks, surf-truth simulation, original capture/recovery/Share tests, 36 settled-still command sequences, startup/cache/lifetime checks and exact source preservation. The shipped minified production host passes API and forecast-forwarding tests.
+- Candidate and exact launch control compile 80 WGSL modules and 84 pipelines at default limits. Maximum resources per stage: 12 uniform buffers, 8 storage buffers, 9 samplers, 16 sampled textures. Identical pass inventory, cloud atlas size, 18+3 samples and 256-pixel work quota. Four-cell cloud warm-up, finite initial clock, independent motion, still freeze and clearing tests pass. Local tests are not a real-browser/device/visual pass.
+- The gate exercises four cells during the 120-second window, compares actual GPU frame spans to exact `c6d8241` for +1.0 ms and <=10% drift, retains the RC11 readiness probe, and adds two supplemental 1/4-cell squall images after the original 36. Release acceptance remains pending until same-revision 20+20 startup and visual review exist.
+- Private hosting packaging passes byte-for-byte checks. Deployed GET audit passes all 39 URLs: HTTP 200 after same-origin redirects, complete body lengths and SHA-256 match local output, including candidate/control renderers, textures, workers, service worker and hashed gate/startup launchers. `night-report/rc15-deployed-assets.json` records every URL/status/byte count; `night-report/rc15-release.json` records source and validation provenance.
+
+## Open issues
+
+- Fresh iPhone 120-second FPS, per-pass GPU budget, wave truth and 20 Wi-Fi + 20 cellular startup are pending. Host has no iPhone/cellular connection or native WebGPU rendering hardware. No GPU runner.
+- Actual storm-cell visual comparison with the accepted squall reference remains pending rendered device captures. Do not claim photorealism or <=+1.0 ms from CPU/null-backend tests.
+- Cell updates use the existing 20-second coherent cloud-atlas refresh and crossfade. While explicit cells exist, bulk atlas wind reprojection is held so independently moving cells are not advected in one incorrect shared direction. No-cell behavior remains exact.
+
+## Next steps
+
+1. Run the deployed phone gate with four active cells and exact accepted startup control, then startup 20+20; preserve all original criteria and uploaded evidence. Actual iPhone FPS/GPU/cellular results cannot be produced by this host.
+2. On matching acceptance, tag deployed source `09158aad40c9c09cd51be439bf20110a75c2bd13` as `scene-baseline-rc15-stormcells`, update the Features pointer, then re-freeze. Keep accepted launch tag `scene-baseline-rc14c-startup` unchanged until then.
+3. No further scene edits pending those results. API specification: `STORM-CELLS-API.md`. Public `setConditions({stormCells})` supports up to four valid cells; bearings are clockwise true north, motion is toward, width is full diameter, and `[]` clears. Motion uses the existing 20-second coherent cache refresh rather than additional per-frame shading work.
+
+## Rules and invariants
+
+- Never commit/push GitHub main. No tokens or secrets in source/logs. Private Sites main approved. Do not modify the Features site's UI/data/hosting identity.
+- All accepted tags immutable. No new render passes or raised limits; DPR floor 1.1 and 4x256 FFT stay exact. Total measured GPU <= launch baseline +1.0 ms, existing >=36 FPS average / >=30 each second and <=10% late drift remain required.
+- No unsolicited scene work, advice wording or crowd reporting. Estimates labelled est. with source; retain Tidewater/Takram MIT credits. Update HANDOFF every pass and mirror to GitHub WIP.
+
+## Archived handoff — accepted launch before RC15 exception
+
 # DayBuoy handoff — accepted launch scene, frozen
 
 Updated 2026-10-15 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
