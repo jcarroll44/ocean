@@ -1,3 +1,45 @@
+# DayBuoy handoff — mipmap timeout recovery
+
+Updated 2026-10-18 UTC. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+Read HANDOFF.md and continue.
+
+## Current revision and source
+
+- Revision `2026-10-18-stormcells-rc15-startup3`; deployed runtime `49e2f633d7d4205610b96e5ce7097586e574b616`, starting source `3644efbeec98290938c12036fc48c6daeab72017`, prior runtime `a47a611cf00ea574a617ca3f818b07111251a4d7`.
+- Deployment succeeded: version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_cfbd80ffce7081919f0aef20ade2d79f`, deployment `appgdep_6ad4ffb74f7c8191a8c5a0f9f471cfdb`. Same owner-private Site. Later documentation checkpoints do not change this runtime.
+- User reports two cool iPhone starts failing `GPU_PIPELINE_TIMEOUT: mipmap rgba8unorm`, stage pipeline-compile, 12.6 s. The accessible uploaded reports predate these failures; candidate versus immutable control attribution is not established. Do not call this thermal failure.
+- Startup-only change: exactly two bounded async mipmap attempts, then initialized mip0-only sampling for affected textures and their packed material array. No fallback shader, render pass, raised limit or healthy-path descriptor change. Cached texture views and binding versions are invalidated once; stale compilations never attach.
+- Mipmap fallback is explicitly reduced-quality native rendering, including `optionalEffects.degraded`. The existing full-quality gate refuses it. Healthy and single-retry success remain full quality. Deterministic shader/layout errors remain nonretryable; typed driver timeouts preserve their code through importer/watcher/parent recovery and retain the existing finite retry/watchdog limits.
+- Healthy scene, waves, cloud shaders, UI, camera, storm API, single-cell120s gate, both horizon captures and existing criteria remain frozen. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+
+## What passed
+
+- Controlled host fault injection:20/20 immediate-ready assets and20/20 delayed-ready assets. Every case forces two mipmap timeouts, samples initialized mip0 through actual adapted texture and packed material-array paths, submits validated native draw commands, and releases all tracked resources.40 devices created/40 destroyed; zero tracked live devices/allocations after every disposal. Healthy and single-retry controls also pass.
+- These use Dawn's strict null backend and accelerated timeout clocks; no pixels, phone timings, Wi-Fi or cellular measurements are produced. Driver memory remains unmeasured. Reports: `night-report/mipmap-startup-batches.json` and `night-report/mipmap-upload-evidence.json`.
+- Full `node scripts/build.mjs` and all seven interaction checks passed: bounded async recovery, typed-timeout ownership,15-second watchdog, asset retries, all84 candidate pipelines/80WGSL modules at default limits, original36 still command sequences and immutable baseline controls. Local tests are not a real-browser/device/visual pass. Deployed verification is recorded after publication below.
+- All six frozen RC11/RC12c/accepted-startup renderer and worker bundles match the prior deployed byte counts and SHA-256 exactly. Their build adapters now explicitly load the accepted startup helper graph rather than inheriting candidate edits. Report: `night-report/startup3-control-byte-checks.json`.
+- Production build/check and byte-verified Sites packaging passed. Deployed GET audit passed39/39: HTTP200, complete byte counts and SHA-256 match packaged assets, including revisioned renderer and startup launcher. Reports: `night-report/startup3-deployed-assets.json` and `night-report/startup3-release.json`.
+
+## Open issues
+
+- Actual new-build iPhone Wi-Fi20/20 and cellular20/20 remain pending. This host cannot manufacture device/network results. Prior accepted startup2 results certify only its immutable launch tag.
+- RC15 storm-cell FPS, actual GPU budget and visual acceptance remain pending. Do not tag this recovery as accepted or reinterpret reduced quality as full-quality success.
+
+## Next steps
+
+1. Implementation, local verification and private deployment are complete. Preserve this source and the saved reports; do not re-run scene work.
+2. Run https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-18-stormcells-rc15-startup3 on iPhone Safari for20 Wi-Fi +20 cellular starts. Saved rows retain pipeline attempts, local fallback, stage, first-frame time and teardown census. Reduced-effect starts are disclosed separately.
+3. Same scene gate remains https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15 . Matching device acceptance is required before `scene-baseline-rc15-stormcells` or a Features baseline change.
+
+## Rules and invariants
+
+- Never commit/push GitHub main or expose secrets. Private Sites main deployment approved; preserve owner-only access. Mirror HANDOFF to GitHub WIP after publication.
+- Accepted launch tag `scene-baseline-rc14c-startup` and all earlier tags remain immutable. Preserve exact accepted baseline controls, UI, surf truth and saved evidence. No further scene work.
+- Keep original gate thresholds, default WebGPU limits,1.1DPRfloor and4x256FFT. No GPU runner. Do not infer hardware acceptance from mock/null-backend checks.
+
+## Archived single-cell gate handoff
+
 # DayBuoy handoff — RC15 single-cell gate correction
 
 Updated 2026-10-18 UTC. Read AGENTS.md and INTERACTION-CONTRACT.md first.
