@@ -1,3 +1,20 @@
+# DayBuoy handoff — RC15 single-cell gate correction
+
+Updated 2026-10-18 UTC. Read AGENTS.md and INTERACTION-CONTRACT.md first.
+
+- Internal revision: `2026-10-18-stormcells-rc15-gate1`. Public gate URL remains https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15 . The new revision isolates saved evidence from the previous four-cell run.
+- Scope: gate/evidence only. All scene, cloud shader, API, camera, quality and startup source remains exact deployed `09158aad40c9c09cd51be439bf20110a75c2bd13`. Accepted launch tag remains `scene-baseline-rc14c-startup` at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`.
+- Candidate seeds one approaching cell before initialization: profile offshore bearing, 18 km away, 14 km full width, intensity 0.85. Decision: approach at 30 km/h along offshore+180 degrees (motion direction TO shore). Every completion callback checks inputs, renderer and displayed cloud atlas throughout the unchanged 120-second window; report includes projected motion and validation counts.
+- Two supplemental originals: `stormcells-horizon-day.jpg` at true solar noon, and `stormcells-horizon-golden-hour.jpg` at the existing golden-hour phase (one hour before astronomical sunset). Clear the prior cell epoch before each phase so the requested 18 km start is preserved across forecast jumps. Existing retry/resume/upload remains; originals persist into Share results after reload. All original 36 stills, 37 color checks, five wave-truth cases and clips remain intact.
+- Four-cell startup stress, RC11 readiness probe, exact accepted launch control, +1.0 ms GPU budget, <=10% drift, >=36 average/>=30 every second, default limits and 1.1 DPR floor remain unchanged. Scene appearance is not altered in this correction.
+- Local verification passed: full `node scripts/build.mjs`, all seven interaction checks, 80 WGSL modules/84 default-limit pipelines, original 36 still command sequences, actual gate completion/recovery algorithm, missing/wrong/mid-run dropped cell and atlas rejection, both supplemental capture retries, and original JPEG bytes in Share after reload. Production build/check passed. These are CPU/null-backend/mock checks; no iPhone FPS, rendered captures or 20+20 cellular/Wi-Fi claim.
+- Deployment succeeded: runtime `a47a611cf00ea574a617ca3f818b07111251a4d7`, saved version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_d08b9afa6c20819194b0b44dd3008b99`, deployment `appgdep_6ad4f3e1e0a081918a6f6fd46bedb073`. Same owner-private Site and gate URL; no access changes. This exact runtime is the device-test candidate; later documentation commits do not change it.
+- Deployed GET audit passed 39/39 URLs: HTTP 200, complete byte counts and SHA-256 match packaged output, including the new hashed gate launcher. Reports: `night-report/rc15-gate1-deployed-assets.json` and `night-report/rc15-gate1-release.json`.
+- Next: run the same public gate on the iPhone; review the two horizon images, then complete same-revision startup 20+20. Only matching acceptance authorizes `scene-baseline-rc15-stormcells` and the Features handoff. Do not tag now.
+- Rules: never write GitHub main; private Sites main approved. Never expose secrets. Preserve immutable tags, existing UI and accepted surf truth. No further scene work. Keep HANDOFF current and mirror it to GitHub WIP.
+
+## Archived RC15 deployment and provenance
+
 # DayBuoy handoff — RC15 storm-cell candidate
 
 Updated 2026-10-16 UTC. Read HANDOFF.md and continue. Read AGENTS.md and INTERACTION-CONTRACT.md first.
