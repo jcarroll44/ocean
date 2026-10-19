@@ -255,11 +255,11 @@ fixture identity. Estimated fixture labels include both `Fixture` and
 
 ## Truth gate, resource limits and delivery status
 
-Five cases: light offshore green shower; asymmetric approaching yellow/orange
-bank; red/purple core with known echo top; overhead rain/dry clearing edge;
-two moving systems plus nonprecipitating cloud gaps. Cover observation, +1 h
-and +6 h selections using honestly labeled fixtures until real archived fields
-exist. Save side-by-side map/scene captures with selection/content IDs, blend,
+V2 cases: light offshore green shower; asymmetric yellow/orange bank to the
+left; a red/purple core to the right with known echo top; an overhead rain cell;
+and a broad offshore squall. All five are explicitly synthetic observed fields.
+V7 will extend coverage to moving systems, clear gaps, +1 h and +6 h selections
+with the shared certainty envelope. Save side-by-side map/scene captures with selection/content IDs, blend,
 time, source resolution and camera pose; metadata alone is not visual proof.
 
 - Required bearing error <=5°; matching size, intensity class and edge position.
@@ -284,7 +284,7 @@ time, source resolution and camera pose; metadata alone is not visual proof.
 Data still needs to acknowledge exact route/products/timestamps, canonical hash,
 encoding, nodata ingestion, cloud-mask/echo-top availability and retention policy.
 Features needs to wire the shared transaction and correctly reprojected map view.
-This document records neither cross-lane acknowledgment nor a live source that
-has not actually arrived. V1 engine comparison precedes V2 scene promotion.
+Core-format alignment is recorded above; it does not certify unimplemented
+products, exact endpoint behavior or live fields. V1 engine comparison precedes V2 scene promotion.
 Preserve Tidewater/Takram MIT credits, product attribution and private Water Pro
 source. No crowd reports, advice wording, public-main writes or secrets.
