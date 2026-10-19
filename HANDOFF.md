@@ -1,3 +1,40 @@
+# DayBuoy handoff — startup4 conditions API correction
+
+Updated 2026-10-19 UTC (October18 America/Chicago). Read AGENTS.md and INTERACTION-CONTRACT.md first. Read HANDOFF.md and continue.
+
+## Current revision and source
+
+- Revision `2026-10-19-stormcells-rc15-startup4`; starting source `5d934ae436f30990010ca7cb6f9ef8ee923ec795`, prior deployed runtime `49e2f633d7d4205610b96e5ce7097586e574b616`. Deployed runtime `5dca02d36d30bbf79a73063d27a6ca8d1d0832f0`.
+- Publication succeeded: version `appgprj_6ac49343ea048191b93c8d1135390e39~appgver_84459646f9d88191877bce5e506d09b2`, deployment `appgdep_6ad56810cde4819195bf5c7e25adeb3a`. Same owner-private Site; later documentation commits do not change this runtime.
+- User reports startup3 2/2 immediate failures: `v.conditions is not a function`. Reproduced from actual deployed HTML and hashed startup launcher. The checker called the iframe Window rather than its public API object. Both methods were already present on `window.__daybuoy`; no method was renamed or removed.
+- One-line fix: `app.conditions()` becomes `app.__daybuoy.conditions()` in startup-check's confirmed-frame branch. Existing public getter, additive setter, diagnostic `__ocean` alias and production API remain byte-identical. Scene, shader, camera, UI, mipmap recovery, timing/capture criteria and frozen controls remain untouched. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+
+## What passed
+
+- Exact deployed startup3 failure reproduced in both controlled network-label paths. Legacy getter and storm-cell setter round-trip checks pass before native completion; the old checker then fails at the wrong receiver. Report: `night-report/conditions-startup3-reproduction.json`.
+- Full build passed, including all nine frozen-scope checks, 80 WGSL modules/84 pipelines at default limits, 36 still command sequences, mipmap timeout recovery and immutable controls. The new integration regression passed40/40 starts across two controlled network labels using the freshly built app and hashed launcher; missing-input and mismatched-native negative cases reject correctly, and reload restores saved results. Report: `night-report/conditions-startup-local.json`.
+- Local checks execute actual app/checker JavaScript with DOM/native-GPU doubles. These are not physical iPhone, browser, Wi-Fi/cellular timing or rendered results. Production build/check and byte-verified hosting package also passed.
+- Post-deployment: downloaded the actual live app, startup HTML and hashed launcher, then executed the same regression against those files:40/40 valid starts; both negative cases rejected, API round trips/forwarding, checkpoint upload and saved-result reload passed. Reports: `night-report/conditions-startup-packaged.json` and `night-report/conditions-startup-deployed.json`. Mock GPU/network limits apply.
+- Deployed asset audit:39/39 complete HTTP200 GET bodies, byte counts and SHA-256 match the packaged assets. Report: `night-report/startup4-deployed-assets.json` and `.md`. No failing URL.
+- Independent final compatibility review found no blocking issue. Scene and native renderer bytes are unchanged; only the app/checker revision and checker receiver differ.
+
+## Open issues
+
+- Actual iPhone Wi-Fi/cellular startup and RC15 storm-cell hardware/visual acceptance remain pending. Previous accepted launch remains `scene-baseline-rc14c-startup` at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`; Features stays there until matching acceptance.
+
+## Next steps
+
+1. Implementation, local regression, deployment and execution of the downloaded deployment are complete. Run startup4 on the iPhone for real Wi-Fi20 + cellular20; then use the unchanged storm-cell gate. Preserve current API, saved results and original mismatched-cell rejection.
+2. Startup link: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/startup-check.html?v=2026-10-19-stormcells-rc15-startup4
+3. Same scene gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15
+
+## Rules and invariants
+
+- Never commit/push GitHub main or expose secrets. Private Sites main approved; owner-only audience unchanged. Mirror this handoff to GitHub WIP.
+- All immutable baseline tags remain unchanged. No Features promotion, scene edits, threshold relaxation, raised WebGPU limits or GPU runner. Preserve saved results and Share behavior.
+
+## Archived startup3 handoff
+
 # DayBuoy handoff — mipmap timeout recovery
 
 Updated 2026-10-18 UTC. Read AGENTS.md and INTERACTION-CONTRACT.md first.
