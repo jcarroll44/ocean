@@ -1,11 +1,20 @@
 # Visual Truth weather-field contract v1
 
-**Scene consumer format finalized, 2026-10-19. Data acknowledgment pending.**
+**Scene consumer format finalized, 2026-10-19. Core format acknowledged by Data; live producer pending.**
 The user approved a beach-local, north-up field sampled directly in scene
 metres by our existing WGSL cloud adaptation. There is no globe/cube-sphere
 mapping and no dependency on the stock Takram package's WebGPU support.
 This document is the concrete Data/Features handoff, not evidence that a live
-Data endpoint exists or that the other lane has acknowledged these names.
+Data endpoint exists or that every route/field name has been implemented.
+
+Data preview source `a4991c7c51b606592a0adfb4080191c21a727054`
+(root HANDOFF.md, read 2026-10-19) confirms agreement on additive geoWeather,
+512-square WGS84 ellipsoidal AEQD ±75 km, numeric RGBA8, immutable hashes and
+per-channel timestamps/missingness. It explicitly marks source ingestion,
+encoding and refresh as pending. The pinned forecast endpoint is already
+`/api/data/v1.0.0`; it is not the semantic weather-field endpoint. Data has not
+yet published the V2 route. Preserve its owner-private boundary: use a
+server-held Site credential and same-origin proxy, never browser credentials.
 
 Consumer implementation: `src/geo-weather-field.js`. Deterministic checks:
 `node scripts/check-geo-weather-field.mjs`. These checks validate contracts,
@@ -220,6 +229,11 @@ transaction, field identity, absolute time and blend. Source field advection
 is applied once, on the Data side.
 
 ## V7 time and certainty
+
+The initial V2 cloud adapter accepts observed or fixture inputs with zero extra
+edge softness. It rejects nonzero softness explicitly until V7 adds the shared
+edge treatment; accepting the transport schema is not a claim that the renderer
+has implemented the later forecast card.
 
 - Past 2 h: actual observation frames; missing scans stay missing.
 - Latest observation to +1 h: tracked-motion extrapolation, `est. · <source>`.
