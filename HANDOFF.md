@@ -1,3 +1,41 @@
+# DayBuoy / Seaglass — Visual Truth V1 audit
+
+Updated2026-10-19. Read AGENTS.md and INTERACTION-CONTRACT.md. Read HANDOFF.md and continue.
+
+## Current revision and source
+
+- New program: **Visual Truth**, V1 audit complete; migration and device evidence pending. Exact version table, package provenance and actionable migration order: `docs/visual-truth-v1-audit.md`.
+- Source checkpoint starts at `ca42b26912675ba2d4253e7311631473b73007e9`. Live runtime remains `5dca02d36d30bbf79a73063d27a6ca8d1d0832f0`, `2026-10-19-stormcells-rc15-startup4`. This pass changes documents only; no scene rebuild/redeployment. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+- Accepted comparison/control remains `scene-baseline-rc14c-startup` (`c6d8241f1a2f248e62b3ad3c15ffc1203df65473`). RC15 startup4 device tests are explicitly skipped by the user; V2 supersedes stormCells. No RC15 acceptance or new baseline tag is implied.
+
+## What passed
+
+- Source/import audit: active native renderer is Tidewater raw WebGPU, pinned4811ba48; embedded Three is0.170.0 for host/fallback. Takram clouds are an adapted WGSL atlas pinnedb012ad06, not installed npm clouds. Atmosphere is Tidewater/Hillaire, not @takram/three-atmosphere.
+- Recovered and inspected the user's owned Water Pro3.5.1 package (SHA256593e3fec8ef51df9fa1a2beb8507071f9820c1d000bbc7820987aaabba9df1ee). No purchase/upload is needed. Candidate Three starting pin0.183.0. Vendor source/ZIP stays outside Git and served paths.
+- Read-only Features source audit atd52c2cebb888e88497a60d5d735fc8b55e38dfed. The map and scene currently share time only. Draft cross-lane contract: `docs/visual-truth-field-contract.md`; NOT acknowledged by Data.
+- Local tests are not a real-browser/device/visual pass. No new renderer, screenshot, 120-second result or upgraded-engine pass exists in this audit. Prior startup4 tests remain historical evidence only.
+
+## Open issues
+
+- Water Pro is an engine migration, not a package bump. TSL/Three resources cannot attach directly to Tidewater; V1 must preserve/port surf partitions, refraction, bar/Iribarren breaking, tide and connected surf before promotion. Stock Takram clouds WebGPU is not currently exported.
+- Data implementation/contract acknowledgment remains unavailable. Current Features has radar/IR tiles and tracking but lacks canonical semantic raster, echo tops, GOES cloud mask/height and HRRR reflectivity. Never call draft fields live.
+- Before/after captures, full default-limit candidate validation and real iPhone120s gate remain pending until a candidate exists.
+
+## Next steps
+
+1. Implement V1 isolated Three0.183.0 + owned Water Pro3.5.1 candidate behind the existing scene boundary, with unchanged accepted Tidewater comparison. One renderer/device at a time. Preserve current production until V1 passes. Follow the detailed audit plan.
+2. Validate real candidate pipelines/default limits, resource lifecycle and surf truth; deploy only compiled vendor end-product with authentic before/after capture workflow and existing120s gate. Obtain matching phone pass before tagging.
+3. Agree the proposed geoWeather format with Data and Features before V2 integration; then V2, V3, V7 sequentially. V4/V5/V6 later.
+4. Existing historical scene gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15 . It is NOT a Visual Truth candidate. No startup4 device run requested.
+
+## Rules and invariants
+
+- Never commit/push GitHub main or expose secrets. Private Sites main is approved. Keep owner-private audience and other lane deployments unchanged. Mirror handoff to GitHub WIP.
+- Preserve existing UI/API/camera compatibility, accepted surf physics, default GPU limits and DPR floor1.1. Source/provider-derived quantities are est. with source; no advice wording or crowd reports.
+- Current task authorized audit and migration; do not let stale scene-freeze text override it. Conversely, do not mark later cards complete, claim Data agreement or tag passing builds without evidence.
+
+## Archived startup4 handoff
+
 # DayBuoy handoff — startup4 conditions API correction
 
 Updated 2026-10-19 UTC (October18 America/Chicago). Read AGENTS.md and INTERACTION-CONTRACT.md first. Read HANDOFF.md and continue.
