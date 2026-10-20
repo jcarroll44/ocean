@@ -1,3 +1,41 @@
+# Seaglass — Visual Truth storm3
+
+Updated 2026-10-20. Read HANDOFF.md and continue. Public WIP summary; licensed source and private configuration omitted.
+
+## Current revision and source
+
+Revision `2026-10-20-visual-truth-v2-v3-storm3`, private runtime `95fc8c7d2b3974a6fb8286c349fb2b5eab2c4c09`, version 74, deployment `appgdep_6ad78bc40b6c8191854f045ec59c2d75`. Same gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth.html .
+
+Production remains Tidewater. Accepted launch tag `scene-baseline-rc14c-startup` stays immutable at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. Capture tools remain `2026-10-15-blob-recovery-rc12c`. No new phone acceptance or passing tag.
+
+## What changed
+
+Storm2 placement and performance were accepted; appearance was rejected. Its uploaded run recorded 42.3509 average FPS, minimum 32, zero seconds below 30, and five geometry passes. Those measurements do not certify storm3.
+
+Field-only changes: metre-scaled 3D billows and eroded crowns, low soft bases, stronger column optical depth and base shading, blue-noise sampling with bounded same-field history, directional rain curtains preserved through fog composition, and fine near-camera rain with existing wet-sand and water-impact effects. Source field geometry, normal UI/camera, accepted surf, FFT and no-field appearance stay unchanged. No new render passes or particle-count increase.
+
+Final review reproduced a cancelled-first-field defect: a discarded field's completed-history metadata could survive a legacy atlas overwrite. History now requires the displayed layer's actual field identity and presentation hash. Regression fails before the fix and passes afterward.
+
+## Verification
+
+Local tests are not a real-browser/device/visual pass. Full required build and hosting passed: all seven interaction checks, 84 actual native pipeline creations / 80 WGSL modules within default limits, 36 settled still-command paths, 40 controlled startup/API cases, field lifecycle/volume checks, and controller retry/reload/Share tests with doubles.
+
+The field compute uses 3 uniform buffers, 4 sampled textures and 9 samplers. All five fixtures plus heavy overhead pass actual Dawn-null command/lifecycle checks. Semantic textures stay bounded at 4 MiB and release to zero. CPU volume diagnostics pass all six cases with current source hashes; they are not app screenshots.
+
+Deployed asset audit: 63/63 HTTP 200, matching packaged bytes and SHA-256. Private report: `night-report/geo-storm3-deployed-assets.json`.
+
+## Open issues and next steps
+
+Run the same gate on iPhone: intense overhead field for 120 seconds, accepted same-device control, and five actual map/scene pairs. Review dark bases versus lit crowns, soft billows, rain curtains, overhead camera rain, wet sand and retained horizon. Fresh appearance and sustained performance remain unverified. Preserve the original 36-capture/wave gate; do not tag or promote to Features before acceptance.
+
+The interrupted workspace was recovered from the exact private storm2 commit. Recorded storm3 edits were restored and fully revalidated. The final edge/crown hunk was reconstructed from the recorded equations/design; prior interrupted checks were not used as acceptance.
+
+## Rules
+
+Never commit/push GitHub main or expose secrets. Private Sites main deployment is approved; preserve owner-private access. Keep MIT credits, private vendor source, default GPU limits, 1.1 DPR floor, strict gates, recovery/Share, API compatibility, other lanes and immutable tags. No GPU runner or invented phone/pixel results. Update HANDOFF every pass.
+
+## Archived handoff — storm2
+
 # Seaglass — Visual Truth storm2 atlas publication repair
 
 Updated 2026-10-20. Read HANDOFF.md and continue. Public WIP summary; licensed source and private configuration omitted.
