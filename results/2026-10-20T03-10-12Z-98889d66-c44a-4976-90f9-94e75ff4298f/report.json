@@ -1,0 +1,868 @@
+{
+  "schema": "seaglass.visual-truth-evidence/1",
+  "revision": "2026-10-20-visual-truth-v2-v3-live",
+  "toolsRevision": "2026-10-20-visual-truth-v2-v3-live",
+  "runId": "2026-10-20T03-10-12Z-98889d66-c44a-4976-90f9-94e75ff4298f",
+  "startedAt": "2026-10-20T03:09:50.254Z",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "viewport": {
+    "width": 390,
+    "height": 699
+  },
+  "cases": {},
+  "attempts": [],
+  "errors": [
+    {
+      "stage": "active-field-performance",
+      "message": "Production renderer settings changed."
+    }
+  ],
+  "acceptance": {
+    "status": "incomplete",
+    "renderedAlignment": "requires-visual-review",
+    "performance": "pending active-field 120-second measurement; original 36-capture and wave checks remain required"
+  },
+  "performance": {
+    "startedAt": "2026-10-20T03:10:12.577Z",
+    "seconds": 120,
+    "fixture": "night-storm",
+    "field": {
+      "schema": "seaglass.geo-weather/1",
+      "beachId": "inlet-beach",
+      "center": {
+        "lat": 30.28,
+        "lon": -86
+      },
+      "grid": {
+        "projection": "aeqd",
+        "datum": "WGS84",
+        "units": "m",
+        "width": 512,
+        "height": 512,
+        "extent": [
+          -75000,
+          -75000,
+          75000,
+          75000
+        ],
+        "rowOrder": "north-to-south"
+      },
+      "image": {
+        "url": "/visual-truth-fixtures/intense-overhead-performance-f5c0dd5b78b64bca.png",
+        "mimeType": "image/png",
+        "byteLength": 1049236,
+        "sha256": "f5c0dd5b78b64bca27f5a88fe6824fa45e4e2e2137b0d4ab9f1bc5ed7a71c8f1",
+        "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30"
+      },
+      "validAt": 1793070000000,
+      "asOf": 1793070000000,
+      "retrievedAt": 1793070000000,
+      "issuedAt": null,
+      "kind": "fixture",
+      "sources": {
+        "reflectivity": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        },
+        "cloudCoverage": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        },
+        "echoTop18": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        }
+      },
+      "processing": {
+        "version": "2026-10-20-visual-truth-v2-v3-live",
+        "classification": "seaglass.dbz/1",
+        "parallax": "not-applicable",
+        "fixture": true
+      },
+      "uncertainty": {
+        "leadSeconds": 0,
+        "edgeSoftnessM": 0,
+        "basis": "observed",
+        "label": "Fixture · synthetic observed radar"
+      },
+      "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb"
+    },
+    "before": {
+      "native": {
+        "lifecycle": {
+          "session": {
+            "devicesCreated": 1,
+            "devicesLive": 1,
+            "devicesDestroyed": 0,
+            "estimatedBytes": 197027260,
+            "peakEstimatedBytes": 285812334,
+            "buffersLive": 98,
+            "texturesLive": 66,
+            "querySetsLive": 1,
+            "buffersCreated": 102,
+            "texturesCreated": 274,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 81,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 308,
+            "bindGroupLayoutsCreated": 60,
+            "pipelineLayoutsCreated": 97,
+            "pipelinesCreated": 99,
+            "bufferBytes": 49154768,
+            "textureBytes": 147872492,
+            "id": 1,
+            "startedAtMs": 1203,
+            "disposed": false,
+            "reason": null,
+            "elapsedMs": 19523
+          },
+          "aggregate": {
+            "sessionsStarted": 1,
+            "sessionsDisposed": 0,
+            "devicesCreated": 1,
+            "devicesLive": 1,
+            "devicesDestroyed": 0,
+            "estimatedBytes": 197027260,
+            "peakEstimatedBytes": 285812334,
+            "buffersLive": 98,
+            "texturesLive": 66,
+            "querySetsLive": 1,
+            "buffersCreated": 102,
+            "texturesCreated": 274,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 81,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 308,
+            "bindGroupLayoutsCreated": 60,
+            "pipelineLayoutsCreated": 97,
+            "pipelinesCreated": 99,
+            "bufferBytes": 49154768,
+            "textureBytes": 147872492
+          },
+          "memory": {
+            "scope": "Tracked destroyable resource descriptors and explicit destroy calls; byte estimates exclude driver residency, alignment and internal allocations.",
+            "driverBytes": null,
+            "nonDestroyableLiveCounts": null,
+            "nonDestroyableTracking": "Creation totals only; no strong references retained for pipelines, modules, samplers or bind groups."
+          },
+          "pending": {
+            "timers": 0,
+            "animationFrames": 0,
+            "listeners": 7,
+            "cleanupHooks": 7
+          }
+        },
+        "revision": "2026-10-20-visual-truth-v2-v3-live",
+        "waveSeconds": 47.10300000000001,
+        "marine": {
+          "heightM": 1.8288000000000002,
+          "amplitude": 0.9144000000000001,
+          "period": 7,
+          "windMps": 13.375544,
+          "waveAngle": -90,
+          "windAngle": -71,
+          "propagation": [
+            0.32556815445715664,
+            -0.9455185755993168
+          ],
+          "windVector": [
+            0.32556815445715664,
+            -0.9455185755993168
+          ],
+          "chop": 1.1,
+          "tide": 0.35,
+          "cloud": 0.94,
+          "waves": {
+            "components": [
+              {
+                "id": "wind",
+                "label": "Wind waves",
+                "height": 1.3927725856003916,
+                "period": 4.5,
+                "meanPeriod": 4.5,
+                "direction": 220,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 31.61652733256274,
+                "gamma": 1.8
+              },
+              {
+                "id": "primary",
+                "label": "Primary swell",
+                "height": 0.9502723550645891,
+                "period": 7,
+                "meanPeriod": 7,
+                "direction": 201,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 76.50418959484317,
+                "gamma": 3.3
+              },
+              {
+                "id": "secondary",
+                "label": "Secondary swell",
+                "height": 0.6335149033763926,
+                "period": 5.88,
+                "meanPeriod": 5.88,
+                "direction": 233,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 53.981356178121345,
+                "gamma": 3.3
+              },
+              {
+                "id": "tertiary",
+                "label": "Tertiary swell",
+                "height": 0.3167574516881963,
+                "period": 8.54,
+                "meanPeriod": 8.54,
+                "direction": 173,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 113.86883579296457,
+                "gamma": 3.3
+              }
+            ],
+            "period": 7,
+            "direction": 220,
+            "height": 1.8288000000000002,
+            "steepness": 0.023904573196384424,
+            "onshore": 1,
+            "offshore": 0,
+            "swellShare": 0.42000000000000004,
+            "curl": 0.3721908536072313,
+            "groupWaves": 6.78,
+            "groupiness": 0.5012000000000001,
+            "source": "Wave appearance est. · Open-Meteo Marine; typical two-bar profile",
+            "surfAdjustment": 1,
+            "surfSource": null,
+            "truth": {
+              "schema": 1,
+              "heightConvention": "Hs = mean highest third crest-to-trough, metres",
+              "shoreHeightTarget": 1.8288000000000002,
+              "periodTarget": 7,
+              "peakPeriod": null,
+              "deepWavelength": 76.50418959484317,
+              "groups": {
+                "mean": 0.6275922485193075,
+                "cv": 0.520714380246044,
+                "lagOne": 0.17134266665366027,
+                "setLullRatio": 4.362023916294839
+              },
+              "heights": [
+                0.2545584694568889,
+                0.44355026158965244,
+                0.26321553522636704,
+                0.7439735668018,
+                0.7205930627459611,
+                0.24567718365498323,
+                0.6833100597249803,
+                0.296012334615776,
+                0.4954354965371232,
+                1.045635171100166,
+                0.7850680249267914,
+                0.27994482872066756,
+                0.889175617031826,
+                1.1668230951565197,
+                0.5999034304467883,
+                0.3191120964193022,
+                0.34125602796204685,
+                0.3484627245328594,
+                0.8112900396805952,
+                0.5799546127833963,
+                0.4500826706734754,
+                0.7282931769854187,
+                0.8203402097782863,
+                0.43699697794313463,
+                0.9589125519247504,
+                0.21739413230635718,
+                0.5406904265464296,
+                0.7682751269240496,
+                0.8485620200883989,
+                0.044326952405655255,
+                0.13404125478927462,
+                1.0998742282075533,
+                1.6684791061725548,
+                1.4940852513642415,
+                0.829561407737846,
+                0.3765845324546545,
+                0.16175160210418849,
+                0.4304200946923393,
+                1.1204434407514323,
+                0.5147992380145116,
+                1.4056468476980697,
+                0.8389646682266718,
+                0.6269673179029398,
+                0.9342266757393956,
+                1.2569872985016528,
+                1.1934451269552786,
+                0.6066147812645338,
+                0.09950985853867607,
+                0.8583666159079008,
+                0.6477009601596342,
+                0.6407429655411303,
+                0.5537047600045732,
+                0.40381784989161074,
+                0.22713001735355068,
+                0.7360849962140609,
+                0.7600627409454374,
+                0.30383411090727563,
+                0.9994727740275271,
+                0.2072905285902435,
+                0.7936629615382483,
+                0.33396678719296274,
+                0.5471901325351647,
+                0.7766079024663884,
+                0.39707767029984914,
+                0.9224688778132681,
+                1.2964408775389373,
+                0.8683928833372526,
+                0.5342035602191597,
+                0.07692762010667178,
+                0.5667871666444666,
+                0.5865756388951988,
+                0.42381677463746315,
+                0.560236401747973,
+                0.6133609128845746,
+                0.6906181939494823,
+                0.7129798919920287,
+                1.344219213265875,
+                0.4565968301065187,
+                0.9110587571018063,
+                1.0806773769967948,
+                0.41718405513585544,
+                1.1426451720551776,
+                0.36265352943849105,
+                0.8024007454763697,
+                0.8999690805802281,
+                0.6688901528891429,
+                0.6617715386704378,
+                0.9854178419238872,
+                0.48898004921848226,
+                0.6201442581927212,
+                0.2880536084723542,
+                0.9463629163991634,
+                0.4630952756124711,
+                0.5083429517660315,
+                0.11797643968962929,
+                0.3902946645067933,
+                0.7054491632500239,
+                0.878656702759181,
+                0.482520552364271,
+                0.18573139650763446,
+                0.2716711323551269,
+                1.0295009061555915,
+                0.9719155349661952,
+                0.41051883336368994,
+                0.6760685452114464,
+                0.14848768164747,
+                0.527727457596882,
+                0.17410507897851762,
+                0.6547094991962383,
+                0.5932244886641126,
+                0.32658802656362423,
+                0.35559326613327036,
+                1.0141426325740694,
+                0.46958046372630996,
+                0.5212600434406026,
+                0.6979966126987166,
+                1.0626510055346063,
+                0.7519642476288749,
+                1.223172758239344,
+                0.38346498342175855,
+                0.5733591848045749,
+                0.6338326676531537,
+                0.3696489413183507,
+                0.1967609749415397,
+                0.23654495267022624,
+                0.476054780977288,
+                0.5018890798616128,
+                0.31153056862054684
+              ],
+              "iribarren": 0.67912359464214,
+              "breakerType": "plunging",
+              "beachSlope": 0.10500000417232513,
+              "windKnots": 26,
+              "whitecapOpenOceanTarget": 0.026610515248397016,
+              "whitecapCoastalFactor": 1,
+              "whitecapTarget": 0.026610515248397016,
+              "source": "Surf transformation est. · NOAA NDBC height convention; linear dispersion and Snell refraction; typical beach profile",
+              "whitecapSource": "Active wind whitecap area est. · Monahan & O’Muircheartaigh 1980 open-ocean wind law; visibility ramp 8–12 kt; nearshore offshore-fetch appearance factor est. = 1 − 0.95 × offshore exposure (0–1)",
+              "groupSource": "Grouped Rayleigh height population est. · spectral bandwidth proxy; not an observed set forecast"
+            }
+          }
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.2,
+          "lod": 2.5,
+          "spray": 16384,
+          "reflection": 0.5,
+          "reflectionSeconds": 6,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64,
+          "underwaterLightMap": 256
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": false
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 637,
+          "completed": 635,
+          "outstanding": 2,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "adaptiveResolution": {
+          "currentDpr": 1.2,
+          "minDpr": 1.2,
+          "maxDpr": 1.5,
+          "verifiedFrames": 637
+        },
+        "weather": {
+          "deck": 0.944606413994169,
+          "daylight": 0,
+          "weight": 0,
+          "radiance": 0.015299999999999998,
+          "exposure": 1,
+          "cover": 0.94,
+          "layers": [
+            0.82,
+            0.76,
+            0.91
+          ],
+          "layerDataAvailable": [
+            true,
+            true,
+            true
+          ],
+          "visibility": 1600,
+          "humidity": 97,
+          "rain": 100,
+          "radiation": 0,
+          "thunder": 1,
+          "offshoreSamples": 0,
+          "estimateSource": "Weather appearance est. · Open-Meteo",
+          "geoPrecipitation": {
+            "available": true,
+            "dbz": 64,
+            "mmh": 100,
+            "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall",
+            "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "blend": 1
+          },
+          "stormCells": {
+            "key": "",
+            "count": 0,
+            "cells": [],
+            "projected": [],
+            "clockSeconds": 1793070017.087,
+            "elapsedSeconds": 17.086999893188477,
+            "provided": false,
+            "valid": true,
+            "diagnostics": [],
+            "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+          },
+          "optics": {
+            "cover": 0.94,
+            "fog": 0,
+            "closed": 1,
+            "disc": 0,
+            "glow": 0
+          },
+          "squall": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cloudCache": {
+            "width": 512,
+            "height": 128,
+            "columns": 256,
+            "rows": 1,
+            "layers": 3,
+            "primarySteps": 18,
+            "shadowSteps": 3,
+            "refreshMs": 20000,
+            "fadeMs": 400,
+            "refreshFadeMs": 1600,
+            "ready": true,
+            "disabled": false,
+            "optionalFailure": null,
+            "active": false,
+            "row": 128,
+            "column": 0,
+            "empty": false,
+            "generations": 4,
+            "targetKey": "[59769000,1793034000000,0,0,0,0,82,76,91,100,1]|geo:98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "geoWeather": {
+              "active": {
+                "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                "beachId": "inlet-beach",
+                "validAt": 1793070000000,
+                "asOf": 1793070000000,
+                "kind": "fixture",
+                "facingDeg": 201,
+                "cameraOriginM": [
+                  0,
+                  -28
+                ],
+                "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                "presentation": {
+                  "version": "gaussian-box3/1",
+                  "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "edgeSoftnessM": 0,
+                  "rawClassesUnchanged": true
+                },
+                "precipitation": {
+                  "available": true,
+                  "dbz": 64,
+                  "mmh": 100,
+                  "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                },
+                "textureBytes": 2097152,
+                "validPixels": 262144,
+                "cloudPixels": 17576,
+                "maximumCloudTopM": 14000,
+                "estimatedCloudBaseM": 850,
+                "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                "advection": "source-field-only",
+                "uncertainty": {
+                  "leadSeconds": 0,
+                  "edgeSoftnessM": 0,
+                  "basis": "observed",
+                  "label": "Fixture · synthetic observed radar"
+                },
+                "sources": {
+                  "reflectivity": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "cloudCoverage": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "echoTop18": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  }
+                }
+              },
+              "preparing": null,
+              "prepared": null,
+              "display": {
+                "current": {
+                  "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                  "beachId": "inlet-beach",
+                  "validAt": 1793070000000,
+                  "asOf": 1793070000000,
+                  "kind": "fixture",
+                  "facingDeg": 201,
+                  "cameraOriginM": [
+                    0,
+                    -28
+                  ],
+                  "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "presentation": {
+                    "version": "gaussian-box3/1",
+                    "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                    "edgeSoftnessM": 0,
+                    "rawClassesUnchanged": true
+                  },
+                  "precipitation": {
+                    "available": true,
+                    "dbz": 64,
+                    "mmh": 100,
+                    "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                  },
+                  "textureBytes": 2097152,
+                  "validPixels": 262144,
+                  "cloudPixels": 17576,
+                  "maximumCloudTopM": 14000,
+                  "estimatedCloudBaseM": 850,
+                  "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                  "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                  "advection": "source-field-only",
+                  "uncertainty": {
+                    "leadSeconds": 0,
+                    "edgeSoftnessM": 0,
+                    "basis": "observed",
+                    "label": "Fixture · synthetic observed radar"
+                  },
+                  "sources": {
+                    "reflectivity": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "cloudCoverage": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "echoTop18": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    }
+                  }
+                },
+                "previous": {
+                  "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                  "beachId": "inlet-beach",
+                  "validAt": 1793070000000,
+                  "asOf": 1793070000000,
+                  "kind": "fixture",
+                  "facingDeg": 201,
+                  "cameraOriginM": [
+                    0,
+                    -28
+                  ],
+                  "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "presentation": {
+                    "version": "gaussian-box3/1",
+                    "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                    "edgeSoftnessM": 0,
+                    "rawClassesUnchanged": true
+                  },
+                  "precipitation": {
+                    "available": true,
+                    "dbz": 64,
+                    "mmh": 100,
+                    "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                  },
+                  "textureBytes": 2097152,
+                  "validPixels": 262144,
+                  "cloudPixels": 17576,
+                  "maximumCloudTopM": 14000,
+                  "estimatedCloudBaseM": 850,
+                  "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                  "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                  "advection": "source-field-only",
+                  "uncertainty": {
+                    "leadSeconds": 0,
+                    "edgeSoftnessM": 0,
+                    "basis": "observed",
+                    "label": "Fixture · synthetic observed radar"
+                  },
+                  "sources": {
+                    "reflectivity": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "cloudCoverage": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "echoTop18": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    }
+                  }
+                },
+                "blend": 1
+              },
+              "geometry": {
+                "space": "beach-local scene metres; +Z offshore, +X left",
+                "texture": "512 × 512 north-up AEQD RGBA8; no sRGB/premultiply/repeat",
+                "sample": "nearest validity + bilinear valid-neighbor renormalization",
+                "advection": "source-field-only"
+              },
+              "candidateShader": true,
+              "loading": false
+            },
+            "completedKey": "[59769000,1793034000000,0,0,0,0,82,76,91,100,1]|geo:98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "scrubbing": false,
+            "activeResolution": [
+              512,
+              128
+            ],
+            "snapshotLayers": [
+              0.82,
+              0.76,
+              0.91
+            ],
+            "stormCells": {
+              "requested": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070017.087,
+                "elapsedSeconds": 17.086999893188477,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "current": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070010.669,
+                "elapsedSeconds": 10.668999910354614,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "previous": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070003.331,
+                "elapsedSeconds": 3.3310000896453857,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "snapshotCount": 0,
+              "packed": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              "lowTop": 6850,
+              "refreshMs": 20000,
+              "advection": "independent world positions sampled into complete 20-second atlases; no shared wind reprojection"
+            },
+            "advection": {
+              "current": [
+                0,
+                0
+              ],
+              "previous": [
+                0,
+                0
+              ],
+              "clock": 17.087000000000003,
+              "source": "dominant optical layer wind reprojection; full layer winds in each bake; frozen weather clock"
+            }
+          }
+        },
+        "windWhitecaps": {
+          "status": "calibrated",
+          "target": 0.026610515248397016,
+          "bias": 0.655933678150177
+        },
+        "shoreDisplay": {
+          "breakSpan": 0.13
+        },
+        "shoreFieldPending": false,
+        "optionalEffects": {
+          "disabled": [],
+          "degraded": false
+        },
+        "still": null
+      }
+    },
+    "samples": [],
+    "captureDuringWindow": false,
+    "error": "Production renderer settings changed.",
+    "finishedAt": "2026-10-20T03:10:12.607Z",
+    "acceptance": {
+      "cadencePass": false,
+      "fieldActiveThroughout": false,
+      "error": "Production renderer settings changed."
+    }
+  },
+  "parentRunId": "2026-10-20T03-09-50Z-d44795c6-d976-40cc-a0fc-fce1ca944b54",
+  "part": "active-field-performance",
+  "partial": true
+}
