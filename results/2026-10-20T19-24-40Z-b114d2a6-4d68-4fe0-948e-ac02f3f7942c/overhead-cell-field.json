@@ -1,0 +1,79 @@
+{
+  "schema": "seaglass.geo-weather/1",
+  "beachId": "inlet-beach",
+  "center": {
+    "lat": 30.28,
+    "lon": -86
+  },
+  "grid": {
+    "projection": "aeqd",
+    "datum": "WGS84",
+    "units": "m",
+    "width": 512,
+    "height": 512,
+    "extent": [
+      -75000,
+      -75000,
+      75000,
+      75000
+    ],
+    "rowOrder": "north-to-south"
+  },
+  "image": {
+    "url": "/visual-truth-fixtures/overhead-cell-0c1c4376f2156730.png",
+    "mimeType": "image/png",
+    "byteLength": 1049236,
+    "sha256": "0c1c4376f215673051f1a96251e2e1e72b22063f15914d73985080df90df470a",
+    "decodedSha256": "4da9f51948a39ee5aaabf2b00cd03d961b2bc975c699bdce88c5e27d050e4f69"
+  },
+  "validAt": 1793034000000,
+  "asOf": 1793034000000,
+  "retrievedAt": 1793034000000,
+  "issuedAt": null,
+  "kind": "fixture",
+  "sources": {
+    "reflectivity": {
+      "status": "available",
+      "provider": "Synthetic fixture",
+      "product": "Analytic ellipse overhead-cell",
+      "objectId": "overhead-cell",
+      "attribution": "Synthetic test fixture; not NOAA observations",
+      "validAt": 1793034000000,
+      "retrievedAt": 1793034000000,
+      "nativeResolutionM": 292.96875
+    },
+    "cloudCoverage": {
+      "status": "available",
+      "provider": "Synthetic fixture",
+      "product": "Analytic ellipse overhead-cell",
+      "objectId": "overhead-cell",
+      "attribution": "Synthetic test fixture; not NOAA observations",
+      "validAt": 1793034000000,
+      "retrievedAt": 1793034000000,
+      "nativeResolutionM": 292.96875
+    },
+    "echoTop18": {
+      "status": "available",
+      "provider": "Synthetic fixture",
+      "product": "Analytic ellipse overhead-cell",
+      "objectId": "overhead-cell",
+      "attribution": "Synthetic test fixture; not NOAA observations",
+      "validAt": 1793034000000,
+      "retrievedAt": 1793034000000,
+      "nativeResolutionM": 292.96875
+    }
+  },
+  "processing": {
+    "version": "2026-10-20-visual-truth-v2-v3-storm3",
+    "classification": "seaglass.dbz/1",
+    "parallax": "not-applicable",
+    "fixture": true
+  },
+  "uncertainty": {
+    "leadSeconds": 0,
+    "edgeSoftnessM": 0,
+    "basis": "observed",
+    "label": "Fixture · synthetic observed radar"
+  },
+  "contentId": "2c403b1a588f36845a30f918425822a18e38277479ddb8be20562314cc64de88"
+}
