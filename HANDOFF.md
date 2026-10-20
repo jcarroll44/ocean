@@ -1,3 +1,37 @@
+# Seaglass — Water Pro A/B asynchronous preparation repair
+
+Updated 2026-10-20. Read AGENTS.md and INTERACTION-CONTRACT.md. Read HANDOFF.md and continue.
+
+## Current revision and scope
+
+- Comparison revision `2026-10-20-visual-truth-v1-waterpro-ab2`, from private Sites `e4e25cd7458cd2b909a9299b4bfb02a9e0d4fa04`. Same comparison route: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth-ab.html . Runtime deployed from `7e71cab4b7c93160ff492ebec161600c0c2a8d80` (private Sites version65, deployment `appgdep_6ad6c6c794a88191a3293605e92fb4cd`). Later documentation-only checkpoints retain identical runtime assets. Do not infer a phone pass.
+- User-reported AB1 run `2026-10-20T00-58-02Z-64fd7414`: accepted Tidewater3/3, WaterPro0/3 and120s blocked by “Unprecompiled candidate render pipeline; sync creation prohibited.” No candidate hardware result.
+- Tidewater production, immutable `scene-baseline-rc14c-startup`, V2 weather-field runtime, public conditions API and existing native gates remain unchanged. No new scene tag.
+
+## Changes
+
+- The host-generated pipeline list is now validation evidence, not a runtime whitelist. Candidate load discovers actual Three0.183/WaterPro3.5.1 scene, offscreen depth/mask, foam, PMREM/output, compute and texture-transfer descriptors on the active device. Every actual GPU pipeline is created asynchronously. Three computeAsync still uses a synchronous constructor internally; the candidate adapter prepares that descriptor asynchronously before any real dispatch.
+- All internal render passes use compileAsync during preparation with their actual render-target/depth settings. PMREM is rendered again after compilation so it contains real sky pixels. Texture/mipmap variants are primed through Three's own descriptors. No shader, visual preset, native or vendor-source edit.
+- Pipeline progress shows compiled/pending counts and labels. Readiness requires zero pending pipelines and no compile errors; capture and timed measurement reject an unprepared candidate. A sealed timed phase cannot silently compile. Compile rejection fails immediately; timeout gets one bounded retry.
+- AB2 restores the three accepted baseline images, camera packets and clocks from the AB1 journal, retaining the old journal and provenance. Candidate captures/timing are new-build evidence. Share and independent save/upload stay intact.
+
+## Verification
+
+- Four strict Dawn-null configurations passed: rgba8unorm/bgra8unorm, each with/without timestamp-query. Each generated56actual pipelines using actual source image dimensions and an empty host manifest, completed3capture command paths, then32steady frames with zero new compilation and zero synchronous GPU constructors. All default-limit checks passed; no raised limits. Source/report hashes bind checks to the candidate bundle.
+- DOM workflow checks passed six-part sequencing, single-device ownership, invalidBlob retry/continuation, reload/Share, AB1→AB2 preservation of three baseline images and pre-ready candidate rejection. Registry checks cover dynamic descriptors, pending/ready state, timed-phase sealing, compile-error rejection, timeout retry and default-limit rejection.
+- These are shader/command and mocked-media/DOM checks, not rendered iPhone captures, Safari or120s performance. Full native build passed: all seven interaction checks,84default-limit native pipelines/80WGSLmodules,36still command sequences,40controlled startup/API checks and V2field/truth checks. Hosting package verified every original asset byte. Native app and original gate output remain byte-identical to the prior deployed source. Deployed asset audit passed26/26 complete HTTP200 bodies with matching bytes/SHA256, including cache-busted AB2 controller/engine. Reports: `night-report/waterpro-ab2-deployed-assets.json` and `.md`.
+
+## Open / next
+
+- Implementation, full required build, private deployment and deployed hashes are complete. User reruns comparison and candidate120s on iPhone. Preserve all prior accepted baseline tags.
+- Water Pro remains an experimental reference, ineligible for promotion: stock implementation still lacks our accepted partitions/sets/refraction/sandbars/connected-breaker truth. Reference sky/stand/tide differences remain disclosed.
+- V3 visual notes (deferred; no changes in this pass): golden-hour glint is great and must stay; daytime close water needs nearshore detail/depth; replace large white storm dashes with fine dense rain sheets and distant gray shafts; lifeguard stand replacement is already planned.
+- Never commit public GitHub main or vendor source; private Sites main is approved. Keep secrets out of files/output, owner-private audience, MIT credits, default GPU limits and1.1DPRfloor. No GPU runner or unearned hardware/visual claim.
+
+
+
+## Prior public handoff
+
 # Seaglass — Visual Truth V2 candidate
 
 Updated 2026-10-19. Read AGENTS.md and INTERACTION-CONTRACT.md. Read HANDOFF.md and continue.
