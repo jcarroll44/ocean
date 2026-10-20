@@ -1,3 +1,35 @@
+# Seaglass — Visual Truth storm2 atlas publication repair
+
+Updated 2026-10-20. Read HANDOFF.md and continue. Public WIP summary; licensed source and private configuration omitted.
+
+## Current revision and source
+
+Candidate `2026-10-20-visual-truth-v2-v3-storm2` deployed from private Sites runtime `7dae9816da698ea7e069cb4fe0225aaa0088a8d4`, version72, deployment `appgdep_6ad6f4d171f08191b6d209f2067b4846`. Receipt-only checkpoints preserve these runtime bytes. Same gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth.html .
+
+Production remains Tidewater. Accepted launch tag `scene-baseline-rc14c-startup` remains immutable at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. No new phone acceptance or passing tag. Capture tools remain `2026-10-15-blob-recovery-rc12c`.
+
+## What changed / passed
+
+Storm1 reported “Committed cloud atlas did not become visible” before any case. Local actual-cache reproduction found committedKey was forecast-prefixed while readiness expected geo:<contentId>. The complete atlas swapped and reached blend1 but readiness stayed false, causing a redundant 25.6-second bake at simulated40FPS beyond the20-second deadline. The uploaded results branch had no04:29 report; do not claim its device JSON was read.
+
+Commit now retains the baked key. Geo refresh ages from completion/publication; explicit same-ID retry still prepares. No-field scheduler/shaders unchanged. Gate saves exact field/keys/progress/blend/timing diagnostics, discards failed staging or reopens after a failed commit, uploads failure checkpoints even with zero captures, and continues the five independent cases. Same-field refreshes remain valid only when both completed atlas identities match; different-field blends still fail.
+
+Local tests are not a real-browser/device/visual pass. Actual Dawn-null lifecycle checks passed all5fixtures plus heavy overhead: ready after400ms crossfade,1024-stripe bounded refresh, semantic textures4MiB→0afterclear, no new pass. Default-limit field compute3uniform buffers/3sampled textures/9samplers. CPU equation reference supports overhead ceiling opacity≈.989, right-cell visibility and continuous rain; it is not an app screenshot.
+
+Full required build passed: seven interaction checks,84actual native pipelines/80WGSLmodules,36still-command paths,40controlled startup/API cases,71field/gate checks and actualcontroller withDOM/native doubles covering delayedcommit, same-field refreshes, timeout/staging failure, five capture paths, reload andShare. Deployed assets63/63HTTP200 with exactbytes/SHA256. Private report: night-report/geo-storm2-deployed-assets.json.
+
+## Open issues / next steps
+
+Run the same gate on iPhone: intense overhead field for120s, accepted same-device control and5actual map/scene pairs. Review ceiling/camera rain, rightcell, soft billows/shafts and stormlight. Keep original36capture/wave gate. No fresh rendered/performance claim or new passing tag.
+
+Storm1 visual work is retained; this pass repairs publication/recovery. Accepted surf/UI/camera/no-field look, publicconditionsAPI, defaultlimits/1.1DPRfloor, MITcredits and other lanes stay preserved. Data source/provenance limitations remain explicit. WaterPro bounded final attempt remains independent and cannot block Tidewater.
+
+## Rules and invariants
+
+Never commit/push GitHub main or expose secrets. Private Sites main deployment is approved. Preserve owner-private audience, licensed source privacy, strict gates, durable evidence and immutable baseline tags. No GPUrunner or invented phone/pixel results. Keep HANDOFF current everypass.
+
+## Archived handoff — storm1
+
 # Seaglass — Visual Truth storm volume / gate repair
 
 Updated 2026-10-20. Read HANDOFF.md and continue. This public WIP summary omits licensed source and private runtime configuration.
