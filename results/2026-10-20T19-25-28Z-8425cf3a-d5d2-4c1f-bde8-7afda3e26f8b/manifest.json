@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T19-25-28Z-8425cf3a-d5d2-4c1f-bde8-7afda3e26f8b",
+  "kind": "weather",
+  "fingerprint": "e25e9981fdc7ac69926df610d632eb6fbc804b99dbfe505880bac5da13a73fca",
+  "receivedAt": "2026-10-20T19:25:29.626Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 6700890,
+      "type": "application/json",
+      "sha256": "58038af65f781e69b57664d9da3d3e60e8db2c21c3b0524a2ba67ad9b400fd6d"
+    }
+  ]
+}
