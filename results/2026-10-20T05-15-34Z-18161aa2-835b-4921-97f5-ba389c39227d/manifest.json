@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T05-15-34Z-18161aa2-835b-4921-97f5-ba389c39227d",
+  "kind": "weather",
+  "fingerprint": "b340636fef08aee6e573c36c28aea44c3bcf7e357cee55a0911a85c31e189719",
+  "receivedAt": "2026-10-20T05:15:37.308Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 5071714,
+      "type": "application/json",
+      "sha256": "018e57b767120f704a1eb6dec15b7902604e44cec316e506be4939f723e0df42"
+    },
+    {
+      "name": "orange-left-map-scene.jpg",
+      "size": 156972,
+      "type": "image/jpeg",
+      "sha256": "69a678bc668f9ac45099cc70e6f54b795496bb5b6d5adf7ab775116dca4dbce1"
+    },
+    {
+      "name": "orange-left-field.json",
+      "size": 2269,
+      "type": "application/json",
+      "sha256": "00ddb1249aeaddd02b55dcd31f51b76b58e7ebb7f516a88f53ca01d72d7f213a"
+    }
+  ]
+}
