@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T03-11-30Z-a451358b-9996-4eea-8a06-c3342af4eb0b",
+  "kind": "weather",
+  "fingerprint": "ec500a188eb52d144dc725302c940d6ec5c7f39b780254ef4c20283f1f83f3e8",
+  "receivedAt": "2026-10-20T03:11:30.909Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 529884,
+      "type": "application/json",
+      "sha256": "2c06c0695fb9c305300f6e53628b8e11e981aed18151849a7193af6e6399f9e2"
+    },
+    {
+      "name": "visual-truth-contact-sheet.jpg",
+      "size": 372988,
+      "type": "image/jpeg",
+      "sha256": "0d6528da6d562fb28776eb839a3c131a87a6be22274d9f2fd44f987514a7b36d"
+    }
+  ]
+}
