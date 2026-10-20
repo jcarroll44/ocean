@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T05-17-12Z-85f6e26b-8fb9-41d9-944c-781c143b89c9",
+  "kind": "weather",
+  "fingerprint": "ea3af83ef13334d45dc7cda248aeca5417a0456a43ea53374f826b32397a0e2f",
+  "receivedAt": "2026-10-20T05:17:18.802Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 6553771,
+      "type": "application/json",
+      "sha256": "3204400c73140f76c109f0079b0947ec36f10f9d85de2fb342e4fedd477f9bae"
+    },
+    {
+      "name": "broad-squall-map-scene.jpg",
+      "size": 160857,
+      "type": "image/jpeg",
+      "sha256": "877c0212c75b36fe090961cef8ecea68476d43604b237b845ac7fbccc7bfb9ee"
+    },
+    {
+      "name": "broad-squall-field.json",
+      "size": 2276,
+      "type": "application/json",
+      "sha256": "886b39b2dbe272e882b7e7653cedb87c118177a635353ffe7025898b85b942cb"
+    }
+  ]
+}
