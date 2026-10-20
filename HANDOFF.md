@@ -1,3 +1,37 @@
+# Seaglass — final Water Pro attempt; live Visual Truth V2/V3
+
+Updated 2026-10-20. Read this handoff and continue. This is a public WIP summary; licensed source and full scene/deployment evidence stay in the private Sites source.
+
+## Current revision and deployed source
+
+Native: `2026-10-20-visual-truth-v2-v3-live`. Comparison: `2026-10-20-visual-truth-v1-waterpro-final`.
+Runtime private source `391fdaad8611edde2afe6590a136b6fe4333835e` deployed as Sites version67; verified receipt checkpoint `87e599f086e3a50a622a1ee6041741cad1aa9cd0` retains identical runtime, successful deployment `appgdep_6ad6d8d6363c8191b38f8f757d6e8189`.
+Production ocean remains Tidewater. Accepted immutable tag remains `scene-baseline-rc14c-startup` at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. No new device acceptance/tag.
+
+- Final comparison: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth-ab.html
+- Live Visual Truth + active-field120s/control/five pairs: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth.html
+- Existing full36-capture/wave/performance gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/weather-fixtures.html?gate=1&v=2026-10-16-stormcells-rc15
+
+## What changed and passed
+
+- Missing AB2 report detail came from success-only uploads before later candidate failures. Failures and final JSON now upload independently, survive reload/Share and appear on-page: exact message/stage/pipeline, feature/limit if identified, capabilities/device-loss/preparation trace. Historical AB2's exact shader error cannot be reconstructed from absent evidence.
+- One final bounded Water Pro3.5.1 attempt: half-float sky, omit unused float32 transfer pipelines, no optional features/raised limits, async-only actual-device descriptors and90s preparation cap. Failure permanently closes further candidate attempts in the journal. This is a compatibility hypothesis; iPhone attempt remains unrun.
+- Live Data1.1/1.2 wire adapter preserves producer ID, source times, missingness, rawPNG/decoded hashes and pinned timelines. Private server proxy keeps credentials out of clients. Live forecast and shared field/time publish atomically to map/scene.
+- Certainty fade is a shared display derivative (0m observed,500m at+1h,1500m at+3h,3000m at+6h), while raw classes/bytes stay immutable. Two bounded2MiB texture arrays, no extra pass.
+- V3 rain shafts run in the existing amortized cloud bake; valid beach dBZ drives local rain and existing water impacts through explicitly labeled Z=200 R^1.6 est. Missing radar retains forecast rain. Rain trails are finer/lower-opacity at unchanged384 instances. Supplemental120s uses64dBZ overhead field and validates local rain throughout.
+- Full local build passed: seven interaction checks,84native default-limit pipelines/80WGSL modules,36still command paths,40controlled startup/API checks, live Data/hash/controller tests, and52async Water Pro pipelines in each of four format/timestamp configurations with zero sync calls. These are CPU/DOM/Dawn-null checks, not iPhone rendering/FPS.
+- Deployment transport audit:63/63 assets HTTP200 with matching bytes/SHA256. Actual deployed private Data proxy:9/9 requests, observed/nowcast/model fields and forecast, verified immutable image hashes/IDs. Private reports: `night-report/visual-truth-final-deployed-assets.json`, `night-report/geo-live-deployed.json`.
+
+## Open and next
+
+Run the one final iPhone A/B; any compatibility failure closes it, with no AB4. Tidewater remains production regardless because stock Water Pro lacks accepted partitions/sets/refraction/sandbars/connected breakers. Continue live V2/V3 independently. Fresh rendered map/scene alignment and120s/full36-capture/wave evidence are pending; do not claim a passing tag. Existing persistent foam/spray are preserved; enhanced foam/spray/nearshore-depth ports are not claimed complete. Preserve golden-hour glint. Data producer declares GOES parallax uncorrected; missing echo/radar is not dry weather. Data/Features source deployments are untouched.
+
+## Rules
+
+No public main, secrets, vendor source/ZIP, raised WebGPU limits, GPU runner or invented phone results. Private Sites main/deployment approved; retain owner-private audience. Keep accepted surf truth, camera/UI,1.1DPRfloor, budgets, MIT Tidewater/Takram credits and immutable controls. Update rootHANDOFF at every pass. Features should consume accepted tag until a new build passes.
+
+## Archived prior handoff
+
 # Seaglass — Water Pro A/B asynchronous preparation repair
 
 Updated 2026-10-20. Read AGENTS.md and INTERACTION-CONTRACT.md. Read HANDOFF.md and continue.
