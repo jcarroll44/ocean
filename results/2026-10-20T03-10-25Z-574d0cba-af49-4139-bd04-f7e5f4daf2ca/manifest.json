@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T03-10-25Z-574d0cba-af49-4139-bd04-f7e5f4daf2ca",
+  "kind": "weather",
+  "fingerprint": "73141da4ad25faeef8cbe10d9916fa2278e73851f85d48e3af719e5fb66c7804",
+  "receivedAt": "2026-10-20T03:10:26.421Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 123085,
+      "type": "application/json",
+      "sha256": "09570ea6d04460b3cedfcdf2cf22c341aa6052fb842a3b9b92fb0de878365423"
+    },
+    {
+      "name": "green-offshore-map-scene.jpg",
+      "size": 153137,
+      "type": "image/jpeg",
+      "sha256": "2054b9a011f13744ba2819bff9299cd34f02d8a7507b484c51f4d2c0b46a8312"
+    },
+    {
+      "name": "green-offshore-field.json",
+      "size": 2288,
+      "type": "application/json",
+      "sha256": "2cda43281950cdd0227860f84a3be254e418736447d85a493a983b880914618d"
+    }
+  ]
+}

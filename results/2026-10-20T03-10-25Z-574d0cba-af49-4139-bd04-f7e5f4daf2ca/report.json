@@ -1,0 +1,3359 @@
+{
+  "schema": "seaglass.visual-truth-evidence/1",
+  "revision": "2026-10-20-visual-truth-v2-v3-live",
+  "toolsRevision": "2026-10-20-visual-truth-v2-v3-live",
+  "runId": "2026-10-20T03-10-25Z-574d0cba-af49-4139-bd04-f7e5f4daf2ca",
+  "startedAt": "2026-10-20T03:09:50.254Z",
+  "device": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.6.1 Mobile/15E148 Safari/604.1",
+  "viewport": {
+    "width": 390,
+    "height": 699
+  },
+  "cases": {
+    "green-offshore": {
+      "scope": "Uploaded semantic texture and scene-space sampler; not a rendered-pixel cloud-edge test",
+      "fixture": "green-offshore",
+      "expected": {
+        "id": "green-offshore",
+        "title": "Light rain offshore",
+        "bearingOffset": 0,
+        "distanceM": 22000,
+        "widthM": 14000,
+        "depthM": 10000,
+        "dbz": 25,
+        "cover": 0.72,
+        "topM": 4200,
+        "basis": "observed",
+        "leadSeconds": 0,
+        "bearingDeg": 201,
+        "eastM": -7884.09488999661,
+        "northM": -20538.769382938437
+      },
+      "checks": {
+        "bearing": {
+          "expectedDeg": 201,
+          "measuredDeg": 201.09626932550535,
+          "errorDeg": 0.09626932550531819,
+          "limitDeg": 5,
+          "pass": true
+        },
+        "distance": {
+          "expectedM": 22000,
+          "measuredM": 21966.881288414945,
+          "limitM": 1100,
+          "pass": true
+        },
+        "size": {
+          "expectedWidthM": 14000,
+          "measuredWidthM": 13767.095565795898,
+          "expectedDepthM": 10000,
+          "measuredDepthM": 9978.818893432617,
+          "relativeLimit": 0.1,
+          "pass": true
+        },
+        "edge": {
+          "maximumErrorM": 153.36132049560547,
+          "limitM": 292.96875,
+          "pass": true
+        },
+        "intensity": {
+          "expectedDbz": 25,
+          "measuredDbz": 25,
+          "expectedClass": "green",
+          "measuredClass": "green",
+          "pass": true
+        },
+        "echoTop": {
+          "expectedM": 4200,
+          "measuredM": 4200,
+          "limitM": 100,
+          "pass": true
+        }
+      },
+      "pass": true,
+      "samples": [
+        {
+          "eastM": -7884.09488999661,
+          "northM": -20538.769382938437,
+          "scene": {
+            "x": 0,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 22000,
+            "eastM": -7884.09488999661,
+            "northM": -20538.769382938437,
+            "u": 0.44743936740002266,
+            "v": 0.6369251292195895,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -254.99234221479037,
+          "northM": -23467.30747062894,
+          "scene": {
+            "x": 8171.874999999999,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 8171.874999999999,
+            "z": 22000,
+            "eastM": -254.99234221479128,
+            "northM": -23467.307470628937,
+            "u": 0.49830005105190134,
+            "v": 0.6564487164708596,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -4069.5436161057,
+          "northM": -22003.03842678369,
+          "scene": {
+            "x": 4085.9375,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 4085.9375,
+            "z": 22000,
+            "eastM": -4069.5436161057,
+            "northM": -22003.03842678369,
+            "u": 0.472869709225962,
+            "v": 0.6466869228452247,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509805,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -2162.267979160245,
+          "northM": -22735.172948706313,
+          "scene": {
+            "x": 6128.90625,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6128.90625,
+            "z": 22000,
+            "eastM": -2162.267979160245,
+            "northM": -22735.172948706313,
+            "u": 0.4855848801389317,
+            "v": 0.6515678196580421,
+            "inside": true,
+            "dbz": 24.999999999999996,
+            "cloudCoverage": 0.7215686274509803,
+            "echoTop18M": 4199.999999999999,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1208.6301606875177,
+          "northM": -23101.240209667627,
+          "scene": {
+            "x": 7150.390625,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 7150.390625,
+            "z": 22000,
+            "eastM": -1208.6301606875177,
+            "northM": -23101.240209667627,
+            "u": 0.49194246559541654,
+            "v": 0.6540082680644508,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1685.4490699238813,
+          "northM": -22918.206579186968,
+          "scene": {
+            "x": 6639.648437499999,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6639.648437499999,
+            "z": 22000,
+            "eastM": -1685.4490699238822,
+            "northM": -22918.206579186968,
+            "u": 0.48876367286717415,
+            "v": 0.6527880438612464,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1447.039615305699,
+          "northM": -23009.7233944273,
+          "scene": {
+            "x": 6895.01953125,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6895.01953125,
+            "z": 22000,
+            "eastM": -1447.039615305699,
+            "northM": -23009.7233944273,
+            "u": 0.4903530692312954,
+            "v": 0.6533981559628487,
+            "inside": true,
+            "dbz": 10.980713839418854,
+            "cloudCoverage": 0.3169335445416579,
+            "echoTop18M": 1844.7599250223673,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1566.2443426147902,
+          "northM": -22963.964986807136,
+          "scene": {
+            "x": 6767.333984375,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6767.333984375,
+            "z": 22000,
+            "eastM": -1566.2443426147902,
+            "northM": -22963.964986807136,
+            "u": 0.4895583710492347,
+            "v": 0.6530930999120477,
+            "inside": true,
+            "dbz": 21.60040040827294,
+            "cloudCoverage": 0.6234468509995641,
+            "echoTop18M": 3628.867268589854,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1506.641978960245,
+          "northM": -22986.844190617216,
+          "scene": {
+            "x": 6831.176757812499,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6831.176757812499,
+            "z": 22000,
+            "eastM": -1506.641978960246,
+            "northM": -22986.844190617216,
+            "u": 0.489955720140265,
+            "v": 0.653245627937448,
+            "inside": true,
+            "dbz": 16.40837501778198,
+            "cloudCoverage": 0.473590745611276,
+            "echoTop18M": 2756.607002987373,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1476.8407971329725,
+          "northM": -22998.283792522256,
+          "scene": {
+            "x": 6863.098144531248,
+            "z": 21999.999999999996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6863.098144531248,
+            "z": 21999.999999999996,
+            "eastM": -1476.8407971329716,
+            "northM": -22998.283792522252,
+            "u": 0.4901543946857802,
+            "v": 0.6533218919501483,
+            "inside": true,
+            "dbz": 13.523748022013393,
+            "cloudCoverage": 0.3903324919294846,
+            "echoTop18M": 2271.98966769825,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1491.7413880466083,
+          "northM": -22992.563991569736,
+          "scene": {
+            "x": 6847.137451171874,
+            "z": 21999.999999999996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6847.137451171874,
+            "z": 21999.999999999996,
+            "eastM": -1491.7413880466074,
+            "northM": -22992.563991569732,
+            "u": 0.49005505741302263,
+            "v": 0.6532837599437983,
+            "inside": true,
+            "dbz": 14.986245795790623,
+            "cloudCoverage": 0.4325441923804666,
+            "echoTop18M": 2517.689293692825,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1499.1916835034272,
+          "northM": -22989.704091093477,
+          "scene": {
+            "x": 6839.1571044921875,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6839.1571044921875,
+            "z": 22000,
+            "eastM": -1499.1916835034272,
+            "northM": -22989.704091093477,
+            "u": 0.49000538877664385,
+            "v": 0.6532646939406231,
+            "inside": true,
+            "dbz": 15.703516550504338,
+            "cloudCoverage": 0.45324659534004674,
+            "echoTop18M": 2638.1907804847287,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1495.4665357750173,
+          "northM": -22991.134041331607,
+          "scene": {
+            "x": 6843.147277832031,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6843.147277832031,
+            "z": 22000,
+            "eastM": -1495.4665357750173,
+            "northM": -22991.134041331607,
+            "u": 0.4900302230948332,
+            "v": 0.6532742269422107,
+            "inside": true,
+            "dbz": 15.346432709077767,
+            "cloudCoverage": 0.442940175446323,
+            "echoTop18M": 2578.200695125065,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1493.6039619108133,
+          "northM": -22991.849016450673,
+          "scene": {
+            "x": 6845.142364501952,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6845.142364501952,
+            "z": 22000,
+            "eastM": -1493.6039619108142,
+            "northM": -22991.849016450673,
+            "u": 0.49004264025392785,
+            "v": 0.6532789934430044,
+            "inside": true,
+            "dbz": 15.166727136417576,
+            "cloudCoverage": 0.4377533793099348,
+            "echoTop18M": 2548.0101589181527,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -1492.6726749787113,
+          "northM": -22992.206504010202,
+          "scene": {
+            "x": 6846.139907836913,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 6846.139907836913,
+            "z": 22000,
+            "eastM": -1492.6726749787113,
+            "northM": -22992.206504010202,
+            "u": 0.4900488488334753,
+            "v": 0.6532813766934014,
+            "inside": true,
+            "dbz": 15.076583437098655,
+            "cloudCoverage": 0.4351515846942985,
+            "echoTop18M": 2532.866017432574,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -15513.197437778428,
+          "northM": -17610.231295247933,
+          "scene": {
+            "x": -8171.874999999998,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -8171.874999999998,
+            "z": 22000,
+            "eastM": -15513.197437778428,
+            "northM": -17610.231295247937,
+            "u": 0.3965786837481438,
+            "v": 0.6174015419683196,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -11698.646163887519,
+          "northM": -19074.500339093185,
+          "scene": {
+            "x": -4085.937499999999,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -4085.937499999999,
+            "z": 22000,
+            "eastM": -11698.646163887519,
+            "northM": -19074.500339093185,
+            "u": 0.4220090255740832,
+            "v": 0.6271633355939545,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -13605.921800832974,
+          "northM": -18342.36581717056,
+          "scene": {
+            "x": -6128.906249999998,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6128.906249999998,
+            "z": 22000,
+            "eastM": -13605.921800832974,
+            "northM": -18342.36581717056,
+            "u": 0.4092938546611135,
+            "v": 0.6222824387811371,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14559.559619305703,
+          "northM": -17976.298556209247,
+          "scene": {
+            "x": -7150.390624999999,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -7150.390624999999,
+            "z": 22000,
+            "eastM": -14559.5596193057,
+            "northM": -17976.298556209247,
+            "u": 0.40293626920462866,
+            "v": 0.6198419903747283,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14082.740710069338,
+          "northM": -18159.332186689906,
+          "scene": {
+            "x": -6639.648437499998,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6639.648437499998,
+            "z": 22000,
+            "eastM": -14082.740710069336,
+            "northM": -18159.332186689906,
+            "u": 0.40611506193287106,
+            "v": 0.6210622145779328,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14321.15016468752,
+          "northM": -18067.815371449575,
+          "scene": {
+            "x": -6895.01953125,
+            "z": 21999.999999999996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6895.01953125,
+            "z": 21999.999999999996,
+            "eastM": -14321.150164687519,
+            "northM": -18067.81537144957,
+            "u": 0.40452566556874986,
+            "v": 0.6204521024763304,
+            "inside": true,
+            "dbz": 17.069802986256896,
+            "cloudCoverage": 0.4926813724660814,
+            "echoTop18M": 2867.7269016911587,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14440.35489199661,
+          "northM": -18022.05696382941,
+          "scene": {
+            "x": -7022.705078125,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -7022.705078125,
+            "z": 22000,
+            "eastM": -14440.35489199661,
+            "northM": -18022.05696382941,
+            "u": 0.40373096738668923,
+            "v": 0.6201470464255294,
+            "inside": true,
+            "dbz": 5.558218429625901,
+            "cloudCoverage": 0.16042544173351622,
+            "echoTop18M": 933.7806961771514,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14380.752528342065,
+          "northM": -18044.936167639495,
+          "scene": {
+            "x": -6958.862304687499,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6958.862304687499,
+            "z": 22000,
+            "eastM": -14380.752528342065,
+            "northM": -18044.936167639495,
+            "u": 0.4041283164777195,
+            "v": 0.62029957445093,
+            "inside": true,
+            "dbz": 11.711203905916062,
+            "cloudCoverage": 0.3380174931276165,
+            "echoTop18M": 1967.4822561938981,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14350.951346514794,
+          "northM": -18056.375769544535,
+          "scene": {
+            "x": -6926.940917968751,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6926.940917968751,
+            "z": 22000,
+            "eastM": -14350.951346514794,
+            "northM": -18056.375769544535,
+            "u": 0.4043269910232347,
+            "v": 0.6203758384636302,
+            "inside": true,
+            "dbz": 14.489801745580401,
+            "cloudCoverage": 0.4182154543038108,
+            "echoTop18M": 2434.286693257507,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14336.050755601156,
+          "northM": -18062.095570497055,
+          "scene": {
+            "x": -6910.980224609373,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6910.980224609373,
+            "z": 22000,
+            "eastM": -14336.050755601154,
+            "northM": -18062.095570497055,
+            "u": 0.4044263282959923,
+            "v": 0.6204139704699804,
+            "inside": true,
+            "dbz": 15.804626940792357,
+            "cloudCoverage": 0.45616491876169313,
+            "echoTop18M": 2655.177326053116,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14343.501051057974,
+          "northM": -18059.235670020797,
+          "scene": {
+            "x": -6918.960571289062,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6918.960571289062,
+            "z": 22000,
+            "eastM": -14343.501051057974,
+            "northM": -18059.235670020797,
+            "u": 0.4043766596596135,
+            "v": 0.6203949044668053,
+            "inside": true,
+            "dbz": 15.153420486905064,
+            "cloudCoverage": 0.43736931287694614,
+            "echoTop18M": 2545.7746418000506,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14347.226198786384,
+          "northM": -18057.805719782664,
+          "scene": {
+            "x": -6922.950744628906,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6922.950744628906,
+            "z": 22000,
+            "eastM": -14347.226198786384,
+            "northM": -18057.805719782664,
+            "u": 0.4043518253414241,
+            "v": 0.6203853714652177,
+            "inside": true,
+            "dbz": 14.823162652171657,
+            "cloudCoverage": 0.42783716517640547,
+            "echoTop18M": 2490.291325564838,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14345.363624922178,
+          "northM": -18058.52069490173,
+          "scene": {
+            "x": -6920.955657958983,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6920.955657958983,
+            "z": 22000,
+            "eastM": -14345.363624922178,
+            "northM": -18058.52069490173,
+            "u": 0.40436424250051883,
+            "v": 0.6203901379660115,
+            "inside": true,
+            "dbz": 14.988679453521069,
+            "cloudCoverage": 0.4326144344231963,
+            "echoTop18M": 2518.0981481915396,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -14344.432337990078,
+          "northM": -18058.878182461263,
+          "scene": {
+            "x": -6919.9581146240225,
+            "z": 22000
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -6919.9581146240225,
+            "z": 22000,
+            "eastM": -14344.432337990076,
+            "northM": -18058.878182461263,
+            "u": 0.4043704510800662,
+            "v": 0.6203925212164084,
+            "inside": true,
+            "dbz": 15.071146941208973,
+            "cloudCoverage": 0.434994672499208,
+            "echoTop18M": 2531.952686123108,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -5672.292701396709,
+          "northM": -14776.827688151021,
+          "scene": {
+            "x": -9.094947017729282e-13,
+            "z": 15828.125
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -9.094947017729282e-13,
+            "z": 15828.125,
+            "eastM": -5672.292701396709,
+            "northM": -14776.82768815102,
+            "u": 0.4621847153240219,
+            "v": 0.5985121845876735,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6778.193795696659,
+          "northM": -17657.79853554473,
+          "scene": {
+            "x": 9.094947017729282e-13,
+            "z": 18914.062500000004
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 9.094947017729282e-13,
+            "z": 18914.062500000004,
+            "eastM": -6778.193795696659,
+            "northM": -17657.79853554473,
+            "u": 0.4548120413620223,
+            "v": 0.6177186569036316,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6225.243248546683,
+          "northM": -16217.313111847874,
+          "scene": {
+            "x": 0,
+            "z": 17371.09375
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 17371.09375,
+            "eastM": -6225.243248546683,
+            "northM": -16217.313111847874,
+            "u": 0.4584983783430221,
+            "v": 0.6081154207456525,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -5948.767974971696,
+          "northM": -15497.070399999448,
+          "scene": {
+            "x": 0,
+            "z": 16599.609375
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16599.609375,
+            "eastM": -5948.767974971696,
+            "northM": -15497.070399999446,
+            "u": 0.4603415468335221,
+            "v": 0.603313802666663,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6087.00561175919,
+          "northM": -15857.19175592366,
+          "scene": {
+            "x": 0,
+            "z": 16985.3515625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16985.3515625,
+            "eastM": -6087.00561175919,
+            "northM": -15857.19175592366,
+            "u": 0.45941996258827206,
+            "v": 0.6057146117061577,
+            "inside": true,
+            "dbz": 15.647029838818582,
+            "cloudCoverage": 0.4516162337792344,
+            "echoTop18M": 2628.701012921522,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6017.886793365443,
+          "northM": -15677.131077961554,
+          "scene": {
+            "x": 0,
+            "z": 16792.48046875
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16792.48046875,
+            "eastM": -6017.886793365443,
+            "northM": -15677.131077961554,
+            "u": 0.45988075471089707,
+            "v": 0.6045142071864104,
+            "inside": true,
+            "dbz": 0.28185198605257256,
+            "cloudCoverage": 0.008135022028811506,
+            "echoTop18M": 47.35113365683219,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6052.446202562316,
+          "northM": -15767.161416942607,
+          "scene": {
+            "x": 0,
+            "z": 16888.916015625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16888.916015625,
+            "eastM": -6052.446202562316,
+            "northM": -15767.161416942607,
+            "u": 0.45965035864958453,
+            "v": 0.605114409446284,
+            "inside": true,
+            "dbz": 7.9644409124355775,
+            "cloudCoverage": 0.22987562790402294,
+            "echoTop18M": 1338.026073289177,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6069.725907160753,
+          "northM": -15812.176586433136,
+          "scene": {
+            "x": 9.094947017729282e-13,
+            "z": 16937.1337890625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 9.094947017729282e-13,
+            "z": 16937.1337890625,
+            "eastM": -6069.725907160752,
+            "northM": -15812.176586433134,
+            "u": 0.4595351606189283,
+            "v": 0.605414510576221,
+            "inside": true,
+            "dbz": 11.805735375628501,
+            "cloudCoverage": 0.3407459308416697,
+            "echoTop18M": 1983.3635431055882,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6078.365759459972,
+          "northM": -15834.684171178398,
+          "scene": {
+            "x": 9.094947017729282e-13,
+            "z": 16961.24267578125
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 9.094947017729282e-13,
+            "z": 16961.24267578125,
+            "eastM": -6078.365759459971,
+            "northM": -15834.684171178396,
+            "u": 0.45947756160360026,
+            "v": 0.6055645611411893,
+            "inside": true,
+            "dbz": 13.726382607222831,
+            "cloudCoverage": 0.39618108231043153,
+            "echoTop18M": 2306.0322780134356,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6082.685685609581,
+          "northM": -15845.93796355103,
+          "scene": {
+            "x": 9.094947017729282e-13,
+            "z": 16973.297119140625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 9.094947017729282e-13,
+            "z": 16973.297119140625,
+            "eastM": -6082.68568560958,
+            "northM": -15845.937963551029,
+            "u": 0.4594487620959361,
+            "v": 0.6056395864236735,
+            "inside": true,
+            "dbz": 14.686706223021416,
+            "cloudCoverage": 0.42389865804485344,
+            "echoTop18M": 2467.366645467598,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6084.845648684385,
+          "northM": -15851.564859737346,
+          "scene": {
+            "x": 0,
+            "z": 16979.324340820312
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16979.324340820312,
+            "eastM": -6084.845648684385,
+            "northM": -15851.564859737344,
+            "u": 0.45943436234210416,
+            "v": 0.6056770990649156,
+            "inside": true,
+            "dbz": 15.16686803092,
+            "cloudCoverage": 0.43775744591204396,
+            "echoTop18M": 2548.03382919456,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6083.765667146983,
+          "northM": -15848.751411644187,
+          "scene": {
+            "x": 0,
+            "z": 16976.31072998047
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16976.31072998047,
+            "eastM": -6083.765667146983,
+            "northM": -15848.751411644187,
+            "u": 0.45944156221902005,
+            "v": 0.6056583427442946,
+            "inside": true,
+            "dbz": 14.92678712697142,
+            "cloudCoverage": 0.4308280519784692,
+            "echoTop18M": 2507.7002373311984,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6084.305657915685,
+          "northM": -15850.158135690766,
+          "scene": {
+            "x": 0,
+            "z": 16977.81753540039
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16977.81753540039,
+            "eastM": -6084.305657915685,
+            "northM": -15850.158135690765,
+            "u": 0.4594379622805621,
+            "v": 0.6056677209046051,
+            "inside": true,
+            "dbz": 15.046827578944999,
+            "cloudCoverage": 0.43429274894523606,
+            "echoTop18M": 2527.86703326276,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -6084.035662531333,
+          "northM": -15849.454773667476,
+          "scene": {
+            "x": 0,
+            "z": 16977.06413269043
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 16977.06413269043,
+            "eastM": -6084.035662531333,
+            "northM": -15849.454773667476,
+            "u": 0.45943976224979116,
+            "v": 0.6056630318244498,
+            "inside": true,
+            "dbz": 14.986807352957499,
+            "cloudCoverage": 0.4325604004618321,
+            "echoTop18M": 2517.7836352968598,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -10095.89707859651,
+          "northM": -26300.711077725853,
+          "scene": {
+            "x": 0,
+            "z": 28171.874999999996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 28171.874999999996,
+            "eastM": -10095.89707859651,
+            "northM": -26300.71107772585,
+            "u": 0.43269401947602326,
+            "v": 0.6753380738515057,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -8989.99598429656,
+          "northM": -23419.740230332143,
+          "scene": {
+            "x": 0,
+            "z": 25085.937499999996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 25085.937499999996,
+            "eastM": -8989.995984296558,
+            "northM": -23419.74023033214,
+            "u": 0.4400666934380229,
+            "v": 0.6561316015355476,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509805,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9542.946531446536,
+          "northM": -24860.225654029,
+          "scene": {
+            "x": 0,
+            "z": 26628.90625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26628.90625,
+            "eastM": -9542.946531446536,
+            "northM": -24860.225654028996,
+            "u": 0.4363803564570231,
+            "v": 0.6657348376935266,
+            "inside": true,
+            "dbz": 25,
+            "cloudCoverage": 0.7215686274509804,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9819.421805021524,
+          "northM": -25580.468365877427,
+          "scene": {
+            "x": 0,
+            "z": 27400.390625
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 27400.390625,
+            "eastM": -9819.421805021522,
+            "northM": -25580.468365877427,
+            "u": 0.4345371879665232,
+            "v": 0.6705364557725162,
+            "inside": true,
+            "dbz": 0,
+            "cloudCoverage": 0,
+            "echoTop18M": 0,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9681.18416823403,
+          "northM": -25220.347009953213,
+          "scene": {
+            "x": 0,
+            "z": 27014.6484375
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 27014.6484375,
+            "eastM": -9681.18416823403,
+            "northM": -25220.347009953213,
+            "u": 0.43545877221177315,
+            "v": 0.6681356467330214,
+            "inside": true,
+            "dbz": 10.363721817326166,
+            "cloudCoverage": 0.2991254610804729,
+            "echoTop18M": 1741.1052653107959,
+            "validity": 7,
+            "classification": "weak",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9612.065349840283,
+          "northM": -25040.286331991105,
+          "scene": {
+            "x": 0,
+            "z": 26821.777343749996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26821.777343749996,
+            "eastM": -9612.06534984028,
+            "northM": -25040.2863319911,
+            "u": 0.4359195643343981,
+            "v": 0.6669352422132739,
+            "inside": true,
+            "dbz": 25.000000000000004,
+            "cloudCoverage": 0.7215686274509805,
+            "echoTop18M": 4200,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9646.624759037157,
+          "northM": -25130.31667097216,
+          "scene": {
+            "x": 0,
+            "z": 26918.212890624996
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26918.212890624996,
+            "eastM": -9646.624759037155,
+            "northM": -25130.316670972155,
+            "u": 0.4356891682730856,
+            "v": 0.6675354444731477,
+            "inside": true,
+            "dbz": 18.04631074370917,
+            "cloudCoverage": 0.5208660669556843,
+            "echoTop18M": 3031.7802049431407,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9663.904463635592,
+          "northM": -25175.331840462684,
+          "scene": {
+            "x": 0,
+            "z": 26966.430664062496
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26966.430664062496,
+            "eastM": -9663.904463635592,
+            "northM": -25175.33184046268,
+            "u": 0.4355739702424294,
+            "v": 0.6678355456030846,
+            "inside": true,
+            "dbz": 14.205016280517668,
+            "cloudCoverage": 0.4099957640180786,
+            "echoTop18M": 2386.4427351269683,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9655.264611336373,
+          "northM": -25152.824255717424,
+          "scene": {
+            "x": 1.8189894035458565e-12,
+            "z": 26942.321777343746
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 1.8189894035458565e-12,
+            "z": 26942.321777343746,
+            "eastM": -9655.264611336372,
+            "northM": -25152.82425571742,
+            "u": 0.43563156925775753,
+            "v": 0.6676854950381161,
+            "inside": true,
+            "dbz": 16.12566351211342,
+            "cloudCoverage": 0.4654309154868814,
+            "echoTop18M": 2709.1114700350545,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9659.584537485984,
+          "northM": -25164.078048090054,
+          "scene": {
+            "x": 0,
+            "z": 26954.37622070312
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26954.37622070312,
+            "eastM": -9659.584537485982,
+            "northM": -25164.07804809005,
+            "u": 0.4356027697500935,
+            "v": 0.6677605203206003,
+            "inside": true,
+            "dbz": 15.165339896316254,
+            "cloudCoverage": 0.4377133397525005,
+            "echoTop18M": 2547.7771025811307,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9661.744500560788,
+          "northM": -25169.70494427637,
+          "scene": {
+            "x": 0,
+            "z": 26960.403442382812
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26960.403442382812,
+            "eastM": -9661.744500560788,
+            "northM": -25169.70494427637,
+            "u": 0.43558836999626144,
+            "v": 0.6677980329618425,
+            "inside": true,
+            "dbz": 14.68517808841625,
+            "cloudCoverage": 0.42385455188526905,
+            "echoTop18M": 2467.10991885393,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9660.664519023387,
+          "northM": -25166.891496183212,
+          "scene": {
+            "x": -1.8189894035458565e-12,
+            "z": 26957.38983154297
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": -1.8189894035458565e-12,
+            "z": 26957.38983154297,
+            "eastM": -9660.664519023387,
+            "northM": -25166.891496183212,
+            "u": 0.43559556987317744,
+            "v": 0.6677792766412214,
+            "inside": true,
+            "dbz": 14.925258992366253,
+            "cloudCoverage": 0.4307839458188848,
+            "echoTop18M": 2507.4435107175304,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9660.124528254684,
+          "northM": -25165.48477213663,
+          "scene": {
+            "x": 0,
+            "z": 26955.88302612304
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26955.88302612304,
+            "eastM": -9660.124528254682,
+            "northM": -25165.484772136624,
+            "u": 0.4355991698116355,
+            "v": 0.6677698984809108,
+            "inside": true,
+            "dbz": 15.045299444341254,
+            "cloudCoverage": 0.43424864278569264,
+            "echoTop18M": 2527.6103066493306,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        },
+        {
+          "eastM": -9660.394523639035,
+          "northM": -25166.188134159922,
+          "scene": {
+            "x": 0,
+            "z": 26956.636428833004
+          },
+          "sample": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "x": 0,
+            "z": 26956.636428833004,
+            "eastM": -9660.394523639034,
+            "northM": -25166.18813415992,
+            "u": 0.43559736984240643,
+            "v": 0.6677745875610661,
+            "inside": true,
+            "dbz": 14.985279218353753,
+            "cloudCoverage": 0.4325162943022887,
+            "echoTop18M": 2517.5269086834305,
+            "validity": 7,
+            "classification": "green",
+            "scope": "Immutable uploaded semantic texture sampled at scene metres; not rendered pixels"
+          }
+        }
+      ],
+      "completedCloudCache": {
+        "width": 512,
+        "height": 128,
+        "columns": 256,
+        "rows": 1,
+        "layers": 3,
+        "primarySteps": 18,
+        "shadowSteps": 3,
+        "refreshMs": 20000,
+        "fadeMs": 400,
+        "refreshFadeMs": 1600,
+        "ready": true,
+        "disabled": false,
+        "optionalFailure": null,
+        "active": false,
+        "row": 128,
+        "column": 0,
+        "empty": false,
+        "generations": 6,
+        "targetKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+        "geoWeather": {
+          "active": {
+            "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "beachId": "inlet-beach",
+            "validAt": 1793034000000,
+            "asOf": 1793034000000,
+            "kind": "fixture",
+            "facingDeg": 201,
+            "cameraOriginM": [
+              -27.439781843333588,
+              -63.547050276251206
+            ],
+            "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+            "presentation": {
+              "version": "gaussian-box3/1",
+              "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+              "edgeSoftnessM": 0,
+              "rawClassesUnchanged": true
+            },
+            "precipitation": {
+              "available": true,
+              "dbz": 0,
+              "mmh": 0,
+              "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+            },
+            "textureBytes": 2097152,
+            "validPixels": 262144,
+            "cloudPixels": 1279,
+            "maximumCloudTopM": 4200,
+            "estimatedCloudBaseM": 850,
+            "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+            "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+            "advection": "source-field-only",
+            "uncertainty": {
+              "leadSeconds": 0,
+              "edgeSoftnessM": 0,
+              "basis": "observed",
+              "label": "Fixture · synthetic observed radar"
+            },
+            "sources": {
+              "reflectivity": {
+                "status": "available",
+                "provider": "Synthetic fixture",
+                "product": "Analytic ellipse green-offshore",
+                "objectId": "green-offshore",
+                "attribution": "Synthetic test fixture; not NOAA observations",
+                "validAt": 1793034000000,
+                "retrievedAt": 1793034000000,
+                "nativeResolutionM": 292.96875
+              },
+              "cloudCoverage": {
+                "status": "available",
+                "provider": "Synthetic fixture",
+                "product": "Analytic ellipse green-offshore",
+                "objectId": "green-offshore",
+                "attribution": "Synthetic test fixture; not NOAA observations",
+                "validAt": 1793034000000,
+                "retrievedAt": 1793034000000,
+                "nativeResolutionM": 292.96875
+              },
+              "echoTop18": {
+                "status": "available",
+                "provider": "Synthetic fixture",
+                "product": "Analytic ellipse green-offshore",
+                "objectId": "green-offshore",
+                "attribution": "Synthetic test fixture; not NOAA observations",
+                "validAt": 1793034000000,
+                "retrievedAt": 1793034000000,
+                "nativeResolutionM": 292.96875
+              }
+            }
+          },
+          "preparing": null,
+          "prepared": null,
+          "display": {
+            "current": {
+              "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+              "beachId": "inlet-beach",
+              "validAt": 1793034000000,
+              "asOf": 1793034000000,
+              "kind": "fixture",
+              "facingDeg": 201,
+              "cameraOriginM": [
+                -27.439781843333588,
+                -63.547050276251206
+              ],
+              "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+              "presentation": {
+                "version": "gaussian-box3/1",
+                "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                "edgeSoftnessM": 0,
+                "rawClassesUnchanged": true
+              },
+              "precipitation": {
+                "available": true,
+                "dbz": 0,
+                "mmh": 0,
+                "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+              },
+              "textureBytes": 2097152,
+              "validPixels": 262144,
+              "cloudPixels": 1279,
+              "maximumCloudTopM": 4200,
+              "estimatedCloudBaseM": 850,
+              "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+              "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+              "advection": "source-field-only",
+              "uncertainty": {
+                "leadSeconds": 0,
+                "edgeSoftnessM": 0,
+                "basis": "observed",
+                "label": "Fixture · synthetic observed radar"
+              },
+              "sources": {
+                "reflectivity": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "cloudCoverage": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "echoTop18": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                }
+              }
+            },
+            "previous": null,
+            "blend": 1
+          },
+          "geometry": {
+            "space": "beach-local scene metres; +Z offshore, +X left",
+            "texture": "512 × 512 north-up AEQD RGBA8; no sRGB/premultiply/repeat",
+            "sample": "nearest validity + bilinear valid-neighbor renormalization",
+            "advection": "source-field-only"
+          },
+          "candidateShader": true,
+          "loading": false
+        },
+        "completedKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+        "scrubbing": false,
+        "activeResolution": [
+          512,
+          128
+        ],
+        "snapshotLayers": [
+          0,
+          0,
+          0
+        ],
+        "stormCells": {
+          "requested": {
+            "key": "",
+            "count": 0,
+            "cells": [],
+            "projected": [],
+            "clockSeconds": 1793034006.704,
+            "elapsedSeconds": -35993.296000003815,
+            "provided": false,
+            "valid": true,
+            "diagnostics": [],
+            "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+          },
+          "current": {
+            "key": "",
+            "count": 0,
+            "cells": [],
+            "projected": [],
+            "clockSeconds": 1793034001.387,
+            "elapsedSeconds": -35998.61299991608,
+            "provided": false,
+            "valid": true,
+            "diagnostics": [],
+            "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+          },
+          "previous": {
+            "key": "",
+            "count": 0,
+            "cells": [],
+            "projected": [],
+            "clockSeconds": 1793034000,
+            "elapsedSeconds": -36000,
+            "provided": false,
+            "valid": true,
+            "diagnostics": [],
+            "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+          },
+          "snapshotCount": 0,
+          "packed": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "lowTop": 2550,
+          "refreshMs": 20000,
+          "advection": "independent world positions sampled into complete 20-second atlases; no shared wind reprojection"
+        },
+        "advection": {
+          "current": [
+            0,
+            0
+          ],
+          "previous": [
+            0,
+            0
+          ],
+          "clock": 6.704000000000003,
+          "source": "dominant optical layer wind reprojection; full layer winds in each bake; frozen weather clock"
+        }
+      },
+      "renderedAlignment": {
+        "status": "requires-visual-review",
+        "pass": null,
+        "reason": "Review the actual same-time map/scene capture. Field geometry is not proof of the visible volumetric silhouette."
+      },
+      "publication": {
+        "preparedMs": 5411,
+        "prepared": {
+          "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+          "beachId": "inlet-beach",
+          "validAt": 1793034000000,
+          "asOf": 1793034000000,
+          "kind": "fixture",
+          "facingDeg": 201,
+          "cameraOriginM": [
+            -27.439781843333588,
+            -63.547050276251206
+          ],
+          "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+          "presentation": {
+            "version": "gaussian-box3/1",
+            "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+            "edgeSoftnessM": 0,
+            "rawClassesUnchanged": true
+          },
+          "precipitation": {
+            "available": true,
+            "dbz": 0,
+            "mmh": 0,
+            "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+          },
+          "textureBytes": 2097152,
+          "validPixels": 262144,
+          "cloudPixels": 1279,
+          "maximumCloudTopM": 4200,
+          "estimatedCloudBaseM": 850,
+          "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+          "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+          "advection": "source-field-only",
+          "uncertainty": {
+            "leadSeconds": 0,
+            "edgeSoftnessM": 0,
+            "basis": "observed",
+            "label": "Fixture · synthetic observed radar"
+          },
+          "sources": {
+            "reflectivity": {
+              "status": "available",
+              "provider": "Synthetic fixture",
+              "product": "Analytic ellipse green-offshore",
+              "objectId": "green-offshore",
+              "attribution": "Synthetic test fixture; not NOAA observations",
+              "validAt": 1793034000000,
+              "retrievedAt": 1793034000000,
+              "nativeResolutionM": 292.96875
+            },
+            "cloudCoverage": {
+              "status": "available",
+              "provider": "Synthetic fixture",
+              "product": "Analytic ellipse green-offshore",
+              "objectId": "green-offshore",
+              "attribution": "Synthetic test fixture; not NOAA observations",
+              "validAt": 1793034000000,
+              "retrievedAt": 1793034000000,
+              "nativeResolutionM": 292.96875
+            },
+            "echoTop18": {
+              "status": "available",
+              "provider": "Synthetic fixture",
+              "product": "Analytic ellipse green-offshore",
+              "objectId": "green-offshore",
+              "attribution": "Synthetic test fixture; not NOAA observations",
+              "validAt": 1793034000000,
+              "retrievedAt": 1793034000000,
+              "nativeResolutionM": 292.96875
+            }
+          },
+          "ready": true,
+          "blendMs": 400,
+          "preparedAt": 30760
+        },
+        "selection": {
+          "generation": 5,
+          "active": {
+            "selectionId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "beachId": "inlet-beach",
+            "selectedAt": 1793034000000,
+            "fromId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "toId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+            "blend": 1
+          },
+          "pending": null
+        },
+        "cache": {
+          "width": 512,
+          "height": 128,
+          "columns": 256,
+          "rows": 1,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 20000,
+          "fadeMs": 400,
+          "refreshFadeMs": 1600,
+          "ready": true,
+          "disabled": false,
+          "optionalFailure": null,
+          "active": false,
+          "row": 128,
+          "column": 0,
+          "empty": false,
+          "generations": 6,
+          "targetKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+          "geoWeather": {
+            "active": {
+              "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+              "beachId": "inlet-beach",
+              "validAt": 1793034000000,
+              "asOf": 1793034000000,
+              "kind": "fixture",
+              "facingDeg": 201,
+              "cameraOriginM": [
+                -27.439781843333588,
+                -63.547050276251206
+              ],
+              "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+              "presentation": {
+                "version": "gaussian-box3/1",
+                "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                "edgeSoftnessM": 0,
+                "rawClassesUnchanged": true
+              },
+              "precipitation": {
+                "available": true,
+                "dbz": 0,
+                "mmh": 0,
+                "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+              },
+              "textureBytes": 2097152,
+              "validPixels": 262144,
+              "cloudPixels": 1279,
+              "maximumCloudTopM": 4200,
+              "estimatedCloudBaseM": 850,
+              "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+              "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+              "advection": "source-field-only",
+              "uncertainty": {
+                "leadSeconds": 0,
+                "edgeSoftnessM": 0,
+                "basis": "observed",
+                "label": "Fixture · synthetic observed radar"
+              },
+              "sources": {
+                "reflectivity": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "cloudCoverage": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "echoTop18": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                }
+              }
+            },
+            "preparing": null,
+            "prepared": null,
+            "display": {
+              "current": {
+                "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+                "beachId": "inlet-beach",
+                "validAt": 1793034000000,
+                "asOf": 1793034000000,
+                "kind": "fixture",
+                "facingDeg": 201,
+                "cameraOriginM": [
+                  -27.439781843333588,
+                  -63.547050276251206
+                ],
+                "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                "presentation": {
+                  "version": "gaussian-box3/1",
+                  "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                  "edgeSoftnessM": 0,
+                  "rawClassesUnchanged": true
+                },
+                "precipitation": {
+                  "available": true,
+                  "dbz": 0,
+                  "mmh": 0,
+                  "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                },
+                "textureBytes": 2097152,
+                "validPixels": 262144,
+                "cloudPixels": 1279,
+                "maximumCloudTopM": 4200,
+                "estimatedCloudBaseM": 850,
+                "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                "advection": "source-field-only",
+                "uncertainty": {
+                  "leadSeconds": 0,
+                  "edgeSoftnessM": 0,
+                  "basis": "observed",
+                  "label": "Fixture · synthetic observed radar"
+                },
+                "sources": {
+                  "reflectivity": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "cloudCoverage": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "echoTop18": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  }
+                }
+              },
+              "previous": null,
+              "blend": 1
+            },
+            "geometry": {
+              "space": "beach-local scene metres; +Z offshore, +X left",
+              "texture": "512 × 512 north-up AEQD RGBA8; no sRGB/premultiply/repeat",
+              "sample": "nearest validity + bilinear valid-neighbor renormalization",
+              "advection": "source-field-only"
+            },
+            "candidateShader": true,
+            "loading": false
+          },
+          "completedKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+          "scrubbing": false,
+          "activeResolution": [
+            512,
+            128
+          ],
+          "snapshotLayers": [
+            0,
+            0,
+            0
+          ],
+          "stormCells": {
+            "requested": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034006.704,
+              "elapsedSeconds": -35993.296000003815,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "current": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034001.387,
+              "elapsedSeconds": -35998.61299991608,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "previous": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034000,
+              "elapsedSeconds": -36000,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "snapshotCount": 0,
+            "packed": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "lowTop": 2550,
+            "refreshMs": 20000,
+            "advection": "independent world positions sampled into complete 20-second atlases; no shared wind reprojection"
+          },
+          "advection": {
+            "current": [
+              0,
+              0
+            ],
+            "previous": [
+              0,
+              0
+            ],
+            "clock": 6.704000000000003,
+            "source": "dominant optical layer wind reprojection; full layer winds in each bake; frozen weather clock"
+          }
+        }
+      },
+      "manifest": {
+        "schema": "seaglass.geo-weather/1",
+        "beachId": "inlet-beach",
+        "center": {
+          "lat": 30.28,
+          "lon": -86
+        },
+        "grid": {
+          "projection": "aeqd",
+          "datum": "WGS84",
+          "units": "m",
+          "width": 512,
+          "height": 512,
+          "extent": [
+            -75000,
+            -75000,
+            75000,
+            75000
+          ],
+          "rowOrder": "north-to-south"
+        },
+        "image": {
+          "url": "/visual-truth-fixtures/green-offshore-40aea0fa4f4fd557.png",
+          "mimeType": "image/png",
+          "byteLength": 1049236,
+          "sha256": "40aea0fa4f4fd557d7d373d7b6dcecce79c91a54ca63fc7d2c1c8253d63c91de",
+          "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9"
+        },
+        "validAt": 1793034000000,
+        "asOf": 1793034000000,
+        "retrievedAt": 1793034000000,
+        "issuedAt": null,
+        "kind": "fixture",
+        "sources": {
+          "reflectivity": {
+            "status": "available",
+            "provider": "Synthetic fixture",
+            "product": "Analytic ellipse green-offshore",
+            "objectId": "green-offshore",
+            "attribution": "Synthetic test fixture; not NOAA observations",
+            "validAt": 1793034000000,
+            "retrievedAt": 1793034000000,
+            "nativeResolutionM": 292.96875
+          },
+          "cloudCoverage": {
+            "status": "available",
+            "provider": "Synthetic fixture",
+            "product": "Analytic ellipse green-offshore",
+            "objectId": "green-offshore",
+            "attribution": "Synthetic test fixture; not NOAA observations",
+            "validAt": 1793034000000,
+            "retrievedAt": 1793034000000,
+            "nativeResolutionM": 292.96875
+          },
+          "echoTop18": {
+            "status": "available",
+            "provider": "Synthetic fixture",
+            "product": "Analytic ellipse green-offshore",
+            "objectId": "green-offshore",
+            "attribution": "Synthetic test fixture; not NOAA observations",
+            "validAt": 1793034000000,
+            "retrievedAt": 1793034000000,
+            "nativeResolutionM": 292.96875
+          }
+        },
+        "processing": {
+          "version": "2026-10-20-visual-truth-v2-v3-live",
+          "classification": "seaglass.dbz/1",
+          "parallax": "not-applicable",
+          "fixture": true
+        },
+        "uncertainty": {
+          "leadSeconds": 0,
+          "edgeSoftnessM": 0,
+          "basis": "observed",
+          "label": "Fixture · synthetic observed radar"
+        },
+        "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a"
+      },
+      "capturedAt": "2026-10-20T03:10:25.869Z",
+      "settle": {
+        "status": "settled",
+        "settled": true,
+        "unsettled": false,
+        "timedOut": false,
+        "elapsedMs": 1837,
+        "timeoutMs": 45000,
+        "metrics": [
+          {
+            "metric": "camera.maxElementDelta",
+            "threshold": 0.0001,
+            "finalValue": 0,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "waveClock.deltaSeconds",
+            "threshold": 0,
+            "finalValue": 0,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "fftClock.deltaSeconds",
+            "threshold": 0,
+            "finalValue": 0,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "skyInput.changed",
+            "threshold": 0,
+            "finalValue": 0,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "cloudCache.ready",
+            "threshold": 1,
+            "finalValue": 1,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "shoreField.pending",
+            "threshold": 0,
+            "finalValue": 0,
+            "elapsedMs": 1837,
+            "pass": true
+          },
+          {
+            "metric": "stableWindow.ms",
+            "threshold": 1800,
+            "finalValue": 1837,
+            "elapsedMs": 1837,
+            "pass": true
+          }
+        ],
+        "cloudCache": {
+          "width": 512,
+          "height": 128,
+          "columns": 256,
+          "rows": 1,
+          "layers": 3,
+          "primarySteps": 18,
+          "shadowSteps": 3,
+          "refreshMs": 20000,
+          "fadeMs": 400,
+          "refreshFadeMs": 1600,
+          "ready": true,
+          "disabled": false,
+          "optionalFailure": null,
+          "active": false,
+          "row": 128,
+          "column": 0,
+          "empty": false,
+          "generations": 6,
+          "targetKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+          "geoWeather": {
+            "active": {
+              "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+              "beachId": "inlet-beach",
+              "validAt": 1793034000000,
+              "asOf": 1793034000000,
+              "kind": "fixture",
+              "facingDeg": 201,
+              "cameraOriginM": [
+                -27.439781843333588,
+                -63.547050276251206
+              ],
+              "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+              "presentation": {
+                "version": "gaussian-box3/1",
+                "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                "edgeSoftnessM": 0,
+                "rawClassesUnchanged": true
+              },
+              "precipitation": {
+                "available": true,
+                "dbz": 0,
+                "mmh": 0,
+                "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+              },
+              "textureBytes": 2097152,
+              "validPixels": 262144,
+              "cloudPixels": 1279,
+              "maximumCloudTopM": 4200,
+              "estimatedCloudBaseM": 850,
+              "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+              "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+              "advection": "source-field-only",
+              "uncertainty": {
+                "leadSeconds": 0,
+                "edgeSoftnessM": 0,
+                "basis": "observed",
+                "label": "Fixture · synthetic observed radar"
+              },
+              "sources": {
+                "reflectivity": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "cloudCoverage": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                },
+                "echoTop18": {
+                  "status": "available",
+                  "provider": "Synthetic fixture",
+                  "product": "Analytic ellipse green-offshore",
+                  "objectId": "green-offshore",
+                  "attribution": "Synthetic test fixture; not NOAA observations",
+                  "validAt": 1793034000000,
+                  "retrievedAt": 1793034000000,
+                  "nativeResolutionM": 292.96875
+                }
+              }
+            },
+            "preparing": null,
+            "prepared": null,
+            "display": {
+              "current": {
+                "contentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+                "beachId": "inlet-beach",
+                "validAt": 1793034000000,
+                "asOf": 1793034000000,
+                "kind": "fixture",
+                "facingDeg": 201,
+                "cameraOriginM": [
+                  -27.439781843333588,
+                  -63.547050276251206
+                ],
+                "decodedSha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                "presentation": {
+                  "version": "gaussian-box3/1",
+                  "sha256": "46d2097631752b3c89e70667721c4458c32ab948fb00d9671196346a345f23c9",
+                  "edgeSoftnessM": 0,
+                  "rawClassesUnchanged": true
+                },
+                "precipitation": {
+                  "available": true,
+                  "dbz": 0,
+                  "mmh": 0,
+                  "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                },
+                "textureBytes": 2097152,
+                "validPixels": 262144,
+                "cloudPixels": 1279,
+                "maximumCloudTopM": 4200,
+                "estimatedCloudBaseM": 850,
+                "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                "advection": "source-field-only",
+                "uncertainty": {
+                  "leadSeconds": 0,
+                  "edgeSoftnessM": 0,
+                  "basis": "observed",
+                  "label": "Fixture · synthetic observed radar"
+                },
+                "sources": {
+                  "reflectivity": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "cloudCoverage": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "echoTop18": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse green-offshore",
+                    "objectId": "green-offshore",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793034000000,
+                    "retrievedAt": 1793034000000,
+                    "nativeResolutionM": 292.96875
+                  }
+                }
+              },
+              "previous": null,
+              "blend": 1
+            },
+            "geometry": {
+              "space": "beach-local scene metres; +Z offshore, +X left",
+              "texture": "512 × 512 north-up AEQD RGBA8; no sRGB/premultiply/repeat",
+              "sample": "nearest validity + bilinear valid-neighbor renormalization",
+              "advection": "source-field-only"
+            },
+            "candidateShader": true,
+            "loading": false
+          },
+          "completedKey": "[59767800,1793034000000,0,0,0,0,0,0,0,0,0]|geo:8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+          "scrubbing": false,
+          "activeResolution": [
+            512,
+            128
+          ],
+          "snapshotLayers": [
+            0,
+            0,
+            0
+          ],
+          "stormCells": {
+            "requested": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034006.754,
+              "elapsedSeconds": -35993.2460000515,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "current": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034001.387,
+              "elapsedSeconds": -35998.61299991608,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "previous": {
+              "key": "",
+              "count": 0,
+              "cells": [],
+              "projected": [],
+              "clockSeconds": 1793034000,
+              "elapsedSeconds": -36000,
+              "provided": false,
+              "valid": true,
+              "diagnostics": [],
+              "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+            },
+            "snapshotCount": 0,
+            "packed": [
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "lowTop": 2550,
+            "refreshMs": 20000,
+            "advection": "independent world positions sampled into complete 20-second atlases; no shared wind reprojection"
+          },
+          "advection": {
+            "current": [
+              0,
+              0
+            ],
+            "previous": [
+              0,
+              0
+            ],
+            "clock": 6.754,
+            "source": "dominant optical layer wind reprojection; full layer winds in each bake; frozen weather clock"
+          }
+        },
+        "freezeBeforeCheck": true,
+        "reason": null
+      },
+      "nativeRevision": "2026-10-20-visual-truth-v2-v3-live",
+      "source": "Synthetic analytic fixture; actual native rendered screenshot",
+      "capturedContentId": "8746c7b0091e0a17b4d0d7c7952cdaa2e688fbf50ad7d0359dc6cf47f547a73a",
+      "visibleReview": "pending"
+    }
+  },
+  "attempts": [
+    {
+      "fixture": "green-offshore",
+      "attempt": 1,
+      "startedAt": "2026-10-20T03:10:17.407Z",
+      "stage": "complete",
+      "finishedAt": "2026-10-20T03:10:25.903Z",
+      "pass": true
+    }
+  ],
+  "errors": [
+    {
+      "stage": "active-field-performance",
+      "message": "Production renderer settings changed."
+    }
+  ],
+  "acceptance": {
+    "status": "incomplete",
+    "renderedAlignment": "requires-visual-review",
+    "performance": "pending active-field 120-second measurement; original 36-capture and wave checks remain required"
+  },
+  "performance": {
+    "startedAt": "2026-10-20T03:10:12.577Z",
+    "seconds": 120,
+    "fixture": "night-storm",
+    "field": {
+      "schema": "seaglass.geo-weather/1",
+      "beachId": "inlet-beach",
+      "center": {
+        "lat": 30.28,
+        "lon": -86
+      },
+      "grid": {
+        "projection": "aeqd",
+        "datum": "WGS84",
+        "units": "m",
+        "width": 512,
+        "height": 512,
+        "extent": [
+          -75000,
+          -75000,
+          75000,
+          75000
+        ],
+        "rowOrder": "north-to-south"
+      },
+      "image": {
+        "url": "/visual-truth-fixtures/intense-overhead-performance-f5c0dd5b78b64bca.png",
+        "mimeType": "image/png",
+        "byteLength": 1049236,
+        "sha256": "f5c0dd5b78b64bca27f5a88fe6824fa45e4e2e2137b0d4ab9f1bc5ed7a71c8f1",
+        "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30"
+      },
+      "validAt": 1793070000000,
+      "asOf": 1793070000000,
+      "retrievedAt": 1793070000000,
+      "issuedAt": null,
+      "kind": "fixture",
+      "sources": {
+        "reflectivity": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        },
+        "cloudCoverage": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        },
+        "echoTop18": {
+          "status": "available",
+          "provider": "Synthetic fixture",
+          "product": "Analytic ellipse intense-overhead-performance",
+          "objectId": "intense-overhead-performance",
+          "attribution": "Synthetic test fixture; not NOAA observations",
+          "validAt": 1793070000000,
+          "retrievedAt": 1793070000000,
+          "nativeResolutionM": 292.96875
+        }
+      },
+      "processing": {
+        "version": "2026-10-20-visual-truth-v2-v3-live",
+        "classification": "seaglass.dbz/1",
+        "parallax": "not-applicable",
+        "fixture": true
+      },
+      "uncertainty": {
+        "leadSeconds": 0,
+        "edgeSoftnessM": 0,
+        "basis": "observed",
+        "label": "Fixture · synthetic observed radar"
+      },
+      "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb"
+    },
+    "before": {
+      "native": {
+        "lifecycle": {
+          "session": {
+            "devicesCreated": 1,
+            "devicesLive": 1,
+            "devicesDestroyed": 0,
+            "estimatedBytes": 197027260,
+            "peakEstimatedBytes": 285812334,
+            "buffersLive": 98,
+            "texturesLive": 66,
+            "querySetsLive": 1,
+            "buffersCreated": 102,
+            "texturesCreated": 274,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 81,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 308,
+            "bindGroupLayoutsCreated": 60,
+            "pipelineLayoutsCreated": 97,
+            "pipelinesCreated": 99,
+            "bufferBytes": 49154768,
+            "textureBytes": 147872492,
+            "id": 1,
+            "startedAtMs": 1203,
+            "disposed": false,
+            "reason": null,
+            "elapsedMs": 19523
+          },
+          "aggregate": {
+            "sessionsStarted": 1,
+            "sessionsDisposed": 0,
+            "devicesCreated": 1,
+            "devicesLive": 1,
+            "devicesDestroyed": 0,
+            "estimatedBytes": 197027260,
+            "peakEstimatedBytes": 285812334,
+            "buffersLive": 98,
+            "texturesLive": 66,
+            "querySetsLive": 1,
+            "buffersCreated": 102,
+            "texturesCreated": 274,
+            "querySetsCreated": 1,
+            "shaderModulesCreated": 81,
+            "samplersCreated": 9,
+            "bindGroupsCreated": 308,
+            "bindGroupLayoutsCreated": 60,
+            "pipelineLayoutsCreated": 97,
+            "pipelinesCreated": 99,
+            "bufferBytes": 49154768,
+            "textureBytes": 147872492
+          },
+          "memory": {
+            "scope": "Tracked destroyable resource descriptors and explicit destroy calls; byte estimates exclude driver residency, alignment and internal allocations.",
+            "driverBytes": null,
+            "nonDestroyableLiveCounts": null,
+            "nonDestroyableTracking": "Creation totals only; no strong references retained for pipelines, modules, samplers or bind groups."
+          },
+          "pending": {
+            "timers": 0,
+            "animationFrames": 0,
+            "listeners": 7,
+            "cleanupHooks": 7
+          }
+        },
+        "revision": "2026-10-20-visual-truth-v2-v3-live",
+        "waveSeconds": 47.10300000000001,
+        "marine": {
+          "heightM": 1.8288000000000002,
+          "amplitude": 0.9144000000000001,
+          "period": 7,
+          "windMps": 13.375544,
+          "waveAngle": -90,
+          "windAngle": -71,
+          "propagation": [
+            0.32556815445715664,
+            -0.9455185755993168
+          ],
+          "windVector": [
+            0.32556815445715664,
+            -0.9455185755993168
+          ],
+          "chop": 1.1,
+          "tide": 0.35,
+          "cloud": 0.94,
+          "waves": {
+            "components": [
+              {
+                "id": "wind",
+                "label": "Wind waves",
+                "height": 1.3927725856003916,
+                "period": 4.5,
+                "meanPeriod": 4.5,
+                "direction": 220,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 31.61652733256274,
+                "gamma": 1.8
+              },
+              {
+                "id": "primary",
+                "label": "Primary swell",
+                "height": 0.9502723550645891,
+                "period": 7,
+                "meanPeriod": 7,
+                "direction": 201,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 76.50418959484317,
+                "gamma": 3.3
+              },
+              {
+                "id": "secondary",
+                "label": "Secondary swell",
+                "height": 0.6335149033763926,
+                "period": 5.88,
+                "meanPeriod": 5.88,
+                "direction": 233,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 53.981356178121345,
+                "gamma": 3.3
+              },
+              {
+                "id": "tertiary",
+                "label": "Tertiary swell",
+                "height": 0.3167574516881963,
+                "period": 8.54,
+                "meanPeriod": 8.54,
+                "direction": 173,
+                "source": "est. · Open-Meteo Marine",
+                "wavelength": 113.86883579296457,
+                "gamma": 3.3
+              }
+            ],
+            "period": 7,
+            "direction": 220,
+            "height": 1.8288000000000002,
+            "steepness": 0.023904573196384424,
+            "onshore": 1,
+            "offshore": 0,
+            "swellShare": 0.42000000000000004,
+            "curl": 0.3721908536072313,
+            "groupWaves": 6.78,
+            "groupiness": 0.5012000000000001,
+            "source": "Wave appearance est. · Open-Meteo Marine; typical two-bar profile",
+            "surfAdjustment": 1,
+            "surfSource": null,
+            "truth": {
+              "schema": 1,
+              "heightConvention": "Hs = mean highest third crest-to-trough, metres",
+              "shoreHeightTarget": 1.8288000000000002,
+              "periodTarget": 7,
+              "peakPeriod": null,
+              "deepWavelength": 76.50418959484317,
+              "groups": {
+                "mean": 0.6275922485193075,
+                "cv": 0.520714380246044,
+                "lagOne": 0.17134266665366027,
+                "setLullRatio": 4.362023916294839
+              },
+              "heights": [
+                0.2545584694568889,
+                0.44355026158965244,
+                0.26321553522636704,
+                0.7439735668018,
+                0.7205930627459611,
+                0.24567718365498323,
+                0.6833100597249803,
+                0.296012334615776,
+                0.4954354965371232,
+                1.045635171100166,
+                0.7850680249267914,
+                0.27994482872066756,
+                0.889175617031826,
+                1.1668230951565197,
+                0.5999034304467883,
+                0.3191120964193022,
+                0.34125602796204685,
+                0.3484627245328594,
+                0.8112900396805952,
+                0.5799546127833963,
+                0.4500826706734754,
+                0.7282931769854187,
+                0.8203402097782863,
+                0.43699697794313463,
+                0.9589125519247504,
+                0.21739413230635718,
+                0.5406904265464296,
+                0.7682751269240496,
+                0.8485620200883989,
+                0.044326952405655255,
+                0.13404125478927462,
+                1.0998742282075533,
+                1.6684791061725548,
+                1.4940852513642415,
+                0.829561407737846,
+                0.3765845324546545,
+                0.16175160210418849,
+                0.4304200946923393,
+                1.1204434407514323,
+                0.5147992380145116,
+                1.4056468476980697,
+                0.8389646682266718,
+                0.6269673179029398,
+                0.9342266757393956,
+                1.2569872985016528,
+                1.1934451269552786,
+                0.6066147812645338,
+                0.09950985853867607,
+                0.8583666159079008,
+                0.6477009601596342,
+                0.6407429655411303,
+                0.5537047600045732,
+                0.40381784989161074,
+                0.22713001735355068,
+                0.7360849962140609,
+                0.7600627409454374,
+                0.30383411090727563,
+                0.9994727740275271,
+                0.2072905285902435,
+                0.7936629615382483,
+                0.33396678719296274,
+                0.5471901325351647,
+                0.7766079024663884,
+                0.39707767029984914,
+                0.9224688778132681,
+                1.2964408775389373,
+                0.8683928833372526,
+                0.5342035602191597,
+                0.07692762010667178,
+                0.5667871666444666,
+                0.5865756388951988,
+                0.42381677463746315,
+                0.560236401747973,
+                0.6133609128845746,
+                0.6906181939494823,
+                0.7129798919920287,
+                1.344219213265875,
+                0.4565968301065187,
+                0.9110587571018063,
+                1.0806773769967948,
+                0.41718405513585544,
+                1.1426451720551776,
+                0.36265352943849105,
+                0.8024007454763697,
+                0.8999690805802281,
+                0.6688901528891429,
+                0.6617715386704378,
+                0.9854178419238872,
+                0.48898004921848226,
+                0.6201442581927212,
+                0.2880536084723542,
+                0.9463629163991634,
+                0.4630952756124711,
+                0.5083429517660315,
+                0.11797643968962929,
+                0.3902946645067933,
+                0.7054491632500239,
+                0.878656702759181,
+                0.482520552364271,
+                0.18573139650763446,
+                0.2716711323551269,
+                1.0295009061555915,
+                0.9719155349661952,
+                0.41051883336368994,
+                0.6760685452114464,
+                0.14848768164747,
+                0.527727457596882,
+                0.17410507897851762,
+                0.6547094991962383,
+                0.5932244886641126,
+                0.32658802656362423,
+                0.35559326613327036,
+                1.0141426325740694,
+                0.46958046372630996,
+                0.5212600434406026,
+                0.6979966126987166,
+                1.0626510055346063,
+                0.7519642476288749,
+                1.223172758239344,
+                0.38346498342175855,
+                0.5733591848045749,
+                0.6338326676531537,
+                0.3696489413183507,
+                0.1967609749415397,
+                0.23654495267022624,
+                0.476054780977288,
+                0.5018890798616128,
+                0.31153056862054684
+              ],
+              "iribarren": 0.67912359464214,
+              "breakerType": "plunging",
+              "beachSlope": 0.10500000417232513,
+              "windKnots": 26,
+              "whitecapOpenOceanTarget": 0.026610515248397016,
+              "whitecapCoastalFactor": 1,
+              "whitecapTarget": 0.026610515248397016,
+              "source": "Surf transformation est. · NOAA NDBC height convention; linear dispersion and Snell refraction; typical beach profile",
+              "whitecapSource": "Active wind whitecap area est. · Monahan & O’Muircheartaigh 1980 open-ocean wind law; visibility ramp 8–12 kt; nearshore offshore-fetch appearance factor est. = 1 − 0.95 × offshore exposure (0–1)",
+              "groupSource": "Grouped Rayleigh height population est. · spectral bandwidth proxy; not an observed set forecast"
+            }
+          }
+        },
+        "quality": {
+          "name": "High",
+          "dpr": 1.2,
+          "lod": 2.5,
+          "spray": 16384,
+          "reflection": 0.5,
+          "reflectionSeconds": 6,
+          "cloud": 1,
+          "level": 0,
+          "fft": "4 × 256",
+          "mesh": "32-cell tiles",
+          "reflectionCube": 64,
+          "underwaterLightMap": 256
+        },
+        "post": {
+          "aa": "fxaa",
+          "flare": false
+        },
+        "pipeline": {
+          "maxFramesInFlight": 2,
+          "maxObservedInFlight": 2,
+          "submitted": 637,
+          "completed": 635,
+          "outstanding": 2,
+          "completionObserver": "one asynchronous queue-fence observer; counts only its captured submission watermark"
+        },
+        "adaptiveResolution": {
+          "currentDpr": 1.2,
+          "minDpr": 1.2,
+          "maxDpr": 1.5,
+          "verifiedFrames": 637
+        },
+        "weather": {
+          "deck": 0.944606413994169,
+          "daylight": 0,
+          "weight": 0,
+          "radiance": 0.015299999999999998,
+          "exposure": 1,
+          "cover": 0.94,
+          "layers": [
+            0.82,
+            0.76,
+            0.91
+          ],
+          "layerDataAvailable": [
+            true,
+            true,
+            true
+          ],
+          "visibility": 1600,
+          "humidity": 97,
+          "rain": 100,
+          "radiation": 0,
+          "thunder": 1,
+          "offshoreSamples": 0,
+          "estimateSource": "Weather appearance est. · Open-Meteo",
+          "geoPrecipitation": {
+            "available": true,
+            "dbz": 64,
+            "mmh": 100,
+            "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall",
+            "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "blend": 1
+          },
+          "stormCells": {
+            "key": "",
+            "count": 0,
+            "cells": [],
+            "projected": [],
+            "clockSeconds": 1793070017.087,
+            "elapsedSeconds": 17.086999893188477,
+            "provided": false,
+            "valid": true,
+            "diagnostics": [],
+            "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+          },
+          "optics": {
+            "cover": 0.94,
+            "fog": 0,
+            "closed": 1,
+            "disc": 0,
+            "glow": 0
+          },
+          "squall": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "cloudCache": {
+            "width": 512,
+            "height": 128,
+            "columns": 256,
+            "rows": 1,
+            "layers": 3,
+            "primarySteps": 18,
+            "shadowSteps": 3,
+            "refreshMs": 20000,
+            "fadeMs": 400,
+            "refreshFadeMs": 1600,
+            "ready": true,
+            "disabled": false,
+            "optionalFailure": null,
+            "active": false,
+            "row": 128,
+            "column": 0,
+            "empty": false,
+            "generations": 4,
+            "targetKey": "[59769000,1793034000000,0,0,0,0,82,76,91,100,1]|geo:98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "geoWeather": {
+              "active": {
+                "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                "beachId": "inlet-beach",
+                "validAt": 1793070000000,
+                "asOf": 1793070000000,
+                "kind": "fixture",
+                "facingDeg": 201,
+                "cameraOriginM": [
+                  0,
+                  -28
+                ],
+                "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                "presentation": {
+                  "version": "gaussian-box3/1",
+                  "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "edgeSoftnessM": 0,
+                  "rawClassesUnchanged": true
+                },
+                "precipitation": {
+                  "available": true,
+                  "dbz": 64,
+                  "mmh": 100,
+                  "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                },
+                "textureBytes": 2097152,
+                "validPixels": 262144,
+                "cloudPixels": 17576,
+                "maximumCloudTopM": 14000,
+                "estimatedCloudBaseM": 850,
+                "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                "advection": "source-field-only",
+                "uncertainty": {
+                  "leadSeconds": 0,
+                  "edgeSoftnessM": 0,
+                  "basis": "observed",
+                  "label": "Fixture · synthetic observed radar"
+                },
+                "sources": {
+                  "reflectivity": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "cloudCoverage": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  },
+                  "echoTop18": {
+                    "status": "available",
+                    "provider": "Synthetic fixture",
+                    "product": "Analytic ellipse intense-overhead-performance",
+                    "objectId": "intense-overhead-performance",
+                    "attribution": "Synthetic test fixture; not NOAA observations",
+                    "validAt": 1793070000000,
+                    "retrievedAt": 1793070000000,
+                    "nativeResolutionM": 292.96875
+                  }
+                }
+              },
+              "preparing": null,
+              "prepared": null,
+              "display": {
+                "current": {
+                  "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                  "beachId": "inlet-beach",
+                  "validAt": 1793070000000,
+                  "asOf": 1793070000000,
+                  "kind": "fixture",
+                  "facingDeg": 201,
+                  "cameraOriginM": [
+                    0,
+                    -28
+                  ],
+                  "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "presentation": {
+                    "version": "gaussian-box3/1",
+                    "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                    "edgeSoftnessM": 0,
+                    "rawClassesUnchanged": true
+                  },
+                  "precipitation": {
+                    "available": true,
+                    "dbz": 64,
+                    "mmh": 100,
+                    "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                  },
+                  "textureBytes": 2097152,
+                  "validPixels": 262144,
+                  "cloudPixels": 17576,
+                  "maximumCloudTopM": 14000,
+                  "estimatedCloudBaseM": 850,
+                  "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                  "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                  "advection": "source-field-only",
+                  "uncertainty": {
+                    "leadSeconds": 0,
+                    "edgeSoftnessM": 0,
+                    "basis": "observed",
+                    "label": "Fixture · synthetic observed radar"
+                  },
+                  "sources": {
+                    "reflectivity": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "cloudCoverage": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "echoTop18": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    }
+                  }
+                },
+                "previous": {
+                  "contentId": "98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+                  "beachId": "inlet-beach",
+                  "validAt": 1793070000000,
+                  "asOf": 1793070000000,
+                  "kind": "fixture",
+                  "facingDeg": 201,
+                  "cameraOriginM": [
+                    0,
+                    -28
+                  ],
+                  "decodedSha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                  "presentation": {
+                    "version": "gaussian-box3/1",
+                    "sha256": "f1ea49bc1d313b9fac909300b2ba5361b2a5ed71dde759ff3ccbec2c58755e30",
+                    "edgeSoftnessM": 0,
+                    "rawClassesUnchanged": true
+                  },
+                  "precipitation": {
+                    "available": true,
+                    "dbz": 64,
+                    "mmh": 100,
+                    "label": "est. · NOAA reflectivity / Z=200 R^1.6; composite reflectivity is not surface rainfall"
+                  },
+                  "textureBytes": 2097152,
+                  "validPixels": 262144,
+                  "cloudPixels": 17576,
+                  "maximumCloudTopM": 14000,
+                  "estimatedCloudBaseM": 850,
+                  "cloudHeightSource": "est. · NOAA echo top 18 dBZ where valid; 2,550 m cloud top otherwise",
+                  "coverageSource": "GOES coverage where valid; radar-implied cloud est. otherwise",
+                  "advection": "source-field-only",
+                  "uncertainty": {
+                    "leadSeconds": 0,
+                    "edgeSoftnessM": 0,
+                    "basis": "observed",
+                    "label": "Fixture · synthetic observed radar"
+                  },
+                  "sources": {
+                    "reflectivity": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "cloudCoverage": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    },
+                    "echoTop18": {
+                      "status": "available",
+                      "provider": "Synthetic fixture",
+                      "product": "Analytic ellipse intense-overhead-performance",
+                      "objectId": "intense-overhead-performance",
+                      "attribution": "Synthetic test fixture; not NOAA observations",
+                      "validAt": 1793070000000,
+                      "retrievedAt": 1793070000000,
+                      "nativeResolutionM": 292.96875
+                    }
+                  }
+                },
+                "blend": 1
+              },
+              "geometry": {
+                "space": "beach-local scene metres; +Z offshore, +X left",
+                "texture": "512 × 512 north-up AEQD RGBA8; no sRGB/premultiply/repeat",
+                "sample": "nearest validity + bilinear valid-neighbor renormalization",
+                "advection": "source-field-only"
+              },
+              "candidateShader": true,
+              "loading": false
+            },
+            "completedKey": "[59769000,1793034000000,0,0,0,0,82,76,91,100,1]|geo:98beca72edc819c3dc0c64eadb3648642795a42f0ac26e7a61cce4dcfac632cb",
+            "scrubbing": false,
+            "activeResolution": [
+              512,
+              128
+            ],
+            "snapshotLayers": [
+              0.82,
+              0.76,
+              0.91
+            ],
+            "stormCells": {
+              "requested": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070017.087,
+                "elapsedSeconds": 17.086999893188477,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "current": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070010.669,
+                "elapsedSeconds": 10.668999910354614,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "previous": {
+                "key": "",
+                "count": 0,
+                "cells": [],
+                "projected": [],
+                "clockSeconds": 1793070003.331,
+                "elapsedSeconds": 3.3310000896453857,
+                "provided": false,
+                "valid": true,
+                "diagnostics": [],
+                "estimateSource": "Storm cell appearance est. · caller-supplied conditions"
+              },
+              "snapshotCount": 0,
+              "packed": [
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0,
+                  0
+                ]
+              ],
+              "lowTop": 6850,
+              "refreshMs": 20000,
+              "advection": "independent world positions sampled into complete 20-second atlases; no shared wind reprojection"
+            },
+            "advection": {
+              "current": [
+                0,
+                0
+              ],
+              "previous": [
+                0,
+                0
+              ],
+              "clock": 17.087000000000003,
+              "source": "dominant optical layer wind reprojection; full layer winds in each bake; frozen weather clock"
+            }
+          }
+        },
+        "windWhitecaps": {
+          "status": "calibrated",
+          "target": 0.026610515248397016,
+          "bias": 0.655933678150177
+        },
+        "shoreDisplay": {
+          "breakSpan": 0.13
+        },
+        "shoreFieldPending": false,
+        "optionalEffects": {
+          "disabled": [],
+          "degraded": false
+        },
+        "still": null
+      }
+    },
+    "samples": [],
+    "captureDuringWindow": false,
+    "error": "Production renderer settings changed.",
+    "finishedAt": "2026-10-20T03:10:12.607Z",
+    "acceptance": {
+      "cadencePass": false,
+      "fieldActiveThroughout": false,
+      "error": "Production renderer settings changed."
+    }
+  },
+  "parentRunId": "2026-10-20T03-09-50Z-d44795c6-d976-40cc-a0fc-fce1ca944b54",
+  "part": "green-offshore",
+  "partial": true
+}
