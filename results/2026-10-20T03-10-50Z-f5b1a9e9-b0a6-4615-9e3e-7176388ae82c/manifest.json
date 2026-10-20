@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T03-10-50Z-f5b1a9e9-b0a6-4615-9e3e-7176388ae82c",
+  "kind": "weather",
+  "fingerprint": "1991bd248c3e1a8da75a00e70ca24303f0d85a6643254f76f92e77074a44d3a1",
+  "receivedAt": "2026-10-20T03:10:51.657Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 326481,
+      "type": "application/json",
+      "sha256": "1f9445ca32c02e95346c19ad56d94d3fd5f6d09ec4e9aa2f2623fefdf9f01012"
+    },
+    {
+      "name": "purple-right-map-scene.jpg",
+      "size": 153521,
+      "type": "image/jpeg",
+      "sha256": "fba518918c53c049ef55083415011317d894440bc3381c19b4595d57a006d450"
+    },
+    {
+      "name": "purple-right-field.json",
+      "size": 2274,
+      "type": "application/json",
+      "sha256": "684c6adab8b7133e2f7987ee0daebf33fea378944533e30377d8956fe4953c44"
+    }
+  ]
+}
