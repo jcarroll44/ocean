@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "runId": "2026-10-20T03-11-08Z-07d1fa29-edd3-4c75-9b34-cf2ebc9e6729",
+  "kind": "weather",
+  "fingerprint": "d730f8e68f3dd0325ffe133df031f473b2225756cb01d5e99696c1802e20f939",
+  "receivedAt": "2026-10-20T03:11:08.990Z",
+  "files": [
+    {
+      "name": "report.json",
+      "size": 427437,
+      "type": "application/json",
+      "sha256": "37e8d4f8f09fd437b88cd4e1accfbebcbe2d5489b62e79b8eb845df7fb7c32f6"
+    },
+    {
+      "name": "overhead-cell-map-scene.jpg",
+      "size": 151206,
+      "type": "image/jpeg",
+      "sha256": "1b86a0513d79845d6b2159c7b2127f5ba96281ec84665ff29414aa6185c9ce7c"
+    },
+    {
+      "name": "overhead-cell-field.json",
+      "size": 2281,
+      "type": "application/json",
+      "sha256": "8e64bf3c2aa2ca944e4b3b1ddefaeaa8d5db8bf3a608e340807c910ee49ae7f2"
+    }
+  ]
+}
