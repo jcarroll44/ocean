@@ -1,3 +1,43 @@
+# Seaglass — Visual Truth storm4
+
+Updated 2026-10-20. Read HANDOFF.md and continue. Public WIP summary; licensed source and private configuration omitted.
+
+## Current revision and source
+
+Revision `2026-10-20-visual-truth-v2-v3-storm4`, private runtime `38bb44b1d2c8f4c61fae4abec81c5d99044e0d9a`, version 76, deployment `appgdep_6ad7c7f45374819193842f7632aa3229`. Same gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth.html . Receipt-only checkpoints preserve those exact runtime bytes.
+
+Production remains Tidewater. Accepted launch tag `scene-baseline-rc14c-startup` stays immutable at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`. Capture tools remain `2026-10-15-blob-recovery-rc12c`. No new phone acceptance or passing tag.
+
+## What changed
+
+Storm3 uploaded report confirms 41.447582 average FPS, minimum 31, zero seconds below 30, five captures and five geometry passes. User accepted intensity darkness, billowed tops and dark/wet overhead, but rejected offshore curtains/bases. Retain the raw report caveat: late frame-span drift 10.7794% flagged FAIL; changing output dimensions left whole-run +1 ms budget unmeasured.
+
+Offshore rain now uses clear-atmosphere radiance, intensity-calibrated extinction and a precomputed occupied rain chord. Ragged cloud bases stay above the rain rather than forming an opaque wall to the sea. Source positions, wind slant, accepted crowns and both overhead cases are retained. Subtle diffuse sea shading reuses the existing shadow result and fades out under full overhead cover. No new pass, texture, GPU binding, water field lookup, FFT or larger raymarch budget. The light fixture is actually 22 km; it was not moved.
+
+The gate now audits actual scene pixels below every offshore cell against clear sky beside it at the same elevation. It reports exact sample geometry, contrast and a qualified translucency proxy. The broad squall gets one additional real edge-view capture, preserving its original pair and restoring the camera. Failed/unavailable audits persist and upload without stopping captures; all work follows timing and survives reload/Share.
+
+An intermediate base proposal was rejected before deployment because cloud opacity hid the rain. The final independent CPU transport check separates cloud, rain and combined extinction; it does not infer visual success from modeled rain opacity alone.
+
+## Verification
+
+Local tests are not a real-browser/device/visual pass. Full required build and hosting passed: all seven interaction checks, 80 WGSL modules / 84 actual default-limit pipelines, 36 settled still-command paths, 40 controlled startup/API cases, six field lifecycles, geometry and pixel-audit negatives, controller retry/reload/Share and camera restoration.
+
+All six CPU volume references pass with exact source hashes. Median combined column opacity: light 16.7%, strong 41.2%, intense 60.8%, squall edge view 49.1%. Both overhead cases preserve every storm3 CPU metric. These diagnostics are not app screenshots. The field compute remains 3 uniform buffers / 4 textures / 9 samplers; semantic resources stay bounded at 4 MiB and release to zero.
+
+Deployed audit: 63/63 URLs HTTP 200, matching packaged byte counts and SHA-256. Private report: `night-report/geo-storm4-deployed-assets.json`.
+
+## Open issues and next steps
+
+Run the same gate on iPhone for the active overhead 120-second window, control and five original map/scene pairs plus the squall edge view. Review curtain visibility, ragged bases and shadowed water. Fresh storm4 appearance/performance remain unverified; do not tag or promote to Features before acceptance.
+
+Candidate mipmap recovery already exists since RC15 startup3: two asynchronous 4.5-second attempts, then initialized mip0-only fallback. Deterministic compile errors do not retry; stale completions cannot attach to a replaced device. Local 40/40 fault injection is not an iPhone cold-start pass. The full-quality gate rejects degraded rendering even if startup continues. Immutable baseline controls retain older startup helpers. After visual acceptance, repeat device cold starts and attribute any failure to candidate/control before editing. No separate rc14d revision exists here; startup code is unchanged in storm4.
+
+## Rules
+
+Never commit/push GitHub main or expose secrets. Private Sites main deployment is approved; preserve owner-private access. Keep MIT credits, private vendor source, default GPU limits, 1.1 DPR floor, strict gates, recovery/Share, API compatibility, surf truth, other lanes and immutable tags. No GPU runner or invented phone/pixel results. Update HANDOFF every pass.
+
+## Archived handoff — storm3
+
 # Seaglass — Visual Truth storm3
 
 Updated 2026-10-20. Read HANDOFF.md and continue. Public WIP summary; licensed source and private configuration omitted.
