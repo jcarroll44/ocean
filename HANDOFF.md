@@ -1,3 +1,34 @@
+# Seaglass — Visual Truth storm volume / gate repair
+
+Updated 2026-10-20. Read HANDOFF.md and continue. This public WIP summary omits licensed source and private runtime configuration.
+
+## Current revision and source
+
+Candidate `2026-10-20-visual-truth-v2-v3-storm1`. Runtime private Sites source `7c74c5a2b053a38ac16ea205d91c7624134ed040` deployed successfully as version70 (deployment `appgdep_6ad6e6b378ac8191ad363f879b8b092f`). Subsequent receipt-only commits retain identical built runtime. No new phone pass or baseline tag.
+
+Gate: https://daybuoy-night-pass.jacobcarroll51.chatgpt.site/visual-truth.html
+
+Production ocean remains Tidewater. Immutable accepted launch: `scene-baseline-rc14c-startup` at `c6d8241f1a2f248e62b3ad3c15ffc1203df65473`.
+
+## Changes and evidence
+
+- Uploaded Visual Truth run2026-10-20T03-09-50Z-d44795c6 passed numeric geometry, failed appearance, and never completed120s. Those results are not relabeled.
+- Removed the solid slab floor/vertical extrusion. Existing volumetric atlas now uses raster-derived occupied ray bounds, rounded inward edges, billowed crowns, self-shadowing and64stratified depth samples.64atlas pixels/frame,2shadow samples; same512x128atlas, no added render pass, bounded4MiBsemantic textures. CPU raw/display data and map/scene identities stay immutable.
+- Continuous dBZ-scaled rain curtains replace four height planes. The same field drives overhead sun occlusion, diffuse light, visibility, local rain/wetness and existing water impacts. Missing radar/GOES retain appropriate forecast fallbacks. Estimates/source labels remain.
+- Right-hand cell was outside the solar-yawed portrait camera although the map arrow pointed offshore. The private diagnostic now holds an offshore manual heading, synchronizes the real camera before baking, and logs/draws its actual FOV. Normal app camera/UI and original36captures are unchanged.
+- Gate false abort came from comparing observed minDpr1.2 to configured floor1.1. It now checks actual production policy, DPR bounds/step, AA/flare, revision and queue depth; real mismatches still fail with details.
+- Deployed audit discovered producer DATA1.3. Its actual grid/channels/PNG/canonical hash match the contract. Added explicit1.3 support with every validator retained; extra storms/lightning metadata does not enable deferred effects. Data/Features repositories untouched.
+- Full local build passed: seven interaction checks,84actual native default-limit pipelines/80WGSLmodules,36still command paths,40controlled startup/API cases, strict field-volume compute/resource checks, geometry/lighting/policy/DOM/reload/Share tests. All63deployed asset bodies returned HTTP200 with exact SHA256/bytes. Live Data1.3 observed/+1h/+3h/+6h plus forecast proxy passed9/9requests.
+- Local null-backend/CPU/DOM tests and the CPU volume illustration are not rendered iPhone evidence or a120s performance result. Gulf reference photography informed shape/lighting and is not embedded in the app.
+
+## Open and next
+
+Run the same gate in iPhone Safari: active-field120s, same-device accepted baseline control, five actual map/scene pairs, Share results. Review actual clouds, right-cell visibility, rain curtains and overhead lighting. Original full36capture/wave gate remains required. Do not tag or promote before matching device acceptance.
+
+Keep surf truth, no-field look, UI, default WebGPU limits and1.1DPRfloor. No public main writes, secrets, vendor source, GPU runner, invented results or threshold weakening. Preserve all accepted tags and condition API compatibility. Water Pro final bounded attempt remains independent; if it fails, close A/B and continue Tidewater.
+
+## Archived prior handoff
+
 # Seaglass — final Water Pro attempt; live Visual Truth V2/V3
 
 Updated 2026-10-20. Read this handoff and continue. This is a public WIP summary; licensed source and full scene/deployment evidence stay in the private Sites source.
